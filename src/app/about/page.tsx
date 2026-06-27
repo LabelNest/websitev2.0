@@ -8,6 +8,18 @@ export const metadata: Metadata = {
   description: 'LabelNest is not a passion project. It is a calculated response to structural gaps in how data is built, priced, and delivered.',
 }
 
+const TIMELINE = [
+  { month: 'Nov 2025', event: 'LabelNest public build begins', desc: 'Decision made to build the full product ecosystem publicly. DataNest and NestIntel already operational internally.' },
+  { month: 'Dec 2025', event: 'NestLens Intelligence live', desc: 'First external module live. 40K+ entities, contact intelligence, live market signals.' },
+  { month: 'Jan 2026', event: 'NestLens Exchange opens', desc: 'Universal data marketplace live. KYC verified sellers, escrow-protected transactions, QC scored datasets.' },
+  { month: 'Feb 2026', event: 'First briefings published', desc: 'Writing goes public. INR-first manifesto, bootstrapping philosophy, NestHR launch piece.' },
+  { month: 'Mar 2026', event: 'NestHR and PlacementOS live', desc: 'HRMS for startups and colleges. 7 OS modules including PlacementOS that learns from every selection.' },
+  { month: 'Apr 2026', event: 'Capital Readiness live', desc: '10-section data room, 51-item checklist, investor tier scoring, LP-GP and SP matching — all live.' },
+  { month: 'May 2026', event: 'Nestling fellows program — Cohort 1', desc: 'NestLabs and NestTech cohorts start. 15 fellows across research and engineering.' },
+  { month: 'Jun 2026', event: 'Team at 13. 39 alumni.', desc: 'Website v2 deployed. Admin panel live. NestResolve scoped for October.' },
+  { month: 'Oct 2026', event: 'NestResolve early access', desc: 'QA and governance platform for data operations teams.', highlight: true },
+]
+
 export default function AboutPage() {
   return (
     <>
@@ -17,7 +29,7 @@ export default function AboutPage() {
         {/* HERO */}
         <section className="px-8 py-28 relative overflow-hidden">
           <div className="absolute -top-24 -left-20 w-[500px] h-[500px] rounded-full pointer-events-none"
-            style={{ background: 'rgba(233,30,140,0.07)', filter: 'blur(90px)', animation: 'breathe 9s ease-in-out infinite' }} />
+            style={{ background: 'rgba(233,30,140,0.07)', filter: 'blur(90px)' }} />
           <div className="max-w-[1240px] mx-auto relative z-10 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <div>
               <div className="font-mono text-[10.5px] tracking-[.14em] uppercase mb-5" style={{ color: 'var(--text3)' }}>About LabelNest</div>
@@ -46,14 +58,14 @@ export default function AboutPage() {
             </div>
             <div className="flex flex-col gap-4">
               {[
-                { num: '2022', label: 'Founded in Bangalore', color: 'var(--pink)' },
+                { num: 'Nov 2025', label: 'When the public build started', color: 'var(--pink)' },
                 { num: '13', label: 'Current team members', color: 'var(--blue)' },
                 { num: '39', label: 'Alumni — on the wall forever', color: 'var(--green)' },
                 { num: '1,000+', label: 'Years of collective analysis', color: 'var(--orange)' },
               ].map(s => (
                 <div key={s.num} className="flex items-center gap-5 px-5 py-4 rounded-[13px]"
                   style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-                  <div className="font-display font-extrabold text-[28px] tracking-tight leading-none w-24 flex-shrink-0" style={{ color: s.color }}>{s.num}</div>
+                  <div className="font-display font-extrabold text-[22px] tracking-tight leading-none w-28 flex-shrink-0" style={{ color: s.color }}>{s.num}</div>
                   <div className="text-[14px]" style={{ color: 'var(--text2)' }}>{s.label}</div>
                 </div>
               ))}
@@ -61,30 +73,43 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* STORY */}
+        {/* STORY + TIMELINE */}
         <section className="px-8 py-20 border-t" style={{ background: 'var(--bg2)', borderColor: 'var(--border)' }}>
           <div className="max-w-[1240px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16">
+
+            {/* Left — timeline */}
             <div>
-              <div className="font-mono text-[10px] tracking-[.14em] uppercase mb-4" style={{ color: 'var(--pink)' }}>The diagnosis</div>
-              <h2 className="font-display font-extrabold tracking-tight leading-[1.06] mb-5"
+              <div className="font-mono text-[10px] tracking-[.14em] uppercase mb-4" style={{ color: 'var(--pink)' }}>The build — month by month</div>
+              <h2 className="font-display font-extrabold tracking-tight leading-[1.06] mb-8"
                 style={{ fontSize: 'clamp(24px,3vw,38px)', color: 'var(--text)' }}>
-                Ten years. Same problem. Different companies.
+                Started Nov 2025.<br />Moving fast.
               </h2>
-              <p className="text-[15px] leading-[1.78] mb-4" style={{ color: 'var(--text2)' }}>
-                Ankit Suman spent a decade in data — operations, quality management, governance, and systems design. Across enough contexts to see that the structural gaps were not specific to any one organisation. They were endemic to how the industry had been built.
-              </p>
-              <p className="text-[15px] leading-[1.78] mb-4" style={{ color: 'var(--text2)' }}>
-                <strong style={{ color: 'var(--text)', fontWeight: 600 }}>Data built exclusively for institutions that could afford it.</strong> Emerging players left working with fragmented, expensive, often outdated information. Pricing models designed to extract, not enable. Data that could be structured better, served better, trusted more.
-              </p>
-              <p className="text-[15px] leading-[1.78]" style={{ color: 'var(--text2)' }}>
-                LabelNest India Private Limited was incorporated in Bangalore in 2022. It was not the product of a weekend insight or an accelerator cohort. It was the product of ten years of watching the same broken systems persist.
-              </p>
+              <div className="flex flex-col gap-0">
+                {TIMELINE.map((t, i) => (
+                  <div key={t.month} className="flex gap-4 pb-5 relative">
+                    {i < TIMELINE.length - 1 && (
+                      <div className="absolute left-[11px] top-6 bottom-0 w-px" style={{ background: 'var(--border)' }} />
+                    )}
+                    <div className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center z-10 mt-0.5"
+                      style={{ background: 'var(--surface)', border: `2px solid ${t.highlight ? 'var(--orange)' : 'var(--border)'}` }}>
+                      <div className="w-2 h-2 rounded-full" style={{ background: t.highlight ? 'var(--orange)' : 'var(--pink)' }} />
+                    </div>
+                    <div>
+                      <div className="font-mono text-[10px] tracking-[.1em] uppercase mb-0.5" style={{ color: 'var(--text3)' }}>{t.month}</div>
+                      <div className="font-display font-bold text-[14px] mb-1" style={{ color: 'var(--text)' }}>{t.event}</div>
+                      <div className="text-[13px] leading-[1.58]" style={{ color: 'var(--text2)' }}>{t.desc}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
+
+            {/* Right — principles */}
             <div>
-              <div className="font-mono text-[10px] tracking-[.14em] uppercase mb-4" style={{ color: 'var(--blue)' }}>The response</div>
+              <div className="font-mono text-[10px] tracking-[.14em] uppercase mb-4" style={{ color: 'var(--blue)' }}>Built differently, by design</div>
               <h2 className="font-display font-extrabold tracking-tight leading-[1.06] mb-5"
                 style={{ fontSize: 'clamp(24px,3vw,38px)', color: 'var(--text)' }}>
-                Built differently, by design.
+                The same five decisions. Every product.
               </h2>
               <div className="flex flex-col gap-3">
                 {[
@@ -105,10 +130,11 @@ export default function AboutPage() {
                 ))}
               </div>
             </div>
+
           </div>
         </section>
 
-        {/* TEAM PREVIEW */}
+        {/* FOUNDER + TEAM */}
         <section className="px-8 py-20">
           <div className="max-w-[1240px] mx-auto text-center">
             <div className="font-mono text-[10.5px] tracking-[.14em] uppercase mb-4" style={{ color: 'var(--text3)' }}>The people</div>
@@ -125,6 +151,11 @@ export default function AboutPage() {
                 style={{ background: 'var(--blue)' }}>
                 Meet the team
               </Link>
+              <Link href="/about/ankit"
+                className="inline-flex items-center gap-2 font-medium text-[14.5px] px-6 py-3.5 rounded-[10px] border transition-all hover:-translate-y-0.5"
+                style={{ color: 'var(--text)', background: 'var(--surface)', borderColor: 'var(--bord2)' }}>
+                Meet the founder →
+              </Link>
               <Link href="/careers"
                 className="inline-flex items-center gap-2 font-medium text-[14.5px] px-6 py-3.5 rounded-[10px] border transition-all hover:-translate-y-0.5"
                 style={{ color: 'var(--text)', background: 'var(--surface)', borderColor: 'var(--bord2)' }}>
@@ -134,7 +165,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <style>{`@keyframes breathe{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.18);opacity:1}}`}</style>
       </main>
       <Footer />
     </>
