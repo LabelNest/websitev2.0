@@ -13,12 +13,50 @@ const BRIEFINGS = [
   { href: '/briefings/death-of-black-box-vendor-india-ai', emoji: '🔓', scope: 'Manifesto', title: 'The Death of the "Black Box" Vendor: Why Global Data Giants are Failing Indian AI', read: '2 min · Apr 2026' },
 ]
 
-const TIMELINE = [
-  { year: '2012–2022', event: 'Ten years in data', desc: 'Operations, quality management, governance, and systems design across private market research and data-intensive organisations. The decade that produced the diagnosis.' },
-  { year: '2022', event: 'LabelNest founded', desc: 'LabelNest India Private Limited incorporated in Bangalore. Built DataNest internally first — LabelNest was the first customer of its own platform.' },
-  { year: '2023–2024', event: 'NestLens and NestHR launched', desc: 'First external products live. Intelligence and Exchange modules of NestLens. NestHR with PlacementOS for startups and colleges.' },
-  { year: '2025–2026', event: 'Capital Readiness, Exchange, and team growth', desc: 'NestLens Capital Readiness module launched live. Exchange marketplace open. Team grows to 13. Nestling fellows program starts with Cohort 1.' },
-  { year: 'Oct 2026', event: 'NestResolve early access', desc: 'QA and governance platform for data operations teams. Early access opens October 2026.', orange: true },
+const CAREER = [
+  {
+    period: 'Nov 2025 — Present',
+    title: 'Founder and Director',
+    company: 'LabelNest India Private Limited · Bengaluru',
+    desc: 'Building the full LabelNest product ecosystem — NestLens, NestHR, Managed Services, and the internal infrastructure that powers all of them.',
+    color: '#E91E8C',
+  },
+  {
+    period: 'Mar 2025 — Nov 2025 · 9 months',
+    title: 'Vice President',
+    company: 'BlackRock · Bengaluru, Hybrid',
+    desc: "Following BlackRock's acquisition of Preqin, transitioned into a VP role. Led data quality and controls at institutional scale.",
+    color: '#2563EB',
+  },
+  {
+    period: 'Jan 2022 — Mar 2025 · 3 years 2 months',
+    title: 'AVP, Lead, and Manager — Data Quality and Controls',
+    company: 'Preqin · Bengaluru, Hybrid',
+    desc: 'Three progressive roles across data management, data controls, and AVP-level quality governance. Led teams of 14–20 across critical data operations programs.',
+    color: '#2563EB',
+  },
+  {
+    period: 'Nov 2020 — Mar 2022 · 1 year 5 months',
+    title: 'Senior Data Operations',
+    company: 'Remote',
+    desc: 'Senior data operations role. Remote. Led structured data programs across clients.',
+    color: '#10B981',
+  },
+  {
+    period: 'Oct 2018 — Jul 2020 · 1 year 10 months',
+    title: 'Analyst',
+    company: 'Microsoft · Bengaluru, India',
+    desc: 'Worked with the Bing BI team on data cleaning and increasing the relevancy of Bing ads.',
+    color: '#10B981',
+  },
+  {
+    period: 'Aug 2016 — Oct 2018 · 2 years 3 months',
+    title: 'Market Research Executive / Team Lead',
+    company: 'CIOReview · Bengaluru, On-site',
+    desc: 'Technology magazine focused on the US market. First professional role in data and research operations.',
+    color: '#F97316',
+    last: true,
+  },
 ]
 
 export default function FounderPage() {
@@ -26,186 +64,196 @@ export default function FounderPage() {
     <>
       <Nav />
       <main style={{ paddingTop: '60px' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '64px 48px 0', display: 'grid', gridTemplateColumns: '340px 1fr', gap: 64, alignItems: 'start' }}>
 
-        {/* HERO */}
-        <section className="px-8 pt-16 pb-0 relative overflow-hidden">
-          <div className="absolute -top-20 -left-16 w-[500px] h-[500px] rounded-full pointer-events-none"
-            style={{ background: 'rgba(233,30,140,0.07)', filter: 'blur(90px)' }} />
-          <div className="max-w-[1240px] mx-auto relative z-10 grid grid-cols-1 md:grid-cols-[360px_1fr] gap-16 items-end">
-
-            {/* Portrait card */}
-            <div className="rounded-[20px] overflow-hidden md:sticky md:top-20 self-start"
-              style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-              <div className="relative" style={{ height: 380, background: 'linear-gradient(135deg,rgba(233,30,140,.15),rgba(124,58,237,.1))' }}>
-                <Image
-                  src="https://hdwfndjlgkjcjwxxciwn.supabase.co/storage/v1/object/public/site-assets/team/1775127976877.png"
-                  alt="Ankit Suman" fill className="object-cover object-center"
-                  sizes="360px" />
-                <div className="absolute bottom-0 left-0 right-0 px-3 py-2 font-mono text-[9px] tracking-[.1em] uppercase text-center"
-                  style={{ background: 'rgba(0,0,0,.4)', backdropFilter: 'blur(4px)', color: 'rgba(255,255,255,.5)' }}>
-                  Photo · update via admin
-                </div>
-              </div>
-              <div className="p-6">
-                <div className="font-display font-extrabold text-[22px] tracking-tight mb-1" style={{ color: 'var(--text)' }}>Ankit Suman</div>
-                <div className="text-[13.5px] mb-4" style={{ color: 'var(--text2)' }}>Founder and Director · LabelNest India Pvt. Ltd.</div>
-                <div className="flex gap-2 flex-wrap mb-5">
-                  {['System Architecture','Intelligence Strategy','Data Ops','Governance'].map(t => (
-                    <span key={t} className="font-mono text-[9.5px] tracking-[.08em] uppercase px-2 py-1 rounded"
-                      style={{ background: 'var(--bg3)', color: 'var(--text3)' }}>{t}</span>
-                  ))}
-                </div>
-                <div className="flex flex-col gap-2.5">
-                  <a href="https://www.linkedin.com/in/ankit-kumar-suman-29159b146/" target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-[9px] text-[13px] font-medium transition-all"
-                    style={{ background: 'var(--bg3)', border: '1px solid var(--border)', color: 'var(--blue)' }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                    LinkedIn
-                  </a>
-                  <Link href="/briefings" className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-[9px] text-[13px] font-medium transition-all"
-                    style={{ background: 'var(--bg3)', border: '1px solid var(--border)', color: 'var(--text2)' }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
-                    7 briefings published
-                  </Link>
-                  <a href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7472967819387686913"
-                    target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-[9px] text-[13px] font-medium transition-all"
-                    style={{ background: 'var(--bg3)', border: '1px solid var(--border)', color: 'var(--orange)' }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    Operator to Founder ↗
-                  </a>
-                </div>
-              </div>
+          {/* PORTRAIT CARD */}
+          <div className="md:sticky" style={{ top: 88, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 20, overflow: 'hidden' }}>
+            <div className="relative" style={{ aspectRatio: '3/4', background: 'linear-gradient(135deg,rgba(233,30,140,.12),rgba(37,99,235,.08))' }}>
+              <Image
+                src="https://hdwfndjlgkjcjwxxciwn.supabase.co/storage/v1/object/public/site-assets/team/1775127976877.png"
+                alt="Ankit Suman"
+                fill
+                className="object-cover object-center"
+                sizes="340px"
+              />
             </div>
-
-            {/* Content */}
-            <div className="pb-16">
-              <div className="font-mono text-[10.5px] tracking-[.14em] uppercase mb-5" style={{ color: 'var(--text3)' }}>Founder · LabelNest India Pvt. Ltd.</div>
-              <h1 className="font-display font-extrabold tracking-tight leading-[1.03] mb-5"
-                style={{ fontSize: 'clamp(36px,5vw,62px)', color: 'var(--text)' }}>
-                <span style={{ fontWeight: 300, color: 'var(--text2)' }}>Engineer by education.</span>
-                <br />
-                <span style={{ background: 'linear-gradient(100deg,#E91E8C,#8B5CF6,#2563EB)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Data practitioner</span>
-                <br />
-                <span style={{ fontWeight: 300, color: 'var(--text2)' }}>by necessity.</span>
-              </h1>
-              <p className="text-[clamp(16px,2vw,20px)] leading-[1.72] mb-8" style={{ color: 'var(--text2)' }}>
-                Ankit Suman founded LabelNest after ten years working inside data — in operations, quality, management, and governance. The same structural gaps kept appearing.{' '}
-                <strong style={{ color: 'var(--text)', fontWeight: 600 }}>LabelNest is the calculated response.</strong>
-              </p>
-
-              {/* Stats */}
-              <div className="flex gap-3 flex-wrap mb-10">
-                {[['10','Years in data before building this','var(--pink)'],['2022','LabelNest founded','var(--blue)'],['7','Briefings published','var(--green)'],['1,000+','Collective years of analysis','var(--orange)']].map(([n,l,c]) => (
-                  <div key={l as string} className="rounded-[11px] px-4 py-3 flex flex-col gap-0.5"
-                    style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-                    <div className="font-display font-extrabold text-[22px] tracking-tight leading-none" style={{ color: c as string }}>{n}</div>
-                    <div className="text-[11px]" style={{ color: 'var(--text3)' }}>{l}</div>
-                  </div>
+            <div style={{ padding: 24 }}>
+              <div className="font-display font-extrabold" style={{ fontSize: 22, letterSpacing: '-.02em', color: 'var(--text)', marginBottom: 4 }}>Ankit Suman</div>
+              <div style={{ fontSize: 13.5, color: 'var(--text2)', marginBottom: 18 }}>Founder and Director · LabelNest India Pvt. Ltd.</div>
+              <div className="flex flex-wrap" style={{ gap: 6, marginBottom: 20 }}>
+                {['Data Systems', 'Intelligence', 'Governance', 'Ops'].map(t => (
+                  <span key={t} style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.08em', textTransform: 'uppercase', padding: '4px 10px', borderRadius: 5, background: 'var(--bg3)', border: '1px solid var(--bord2)', color: 'var(--text3)' }}>{t}</span>
                 ))}
               </div>
-
-              {/* Bio */}
-              <div className="mb-8">
-                <div className="font-mono text-[10px] tracking-[.14em] uppercase mb-3" style={{ color: 'var(--pink)' }}>Background</div>
-                <h2 className="font-display font-extrabold tracking-tight mb-4" style={{ fontSize: 'clamp(20px,2.5vw,28px)', color: 'var(--text)' }}>Ten years. Same problems. Different companies.</h2>
-                <p className="text-[15px] leading-[1.78] mb-4" style={{ color: 'var(--text2)' }}>
-                  Ankit's background before LabelNest was entirely inside data — across operations, quality management, governance, and systems design. Not in one company or one market. Across enough contexts to see that the structural gaps were not specific to any one organisation. They were endemic to how the industry had been built.
-                </p>
-                <div className="border-l-[3px] px-5 py-4 rounded-r-[12px] italic text-[15.5px] leading-[1.68]"
-                  style={{ borderColor: 'var(--pink)', background: 'var(--surface)', color: 'var(--text)' }}>
-                  "I spent ten years watching the same problems persist before I decided the right response was to build. Not to complain about the gaps, not to work around them — to build the infrastructure that should have existed."
-                  <cite className="not-italic block mt-3 font-mono text-[9.5px] tracking-[.1em] uppercase" style={{ color: 'var(--text3)' }}>Ankit Suman · Founder</cite>
-                </div>
-              </div>
-
-              {/* Timeline */}
-              <div className="mb-8">
-                <div className="font-mono text-[10px] tracking-[.14em] uppercase mb-4" style={{ color: 'var(--blue)' }}>Timeline</div>
-                <div className="flex flex-col gap-0">
-                  {TIMELINE.map((t, i) => (
-                    <div key={t.year} className="flex gap-4 pb-6 relative">
-                      {i < TIMELINE.length - 1 && (
-                        <div className="absolute left-[11px] top-6 bottom-0 w-px" style={{ background: 'var(--border)' }} />
-                      )}
-                      <div className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center z-10 mt-0.5"
-                        style={{ background: 'var(--surface)', border: '2px solid var(--border)' }}>
-                        <div className="w-2 h-2 rounded-full" style={{ background: t.orange ? 'var(--orange)' : 'var(--pink)' }} />
-                      </div>
-                      <div>
-                        <div className="font-mono text-[10px] tracking-[.1em] uppercase mb-1" style={{ color: 'var(--text3)' }}>{t.year}</div>
-                        <div className="font-display font-bold text-[14.5px] mb-1" style={{ color: 'var(--text)' }}>{t.event}</div>
-                        <div className="text-[13px] leading-[1.58]" style={{ color: 'var(--text2)' }}>{t.desc}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Media slots */}
-              <div className="mb-8">
-                <div className="font-mono text-[10px] tracking-[.14em] uppercase mb-4" style={{ color: 'var(--text3)' }}>Videos, podcasts, and interviews</div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {[['▶️','Video interview'],['🎙️','Podcast episode'],['💼','LinkedIn post or talk']].map(([icon,label]) => (
-                    <div key={label as string} className="rounded-[14px] overflow-hidden" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-                      <div className="flex items-center justify-center flex-col gap-2 py-8" style={{ background: 'var(--bg3)', aspectRatio: '16/9' }}>
-                        <span className="text-[32px] opacity-25">{icon}</span>
-                        <span className="font-mono text-[9px] tracking-[.12em] uppercase" style={{ color: 'var(--text3)' }}>Upload via admin</span>
-                      </div>
-                      <div className="p-4">
-                        <div className="font-mono text-[9.5px] tracking-[.1em] uppercase mb-1" style={{ color: 'var(--text3)' }}>{label}</div>
-                        <div className="text-[11.5px] italic" style={{ color: 'var(--text3)' }}>Add URL and thumbnail via admin panel</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Writing */}
-              <div className="mb-8">
-                <div className="font-mono text-[10px] tracking-[.14em] uppercase mb-4" style={{ color: 'var(--orange)' }}>Briefings by Ankit</div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {BRIEFINGS.map(b => (
-                    <Link key={b.href} href={b.href}
-                      className="flex gap-3 items-start p-4 rounded-[13px] transition-all hover:translate-x-1"
-                      style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
-                      onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--pink)')}
-                      onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border)')}>
-                      <span className="text-[22px] flex-shrink-0 mt-0.5">{b.emoji}</span>
-                      <div>
-                        <div className="font-mono text-[9.5px] tracking-[.1em] uppercase mb-1" style={{ color: 'var(--text3)' }}>{b.scope}</div>
-                        <div className="font-display font-bold text-[14px] leading-[1.3] mb-1" style={{ color: 'var(--text)' }}>{b.title}</div>
-                        <div className="font-mono text-[10px]" style={{ color: 'var(--text3)' }}>{b.read}</div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              {/* Newsletter CTA */}
-              <div className="rounded-[18px] p-8 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6"
-                style={{ background: 'linear-gradient(135deg,rgba(233,30,140,.08),rgba(124,58,237,.05))', border: '1px solid rgba(233,30,140,.15)' }}>
-                <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: 'linear-gradient(90deg,#F97316,#E91E8C)' }} />
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center font-display font-extrabold text-[20px] text-white"
-                    style={{ background: 'linear-gradient(135deg,#F97316,#E91E8C)' }}>A</div>
-                  <div>
-                    <div className="font-mono text-[9.5px] tracking-[.12em] uppercase mb-1" style={{ color: 'var(--orange)' }}>Founder's Newsletter</div>
-                    <div className="font-display font-extrabold text-[18px] tracking-tight mb-1" style={{ color: 'var(--text)' }}>Operator to Founder</div>
-                    <div className="text-[13.5px]" style={{ color: 'var(--text2)' }}>Building LabelNest from zero. Sharing the journey as it happens.</div>
-                  </div>
-                </div>
+              <div className="flex flex-col" style={{ gap: 8 }}>
+                <a href="https://www.linkedin.com/in/ankit-kumar-suman-29159b146/" target="_blank" rel="noopener noreferrer"
+                  className="flex items-center transition-all"
+                  style={{ gap: 10, padding: '10px 14px', background: 'var(--bg3)', border: '1px solid var(--bord2)', borderRadius: 9, fontSize: 13, color: '#2563EB' }}
+                  onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,.2)')}
+                  onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--bord2)')}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
+                  <span style={{ fontWeight: 500 }}>LinkedIn</span>
+                  <span style={{ fontSize: 11, color: 'var(--text3)', marginLeft: 'auto' }}>↗</span>
+                </a>
+                <Link href="/briefings"
+                  className="flex items-center transition-all"
+                  style={{ gap: 10, padding: '10px 14px', background: 'var(--bg3)', border: '1px solid var(--bord2)', borderRadius: 9, fontSize: 13, color: 'var(--text)' }}
+                  onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,.2)')}
+                  onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--bord2)')}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14,2 14,8 20,8" /></svg>
+                  <span style={{ fontWeight: 500 }}>7 briefings published</span>
+                </Link>
                 <a href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7472967819387686913"
                   target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 font-semibold text-[14px] px-6 py-3 rounded-[10px] text-white flex-shrink-0"
-                  style={{ background: 'var(--orange)' }}>
-                  Follow on LinkedIn ↗
+                  className="flex items-center transition-all"
+                  style={{ gap: 10, padding: '10px 14px', background: 'var(--bg3)', border: '1px solid var(--bord2)', borderRadius: 9, fontSize: 13, color: '#F97316' }}
+                  onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,.2)')}
+                  onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--bord2)')}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
+                  <span style={{ fontWeight: 500 }}>Operator to Founder</span>
+                  <span style={{ fontSize: 11, color: 'var(--text3)', marginLeft: 'auto' }}>↗</span>
                 </a>
               </div>
             </div>
           </div>
-        </section>
 
+          {/* MAIN CONTENT */}
+          <div style={{ paddingBottom: 80 }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Founder · LabelNest India Pvt. Ltd.</div>
+            <h1 className="font-display font-extrabold" style={{ fontSize: 'clamp(36px,5vw,58px)', letterSpacing: '-.04em', lineHeight: 1.04, color: 'var(--text)', marginBottom: 20 }}>
+              <span style={{ fontWeight: 300, color: 'var(--text2)' }}>Engineer by education.</span><br />
+              Data practitioner<br />
+              <span style={{ fontWeight: 300, color: 'var(--text2)' }}>by necessity.</span>
+            </h1>
+            <p style={{ fontSize: 'clamp(16px,2vw,19px)', lineHeight: 1.72, color: 'var(--text2)', marginBottom: 36 }}>
+              Ankit Suman founded LabelNest after a decade in data — across operations, quality, management, and governance at CIOReview, Microsoft, Preqin, and BlackRock.{' '}
+              <strong style={{ color: 'var(--text)', fontWeight: 600 }}>The same structural gaps kept appearing. LabelNest is the calculated response.</strong>
+            </p>
+
+            {/* STATS */}
+            <div className="grid grid-cols-2 md:grid-cols-4" style={{ gap: 10, marginBottom: 48 }}>
+              {[
+                { num: '9 yrs', label: 'In data before building this', color: '#E91E8C' },
+                { num: 'Nov 2025', label: 'Left BlackRock to build full-time', color: '#2563EB' },
+                { num: '7', label: 'Briefings published', color: '#10B981' },
+                { num: '1,000+', label: 'Hours of absorbed domain knowledge', color: '#F97316' },
+              ].map(s => (
+                <div key={s.num} className="text-center" style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: 16 }}>
+                  <div className="font-display font-extrabold" style={{ fontSize: 24, letterSpacing: '-.04em', lineHeight: 1, marginBottom: 5, color: s.color }}>{s.num}</div>
+                  <div style={{ fontSize: 11.5, color: 'var(--text2)', lineHeight: 1.4 }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* QUOTE */}
+            <div style={{ background: 'linear-gradient(135deg,rgba(233,30,140,.06),rgba(124,58,237,.04))', border: '1px solid rgba(233,30,140,.12)', borderLeft: '3px solid #E91E8C', borderRadius: '0 12px 12px 0', padding: '20px 24px', marginBottom: 48 }}>
+              <div style={{ fontSize: 16, lineHeight: 1.7, color: 'var(--text)', fontStyle: 'italic', marginBottom: 10 }}>
+                "I spent years watching the same problems persist before I decided the right response was to build. Not to complain about the gaps, not to work around them — to build the infrastructure that should have existed."
+              </div>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text3)' }}>
+                Ankit Suman · Founder, LabelNest
+              </div>
+            </div>
+
+            {/* BEFORE THE FIRST LINE */}
+            <div style={{ marginBottom: 48 }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Before the first line of code</div>
+              <div className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg,rgba(37,99,235,.08),rgba(124,58,237,.06))', border: '1px solid rgba(37,99,235,.15)', borderRadius: 16, padding: 28 }}>
+                <div className="absolute top-0 left-0 right-0" style={{ height: 2, background: 'linear-gradient(90deg,#2563EB,#7C3AED)' }} />
+                <div className="font-display font-extrabold" style={{ fontSize: 56, letterSpacing: '-.06em', color: '#2563EB', lineHeight: 1, marginBottom: 10 }}>1,000+</div>
+                <div style={{ fontSize: 17, fontWeight: 600, color: 'var(--text)', marginBottom: 8 }}>Hours of domain knowledge — absorbed by watching the best in the world do it.</div>
+                <div style={{ fontSize: 14, lineHeight: 1.72, color: 'var(--text2)', marginBottom: 16 }}>
+                  Before LabelNest existed, Ankit spent years inside organisations that had solved the data problem at institutional scale. Watching what worked. What didn't. What was being charged for that should have been free. What was missing that nobody had thought to build. The 1,000+ hours is not a marketing number — it's the compounded observation time that produced the diagnosis LabelNest is built on.
+                </div>
+                <div className="flex flex-wrap" style={{ gap: 8 }}>
+                  {['CIOReview', 'Microsoft', 'Preqin', 'BlackRock'].map(c => (
+                    <span key={c} style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.08em', textTransform: 'uppercase', padding: '5px 12px', borderRadius: 6, background: 'rgba(37,99,235,.1)', border: '1px solid rgba(37,99,235,.2)', color: '#2563EB' }}>{c}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* CAREER */}
+            <div style={{ marginBottom: 48 }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Career</div>
+              <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(18px,2.5vw,26px)', letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 20 }}>
+                Nine years. Four organisations. One diagnosis.
+              </h2>
+              <div className="flex flex-col">
+                {CAREER.map((c, i) => (
+                  <div key={c.period} className="flex" style={{ gap: 16, paddingBottom: c.last ? 0 : 20, position: 'relative' }}>
+                    {!c.last && (
+                      <div className="absolute" style={{ left: 11, top: 22, bottom: 0, width: 1, background: 'var(--border)' }} />
+                    )}
+                    <div className="flex flex-col items-center flex-shrink-0" style={{ width: 22 }}>
+                      <div className="flex items-center justify-center z-10" style={{ width: 22, height: 22, borderRadius: '50%', border: `2px solid ${i === 0 ? c.color : 'var(--border)'}`, background: 'var(--bg)', flexShrink: 0 }}>
+                        <div style={{ width: 8, height: 8, borderRadius: '50%', background: c.color }} />
+                      </div>
+                    </div>
+                    <div style={{ paddingTop: 1 }}>
+                      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 3 }}>{c.period}</div>
+                      <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 1 }}>{c.title}</div>
+                      <div style={{ fontSize: 13, color: 'var(--text2)', marginBottom: 4 }}>{c.company}</div>
+                      <div style={{ fontSize: 12.5, lineHeight: 1.6, color: 'var(--text3)' }}>{c.desc}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Education */}
+              <div className="flex items-center" style={{ gap: 16, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '18px 20px', marginTop: 20 }}>
+                <div className="flex items-center justify-center flex-shrink-0" style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(37,99,235,.1)', border: '1px solid rgba(37,99,235,.15)', fontSize: 20 }}>🎓</div>
+                <div>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)', marginBottom: 2 }}>BTech — Electronics and Communication Engineering</div>
+                  <div style={{ fontSize: 12.5, color: 'var(--text2)' }}>Maulana Abul Kalam Azad University of Technology, West Bengal (MAKAUT / WBUT)</div>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--text3)', marginTop: 3 }}>Aug 2012 — Jun 2016</div>
+                </div>
+              </div>
+            </div>
+
+            {/* WRITING */}
+            <div style={{ marginBottom: 48 }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Writing</div>
+              <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(18px,2.5vw,26px)', letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 20 }}>
+                Briefings by Ankit
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 10 }}>
+                {BRIEFINGS.map(b => (
+                  <Link key={b.href} href={b.href}
+                    className="flex items-start transition-all"
+                    style={{ gap: 12, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: 16 }}
+                    onMouseEnter={e => (e.currentTarget.style.borderColor = 'var(--pink)')}
+                    onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--border)')}>
+                    <div style={{ fontSize: 24, flexShrink: 0, marginTop: 2 }}>{b.emoji}</div>
+                    <div>
+                      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 4 }}>{b.scope}</div>
+                      <div className="font-display font-bold" style={{ fontSize: 13, lineHeight: 1.35, color: 'var(--text)', marginBottom: 4 }}>{b.title}</div>
+                      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: 'var(--text3)' }}>{b.read}</div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* NEWSLETTER CTA */}
+            <div className="flex items-center" style={{ gap: 24, background: 'linear-gradient(135deg,rgba(249,115,22,.06),rgba(233,30,140,.04))', border: '1px solid rgba(249,115,22,.15)', borderRadius: 16, padding: 28, position: 'relative', overflow: 'hidden' }}>
+              <div className="absolute top-0 left-0 right-0" style={{ height: 3, background: 'linear-gradient(90deg,#F97316,#E91E8C)' }} />
+              <div className="flex items-center justify-center flex-shrink-0 font-display font-extrabold text-white" style={{ width: 52, height: 52, borderRadius: '50%', background: 'linear-gradient(135deg,#F97316,#E91E8C)', fontSize: 20 }}>A</div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.12em', textTransform: 'uppercase', color: '#F97316', marginBottom: 4 }}>Founder's Newsletter</div>
+                <div className="font-display font-extrabold" style={{ fontSize: 18, letterSpacing: '-.02em', color: 'var(--text)', marginBottom: 4 }}>Operator to Founder</div>
+                <div style={{ fontSize: 13.5, color: 'var(--text2)' }}>Building LabelNest from zero. Sharing the journey as it happens. 598 subscribers.</div>
+              </div>
+              <a href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7472967819387686913"
+                target="_blank" rel="noopener noreferrer"
+                className="font-semibold text-white flex-shrink-0"
+                style={{ fontSize: 13.5, padding: '11px 22px', borderRadius: 9, background: '#F97316', whiteSpace: 'nowrap' }}>
+                Follow on LinkedIn ↗
+              </a>
+            </div>
+          </div>
+
+        </div>
       </main>
       <Footer />
     </>

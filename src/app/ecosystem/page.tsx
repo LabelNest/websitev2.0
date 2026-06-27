@@ -3,37 +3,43 @@ import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { Metadata } from 'next'
 
-export const metadata: Metadata = { title: 'Ecosystem', description: 'LabelNest builds operating systems for data-intensive industries. NestLens, NestHR, NestResolve, Bundle OS, and more — each purpose-built, all connected.' }
+export const metadata: Metadata = {
+  title: 'Ecosystem — LabelNest',
+  description: 'One company. Multiple operating systems. NestLens, NestHR, Managed Services, and what is being built next.',
+}
 
 export default function EcosystemPage() {
   return (
     <>
+      <style>{`
+        .eco-card { transition: border-color .2s, transform .2s; }
+        .eco-card:hover { transform: translateY(-4px); }
+        .eco-nesthr:hover { border-color: #7C3AED !important; }
+        .eco-services:hover { border-color: #10B981 !important; }
+        .eco-signal:hover { border-color: rgba(124,58,237,.4) !important; }
+      `}</style>
       <Nav />
-      <main style={{ paddingTop: '60px' }}>
+      <main style={{ paddingTop: 64 }}>
 
         {/* HERO */}
-        <section className="px-8 py-28 relative overflow-hidden text-center">
-          <div className="absolute -top-28 -left-20 w-[520px] h-[520px] rounded-full pointer-events-none"
-            style={{ background: 'rgba(233,30,140,0.07)', filter: 'blur(90px)' }} />
-          <div className="max-w-[800px] mx-auto relative z-10">
-            <div className="font-mono text-[10.5px] tracking-[.14em] uppercase mb-5" style={{ color: 'var(--text3)' }}>LabelNest Ecosystem</div>
-            <h1 className="font-display font-extrabold tracking-tight leading-[1.02] mb-6"
-              style={{ fontSize: 'clamp(42px,6.5vw,78px)', color: 'var(--text)' }}>
-              <span style={{ fontWeight: 300, color: 'var(--text2)' }}>One company.</span>
-              <br />
-              <span style={{ background: 'linear-gradient(100deg,#E91E8C,#8B5CF6,#2563EB)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-                Multiple operating systems.
-              </span>
+        <section style={{ padding: '64px 48px', borderBottom: '1px solid rgba(255,255,255,.06)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: -120, left: '50%', transform: 'translateX(-50%)', width: 600, height: 600, borderRadius: '50%', background: 'rgba(233,30,140,.06)', filter: 'blur(90px)', pointerEvents: 'none' }} />
+          <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 2 }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>LabelNest Ecosystem</div>
+            <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(42px,6.5vw,78px)', fontWeight: 800, letterSpacing: '-.045em', lineHeight: 1.02, color: 'var(--text)', marginBottom: 16 }}>
+              <span style={{ fontWeight: 300, color: 'var(--text2)' }}>One company.</span><br />
+              <span style={{ background: 'linear-gradient(100deg,#E91E8C,#8B5CF6,#2563EB)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Multiple operating systems.</span>
             </h1>
-            <p className="text-[clamp(15px,1.8vw,18px)] leading-[1.72] max-w-[560px] mx-auto mb-10" style={{ color: 'var(--text2)' }}>
-              Each product is purpose-built for a specific kind of data problem. All connected by the same belief:{' '}
-              <strong style={{ color: 'var(--text)', fontWeight: 600 }}>expert human reasoning makes every system smarter.</strong>
-            </p>
-            {/* Status counts */}
-            <div className="flex items-center justify-center gap-6 flex-wrap">
-              {[['var(--green)','3 products live'],['var(--orange)','1 early access Oct 2026'],['var(--blue)','1 coming Q1 2027'],['var(--text3)','1 being built']].map(([c,l]) => (
-                <div key={l as string} className="flex items-center gap-2 text-[14px]" style={{ color: 'var(--text2)' }}>
-                  <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: c as string }} />{l}
+            <p style={{ fontSize: 'clamp(15px,1.8vw,18px)', lineHeight: 1.72, color: 'var(--text2)', maxWidth: 560, margin: '0 auto 36px' }}>Each product is purpose-built for a specific kind of data problem. All connected by the same belief: expert human reasoning makes every system smarter.</p>
+            <div style={{ display: 'flex', gap: 20, justifyContent: 'center', flexWrap: 'wrap' }}>
+              {[
+                { dot: '#10B981', label: '3 products live' },
+                { dot: '#F97316', label: '2 coming 2026' },
+                { dot: '#4C4868', label: '1 being built' },
+              ].map(s => (
+                <div key={s.label} style={{ textAlign: 'center' }}>
+                  <span style={{ width: 10, height: 10, borderRadius: '50%', background: s.dot, display: 'inline-block', marginRight: 6 }} />
+                  <span style={{ fontSize: 13.5, color: 'var(--text2)' }}>{s.label}</span>
                 </div>
               ))}
             </div>
@@ -41,35 +47,41 @@ export default function EcosystemPage() {
         </section>
 
         {/* LIVE PRODUCTS */}
-        <section className="px-8 py-16 border-t" style={{ borderColor: 'var(--border)' }}>
-          <div className="max-w-[1240px] mx-auto">
-            <div className="font-mono text-[10px] tracking-[.14em] uppercase mb-3" style={{ color: 'var(--green)' }}>Live now</div>
-            <h2 className="font-display font-extrabold tracking-tight mb-10" style={{ fontSize: 'clamp(26px,3.5vw,44px)', color: 'var(--text)' }}>Products you can use today</h2>
+        <section style={{ padding: '64px 48px', borderBottom: '1px solid rgba(255,255,255,.06)' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Live now</div>
+            <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 32 }}>Products you can use today</h2>
 
             {/* NestLens flagship */}
-            <div className="rounded-[20px] overflow-hidden mb-4" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-              <div className="grid grid-cols-1 md:grid-cols-[1fr_300px]">
-                <div className="p-9 relative border-l-[4px]" style={{ borderLeftColor: '#2563EB' }}>
-                  <div className="font-mono text-[9.5px] tracking-[.1em] uppercase px-2.5 py-1 rounded inline-block mb-4"
-                    style={{ background: 'rgba(37,99,235,.1)', color: '#2563EB' }}>Flagship Product · Live</div>
-                  <div className="text-[28px] mb-3">🔭</div>
-                  <h3 className="font-display font-extrabold text-[26px] tracking-tight mb-2" style={{ color: 'var(--text)' }}>NestLens</h3>
-                  <p className="text-[14px] leading-[1.7] max-w-[520px] mb-5" style={{ color: 'var(--text2)' }}>
-                    The private markets OS. Three modules covering the full lifecycle — Intelligence for entity and signal tracking, Exchange for buying and selling any structured dataset, and Capital Readiness for data rooms, investor matching, and raise preparation. All live. Credit-based access. No per-seat penalties.
-                  </p>
-                  <div className="flex gap-3 flex-wrap">
-                    <Link href="/nestlens" className="font-mono text-[10px] tracking-[.1em] uppercase" style={{ color: '#2563EB' }}>Overview →</Link>
-                    <Link href="/nestlens/intelligence" className="font-mono text-[10px] tracking-[.1em] uppercase" style={{ color: '#2563EB' }}>Intelligence →</Link>
-                    <Link href="/nestlens/exchange" className="font-mono text-[10px] tracking-[.1em] uppercase" style={{ color: '#2563EB' }}>Exchange →</Link>
-                    <Link href="/nestlens/capital" className="font-mono text-[10px] tracking-[.1em] uppercase" style={{ color: '#2563EB' }}>Capital Readiness →</Link>
-                    <a href="https://nestlens.labelnest.in" target="_blank" rel="noopener noreferrer" className="font-mono text-[10px] tracking-[.1em] uppercase" style={{ color: '#2563EB' }}>Open platform ↗</a>
+            <div style={{ background: 'var(--surface)', border: '1px solid rgba(255,255,255,.07)', borderRadius: 20, overflow: 'hidden', marginBottom: 14 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 260px' }}>
+                <div style={{ padding: 36, borderLeft: '4px solid #2563EB' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(37,99,235,.1)', color: '#2563EB' }}>Flagship · Live</span>
+                  </div>
+                  <div style={{ fontSize: 28, marginBottom: 10 }}>🔭</div>
+                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 26, color: 'var(--text)', marginBottom: 8 }}>NestLens</div>
+                  <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.7, maxWidth: 520, marginBottom: 18 }}>The private markets OS. Three modules — Intelligence for entity and signal tracking, Exchange for buying and selling any structured dataset, and Capital Readiness for data rooms, investor matching, and raise preparation.</p>
+                  <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+                    {[
+                      { href: '/nestlens', label: 'Overview →' },
+                      { href: '/nestlens/intelligence', label: 'Intelligence →' },
+                      { href: '/nestlens/exchange', label: 'Exchange →' },
+                      { href: '/nestlens/capital', label: 'Capital Readiness →' },
+                    ].map(l => (
+                      <Link key={l.href} href={l.href} style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: '#2563EB' }}>{l.label}</Link>
+                    ))}
                   </div>
                 </div>
-                <div className="border-l px-8 py-9 flex flex-col gap-5 justify-center" style={{ borderColor: 'var(--border)', background: 'var(--bg3)' }}>
-                  {[['40K+','Entities tracked','var(--blue)'],['12K+','Verified contacts','var(--green)'],['3','Modules — all live','var(--pink)']].map(([v,l,c]) => (
-                    <div key={l as string}>
-                      <div className="font-display font-extrabold text-[22px] tracking-tight" style={{ color: c as string }}>{v}</div>
-                      <div className="text-[12px]" style={{ color: 'var(--text3)' }}>{l}</div>
+                <div style={{ borderLeft: '1px solid rgba(255,255,255,.06)', background: 'var(--bg2)', padding: 32, display: 'flex', flexDirection: 'column', gap: 16, justifyContent: 'center' }}>
+                  {[
+                    { val: '40K+', label: 'Entities tracked' },
+                    { val: '12K+', label: 'Verified contacts' },
+                    { val: '3', label: 'Modules — all live' },
+                  ].map(s => (
+                    <div key={s.label}>
+                      <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 24, color: '#2563EB' }}>{s.val}</div>
+                      <div style={{ fontSize: 12, color: 'var(--text3)' }}>{s.label}</div>
                     </div>
                   ))}
                 </div>
@@ -77,96 +89,83 @@ export default function EcosystemPage() {
             </div>
 
             {/* NestHR + Managed Services */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {[
-                { href: '/nesthr', color: '#7C3AED', badge: 'Live', icon: '👥', name: 'NestHR', tag: 'People and operations intelligence', desc: 'A clean HRMS for startups and colleges. People OS, Talent OS, Performance OS, Expense OS, Learning OS, Analytics, and PlacementOS that learns from every selection and rejection.', items: ['7 OS modules','Starting at ₹799 per employee per year','PlacementOS learns from selection signals'] },
-                { href: '/services', color: '#10B981', badge: 'Live', icon: '⚙️', name: 'Managed Services', tag: 'Expert human data operations', desc: 'Five service areas across data sourcing, enrichment, annotation, quality, and custom workflow design. Seven years of internal operations experience.', items: ['Data sourcing and enrichment','AI training data annotation','PDF and document intelligence','Ongoing data operations'] },
-              ].map(p => (
-                <Link key={p.href} href={p.href}
-                  className="rounded-[16px] p-7 relative overflow-hidden transition-all hover:-translate-y-1 block"
-                  style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-                  <div className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity" style={{ background: p.color }} />
-                  <div className="font-mono text-[9.5px] tracking-[.1em] uppercase px-2.5 py-1 rounded inline-block mb-4"
-                    style={{ background: `${p.color}12`, color: p.color }}>{p.badge}</div>
-                  <div className="text-[26px] mb-3">{p.icon}</div>
-                  <div className="font-display font-extrabold text-[19px] tracking-tight mb-1" style={{ color: 'var(--text)' }}>{p.name}</div>
-                  <div className="font-mono text-[10px] tracking-[.04em] mb-3" style={{ color: 'var(--text3)' }}>{p.tag}</div>
-                  <p className="text-[13.5px] leading-[1.65] mb-4" style={{ color: 'var(--text2)' }}>{p.desc}</p>
-                  <div className="flex flex-col gap-1.5">
-                    {p.items.map(i => (
-                      <div key={i} className="flex items-center gap-2 text-[12.5px]" style={{ color: 'var(--text2)' }}>
-                        <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: p.color }} />{i}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-4 font-mono text-[10px] tracking-[.1em] uppercase" style={{ color: p.color }}>Learn more →</div>
-                </Link>
-              ))}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+              <Link href="/nesthr" className="eco-card eco-nesthr" style={{ background: 'var(--surface)', border: '1px solid rgba(255,255,255,.07)', borderTop: '3px solid #7C3AED', borderRadius: 16, padding: 28, display: 'block' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
+                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(16,185,129,.1)', color: '#10B981' }}>Live</span>
+                </div>
+                <div style={{ fontSize: 26, marginBottom: 10 }}>👥</div>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 19, color: 'var(--text)', marginBottom: 6 }}>NestHR</div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.06em', color: 'var(--text3)', marginBottom: 10 }}>People and operations OS</div>
+                <p style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65, marginBottom: 14 }}>7 OS modules for startups and colleges. People, Talent, PlacementOS, Performance, Expense, Learning, and Analytics — in one platform that learns from every signal.</p>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: '#7C3AED' }}>Explore NestHR →</div>
+              </Link>
+              <Link href="/services" className="eco-card eco-services" style={{ background: 'var(--surface)', border: '1px solid rgba(255,255,255,.07)', borderTop: '3px solid #10B981', borderRadius: 16, padding: 28, display: 'block' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
+                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(16,185,129,.1)', color: '#10B981' }}>Live</span>
+                </div>
+                <div style={{ fontSize: 26, marginBottom: 10 }}>⚙️</div>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 19, color: 'var(--text)', marginBottom: 6 }}>Managed Services</div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.06em', color: 'var(--text3)', marginBottom: 10 }}>Expert human data operations</div>
+                <p style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65, marginBottom: 14 }}>Data sourcing, enrichment, annotation, quality, and custom workflow design. Seven years of internal ops experience. Human judgment at the edge cases where automation fails.</p>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: '#10B981' }}>Explore Services →</div>
+              </Link>
             </div>
           </div>
         </section>
 
         {/* COMING SOON */}
-        <section className="px-8 py-16 border-t" style={{ background: 'var(--bg2)', borderColor: 'var(--border)' }}>
-          <div className="max-w-[1240px] mx-auto">
-            <div className="font-mono text-[10px] tracking-[.14em] uppercase mb-3" style={{ color: 'var(--orange)' }}>Coming soon</div>
-            <h2 className="font-display font-extrabold tracking-tight mb-10" style={{ fontSize: 'clamp(26px,3.5vw,44px)', color: 'var(--text)' }}>What is being built next</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="rounded-[16px] p-7 relative overflow-hidden" style={{ background: 'var(--surface)', border: '1px solid rgba(249,115,22,.15)' }}>
-                <div className="absolute top-0 left-0 right-0 h-[2px] opacity-40" style={{ background: 'var(--orange)' }} />
-                <div className="font-mono text-[9.5px] tracking-[.1em] uppercase px-2.5 py-1 rounded inline-block mb-4"
-                  style={{ background: 'rgba(249,115,22,.12)', color: 'var(--orange)' }}>Early Access · October 2026</div>
-                <div className="text-[24px] mb-3">🔧</div>
-                <div className="font-display font-extrabold text-[17px] tracking-tight mb-2" style={{ color: 'var(--text)' }}>NestResolve</div>
-                <p className="text-[13px] leading-[1.62] mb-4" style={{ color: 'var(--text2)' }}>A governance and resolution platform for data operations teams who have outgrown generic issue trackers. A Jira alternative built for teams whose problems are data problems.</p>
-                <div className="flex items-center gap-2 font-mono text-[9.5px] tracking-[.08em] uppercase" style={{ color: 'var(--orange)' }}>
-                  <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--orange)', boxShadow: '0 0 6px var(--orange)' }} />Request early access
-                </div>
+        <section style={{ padding: '64px 48px', background: 'var(--bg2)', borderBottom: '1px solid rgba(255,255,255,.06)' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Coming soon</div>
+            <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 32 }}>What is being built next</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14 }}>
+              <div style={{ background: 'var(--surface)', border: '1px solid rgba(249,115,22,.15)', borderRadius: 16, padding: 28, position: 'relative', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: '#F97316', opacity: .5 }} />
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(249,115,22,.1)', color: '#F97316', display: 'inline-block', marginBottom: 14 }}>Early access · Oct 2026</div>
+                <div style={{ fontSize: 24, marginBottom: 10 }}>🔧</div>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 17, color: 'var(--text)', marginBottom: 8 }}>NestResolve</div>
+                <p style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65 }}>A QA and governance platform for data operations teams who have outgrown generic issue trackers. A Jira alternative built for teams whose problems are data problems.</p>
               </div>
-              <div className="rounded-[16px] p-7 relative overflow-hidden" style={{ background: 'var(--surface)', border: '1px solid rgba(233,30,140,.1)' }}>
-                <div className="absolute top-0 left-0 right-0 h-[2px] opacity-40" style={{ background: 'var(--pink)' }} />
-                <div className="font-mono text-[9.5px] tracking-[.1em] uppercase px-2.5 py-1 rounded inline-block mb-4"
-                  style={{ background: 'rgba(233,30,140,.1)', color: 'var(--pink)' }}>Coming · Q1 2027</div>
-                <div className="text-[24px] mb-3">📦</div>
-                <div className="font-display font-extrabold text-[17px] tracking-tight mb-2" style={{ color: 'var(--text)' }}>Bundle OS</div>
-                <p className="text-[13px] leading-[1.62]" style={{ color: 'var(--text2)' }}>A full bundle of applications for data-intensive annotation, review, and workflow management. Details to be announced Q1 2027.</p>
+              <div style={{ background: 'var(--surface)', border: '1px solid rgba(233,30,140,.1)', borderRadius: 16, padding: 28, position: 'relative', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: '#E91E8C', opacity: .4 }} />
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(233,30,140,.08)', color: '#E91E8C', display: 'inline-block', marginBottom: 14 }}>Sep 2026</div>
+                <div style={{ fontSize: 24, marginBottom: 10 }}>📝</div>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 17, color: 'var(--text)', marginBottom: 8 }}>AnnoNest</div>
+                <p style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65 }}>The annotation platform — rebuilt and rebranded. Multi-tenant, purpose-built for structured annotation workflows at scale. Details announced September 2026.</p>
               </div>
-              <Link href="/signal" className="rounded-[16px] p-7 relative overflow-hidden block transition-all hover:-translate-y-1"
-                style={{ background: 'var(--surface)', border: '1px dashed var(--bord2)' }}>
-                <div className="font-mono text-[9.5px] tracking-[.1em] uppercase px-2.5 py-1 rounded inline-block mb-4"
-                  style={{ background: 'var(--bg3)', color: 'var(--text3)' }}>Being built</div>
-                <div className="text-[24px] mb-3 opacity-30">🔒</div>
-                <div className="font-display font-extrabold text-[17px] tracking-tight mb-2" style={{ color: 'var(--text2)' }}>Something for private markets</div>
-                <p className="text-[13px] leading-[1.62] mb-4" style={{ color: 'var(--text3)' }}>We are building something that does not exist yet. No name. No branding. If you are in the room when capital decisions get made — you will want to know first.</p>
-                <div className="font-mono text-[9.5px] tracking-[.1em] uppercase" style={{ color: 'var(--pink)' }}>Get early signal →</div>
+              <Link href="/signal" className="eco-signal" style={{ background: 'var(--surface)', border: '1px dashed rgba(255,255,255,.1)', borderRadius: 16, padding: 28, display: 'block', transition: 'border-color .2s' }}>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(255,255,255,.04)', color: 'var(--text3)', display: 'inline-block', marginBottom: 14 }}>Being built · Aug 2026</div>
+                <div style={{ fontSize: 24, marginBottom: 10, opacity: .3 }}>🔒</div>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 17, color: 'var(--text2)', marginBottom: 8 }}>Something for private markets</div>
+                <p style={{ fontSize: 13.5, color: 'var(--text3)', lineHeight: 1.65, marginBottom: 12 }}>No name. No branding. Not yet. If you are in the room when capital decisions get made, you will want to know about this first.</p>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: '#7C3AED' }}>Get early signal →</div>
               </Link>
             </div>
           </div>
         </section>
 
         {/* INTERNAL ENGINES */}
-        <section className="px-8 py-16 border-t border-b" style={{ borderColor: 'var(--border)', background: 'var(--bg3)' }}>
-          <div className="max-w-[1240px] mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-12 items-center mb-10">
+        <section style={{ padding: '64px 48px' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 48, alignItems: 'center', marginBottom: 32 }}>
               <div>
-                <div className="font-mono text-[10px] tracking-[.14em] uppercase mb-3" style={{ color: 'var(--text3)' }}>Internal infrastructure</div>
-                <div className="font-display font-extrabold tracking-tight" style={{ fontSize: 'clamp(20px,2.8vw,30px)', color: 'var(--text)' }}>The engines that power what you see</div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Internal infrastructure</div>
+                <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>The engines that power what you see</h2>
               </div>
-              <div className="text-[14.5px] leading-[1.7]" style={{ color: 'var(--text2)' }}>
-                DataNest, NestIntel, and NestAgent are internal systems — not products we sell directly. They are the infrastructure layer that makes NestLens, Managed Services, and every other external product work. Mentioned here because they are real.
-              </div>
+              <p style={{ fontSize: 14.5, color: 'var(--text2)', lineHeight: 1.7 }}>DataNest, NestIntel, and NestAgent are internal systems — not products we sell directly. They are the infrastructure that makes NestLens, Managed Services, and every external product work. Mentioned here because they are real.</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
               {[
-                { color: '#2563EB', name: 'DataNest', desc: 'Full-stack data intelligence operating system. Central entity registry tracking companies, funds, deals, contacts, GPs, LPs, and service providers.', powers: 'Powers NestLens Intelligence · Exchange' },
-                { color: '#F97316', name: 'NestIntel', desc: 'Unified intelligence engine handling AI research agents, forensic document extraction, and news intelligence. Three-provider LLM fallback chain.', powers: 'Powers DataNest · NestLens Signals' },
-                { color: '#E91E8C', name: 'NestAgent', desc: 'Seven-phase autonomous research and enrichment agent. Source discovery, extraction, signal detection, contact creation, and a learning system that improves from every QA review.', powers: 'Powers DataNest enrichment · Contact intelligence' },
+                { dot: '#2563EB', name: 'DataNest', desc: 'Full-stack data intelligence OS. Central entity registry tracking companies, funds, deals, contacts, GPs, LPs, and service providers.', powers: 'Powers NestLens Intelligence' },
+                { dot: '#F97316', name: 'NestIntel', desc: 'Unified intelligence engine. AI research agents, forensic document extraction, news intelligence. Three-provider LLM fallback chain.', powers: 'Powers DataNest · NestLens Signals' },
+                { dot: '#E91E8C', name: 'NestAgent', desc: 'Seven-phase autonomous research and enrichment agent. Source discovery, extraction, signal detection, contact creation, and a learning system that improves from every QA review.', powers: 'Powers DataNest enrichment' },
               ].map(e => (
-                <div key={e.name} className="rounded-[13px] p-5" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-                  <div className="w-2.5 h-2.5 rounded-full mb-3" style={{ background: e.color }} />
-                  <div className="font-display font-bold text-[15px] mb-2" style={{ color: 'var(--text)' }}>{e.name}</div>
-                  <div className="text-[13px] leading-[1.58] mb-3" style={{ color: 'var(--text2)' }}>{e.desc}</div>
-                  <div className="font-mono text-[9.5px] tracking-[.07em] uppercase" style={{ color: 'var(--text3)' }}>{e.powers}</div>
+                <div key={e.name} style={{ background: 'var(--bg2)', border: '1px solid rgba(255,255,255,.06)', borderLeft: `3px solid ${e.dot}`, borderRadius: 13, padding: 20 }}>
+                  <div style={{ width: 10, height: 10, borderRadius: '50%', background: e.dot, marginBottom: 10 }} />
+                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)', marginBottom: 5 }}>{e.name}</div>
+                  <div style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.6, marginBottom: 8 }}>{e.desc}</div>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.07em', textTransform: 'uppercase', color: 'var(--text3)' }}>{e.powers}</div>
                 </div>
               ))}
             </div>
