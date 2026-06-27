@@ -84,16 +84,8 @@ export default async function BriefingsPage() {
               <Link
                 key={b.slug}
                 href={`/briefings/${b.slug}`}
-                className="block rounded-[18px] overflow-hidden mb-6 transition-all duration-200"
+                className="block rounded-[18px] overflow-hidden mb-6 transition-all duration-200 hover:-translate-y-[3px]"
                 style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--orange)'
-                  e.currentTarget.style.transform = 'translateY(-3px)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--border)'
-                  e.currentTarget.style.transform = 'none'
-                }}
               >
                 {/* Cover placeholder */}
                 <div

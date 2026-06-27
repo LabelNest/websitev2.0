@@ -54,9 +54,7 @@ export default function NestLensPage() {
               {MODULES.map(m => (
                 <Link key={m.href} href={m.href}
                   className="relative rounded-[20px] p-8 overflow-hidden transition-all duration-200 hover:-translate-y-1.5 block"
-                  style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
-                  onMouseEnter={e => (e.currentTarget.style.borderColor = m.color)}
-                  onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--border)')}>
+                  style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
                   <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: m.color, opacity: 0.7 }} />
                   <div className="absolute top-3 right-3 font-mono text-[9px] tracking-[.08em] uppercase px-2 py-1 rounded"
                     style={{ background: 'rgba(16,185,129,.12)', color: '#10B981' }}>{m.badge}</div>

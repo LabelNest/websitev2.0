@@ -72,9 +72,7 @@ export default function ServicesPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {SERVICES.map(s => (
                 <div key={s.name} className="rounded-[16px] p-7 relative overflow-hidden transition-all hover:-translate-y-1"
-                  style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
-                  onMouseEnter={(e: any) => (e.currentTarget.style.borderColor = s.color)}
-                  onMouseLeave={(e: any) => (e.currentTarget.style.borderColor = 'var(--border)')}>
+                  style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
                   <div className="absolute top-0 left-0 right-0 h-[2px] opacity-0 transition-opacity" style={{ background: s.color }} />
                   <div className="text-[30px] mb-4">{s.icon}</div>
                   <div className="font-display font-extrabold text-[18px] tracking-tight mb-2" style={{ color: 'var(--text)' }}>{s.name}</div>

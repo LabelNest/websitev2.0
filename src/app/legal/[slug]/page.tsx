@@ -65,8 +65,6 @@ export default async function LegalDocPage({ params }: Props) {
                     href={`#${h.id}`}
                     className="text-[12.5px] px-2.5 py-1.5 rounded-md transition-all"
                     style={{ color: 'var(--text2)', borderLeft: '2px solid transparent' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text)'; e.currentTarget.style.borderLeftColor = 'var(--pink)'; e.currentTarget.style.background = 'var(--bg3)' }}
-                    onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text2)'; e.currentTarget.style.borderLeftColor = 'transparent'; e.currentTarget.style.background = 'transparent' }}
                   >
                     {h.text}
                   </a>

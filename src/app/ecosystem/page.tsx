@@ -84,9 +84,7 @@ export default function EcosystemPage() {
               ].map(p => (
                 <Link key={p.href} href={p.href}
                   className="rounded-[16px] p-7 relative overflow-hidden transition-all hover:-translate-y-1 block"
-                  style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
-                  onMouseEnter={(e: any) => (e.currentTarget.style.borderColor = p.color)}
-                  onMouseLeave={(e: any) => (e.currentTarget.style.borderColor = 'var(--border)')}>
+                  style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
                   <div className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity" style={{ background: p.color }} />
                   <div className="font-mono text-[9.5px] tracking-[.1em] uppercase px-2.5 py-1 rounded inline-block mb-4"
                     style={{ background: `${p.color}12`, color: p.color }}>{p.badge}</div>

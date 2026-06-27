@@ -43,8 +43,6 @@ export default async function LegalPage() {
                   href={`/legal/${slug}`}
                   className="flex flex-col gap-2 p-5 rounded-[14px] transition-all duration-200"
                   style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.borderColor = 'var(--bord2)' }}
-                  onMouseLeave={(e) => { e.currentTarget.style.transform = ''; e.currentTarget.style.borderColor = 'var(--border)' }}
                 >
                   <div className="font-mono text-[9px] tracking-[.12em] uppercase" style={{ color: 'var(--text3)' }}>{group}</div>
                   <div className="font-display font-bold text-[15px] leading-[1.3]" style={{ color: 'var(--text)' }}>{doc.title}</div>

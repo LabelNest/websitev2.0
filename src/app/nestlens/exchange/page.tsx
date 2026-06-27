@@ -141,9 +141,7 @@ export default function NestLensExchangePage() {
                 { icon: '⭐', color: '#F97316', name: 'QC Scored Datasets', desc: 'Every dataset carries a quality score based on completeness, recency, methodology transparency, and provenance documentation.' },
               ].map(t => (
                 <div key={t.name} className="rounded-[16px] p-7 text-center transition-all hover:-translate-y-1"
-                  style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
-                  onMouseEnter={(e: any) => (e.currentTarget.style.borderColor = t.color)}
-                  onMouseLeave={(e: any) => (e.currentTarget.style.borderColor = 'var(--border)')}>
+                  style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
                   <div className="text-[36px] mb-4">{t.icon}</div>
                   <div className="font-display font-extrabold text-[16px] mb-3" style={{ color: 'var(--text)' }}>{t.name}</div>
                   <div className="text-[13px] leading-[1.65]" style={{ color: 'var(--text2)' }}>{t.desc}</div>

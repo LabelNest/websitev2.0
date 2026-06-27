@@ -72,8 +72,6 @@ export default async function BriefingArticle({ params }: Props) {
               href="/briefings"
               className="inline-flex items-center gap-1.5 text-[13px] mb-6 transition-colors"
               style={{ color: 'var(--text2)' }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text)')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text2)')}
             >
               ← Briefings
             </Link>
@@ -187,8 +185,6 @@ export default async function BriefingArticle({ params }: Props) {
                     rel="noopener noreferrer"
                     className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[13px] transition-all"
                     style={{ background: 'var(--bg3)', border: '1px solid var(--border)', color: 'var(--text2)' }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text)')}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text2)')}
                   >
                     💼 Share on LinkedIn
                   </a>
@@ -198,8 +194,6 @@ export default async function BriefingArticle({ params }: Props) {
                     rel="noopener noreferrer"
                     className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[13px] transition-all"
                     style={{ background: 'var(--bg3)', border: '1px solid var(--border)', color: 'var(--text2)' }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text)')}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text2)')}
                   >
                     𝕏 Share on X
                   </a>
@@ -241,8 +235,6 @@ export default async function BriefingArticle({ params }: Props) {
                         href={`/briefings/${r.slug}`}
                         className="flex gap-2.5 items-start p-2.5 rounded-lg transition-all"
                         style={{ background: 'var(--bg3)', border: '1px solid var(--border)' }}
-                        onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--bord2)')}
-                        onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
                       >
                         <span className="text-[18px] flex-shrink-0">{slugToEmoji(r.slug)}</span>
                         <div>
