@@ -1,10 +1,8 @@
+'use client'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Metadata } from 'next'
-
-export const metadata: Metadata = { title: 'Ankit Suman — Founder, LabelNest', description: 'Ankit Suman founded LabelNest after a decade in data, operations, quality, and governance. Engineer by education, practitioner by necessity.' }
 
 const BRIEFINGS = [
   { href: '/briefings/introducing-nestlens-intelligence-venture-platforms', emoji: '📊', scope: 'Private Market Intelligence', title: 'Introducing NestLens Intelligence: Mapping the Architecture of Venture Platforms', read: '8 min · May 2026' },
@@ -42,8 +40,7 @@ export default function FounderPage() {
                 <Image
                   src="https://hdwfndjlgkjcjwxxciwn.supabase.co/storage/v1/object/public/site-assets/team/1775127976877.png"
                   alt="Ankit Suman" fill className="object-cover object-center"
-                  sizes="360px"
-                  onError={() => {}} />
+                  sizes="360px" />
                 <div className="absolute bottom-0 left-0 right-0 px-3 py-2 font-mono text-[9px] tracking-[.1em] uppercase text-center"
                   style={{ background: 'rgba(0,0,0,.4)', backdropFilter: 'blur(4px)', color: 'rgba(255,255,255,.5)' }}>
                   Photo · update via admin
@@ -172,8 +169,8 @@ export default function FounderPage() {
                     <Link key={b.href} href={b.href}
                       className="flex gap-3 items-start p-4 rounded-[13px] transition-all hover:translate-x-1"
                       style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
-                      onMouseEnter={(e: any) => (e.currentTarget.style.borderColor = 'var(--pink)')}
-                      onMouseLeave={(e: any) => (e.currentTarget.style.borderColor = 'var(--border)')}>
+                      onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--pink)')}
+                      onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border)')}>
                       <span className="text-[22px] flex-shrink-0 mt-0.5">{b.emoji}</span>
                       <div>
                         <div className="font-mono text-[9.5px] tracking-[.1em] uppercase mb-1" style={{ color: 'var(--text3)' }}>{b.scope}</div>
