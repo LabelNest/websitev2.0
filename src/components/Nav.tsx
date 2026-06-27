@@ -9,7 +9,8 @@ const links = [
   { href: '/ecosystem', label: 'Ecosystem' },
   { href: '/services', label: 'Services' },
   { href: '/briefings', label: 'Briefings' },
-  { href: '/team', label: 'Team' },
+  { href: '/about', label: 'About' },
+  { href: '/careers', label: 'Careers' },
   { href: '/contact', label: 'Contact' },
 ]
 
