@@ -4,7 +4,23 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
 
-interface Job { id: string; title: string; department: string; type: string; location: string; complexity: string; apply_url: string }
+interface Job {
+  id: string
+  title: string
+  department: string
+  type: string
+  location: string
+  complexity: string
+  apply_url: string
+}
+
+const ROLLING = [
+  { title: 'Data Engineer', dept: 'Data and AI Systems', loc: 'Bangalore' },
+  { title: 'Data Research Analyst', dept: 'Data and AI Systems', loc: 'Bangalore' },
+  { title: 'Project Management Analyst', dept: 'Delivery and Programs', loc: 'Bangalore' },
+  { title: 'Frontend Engineer', dept: 'Data and AI Systems', loc: 'Remote — India' },
+  { title: 'HR Analyst', dept: 'People and Culture', loc: 'Bangalore' },
+]
 
 export default function CareersPage() {
   const [jobs, setJobs] = useState<Job[]>([])
@@ -31,113 +47,127 @@ export default function CareersPage() {
     await fetch('/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: aName, email: aEmail, message: `Role: ${role}\nLinkedIn/Portfolio: ${aLink}\n\n${aMsg}`, inquiry_type: 'career' }),
+      body: JSON.stringify({
+        name: aName,
+        email: aEmail,
+        message: `Role: ${role}\nLinkedIn/Portfolio: ${aLink}\n\n${aMsg}`,
+        inquiry_type: 'career',
+      }),
     })
     setSent(true)
     setLoading(false)
   }
 
-  const ROLLING = [
-    { title: 'Data Engineer', dept: 'Data and AI Systems', loc: 'Bangalore' },
-    { title: 'Data Research Analyst', dept: 'Data and AI Systems', loc: 'Bangalore' },
-    { title: 'Project Management Analyst', dept: 'Delivery and Programs', loc: 'Bangalore' },
-    { title: 'Frontend Engineer', dept: 'Data and AI Systems', loc: 'Remote — India' },
-    { title: 'HR Analyst', dept: 'People and Culture', loc: 'Bangalore' },
-  ]
+  const featuredJob = jobs[0] ?? null
+  const extraJobs = jobs.slice(1)
 
   return (
     <>
       <Nav />
-      <main style={{ paddingTop: '60px' }}>
+      <main style={{ paddingTop: 64 }}>
 
         {/* HERO */}
-        <section className="px-8 py-28 relative overflow-hidden">
-          <div className="absolute -top-24 -left-20 w-[480px] h-[480px] rounded-full pointer-events-none"
-            style={{ background: 'rgba(233,30,140,0.07)', filter: 'blur(90px)' }} />
-          <div className="max-w-[1240px] mx-auto relative z-10">
-            <div className="font-mono text-[10.5px] tracking-[.14em] uppercase mb-5" style={{ color: 'var(--text3)' }}>Careers · LabelNest · Bangalore</div>
-            <h1 className="font-display font-extrabold tracking-tight leading-[1.02] mb-6"
-              style={{ fontSize: 'clamp(42px,6.5vw,76px)', color: 'var(--text)' }}>
-              <span style={{ fontWeight: 300, color: 'var(--text2)' }}>Build systems</span>
-              <br />others cannot{' '}
+        <section style={{ padding: '80px 48px 72px', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: -100, left: -80, width: 480, height: 480, borderRadius: '50%', background: 'rgba(233,30,140,.07)', filter: 'blur(90px)', pointerEvents: 'none' }} />
+          <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 2 }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Careers · LabelNest · Bangalore</div>
+            <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(42px,6.5vw,76px)', fontWeight: 800, letterSpacing: '-.04em', lineHeight: 1.02, color: 'var(--text)', marginBottom: 20 }}>
+              <span style={{ fontWeight: 300, color: 'var(--text2)' }}>Build systems</span><br />
+              others cannot{' '}
               <span style={{ background: 'linear-gradient(100deg,#E91E8C,#8B5CF6,#2563EB)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>imagine.</span>
             </h1>
-            <p className="text-[clamp(15px,1.8vw,18.5px)] leading-[1.74] max-w-[560px] mb-10" style={{ color: 'var(--text2)' }}>
+            <p style={{ fontSize: 'clamp(15px,1.8vw,18.5px)', lineHeight: 1.74, color: 'var(--text2)', maxWidth: 560, marginBottom: 36 }}>
               We work on hard data problems at the intersection of private markets, automation, and human judgment.{' '}
               <strong style={{ color: 'var(--text)', fontWeight: 600 }}>We hire for potential, not pedigree.</strong> The right degree is not a requirement. The right thinking is.
             </p>
-            <div className="flex gap-3 flex-wrap">
-              <a href="#roles" className="inline-flex items-center gap-2 font-semibold text-[14.5px] px-6 py-3.5 rounded-[10px] text-white"
-                style={{ background: 'var(--pink)' }}>See open roles</a>
-              <a href="#apply" className="inline-flex items-center gap-2 font-medium text-[14.5px] px-6 py-3.5 rounded-[10px] border"
-                style={{ color: 'var(--text)', background: 'var(--surface)', borderColor: 'var(--bord2)' }}>Open application</a>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+              <a href="#roles" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#E91E8C', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>See open roles</a>
+              <a href="#apply" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>Open application</a>
             </div>
           </div>
         </section>
 
         {/* BELIEFS */}
-        <section className="px-8 pb-16" style={{ background: 'var(--bg)' }}>
-          <div className="max-w-[1240px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
+        <section style={{ padding: '56px 48px', borderBottom: '1px solid var(--border)' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14 }}>
             {[
-              ['🧠', 'Potential over pedigree', 'We do not filter by institution or communication style. We care about what you can do with hard problems.'],
-              ['🏗️', 'Real problems, not simulated ones', 'Everyone here works on the actual systems that power LabelNest products — not practice exercises.'],
-              ['🌱', 'Built to grow, not just to perform', 'The environment is honest, the feedback is direct, and the trajectory is yours to define.'],
-            ].map(([icon, title, desc]) => (
-              <div key={title as string} className="rounded-[14px] p-6" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-                <div className="text-[22px] mb-3">{icon}</div>
-                <div className="font-display font-bold text-[14.5px] mb-2" style={{ color: 'var(--text)' }}>{title}</div>
-                <div className="text-[13px] leading-[1.6]" style={{ color: 'var(--text2)' }}>{desc}</div>
+              { icon: '🧠', title: 'Potential over pedigree', desc: 'We do not filter by institution or communication style. We care about what you can do with hard problems.' },
+              { icon: '🏗️', title: 'Real problems, not simulated ones', desc: 'Everyone here works on the actual systems that power LabelNest products — not practice exercises.' },
+              { icon: '🌱', title: 'Built to grow, not just perform', desc: 'The environment is honest, the feedback is direct, and the trajectory is yours to define.' },
+            ].map(b => (
+              <div key={b.title} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 24 }}>
+                <div style={{ fontSize: 24, marginBottom: 12 }}>{b.icon}</div>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)', marginBottom: 6 }}>{b.title}</div>
+                <div style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.6 }}>{b.desc}</div>
               </div>
             ))}
           </div>
         </section>
 
         {/* OPEN ROLES */}
-        <section className="px-8 py-16 border-t" id="roles" style={{ background: 'var(--bg2)', borderColor: 'var(--border)' }}>
-          <div className="max-w-[1240px] mx-auto">
-            <div className="font-mono text-[10px] tracking-[.14em] uppercase mb-3" style={{ color: 'var(--pink)' }}>Open roles</div>
-            <h2 className="font-display font-extrabold tracking-tight leading-[1.06] mb-3"
-              style={{ fontSize: 'clamp(26px,3.5vw,44px)', color: 'var(--text)' }}>Where we need people right now</h2>
-            <p className="text-[15.5px] leading-[1.74] max-w-[500px] mb-10" style={{ color: 'var(--text2)' }}>
-              One publicly listed role and several positions we hire for on a rolling basis. Do not see your fit? Send an open application.
-            </p>
+        <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)', background: 'var(--bg2)' }} id="roles">
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Open roles</div>
+            <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(26px,3.5vw,44px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 8 }}>Where we need people right now</h2>
+            <p style={{ fontSize: 15, color: 'var(--text2)', marginBottom: 36, maxWidth: 520, lineHeight: 1.65 }}>One publicly listed role and several we hire for on a rolling basis. Do not see your fit? Send an open application below.</p>
 
-            <div className="flex flex-col gap-3">
-              {/* Live DB roles */}
-              {jobs.map(job => (
-                <div key={job.id} className="flex items-center gap-5 px-6 py-5 rounded-[14px]"
-                  style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-                  <div className="flex-1">
-                    <div className="font-mono text-[9.5px] tracking-[.1em] uppercase mb-1.5" style={{ color: 'var(--text3)' }}>{job.department}</div>
-                    <div className="font-display font-bold text-[16px] mb-2" style={{ color: 'var(--text)' }}>{job.title}</div>
-                    <div className="flex gap-2 flex-wrap">
-                      {[job.location, job.type, job.complexity].map(t => (
-                        <span key={t} className="font-mono text-[9.5px] tracking-[.08em] uppercase px-2.5 py-1 rounded"
-                          style={{ background: 'var(--bg3)', color: 'var(--text3)' }}>{t}</span>
-                      ))}
-                    </div>
+            {/* Featured role — first DB job or hardcoded fallback */}
+            {featuredJob ? (
+              <div style={{ background: 'var(--surface)', border: '2px solid #E91E8C', borderRadius: 16, padding: '24px 28px', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 20 }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 6 }}>{featuredJob.department} · {featuredJob.location}</div>
+                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 19, color: 'var(--text)', marginBottom: 8 }}>{featuredJob.title}</div>
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 5, background: 'rgba(233,30,140,.1)', color: '#E91E8C' }}>Featured</span>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 5, background: 'rgba(255,255,255,.05)', color: 'var(--text2)' }}>{featuredJob.type}</span>
+                    {featuredJob.complexity && <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 5, background: 'rgba(255,255,255,.05)', color: 'var(--text2)' }}>{featuredJob.complexity}</span>}
                   </div>
-                  <a href={job.apply_url} target="_blank" rel="noopener noreferrer"
-                    className="font-semibold text-[13px] px-5 py-2.5 rounded-[9px] text-white flex-shrink-0"
-                    style={{ background: 'var(--pink)' }}>Apply via NestHR ↗</a>
                 </div>
-              ))}
+                <a href={featuredJob.apply_url} target="_blank" rel="noopener noreferrer"
+                  style={{ background: '#E91E8C', color: '#fff', fontSize: 13.5, fontWeight: 600, padding: '11px 22px', borderRadius: 10, whiteSpace: 'nowrap', flexShrink: 0 }}>Apply now</a>
+              </div>
+            ) : (
+              <div style={{ background: 'var(--surface)', border: '2px solid #E91E8C', borderRadius: 16, padding: '24px 28px', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 20 }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 6 }}>NestSales · Global · Remote</div>
+                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 19, color: 'var(--text)', marginBottom: 8 }}>Strategic BD Partner, Data and Intelligence</div>
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 5, background: 'rgba(233,30,140,.1)', color: '#E91E8C' }}>Featured</span>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 5, background: 'rgba(255,255,255,.05)', color: 'var(--text2)' }}>Remote</span>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 5, background: 'rgba(255,255,255,.05)', color: 'var(--text2)' }}>High complexity</span>
+                  </div>
+                </div>
+                <button onClick={() => applyFor('Strategic BD Partner, Data and Intelligence')}
+                  style={{ background: '#E91E8C', color: '#fff', fontSize: 13.5, fontWeight: 600, padding: '11px 22px', borderRadius: 10, whiteSpace: 'nowrap', flexShrink: 0, border: 'none', cursor: 'pointer' }}>Apply now</button>
+              </div>
+            )}
 
-              {/* Rolling */}
+            {/* Additional DB jobs */}
+            {extraJobs.map(job => (
+              <div key={job.id}
+                style={{ display: 'flex', alignItems: 'center', gap: 20, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '16px 20px', marginBottom: 8 }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 4 }}>{job.department} · {job.location}</div>
+                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)' }}>{job.title}</div>
+                </div>
+                <a href={job.apply_url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, fontWeight: 600, color: '#E91E8C' }}>Apply →</a>
+              </div>
+            ))}
+
+            {/* Rolling roles */}
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text3)', margin: '24px 0 12px', paddingTop: 20, borderTop: '1px solid var(--border)' }}>Rolling basis — always open</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {ROLLING.map(r => (
-                <div key={r.title} className="flex items-center gap-5 px-6 py-5 rounded-[14px]"
-                  style={{ background: 'var(--surface)', border: '1px dashed var(--bord2)' }}>
-                  <div className="flex-1">
-                    <div className="font-mono text-[9.5px] tracking-[.1em] uppercase mb-1.5" style={{ color: 'var(--text3)' }}>{r.dept}</div>
-                    <div className="font-display font-bold text-[16px] mb-2" style={{ color: 'var(--text)' }}>{r.title}</div>
-                    <span className="font-mono text-[9.5px] tracking-[.08em] uppercase px-2.5 py-1 rounded"
-                      style={{ background: 'rgba(16,185,129,.1)', color: 'var(--green)' }}>{r.loc}</span>
-                    <span className="ml-2 font-mono text-[9.5px] tracking-[.08em] uppercase px-2.5 py-1 rounded"
-                      style={{ background: 'var(--bg3)', color: 'var(--text3)' }}>Rolling basis</span>
+                <div key={r.title}
+                  style={{ display: 'flex', alignItems: 'center', gap: 20, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '16px 20px' }}
+                  onMouseOver={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,.15)')}
+                  onMouseOut={e => (e.currentTarget.style.borderColor = 'var(--border)')}>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 4 }}>{r.dept} · {r.loc}</div>
+                    <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)' }}>{r.title}</div>
                   </div>
                   <button onClick={() => applyFor(r.title)}
-                    className="font-semibold text-[13px] px-5 py-2.5 rounded-[9px] text-white flex-shrink-0"
-                    style={{ background: 'var(--pink)' }}>Apply</button>
+                    style={{ fontSize: 13, fontWeight: 600, color: '#E91E8C', background: 'none', border: 'none', cursor: 'pointer' }}>Apply →</button>
                 </div>
               ))}
             </div>
@@ -145,111 +175,92 @@ export default function CareersPage() {
         </section>
 
         {/* POTENTIAL STATEMENT */}
-        <section className="px-8 py-20">
-          <div className="max-w-[1240px] mx-auto">
-            <div className="rounded-[20px] p-12 text-center relative overflow-hidden"
-              style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-              <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: 'linear-gradient(90deg,#E91E8C,#7C3AED,#2563EB)' }} />
-              <h2 className="font-display font-extrabold tracking-tight leading-[1.06] mb-5"
-                style={{ fontSize: 'clamp(28px,4vw,48px)', color: 'var(--text)' }}>
+        <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 20, padding: 52, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg,#E91E8C,#7C3AED,#2563EB)' }} />
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(28px,4vw,48px)', fontWeight: 800, letterSpacing: '-.035em', color: 'var(--text)', marginBottom: 16 }}>
                 Built by people with the{' '}
-                <span style={{ background: 'linear-gradient(100deg,#E91E8C,#7C3AED)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-                  right potential.
-                </span>
+                <span style={{ background: 'linear-gradient(100deg,#E91E8C,#7C3AED)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>right potential.</span>
                 <br />Not the right degree.
               </h2>
-              <p className="text-[16px] leading-[1.74] max-w-[560px] mx-auto mb-8" style={{ color: 'var(--text2)' }}>
+              <p style={{ fontSize: 16, color: 'var(--text2)', maxWidth: 560, margin: '0 auto 32px', lineHeight: 1.72 }}>
                 13 current team members. 39 alumni. 15 Nestling fellows.{' '}
-                <strong style={{ color: 'var(--text)', fontWeight: 600 }}>None of them were hired because of where they studied or how polished their CV looked.</strong>{' '}
-                That is still how we hire.
+                <strong style={{ color: 'var(--text)', fontWeight: 600 }}>None of them were hired because of where they studied.</strong> That is still how we hire.
               </p>
-              <div className="flex gap-3 justify-center flex-wrap">
-                <a href="#apply" className="inline-flex items-center gap-2 font-semibold text-[14.5px] px-6 py-3.5 rounded-[10px] text-white"
-                  style={{ background: 'var(--pink)' }}>Apply now</a>
-                <Link href="/team" className="inline-flex items-center gap-2 font-medium text-[14.5px] px-6 py-3.5 rounded-[10px] border"
-                  style={{ color: 'var(--text)', background: 'var(--surface)', borderColor: 'var(--bord2)' }}>Meet the team</Link>
+              <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+                <a href="#apply" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#E91E8C', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Apply now</a>
+                <Link href="/team" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>Meet the team</Link>
               </div>
             </div>
           </div>
         </section>
 
         {/* APPLICATION FORM */}
-        <section className="px-8 py-16 border-t" id="apply" style={{ background: 'var(--bg2)', borderColor: 'var(--border)' }}>
-          <div className="max-w-[1240px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+        <section style={{ padding: '64px 48px', background: 'var(--bg2)' }} id="apply">
+          <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'start' }}>
             <div>
-              <div className="font-mono text-[10px] tracking-[.14em] uppercase mb-3" style={{ color: 'var(--pink)' }}>Apply</div>
-              <h2 className="font-display font-extrabold tracking-tight leading-[1.06] mb-4"
-                style={{ fontSize: 'clamp(24px,3vw,38px)', color: 'var(--text)' }}>Tell us what you can do</h2>
-              <p className="text-[15px] mb-8" style={{ color: 'var(--text2)' }}>
-                Open applications welcome. No role listed? Apply anyway. Fill in the form and tell us what you work on, what you want to work on, and why LabelNest.
-              </p>
-              <div className="flex flex-col gap-3">
-                {[
-                  ['✉️', 'Applications also go to contact@labelnest.in if you prefer email.'],
-                  ['⏱️', 'We read every application and respond to every fit — typically within 3 to 5 business days.'],
-                  ['🔗', 'External roles with formal JDs apply via NestHR directly.'],
-                ].map(([icon, text]) => (
-                  <div key={text as string} className="flex items-start gap-3 px-4 py-3.5 rounded-[10px]"
-                    style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-                    <span className="text-[16px] flex-shrink-0 mt-0.5">{icon}</span>
-                    <div className="text-[13px] leading-[1.55]" style={{ color: 'var(--text2)' }}>{text}</div>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Apply</div>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(24px,3vw,38px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 14 }}>Tell us what you can do</h2>
+              <p style={{ fontSize: 15, color: 'var(--text2)', lineHeight: 1.72, marginBottom: 28 }}>Open applications welcome. No role listed that fits? Apply anyway and tell us what you work on.</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: '14px 16px' }}>
+                  <span style={{ fontSize: 16, flexShrink: 0 }}>✉️</span>
+                  <div style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.55 }}>
+                    Applications also go to <a href="mailto:contact@labelnest.in" style={{ color: '#2563EB' }}>contact@labelnest.in</a> if you prefer email.
                   </div>
-                ))}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: '14px 16px' }}>
+                  <span style={{ fontSize: 16, flexShrink: 0 }}>⏱️</span>
+                  <div style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.55 }}>We read every application and respond to every fit — typically within 3 to 5 business days.</div>
+                </div>
               </div>
             </div>
 
-            <div className="rounded-[18px] p-8 relative overflow-hidden" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-              <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: 'linear-gradient(90deg,#E91E8C,#2563EB)' }} />
+            <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 18, padding: 32, position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg,#E91E8C,#2563EB)' }} />
               {!sent ? (
-                <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
-                  <div className="font-display font-extrabold text-[18px] mb-1" style={{ color: 'var(--text)' }}>Send your application</div>
-                  <div className="text-[13px] mb-2" style={{ color: 'var(--text2)' }}>Open applications welcome. No role listed? Apply anyway.</div>
-                  <div className="grid grid-cols-2 gap-3">
-                    {[
-                      { label: 'Your name', ph: 'Full name', val: aName, set: setAName, type: 'text', req: true },
-                      { label: 'Your email', ph: 'you@email.com', val: aEmail, set: setAEmail, type: 'email', req: true },
-                    ].map(f => (
-                      <div key={f.label}>
-                        <label className="block text-[12px] font-semibold mb-1.5" style={{ color: 'var(--text)' }}>{f.label}</label>
-                        <input type={f.type} required={f.req} value={f.val} onChange={e => f.set(e.target.value)} placeholder={f.ph}
-                          className="w-full rounded-[9px] px-3.5 py-2.5 text-[14px] outline-none"
-                          style={{ background: 'var(--bg2)', border: '1px solid var(--bord2)', color: 'var(--text)' }} />
-                      </div>
-                    ))}
+                <form onSubmit={handleSubmit}>
+                  <h3 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 18, color: 'var(--text)', marginBottom: 20 }}>Send your application</h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>Your name</label>
+                      <input type="text" required value={aName} onChange={e => setAName(e.target.value)} placeholder="Full name"
+                        style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none' }} />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>Your email</label>
+                      <input type="email" required value={aEmail} onChange={e => setAEmail(e.target.value)} placeholder="you@email.com"
+                        style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none' }} />
+                    </div>
                   </div>
-                  <div>
-                    <label className="block text-[12px] font-semibold mb-1.5" style={{ color: 'var(--text)' }}>Role you are applying for</label>
+                  <div style={{ marginBottom: 12 }}>
+                    <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>Role you are applying for</label>
                     <input type="text" value={role} onChange={e => setRole(e.target.value)} placeholder="e.g. Data Engineer, or Open Application"
-                      className="w-full rounded-[9px] px-3.5 py-2.5 text-[14px] outline-none"
-                      style={{ background: 'var(--bg2)', border: '1px solid var(--bord2)', color: 'var(--text)' }} />
+                      style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none' }} />
                   </div>
-                  <div>
-                    <label className="block text-[12px] font-semibold mb-1.5" style={{ color: 'var(--text)' }}>LinkedIn or portfolio</label>
+                  <div style={{ marginBottom: 12 }}>
+                    <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>LinkedIn or portfolio</label>
                     <input type="text" value={aLink} onChange={e => setALink(e.target.value)} placeholder="linkedin.com/in/your-handle"
-                      className="w-full rounded-[9px] px-3.5 py-2.5 text-[14px] outline-none"
-                      style={{ background: 'var(--bg2)', border: '1px solid var(--bord2)', color: 'var(--text)' }} />
+                      style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none' }} />
                   </div>
-                  <div>
-                    <label className="block text-[12px] font-semibold mb-1.5" style={{ color: 'var(--text)' }}>Tell us about yourself</label>
+                  <div style={{ marginBottom: 16 }}>
+                    <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>Tell us about yourself</label>
                     <textarea required value={aMsg} onChange={e => setAMsg(e.target.value)} rows={4}
                       placeholder="What do you work on now, what do you want to work on, and why LabelNest?"
-                      className="w-full rounded-[9px] px-3.5 py-2.5 text-[14px] outline-none resize-none"
-                      style={{ background: 'var(--bg2)', border: '1px solid var(--bord2)', color: 'var(--text)' }} />
+                      style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none', resize: 'vertical', fontFamily: 'Inter, sans-serif' }} />
                   </div>
                   <button type="submit" disabled={loading}
-                    className="w-full font-semibold text-[14.5px] py-3.5 rounded-[10px] text-white"
-                    style={{ background: 'var(--pink)', opacity: loading ? 0.7 : 1 }}>
+                    style={{ width: '100%', background: '#E91E8C', color: '#fff', border: 'none', borderRadius: 10, padding: 13, fontSize: 14.5, fontWeight: 600, cursor: loading ? 'default' : 'pointer', opacity: loading ? 0.7 : 1, fontFamily: 'Inter, sans-serif' }}>
                     {loading ? 'Sending...' : 'Send application'}
                   </button>
-                  <div className="text-[11.5px] text-center" style={{ color: 'var(--text3)' }}>Goes to contact@labelnest.in · We read every one</div>
+                  <div style={{ fontSize: 11.5, color: 'var(--text3)', textAlign: 'center', marginTop: 10 }}>Goes to contact@labelnest.in · We read every one</div>
                 </form>
               ) : (
-                <div className="text-center py-8">
-                  <div className="text-[42px] mb-4">✅</div>
-                  <div className="font-display font-extrabold text-[20px] mb-2" style={{ color: 'var(--text)' }}>Application received</div>
-                  <div className="text-[14px] leading-[1.65]" style={{ color: 'var(--text2)' }}>
-                    We have your application and will review it properly. If it is a fit, you will hear from us within 3 to 5 business days.
-                  </div>
+                <div style={{ textAlign: 'center', padding: '32px 0' }}>
+                  <div style={{ fontSize: 42, marginBottom: 16 }}>✅</div>
+                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, color: 'var(--text)', marginBottom: 8 }}>Application received</div>
+                  <div style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.65 }}>We have your application and will review it properly. If it is a fit, you will hear from us within 3 to 5 business days.</div>
                 </div>
               )}
             </div>

@@ -14,8 +14,9 @@ build/
 .env.*.local
 .env.production
 
-# Zip reference files
+# Zip reference files and raw data exports (contain PII)
 *.zip
+lovable-extract/
 
 # Debug
 npm-debug.log*

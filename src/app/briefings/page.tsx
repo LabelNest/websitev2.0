@@ -2,169 +2,139 @@ import { Metadata } from 'next'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
-import { getBriefings } from '@/lib/db'
-import { scopeColor, scopeLabel, slugToEmoji, authorGradient } from '@/lib/utils'
+import { getBriefings, Briefing } from '@/lib/db'
 
 export const metadata: Metadata = {
-  title: 'Briefings',
-  description:
-    'Writing from the LabelNest team on private markets, data infrastructure, AI supply chains, and what it takes to build things that work.',
+  title: 'Briefings — LabelNest',
+  description: 'Direct writing from the LabelNest team on private markets, India\'s data infrastructure, and what it takes to build things that work.',
 }
 
-export const revalidate = 3600 // ISR: rebuild every hour
+function scopeColor(scope: string): string {
+  const m: Record<string, string> = {
+    Manifesto: '#E91E8C', Product: '#7C3AED', Intelligence: '#2563EB',
+    Sovereignty: '#06B6D4', Foundry: '#10B981', 'Market Intelligence': '#F97316',
+    Newsletter: '#F59E0B', Strategy: '#8B5CF6', Featured: '#F97316',
+  }
+  return m[scope] ?? '#F97316'
+}
+
+function scopeEmoji(scope: string): string {
+  const m: Record<string, string> = {
+    Manifesto: '🌏', Product: '⚡', Intelligence: '🔭', Sovereignty: '🇮🇳',
+    Foundry: '🏗️', 'Market Intelligence': '🌐', Newsletter: '📬', Strategy: '🎯',
+  }
+  return m[scope] ?? '📊'
+}
+
+function authorInitial(name: string): string {
+  return name[0]?.toUpperCase() ?? 'L'
+}
+
+function authorGradient(name: string): string {
+  if (name === 'Ankit Suman') return 'linear-gradient(135deg,#E91E8C,#7C3AED)'
+  if (name === 'Shubham Singh') return 'linear-gradient(135deg,#2563EB,#7C3AED)'
+  if (name === 'Sumedha Pandey') return 'linear-gradient(135deg,#10B981,#2563EB)'
+  return 'rgba(255,255,255,.08)'
+}
 
 export default async function BriefingsPage() {
-  const briefings = await getBriefings()
-  const featured = briefings.filter((b) => b.is_featured)
-  const rest = briefings.filter((b) => !b.is_featured)
+  let briefings: Briefing[] = []
+  try {
+    briefings = await getBriefings()
+  } catch {
+    // DB unavailable — show empty state
+  }
+
+  const featured = briefings.find(b => b.is_featured) ?? briefings[0] ?? null
+  const listBriefings = featured ? briefings.filter(b => b.slug !== featured.slug) : briefings
 
   return (
     <>
+      <style>{`
+        .briefing-featured:hover { border-color: #F97316 !important; transform: translateY(-3px); }
+        .briefing-item:hover { opacity: 0.8; }
+      `}</style>
       <Nav />
-      <main style={{ paddingTop: '60px' }}>
-        {/* Header */}
-        <section
-          className="px-8 pt-16 pb-12 border-b relative overflow-hidden"
-          style={{ borderColor: 'var(--border)' }}
-        >
-          <div
-            className="absolute -top-24 -left-20 w-[460px] h-[460px] rounded-full pointer-events-none"
-            style={{ background: 'rgba(249,115,22,0.07)', filter: 'blur(90px)' }}
-          />
-          <div className="max-w-[1240px] mx-auto relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
-            <div>
-              <div
-                className="font-mono text-[10.5px] tracking-[.14em] uppercase mb-4"
-                style={{ color: 'var(--text3)' }}
-              >
-                Briefings · LabelNest
+      <main style={{ paddingTop: 64 }}>
+
+        {/* HERO */}
+        <section style={{ padding: '72px 48px 56px', borderBottom: '1px solid rgba(255,255,255,.06)', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: -100, left: -60, width: 480, height: 480, borderRadius: '50%', background: 'rgba(249,115,22,.06)', filter: 'blur(90px)', pointerEvents: 'none' }} />
+          <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 2 }}>
+            <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 32, flexWrap: 'wrap' }}>
+              <div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Briefings · LabelNest</div>
+                <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(36px,5.5vw,64px)', fontWeight: 800, letterSpacing: '-.04em', lineHeight: 1.02, color: 'var(--text)', marginBottom: 14 }}>
+                  How we think about<br />
+                  <span style={{ fontWeight: 300, color: 'var(--text2)' }}>data, markets, and building</span>
+                </h1>
+                <p style={{ fontSize: 15.5, color: 'var(--text2)', maxWidth: 480, lineHeight: 1.72 }}>Direct writing from the LabelNest team on private markets, India's data infrastructure, and what it takes to build things that work.</p>
               </div>
-              <h1
-                className="font-display font-extrabold tracking-tight leading-[1.02]"
-                style={{ fontSize: 'clamp(36px,5.5vw,64px)', color: 'var(--text)' }}
-              >
-                How we think about
-                <br />
-                <span style={{ color: 'var(--text2)', fontWeight: 300 }}>
-                  data, markets, and building
-                </span>
-              </h1>
-              <p className="mt-4 text-[15.5px] leading-relaxed max-w-[480px]" style={{ color: 'var(--text2)' }}>
-                Direct writing from the LabelNest team on private markets, India's AI supply chain,
-                data infrastructure, and what it takes to build things that work.
-              </p>
-            </div>
-            <div className="flex items-center gap-6 flex-shrink-0">
-              <div className="text-center">
-                <div className="font-display font-extrabold text-[28px] tracking-tight" style={{ color: 'var(--orange)' }}>
-                  {briefings.length}
+              <div style={{ display: 'flex', gap: 24 }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 28, color: '#F97316', letterSpacing: '-.04em' }}>{briefings.length || 14}</div>
+                  <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 2 }}>Briefings</div>
                 </div>
-                <div className="text-[11px]" style={{ color: 'var(--text3)' }}>Briefings</div>
-              </div>
-              <div className="text-center">
-                <div className="font-display font-extrabold text-[28px] tracking-tight" style={{ color: 'var(--blue)' }}>4</div>
-                <div className="text-[11px]" style={{ color: 'var(--text3)' }}>Authors</div>
-              </div>
-              <div className="text-center">
-                <div className="font-display font-extrabold text-[28px] tracking-tight" style={{ color: 'var(--pink)' }}>
-                  {featured.length}
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 28, color: '#2563EB', letterSpacing: '-.04em' }}>4</div>
+                  <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 2 }}>Authors</div>
                 </div>
-                <div className="text-[11px]" style={{ color: 'var(--text3)' }}>Featured</div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Content */}
-        <div className="max-w-[1240px] mx-auto px-8 py-12 grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-12">
-          {/* Main */}
+        {/* CONTENT + SIDEBAR */}
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '48px', display: 'grid', gridTemplateColumns: '1fr 300px', gap: 48, alignItems: 'start' }}>
+
+          {/* MAIN FEED */}
           <div>
-            {/* Featured */}
-            {featured.map((b) => (
-              <Link
-                key={b.slug}
-                href={`/briefings/${b.slug}`}
-                className="block rounded-[18px] overflow-hidden mb-6 transition-all duration-200 hover:-translate-y-[3px]"
-                style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
-              >
-                {/* Cover placeholder */}
-                <div
-                  className="h-[180px] flex items-center justify-center text-[48px]"
-                  style={{
-                    background: 'linear-gradient(135deg,rgba(249,115,22,.1),rgba(233,30,140,.06))',
-                    borderBottom: '1px solid var(--border)',
-                  }}
-                >
-                  <span className="opacity-30">{slugToEmoji(b.slug)}</span>
-                  <span
-                    className="absolute top-4 left-4 font-mono text-[9.5px] tracking-[.1em] uppercase px-2.5 py-1 rounded text-white"
-                    style={{ background: 'var(--orange)' }}
-                  >
-                    Featured
-                  </span>
+            {featured ? (
+              <Link href={`/briefings/${featured.slug}`} className="briefing-featured" style={{ display: 'block', background: 'var(--surface)', border: '1px solid rgba(255,255,255,.07)', borderRadius: 18, overflow: 'hidden', marginBottom: 20, transition: 'border-color .2s, transform .2s' }}>
+                <div style={{ height: 180, background: 'linear-gradient(135deg,rgba(249,115,22,.1),rgba(233,30,140,.06))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 48, opacity: .3, borderBottom: '1px solid rgba(255,255,255,.06)', position: 'relative' }}>
+                  {featured.cover_image
+                    ? <img src={featured.cover_image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0, opacity: 1 }} />
+                    : scopeEmoji(featured.scope)
+                  }
+                  <span style={{ position: 'absolute', top: 14, left: 14, fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.1em', textTransform: 'uppercase', padding: '4px 10px', borderRadius: 5, background: '#F97316', color: '#fff' }}>Featured</span>
                 </div>
-                <div className="p-7">
-                  <div className="font-mono text-[9.5px] tracking-[.1em] uppercase mb-2.5" style={{ color: 'var(--orange)' }}>
-                    {scopeLabel(b.scope)}
-                  </div>
-                  <h2 className="font-display font-extrabold text-[20px] tracking-tight leading-[1.2] mb-3" style={{ color: 'var(--text)' }}>
-                    {b.title}
-                  </h2>
-                  <p className="text-[14px] leading-relaxed mb-4 line-clamp-2" style={{ color: 'var(--text2)' }}>
-                    {b.summary}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div
-                        className="w-7 h-7 rounded-full flex items-center justify-center font-display font-extrabold text-[11px] text-white"
-                        style={{ background: authorGradient(b.author_name) }}
-                      >
-                        {b.author_name[0]}
-                      </div>
-                      <span className="text-[13px] font-medium" style={{ color: 'var(--text)' }}>{b.author_name}</span>
+                <div style={{ padding: 24 }}>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.1em', textTransform: 'uppercase', color: scopeColor(featured.scope), marginBottom: 8 }}>{featured.scope}</div>
+                  <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, letterSpacing: '-.02em', lineHeight: 1.25, color: 'var(--text)', marginBottom: 10 }}>{featured.title}</h2>
+                  <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.65, marginBottom: 16 }}>{featured.summary}</p>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <div style={{ width: 26, height: 26, borderRadius: '50%', background: authorGradient(featured.author_name), display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 11, color: '#fff' }}>{authorInitial(featured.author_name)}</div>
+                      <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--text)' }}>{featured.author_name}</span>
                     </div>
-                    <span className="font-mono text-[10px] tracking-wide" style={{ color: 'var(--text3)' }}>
-                      {b.read_time}
-                    </span>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: 'var(--text3)' }}>{featured.read_time} · {featured.date}</span>
                   </div>
                 </div>
               </Link>
-            ))}
+            ) : (
+              <div style={{ background: 'var(--surface)', border: '1px solid rgba(255,255,255,.07)', borderRadius: 18, padding: 48, textAlign: 'center', marginBottom: 20 }}>
+                <div style={{ fontSize: 32, marginBottom: 12 }}>📝</div>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 17, color: 'var(--text)', marginBottom: 6 }}>No briefings yet</div>
+                <div style={{ fontSize: 13.5, color: 'var(--text2)' }}>Publishing soon. Follow Operator to Founder on LinkedIn for updates.</div>
+              </div>
+            )}
 
-            {/* Rest */}
-            <div className="flex flex-col divide-y" style={{ borderColor: 'var(--border)' }}>
-              {rest.map((b) => (
-                <Link
-                  key={b.slug}
-                  href={`/briefings/${b.slug}`}
-                  className="flex gap-4 items-start py-5 group"
-                  style={{ borderColor: 'var(--border)' }}
-                >
-                  <div
-                    className="w-20 h-20 rounded-[10px] flex items-center justify-center text-[28px] flex-shrink-0"
-                    style={{ background: 'var(--bg3)', border: '1px solid var(--border)' }}
-                  >
-                    {slugToEmoji(b.slug)}
+            {/* LIST */}
+            <div style={{ display: 'flex', flexDirection: 'column', borderTop: '1px solid rgba(255,255,255,.06)' }}>
+              {listBriefings.map(b => (
+                <Link key={b.slug} href={`/briefings/${b.slug}`} className="briefing-item" style={{ display: 'flex', gap: 14, alignItems: 'flex-start', padding: '18px 0', borderBottom: '1px solid rgba(255,255,255,.06)', transition: 'opacity .15s' }}>
+                  <div style={{ width: 72, height: 72, borderRadius: 10, background: 'var(--surface)', border: '1px solid rgba(255,255,255,.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26, flexShrink: 0 }}>
+                    {scopeEmoji(b.scope)}
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="font-mono text-[9px] tracking-[.1em] uppercase mb-1.5" style={{ color: 'var(--text3)' }}>
-                      {scopeLabel(b.scope)}
-                    </div>
-                    <div
-                      className="font-display font-bold text-[15.5px] tracking-tight leading-[1.3] mb-1.5 transition-colors group-hover:text-[var(--orange)]"
-                      style={{ color: 'var(--text)' }}
-                    >
-                      {b.title}
-                    </div>
-                    <p className="text-[13px] leading-relaxed mb-2.5 line-clamp-2" style={{ color: 'var(--text2)' }}>
-                      {b.summary}
-                    </p>
-                    <div className="flex items-center gap-3">
-                      <span className="text-[12px] font-medium" style={{ color: 'var(--text2)' }}>{b.author_name}</span>
-                      <span className="w-1 h-1 rounded-full" style={{ background: 'var(--text3)' }} />
-                      <span className="text-[12px]" style={{ color: 'var(--text3)' }}>{b.date}</span>
-                      <span className="w-1 h-1 rounded-full" style={{ background: 'var(--text3)' }} />
-                      <span className="font-mono text-[10px]" style={{ color: 'var(--text3)' }}>{b.read_time}</span>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.1em', textTransform: 'uppercase', color: scopeColor(b.scope), marginBottom: 5 }}>{b.scope}</div>
+                    <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: '-.01em', lineHeight: 1.3, color: 'var(--text)', marginBottom: 6 }}>{b.title}</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 12, color: 'var(--text3)' }}>
+                      <span>{b.author_name}</span>
+                      <span>·</span>
+                      <span>{b.date}</span>
+                      <span>·</span>
+                      <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10 }}>{b.read_time}</span>
                     </div>
                   </div>
                 </Link>
@@ -172,55 +142,40 @@ export default async function BriefingsPage() {
             </div>
           </div>
 
-          {/* Sidebar */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-20 flex flex-col gap-4">
-              {/* Newsletter */}
-              <div
-                className="rounded-[14px] p-5 relative overflow-hidden"
-                style={{ background: 'var(--surface)', border: '1px solid var(--bord2)' }}
-              >
-                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: 'linear-gradient(90deg,#F97316,#E91E8C)' }} />
-                <div className="font-mono text-[9.5px] tracking-[.12em] uppercase mb-2" style={{ color: 'var(--orange)' }}>
-                  Founder's Newsletter
-                </div>
-                <div className="font-display font-bold text-[15px] tracking-tight mb-1" style={{ color: 'var(--text)' }}>
-                  Operator to Founder
-                </div>
-                <p className="text-[12.5px] leading-relaxed mb-4" style={{ color: 'var(--text2)' }}>
-                  Building LabelNest from zero. Sharing the journey as it happens.
-                </p>
-                <a
-                  href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7472967819387686913"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full text-center font-semibold text-[13px] py-2.5 rounded-lg text-white transition-opacity hover:opacity-88"
-                  style={{ background: 'var(--orange)' }}
-                >
-                  Follow on LinkedIn ↗
-                </a>
-              </div>
+          {/* SIDEBAR */}
+          <div style={{ position: 'sticky', top: 88, display: 'flex', flexDirection: 'column', gap: 14 }}>
+            {/* Newsletter */}
+            <div style={{ background: 'var(--surface)', border: '1px solid rgba(255,255,255,.08)', borderRadius: 14, padding: 20, position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg,#F97316,#E91E8C)' }} />
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.12em', textTransform: 'uppercase', color: '#F97316', marginBottom: 6 }}>Founder's Newsletter</div>
+              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 15, color: 'var(--text)', marginBottom: 4 }}>Operator to Founder</div>
+              <div style={{ fontSize: 12.5, color: 'var(--text2)', marginBottom: 14, lineHeight: 1.5 }}>Building LabelNest from zero. Sharing the journey as it happens.</div>
+              <a href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7472967819387686913" target="_blank" rel="noopener noreferrer" style={{ display: 'block', textAlign: 'center', background: '#F97316', color: '#fff', fontSize: 13, fontWeight: 600, padding: 10, borderRadius: 8 }}>Follow on LinkedIn ↗</a>
+            </div>
 
-              {/* Authors */}
-              <div className="rounded-[14px] p-5" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-                <div className="font-mono text-[9.5px] tracking-[.12em] uppercase mb-3" style={{ color: 'var(--text3)' }}>
-                  Authors
-                </div>
-                {['Ankit Suman', 'Shubham Singh', 'Sumedha Pandey', 'LabelNest'].map((a) => (
-                  <div key={a} className="flex items-center gap-2.5 mb-2.5 last:mb-0">
-                    <div
-                      className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center font-display font-extrabold text-[11px] text-white"
-                      style={{ background: authorGradient(a) }}
-                    >
-                      {a[0]}
+            {/* Authors */}
+            <div style={{ background: 'var(--surface)', border: '1px solid rgba(255,255,255,.07)', borderRadius: 14, padding: 20 }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Authors</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {[
+                  { name: 'Ankit Suman', role: 'Founder and Director', grad: 'linear-gradient(135deg,#E91E8C,#7C3AED)' },
+                  { name: 'Shubham Singh', role: 'Data and AI Systems', grad: 'linear-gradient(135deg,#2563EB,#7C3AED)' },
+                  { name: 'Sumedha Pandey', role: 'Research', grad: 'linear-gradient(135deg,#10B981,#2563EB)' },
+                  { name: 'LabelNest', role: 'Team posts', grad: 'rgba(255,255,255,.08)' },
+                ].map(a => (
+                  <div key={a.name} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <div style={{ width: 30, height: 30, borderRadius: '50%', background: a.grad, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 12, color: a.name === 'LabelNest' ? 'var(--text2)' : '#fff', flexShrink: 0, border: a.name === 'LabelNest' ? '1px solid rgba(255,255,255,.1)' : 'none' }}>{a.name[0]}</div>
+                    <div>
+                      <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)' }}>{a.name}</div>
+                      <div style={{ fontSize: 11, color: 'var(--text3)' }}>{a.role}</div>
                     </div>
-                    <span className="text-[13px]" style={{ color: 'var(--text2)' }}>{a}</span>
                   </div>
                 ))}
               </div>
             </div>
-          </aside>
+          </div>
         </div>
+
       </main>
       <Footer />
     </>
