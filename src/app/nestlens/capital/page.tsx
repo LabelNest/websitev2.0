@@ -1,6 +1,7 @@
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import NestLensModuleNav from '@/components/NestLensModuleNav'
+import HoverDiv from '@/components/HoverDiv'
 import Link from 'next/link'
 import { Metadata } from 'next'
 
@@ -102,16 +103,15 @@ export default function CapitalPage() {
             <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 520, marginBottom: 36, lineHeight: 1.65 }}>Capital Readiness does not stop at the data room. It connects you to the right investors, service providers, grants, and strategic partners.</p>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
               {MATCHING.map(m => (
-                <div key={m.name}
-                  style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: 26, position: 'relative', overflow: 'hidden', transition: 'border-color .2s' }}
-                  onMouseOver={e => (e.currentTarget.style.borderColor = `${m.border}4D`)}
-                  onMouseOut={e => (e.currentTarget.style.borderColor = 'var(--border)')}>
+                <HoverDiv key={m.name}
+                  hoverBorderColor={`${m.border}4D`}
+                  style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: 26, position: 'relative', overflow: 'hidden', transition: 'border-color .2s' }}>
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: m.border, opacity: 0.5 }} />
                   <div style={{ position: 'absolute', top: 16, right: 16, fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(16,185,129,.1)', color: '#10B981' }}>Live</div>
                   <div style={{ fontSize: 26, marginBottom: 12 }}>{m.icon}</div>
                   <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 17, color: 'var(--text)', marginBottom: 6 }}>{m.name}</div>
                   <div style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65 }}>{m.desc}</div>
-                </div>
+                </HoverDiv>
               ))}
             </div>
           </div>

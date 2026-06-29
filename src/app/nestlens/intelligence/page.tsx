@@ -1,6 +1,7 @@
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import NestLensModuleNav from '@/components/NestLensModuleNav'
+import HoverDiv from '@/components/HoverDiv'
 import Link from 'next/link'
 import { Metadata } from 'next'
 
@@ -86,14 +87,14 @@ export default function IntelligencePage() {
             <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 520, marginBottom: 36, lineHeight: 1.65 }}>NestLens builds a complete picture of the private markets ecosystem — from fund managers and their portfolios to the contacts who drive decisions.</p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
               {ENTITIES.map(e => (
-                <div key={e.name}
-                  style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 22, transition: 'border-color .2s,transform .2s' }}
-                  onMouseOver={ev => { ev.currentTarget.style.borderColor = 'rgba(255,255,255,.15)'; ev.currentTarget.style.transform = 'translateY(-3px)' }}
-                  onMouseOut={ev => { ev.currentTarget.style.borderColor = 'var(--border)'; ev.currentTarget.style.transform = '' }}>
+                <HoverDiv key={e.name}
+                  hoverBorderColor="rgba(255,255,255,.15)"
+                  hoverTransform="translateY(-3px)"
+                  style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 22, transition: 'border-color .2s,transform .2s' }}>
                   <div style={{ fontSize: 24, marginBottom: 10 }}>{e.icon}</div>
                   <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)', marginBottom: 5 }}>{e.name}</div>
                   <div style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.6 }}>{e.desc}</div>
-                </div>
+                </HoverDiv>
               ))}
             </div>
           </div>
@@ -106,17 +107,16 @@ export default function IntelligencePage() {
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 32 }}>Five intelligence capabilities</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {CAPABILITIES.map(c => (
-                <div key={c.name}
-                  style={{ display: 'flex', gap: 16, alignItems: 'flex-start', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 13, padding: 20, transition: 'border-color .2s' }}
-                  onMouseOver={e => (e.currentTarget.style.borderColor = c.hoverColor)}
-                  onMouseOut={e => (e.currentTarget.style.borderColor = 'var(--border)')}>
+                <HoverDiv key={c.name}
+                  hoverBorderColor={c.hoverColor}
+                  style={{ display: 'flex', gap: 16, alignItems: 'flex-start', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 13, padding: 20, transition: 'border-color .2s' }}>
                   <div style={{ fontSize: 22, flexShrink: 0, marginTop: 2 }}>{c.icon}</div>
                   <div>
                     <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '2px 8px', borderRadius: 4, background: `${c.badgeColor}1A`, color: c.badgeColor, display: 'inline-block', marginBottom: 6 }}>{c.badge}</div>
                     <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 16, color: 'var(--text)', marginBottom: 5 }}>{c.name}</div>
                     <div style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65 }}>{c.desc}</div>
                   </div>
-                </div>
+                </HoverDiv>
               ))}
             </div>
           </div>

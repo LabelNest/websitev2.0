@@ -1,6 +1,7 @@
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import NestLensModuleNav from '@/components/NestLensModuleNav'
+import HoverLink from '@/components/HoverLink'
 import Link from 'next/link'
 import { Metadata } from 'next'
 
@@ -47,10 +48,8 @@ export default function NestLensPage() {
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 8, textAlign: 'center' }}>Three modules — all live</div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16, marginTop: 32 }}>
 
-              <Link href="/nestlens/intelligence"
-                style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderTop: '3px solid #2563EB', borderRadius: 18, padding: 28, display: 'block', transition: 'transform .2s', textDecoration: 'none' }}
-                onMouseOver={e => (e.currentTarget.style.transform = 'translateY(-5px)')}
-                onMouseOut={e => (e.currentTarget.style.transform = '')}>
+              <HoverLink href="/nestlens/intelligence"
+                style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderTop: '3px solid #2563EB', borderRadius: 18, padding: 28, display: 'block', transition: 'transform .2s', textDecoration: 'none' }}>
                 <div style={{ fontSize: 28, marginBottom: 14 }}>🔭</div>
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(16,185,129,.1)', color: '#10B981', display: 'inline-block', marginBottom: 10 }}>Live</div>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, color: 'var(--text)', marginBottom: 8 }}>Intelligence</div>
@@ -60,12 +59,10 @@ export default function NestLensPage() {
                   <div><div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, color: '#2563EB' }}>12K+</div><div style={{ fontSize: 11, color: 'var(--text3)' }}>Contacts</div></div>
                 </div>
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: '#2563EB' }}>Explore Intelligence →</div>
-              </Link>
+              </HoverLink>
 
-              <Link href="/nestlens/exchange"
-                style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderTop: '3px solid #E91E8C', borderRadius: 18, padding: 28, display: 'block', transition: 'transform .2s', textDecoration: 'none' }}
-                onMouseOver={e => (e.currentTarget.style.transform = 'translateY(-5px)')}
-                onMouseOut={e => (e.currentTarget.style.transform = '')}>
+              <HoverLink href="/nestlens/exchange"
+                style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderTop: '3px solid #E91E8C', borderRadius: 18, padding: 28, display: 'block', transition: 'transform .2s', textDecoration: 'none' }}>
                 <div style={{ fontSize: 28, marginBottom: 14 }}>⚡</div>
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(16,185,129,.1)', color: '#10B981', display: 'inline-block', marginBottom: 10 }}>Live</div>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, color: 'var(--text)', marginBottom: 8 }}>Exchange</div>
@@ -75,12 +72,10 @@ export default function NestLensPage() {
                   <div><div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, color: '#E91E8C' }}>KYC</div><div style={{ fontSize: 11, color: 'var(--text3)' }}>Verified</div></div>
                 </div>
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: '#E91E8C' }}>Explore Exchange →</div>
-              </Link>
+              </HoverLink>
 
-              <Link href="/nestlens/capital"
-                style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderTop: '3px solid #10B981', borderRadius: 18, padding: 28, display: 'block', transition: 'transform .2s', textDecoration: 'none' }}
-                onMouseOver={e => (e.currentTarget.style.transform = 'translateY(-5px)')}
-                onMouseOut={e => (e.currentTarget.style.transform = '')}>
+              <HoverLink href="/nestlens/capital"
+                style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderTop: '3px solid #10B981', borderRadius: 18, padding: 28, display: 'block', transition: 'transform .2s', textDecoration: 'none' }}>
                 <div style={{ fontSize: 28, marginBottom: 14 }}>🏦</div>
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(16,185,129,.1)', color: '#10B981', display: 'inline-block', marginBottom: 10 }}>Live</div>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, color: 'var(--text)', marginBottom: 8 }}>Capital Readiness</div>
@@ -90,7 +85,7 @@ export default function NestLensPage() {
                   <div><div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, color: '#10B981' }}>51</div><div style={{ fontSize: 11, color: 'var(--text3)' }}>Items</div></div>
                 </div>
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: '#10B981' }}>Explore Capital Readiness →</div>
-              </Link>
+              </HoverLink>
 
             </div>
           </div>
