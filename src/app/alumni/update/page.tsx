@@ -1,11 +1,11 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 
 type State = 'loading' | 'invalid' | 'form' | 'success'
 
-export default function AlumniUpdatePage() {
+function AlumniUpdateForm() {
   const params   = useSearchParams()
   const token    = params.get('token') ?? ''
 
@@ -139,5 +139,13 @@ export default function AlumniUpdatePage() {
         © 2026 LabelNest India Private Limited
       </div>
     </div>
+  )
+}
+
+export default function AlumniUpdatePage() {
+  return (
+    <Suspense>
+      <AlumniUpdateForm />
+    </Suspense>
   )
 }
