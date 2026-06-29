@@ -22,11 +22,14 @@ const ROLLING = [
   { title: 'HR Analyst', dept: 'People and Culture', loc: 'Bangalore' },
 ]
 
+const TRACKS = ['Data Research', 'HR', 'Marketing', 'Sales', 'Engineering & AI', 'Others'] as const
+
 export default function CareersPage() {
   const [jobs, setJobs] = useState<Job[]>([])
   const [role, setRole] = useState('')
   const [aName, setAName] = useState('')
   const [aEmail, setAEmail] = useState('')
+  const [aTrack, setATrack] = useState('')
   const [aLink, setALink] = useState('')
   const [aMsg, setAMsg] = useState('')
   const [sent, setSent] = useState(false)
@@ -44,14 +47,16 @@ export default function CareersPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
-    await fetch('/api/contact', {
+    await fetch('/api/apply', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         name: aName,
         email: aEmail,
-        message: `Role: ${role}\nLinkedIn/Portfolio: ${aLink}\n\n${aMsg}`,
-        inquiry_type: 'career',
+        track: aTrack || 'Others',
+        linkedin_url: aLink,
+        message: role ? `Applying for: ${role}\n\n${aMsg}` : aMsg,
+        source: 'website',
       }),
     })
     setSent(true)
@@ -212,10 +217,20 @@ export default function CareersPage() {
                         style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none' }} />
                     </div>
                   </div>
-                  <div style={{ marginBottom: 12 }}>
-                    <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>Role you are applying for</label>
-                    <input type="text" value={role} onChange={e => setRole(e.target.value)} placeholder="e.g. Data Engineer, or Open Application"
-                      style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none' }} />
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>Track</label>
+                      <select required value={aTrack} onChange={e => setATrack(e.target.value)}
+                        style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: aTrack ? 'var(--text)' : 'var(--text3)', outline: 'none' }}>
+                        <option value="">Select a track</option>
+                        {TRACKS.map(t => <option key={t} value={t}>{t}</option>)}
+                      </select>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>Role you are applying for</label>
+                      <input type="text" value={role} onChange={e => setRole(e.target.value)} placeholder="e.g. Data Engineer, or Open"
+                        style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none' }} />
+                    </div>
                   </div>
                   <div style={{ marginBottom: 12 }}>
                     <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>LinkedIn or portfolio</label>
@@ -232,7 +247,7 @@ export default function CareersPage() {
                     style={{ width: '100%', background: '#E91E8C', color: '#fff', border: 'none', borderRadius: 10, padding: 13, fontSize: 14.5, fontWeight: 600, cursor: loading ? 'default' : 'pointer', opacity: loading ? 0.7 : 1, fontFamily: 'Inter, sans-serif' }}>
                     {loading ? 'Sending...' : 'Send application'}
                   </button>
-                  <div style={{ fontSize: 11.5, color: 'var(--text3)', textAlign: 'center', marginTop: 10 }}>Goes to contact@labelnest.in · We read every one</div>
+                  <div style={{ fontSize: 11.5, color: 'var(--text3)', textAlign: 'center', marginTop: 10 }}>Goes directly to our hiring pipeline · We read every one</div>
                 </form>
               ) : (
                 <div style={{ textAlign: 'center', padding: '32px 0' }}>
@@ -284,14 +299,16 @@ export default function CareersPage() {
                   e.preventDefault()
                   const form = e.currentTarget
                   const data = new FormData(form)
-                  await fetch('/api/contact', {
+                  await fetch('/api/apply', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                       name: data.get('name'),
                       email: data.get('email'),
-                      message: `Track: ${data.get('track')}\nGraduation/Institution: ${data.get('institution')}\n\n${data.get('message')}`,
-                      inquiry_type: 'fellowship-cohort-3',
+                      track: data.get('track'),
+                      message: data.get('message'),
+                      source: 'fellowship',
+                      metadata: { cohort: 'III', institution: data.get('institution') },
                     }),
                   })
                   form.innerHTML = '<div style="text-align:center;padding:32px 0"><div style="font-size:38px;margin-bottom:14px">🎓</div><div style="font-family:Bricolage Grotesque,sans-serif;font-weight:800;font-size:18px;color:var(--text);margin-bottom:8px">Application received</div><div style="font-size:13.5px;color:var(--text2);line-height:1.65">We will review your application and reach out if it is a fit. Cohort III applications are reviewed on a rolling basis.</div></div>'
@@ -313,8 +330,7 @@ export default function CareersPage() {
                     <select name="track" required
                       style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none' }}>
                       <option value="">Select a track</option>
-                      <option value="NestLabs">NestLabs — Data and Research</option>
-                      <option value="NestTech">NestTech — Engineering and Systems</option>
+                      {TRACKS.map(t => <option key={t} value={t}>{t}</option>)}
                     </select>
                   </div>
                   <div style={{ marginBottom: 12 }}>
