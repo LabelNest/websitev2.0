@@ -54,6 +54,7 @@ const TOKENS = {
   '{{governing_law}}':   'Laws of Karnataka, India',
   '{{jurisdiction}}':    'Courts of Bengaluru, Karnataka, India',
   '{{website_url}}':     'https://labelnest.in',
+  '{{cin}}':             'U63111KA2025PTC211812',
 }
 
 function resolveTokens(text) {
@@ -172,7 +173,7 @@ function buildHtml(doc) {
     ${bodyHtml}
   </div>
   <footer>
-    <span>© 2026 LabelNest Technologies Pvt Ltd</span>
+    <span>© 2026 LabelNest India Private Limited · CIN: U63111KA2025PTC211812</span>
     <a href="https://labelnest.in/legal">All legal documents →</a>
   </footer>
 </div>

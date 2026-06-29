@@ -140,7 +140,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
           <span className="text-[12px]" style={{ color: 'var(--text3)' }}>
-            © 2026 LabelNest India Private Limited. All rights reserved.
+            © 2026 LabelNest India Private Limited. CIN: U63111KA2025PTC211812. All rights reserved.
           </span>
           <span
             className="font-mono text-[10.5px] tracking-wide"
