@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
@@ -84,18 +85,17 @@ export default function Nav() {
         <div className="max-w-[1300px] mx-auto px-6 h-[60px] flex items-center justify-between">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 flex-shrink-0">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background:'linear-gradient(135deg,#E91E8C,#2563EB)' }}>
-              <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
-                <rect x="1"  y="1"  width="7" height="7" rx="1.5" fill="white" opacity=".95" />
-                <rect x="10" y="1"  width="7" height="7" rx="1.5" fill="white" opacity=".4"  />
-                <rect x="1"  y="10" width="7" height="7" rx="1.5" fill="white" opacity=".4"  />
-                <rect x="10" y="10" width="7" height="7" rx="1.5" fill="white" opacity=".95" />
-              </svg>
+          <Link href="/" className="flex items-center flex-shrink-0">
+            <div style={{ background:'#fff', borderRadius:10, padding:'4px 10px', display:'flex', alignItems:'center', height:40 }}>
+              <Image
+                src="https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brand/labelnest-logo.jpg"
+                alt="LabelNest"
+                width={120}
+                height={32}
+                style={{ objectFit:'contain', objectPosition:'left center', display:'block' }}
+                priority
+              />
             </div>
-            <span className="font-display font-extrabold text-[17px] tracking-tight" style={{ color:'var(--text)' }}>
-              Label<em className="not-italic" style={{ color:'var(--pink)' }}>Nest</em>
-            </span>
           </Link>
 
           {/* Desktop nav */}
