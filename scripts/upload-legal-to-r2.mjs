@@ -40,13 +40,20 @@ const R2 = new S3Client({
 const BUCKET = process.env.R2_BUCKET_NAME ?? process.env.R2_BUCKET ?? 'labelnest'
 const PUBLIC_URL = process.env.R2_PUBLIC_URL ?? 'https://assets.labelnest.in'
 
-// Resolve {{company_name}} tokens
+// Resolve {{token}} placeholders — sourced from legal_settings.csv
 const TOKENS = {
-  '{{company_name}}': 'LabelNest',
-  '{{company_full_name}}': 'LabelNest Technologies Private Limited',
-  '{{company_email}}': 'legal@labelnest.in',
-  '{{company_website}}': 'https://labelnest.in',
-  '{{app_name}}': 'NestLens',
+  '{{company_name}}':    'LabelNest India Private Limited',
+  '{{address}}':         'No. 33, 4th Floor, 1st Main, CBI Main Rd, HMT Layout, Ganganagar, Bengaluru, Karnataka, India 560032',
+  '{{support_email}}':   'contact@labelnest.in',
+  '{{privacy_email}}':   'privacy@labelnest.in',
+  '{{ops_email}}':       'ops@labelnest.in',
+  '{{nestlens_email}}':  'nestlens@labelnest.in',
+  '{{hr_email}}':        'hr@labelnest.in',
+  '{{nesthr_email}}':    'nesthr@labelnest.in',
+  '{{legal_email}}':     'contact@labelnest.in',
+  '{{governing_law}}':   'Laws of Karnataka, India',
+  '{{jurisdiction}}':    'Courts of Bengaluru, Karnataka, India',
+  '{{website_url}}':     'https://labelnest.in',
 }
 
 function resolveTokens(text) {
