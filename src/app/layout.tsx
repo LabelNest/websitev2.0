@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Bricolage_Grotesque, Inter, JetBrains_Mono } from 'next/font/google'
+import ScrollToTop from '@/components/ScrollToTop'
 import './globals.css'
 
 const bricolage = Bricolage_Grotesque({
@@ -72,7 +73,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>{children}</body>
+      <body><ScrollToTop />{children}</body>
     </html>
   )
 }

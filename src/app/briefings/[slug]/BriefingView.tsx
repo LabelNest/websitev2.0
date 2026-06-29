@@ -5,6 +5,35 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import { Briefing } from '@/lib/db'
 
+function mdInline(t: string): string {
+  return t
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/`(.+?)`/g, '<code>$1</code>')
+    .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2">$1</a>')
+}
+function mdLine(l: string): string {
+  if (!l.trim()) return ''
+  if (l.startsWith('- ') || l.startsWith('* ')) return `<li>${mdInline(l.slice(2))}</li>`
+  return mdInline(l)
+}
+function mdToHtml(md: string): string {
+  if (!md) return ''
+  if (md.trim().startsWith('<')) return md
+  return md.replace(/\r\n/g, '\n').split('\n\n').map(block => {
+    const lines = block.trim().split('\n')
+    if (lines[0].startsWith('## ')) return `<h2>${lines[0].slice(3)}</h2>${lines.slice(1).map(l => mdLine(l)).join('\n')}`
+    if (lines[0].startsWith('### ')) return `<h3>${lines[0].slice(4)}</h3>${lines.slice(1).map(l => mdLine(l)).join('\n')}`
+    if (lines[0].startsWith('# ')) return `<h1>${lines[0].slice(2)}</h1>${lines.slice(1).map(l => mdLine(l)).join('\n')}`
+    if (lines[0].match(/^---+$/)) return '<hr>'
+    if (lines.every(l => l.startsWith('- ') || l.startsWith('* ')))
+      return `<ul>${lines.map(l => `<li>${mdInline(l.slice(2))}</li>`).join('')}</ul>`
+    if (lines.every(l => /^\d+\. /.test(l)))
+      return `<ol>${lines.map(l => `<li>${mdInline(l.replace(/^\d+\. /, ''))}</li>`).join('')}</ol>`
+    return `<p>${lines.map(l => mdInline(l)).join('<br>')}</p>`
+  }).join('\n')
+}
+
 function scopeColor(scope: string): string {
   const m: Record<string, string> = {
     Manifesto: '#E91E8C', Product: '#7C3AED', Intelligence: '#2563EB',
@@ -31,6 +60,7 @@ function authorGradient(name: string): string {
 
 export default function BriefingView({ briefing, related }: { briefing: Briefing; related: Briefing[] }) {
   const [progress, setProgress] = useState(0)
+  const contentHtml = mdToHtml(briefing.content)
 
   useEffect(() => {
     const onScroll = () => {
@@ -47,19 +77,36 @@ export default function BriefingView({ briefing, related }: { briefing: Briefing
   return (
     <>
       <style>{`
-        .briefing-body h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(18px,2.4vw,24px);color:var(--text);letter-spacing:-.022em;margin:40px 0 12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.07)}
-        .briefing-body h2:first-child{margin-top:0;border-top:none;padding-top:0}
-        .briefing-body h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:17px;color:var(--text);margin:24px 0 8px}
-        .briefing-body p{font-size:15.5px;color:var(--text2);line-height:1.8;margin-bottom:16px}
-        .briefing-body p strong{color:var(--text);font-weight:600}
-        .briefing-body ul{list-style:none;padding:0;margin:12px 0 18px;display:flex;flex-direction:column;gap:7px}
-        .briefing-body li{padding:10px 14px;background:var(--surface);border-radius:7px;border-left:3px solid #F97316;font-size:14.5px;color:var(--text2);line-height:1.6}
-        .briefing-body li strong{color:var(--text);font-weight:600}
-        .briefing-body hr{border:none;border-top:1px solid rgba(255,255,255,.07);margin:28px 0}
-        .share-btn{display:flex;align-items:center;gap:10px;padding:10px 13px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:8px;font-size:13px;color:var(--text2);transition:all .15s;margin-bottom:7px}
-        .share-btn:hover{color:var(--text);border-color:rgba(255,255,255,.14)}
-        .related-item{display:flex;gap:10px;padding:10px;background:rgba(255,255,255,.03);border-radius:8px;margin-bottom:6px;transition:background .15s}
-        .related-item:hover{background:rgba(255,255,255,.06)}
+        /* ── Briefing body ── */
+        .briefing-body { font-family: Inter, sans-serif; }
+        .briefing-body h1 { font-family: 'Bricolage Grotesque',sans-serif; font-weight: 800; font-size: clamp(22px,3vw,32px); color: var(--text); letter-spacing: -.03em; margin: 44px 0 14px; }
+        .briefing-body h2 { font-family: 'Bricolage Grotesque',sans-serif; font-weight: 800; font-size: clamp(18px,2.4vw,22px); color: var(--text); letter-spacing: -.022em; margin: 44px 0 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.07); position: relative; }
+        .briefing-body h2::before { content:''; position:absolute; left:0; top:-1px; width:40px; height:2px; background:linear-gradient(90deg,#F97316,#E91E8C); border-radius:2px; }
+        .briefing-body h2:first-child { margin-top:0; border-top:none; padding-top:0; }
+        .briefing-body h2:first-child::before { display:none; }
+        .briefing-body h3 { font-family: 'Bricolage Grotesque',sans-serif; font-weight: 700; font-size: 16px; color: var(--text); margin: 28px 0 9px; }
+        .briefing-body p { font-size: 16px; color: var(--text2); line-height: 1.82; margin-bottom: 18px; }
+        .briefing-body p strong { color: var(--text); font-weight: 700; }
+        .briefing-body p em { color: #F97316; font-style: normal; font-weight: 600; }
+        .briefing-body code { font-family: 'JetBrains Mono',monospace; font-size: 13px; background: rgba(255,255,255,.06); padding: 2px 7px; border-radius: 4px; color: #F97316; }
+        .briefing-body a { color: #2563EB; }
+        /* ── Lists ── */
+        .briefing-body ul, .briefing-body ol { list-style: none; padding: 0; margin: 14px 0 22px; display: flex; flex-direction: column; gap: 8px; }
+        .briefing-body li { position: relative; padding: 12px 16px 12px 44px; background: var(--surface); border: 1px solid rgba(255,255,255,.06); border-radius: 10px; font-size: 15px; color: var(--text2); line-height: 1.65; }
+        .briefing-body ul li::before { content:''; position:absolute; left:16px; top:21px; width:8px; height:8px; border-radius:50%; background:linear-gradient(135deg,#F97316,#E91E8C); }
+        .briefing-body ol { counter-reset: li; }
+        .briefing-body ol li { counter-increment: li; }
+        .briefing-body ol li::before { content:counter(li); position:absolute; left:12px; top:11px; width:22px; height:22px; background:rgba(249,115,22,.15); color:#F97316; border-radius:50%; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; line-height:22px; text-align:center; }
+        .briefing-body li strong { color: var(--text); font-weight: 700; }
+        .briefing-body hr { border:none; border-top:1px solid rgba(255,255,255,.07); margin:36px 0; }
+        /* ── Callout: blockquote used inline ── */
+        .briefing-body blockquote { border-left: 3px solid #F97316; background: rgba(249,115,22,.06); border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 24px 0; }
+        .briefing-body blockquote p { color: var(--text); font-size: 15.5px; font-style: italic; margin: 0; }
+        /* ── Sidebar ── */
+        .share-btn { display:flex; align-items:center; gap:10px; padding:10px 13px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07); border-radius:8px; font-size:13px; color:var(--text2); transition:all .15s; margin-bottom:7px; text-decoration:none; }
+        .share-btn:hover { color:var(--text); border-color:rgba(255,255,255,.14); }
+        .related-item { display:flex; gap:10px; padding:10px; background:rgba(255,255,255,.03); border-radius:8px; margin-bottom:6px; transition:background .15s; text-decoration:none; }
+        .related-item:hover { background:rgba(255,255,255,.06); }
       `}</style>
 
       {/* Reading progress */}
@@ -116,8 +163,8 @@ export default function BriefingView({ briefing, related }: { briefing: Briefing
             </div>
 
             {/* Body */}
-            {briefing.content ? (
-              <div className="briefing-body" dangerouslySetInnerHTML={{ __html: briefing.content }} />
+            {contentHtml ? (
+              <div className="briefing-body" dangerouslySetInnerHTML={{ __html: contentHtml }} />
             ) : (
               <div style={{ fontSize: 15.5, color: 'var(--text2)', lineHeight: 1.8 }}>Content coming soon.</div>
             )}

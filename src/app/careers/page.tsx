@@ -14,14 +14,6 @@ interface Job {
   apply_url: string
 }
 
-const ROLLING = [
-  { title: 'Data Engineer', dept: 'Data and AI Systems', loc: 'Bangalore' },
-  { title: 'Data Research Analyst', dept: 'Data and AI Systems', loc: 'Bangalore' },
-  { title: 'Project Management Analyst', dept: 'Delivery and Programs', loc: 'Bangalore' },
-  { title: 'Frontend Engineer', dept: 'Data and AI Systems', loc: 'Remote — India' },
-  { title: 'HR Analyst', dept: 'People and Culture', loc: 'Bangalore' },
-]
-
 const TRACKS = ['Data Research', 'HR', 'Marketing', 'Sales', 'Engineering & AI', 'Others'] as const
 
 export default function CareersPage() {
@@ -137,23 +129,6 @@ export default function CareersPage() {
               </div>
             ))}
 
-            {/* Rolling roles */}
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text3)', margin: '8px 0 12px', paddingTop: 20, borderTop: '1px solid var(--border)' }}>Roles we hire for on a rolling basis</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {ROLLING.map(r => (
-                <div key={r.title}
-                  style={{ display: 'flex', alignItems: 'center', gap: 20, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '16px 20px' }}
-                  onMouseOver={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,.15)')}
-                  onMouseOut={e => (e.currentTarget.style.borderColor = 'var(--border)')}>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 4 }}>{r.dept} · {r.loc}</div>
-                    <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)' }}>{r.title}</div>
-                  </div>
-                  <button onClick={() => applyFor(r.title)}
-                    style={{ fontSize: 13, fontWeight: 600, color: '#E91E8C', background: 'none', border: 'none', cursor: 'pointer' }}>Apply →</button>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 
