@@ -1,5 +1,6 @@
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import HoverDiv from '@/components/HoverDiv'
 import Link from 'next/link'
 import { Metadata } from 'next'
 
@@ -124,10 +125,10 @@ export default function NestHRPage() {
             <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 520, marginBottom: 36, lineHeight: 1.65 }}>Purpose-built modules that work independently or together. No bloat. No features you do not need. Each OS does exactly what it says.</p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
               {OS_MODULES.map(m => (
-                <div key={m.name}
-                  style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderTop: `3px solid ${m.border}`, borderRadius: 14, padding: 22, gridColumn: m.span === 2 ? 'span 2' : 'span 1', transition: 'border-color .2s,transform .2s' }}
-                  onMouseOver={ev => { ev.currentTarget.style.borderColor = `${m.border}59`; ev.currentTarget.style.transform = 'translateY(-3px)' }}
-                  onMouseOut={ev => { ev.currentTarget.style.borderColor = 'var(--border)'; ev.currentTarget.style.transform = '' }}>
+                <HoverDiv key={m.name}
+                  hoverBorderColor={`${m.border}59`}
+                  hoverTransform="translateY(-3px)"
+                  style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderTop: `3px solid ${m.border}`, borderRadius: 14, padding: 22, gridColumn: m.span === 2 ? 'span 2' : 'span 1', transition: 'border-color .2s,transform .2s' }}>
                   <div style={{ fontSize: 26, marginBottom: 12 }}>{m.icon}</div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
                     <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 17, color: 'var(--text)' }}>{m.name}</div>
@@ -139,7 +140,7 @@ export default function NestHRPage() {
                       <div key={f} style={{ fontSize: 12, color: 'var(--text3)' }}>✓ {f}</div>
                     ))}
                   </div>
-                </div>
+                </HoverDiv>
               ))}
             </div>
           </div>

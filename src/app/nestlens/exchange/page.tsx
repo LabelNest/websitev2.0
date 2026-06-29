@@ -1,6 +1,7 @@
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import NestLensModuleNav from '@/components/NestLensModuleNav'
+import HoverDiv from '@/components/HoverDiv'
 import Link from 'next/link'
 import { Metadata } from 'next'
 
@@ -95,14 +96,14 @@ export default function ExchangePage() {
             <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 520, marginBottom: 36, lineHeight: 1.65 }}>Exchange is not limited to private markets data. Any structured dataset with provenance can be listed, licensed, or sold.</p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12 }}>
               {CATEGORIES.map(c => (
-                <div key={c.name}
-                  style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 22, transition: 'border-color .2s,transform .2s' }}
-                  onMouseOver={ev => { ev.currentTarget.style.borderColor = 'rgba(233,30,140,.3)'; ev.currentTarget.style.transform = 'translateY(-3px)' }}
-                  onMouseOut={ev => { ev.currentTarget.style.borderColor = 'var(--border)'; ev.currentTarget.style.transform = '' }}>
+                <HoverDiv key={c.name}
+                  hoverBorderColor="rgba(233,30,140,.3)"
+                  hoverTransform="translateY(-3px)"
+                  style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 22, transition: 'border-color .2s,transform .2s' }}>
                   <div style={{ fontSize: 22, marginBottom: 10 }}>{c.icon}</div>
                   <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 4 }}>{c.name}</div>
                   <div style={{ fontSize: 12.5, color: 'var(--text2)', lineHeight: 1.55 }}>{c.desc}</div>
-                </div>
+                </HoverDiv>
               ))}
             </div>
           </div>
@@ -120,14 +121,13 @@ export default function ExchangePage() {
                 { icon: '🔒', name: 'Escrow Protected', color: 'rgba(37,99,235,.3)', desc: 'Payment held in escrow until delivery is confirmed. No upfront risk for buyers. Guaranteed payment for sellers on delivery.' },
                 { icon: '⭐', name: 'QC Scored Datasets', color: 'rgba(249,115,22,.3)', desc: 'Every dataset carries a quality score based on completeness, recency, methodology transparency, and provenance documentation.' },
               ].map(t => (
-                <div key={t.name}
-                  style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: 28, textAlign: 'center', transition: 'border-color .2s' }}
-                  onMouseOver={e => (e.currentTarget.style.borderColor = t.color)}
-                  onMouseOut={e => (e.currentTarget.style.borderColor = 'var(--border)')}>
+                <HoverDiv key={t.name}
+                  hoverBorderColor={t.color}
+                  style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: 28, textAlign: 'center', transition: 'border-color .2s' }}>
                   <div style={{ fontSize: 36, marginBottom: 14 }}>{t.icon}</div>
                   <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 17, color: 'var(--text)', marginBottom: 8 }}>{t.name}</div>
                   <div style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65 }}>{t.desc}</div>
-                </div>
+                </HoverDiv>
               ))}
             </div>
           </div>
