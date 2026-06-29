@@ -58,8 +58,7 @@ export default function CareersPage() {
     setLoading(false)
   }
 
-  const featuredJob = jobs[0] ?? null
-  const extraJobs = jobs.slice(1)
+  const activeJobs = jobs.filter(j => j)
 
   return (
     <>
@@ -81,8 +80,8 @@ export default function CareersPage() {
               <strong style={{ color: 'var(--text)', fontWeight: 600 }}>We hire for potential, not pedigree.</strong> The right degree is not a requirement. The right thinking is.
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-              <a href="#roles" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#E91E8C', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>See open roles</a>
-              <a href="#apply" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>Open application</a>
+              <a href="#apply" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#E91E8C', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Apply now</a>
+              <a href="#fellowship" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>Apply for Fellowship Cohort III</a>
             </div>
           </div>
         </section>
@@ -107,45 +106,24 @@ export default function CareersPage() {
         {/* OPEN ROLES */}
         <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)', background: 'var(--bg2)' }} id="roles">
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Open roles</div>
-            <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(26px,3.5vw,44px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 8 }}>Where we need people right now</h2>
-            <p style={{ fontSize: 15, color: 'var(--text2)', marginBottom: 36, maxWidth: 520, lineHeight: 1.65 }}>One publicly listed role and several we hire for on a rolling basis. Do not see your fit? Send an open application below.</p>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Hiring</div>
+            <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(26px,3.5vw,44px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 8 }}>No open vacancies. Always open to the right person.</h2>
+            <p style={{ fontSize: 15, color: 'var(--text2)', marginBottom: 36, maxWidth: 560, lineHeight: 1.65 }}>We do not wait for headcount approval to talk to someone exceptional. If you are willing to learn hard things and work on real problems, there is a place for you here.</p>
 
-            {/* Featured role — first DB job or hardcoded fallback */}
-            {featuredJob ? (
-              <div style={{ background: 'var(--surface)', border: '2px solid #E91E8C', borderRadius: 16, padding: '24px 28px', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 20 }}>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 6 }}>{featuredJob.department} · {featuredJob.location}</div>
-                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 19, color: 'var(--text)', marginBottom: 8 }}>{featuredJob.title}</div>
-                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 5, background: 'rgba(233,30,140,.1)', color: '#E91E8C' }}>Featured</span>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 5, background: 'rgba(255,255,255,.05)', color: 'var(--text2)' }}>{featuredJob.type}</span>
-                    {featuredJob.complexity && <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 5, background: 'rgba(255,255,255,.05)', color: 'var(--text2)' }}>{featuredJob.complexity}</span>}
-                  </div>
-                </div>
-                <a href={featuredJob.apply_url} target="_blank" rel="noopener noreferrer"
-                  style={{ background: '#E91E8C', color: '#fff', fontSize: 13.5, fontWeight: 600, padding: '11px 22px', borderRadius: 10, whiteSpace: 'nowrap', flexShrink: 0 }}>Apply now</a>
+            {/* Always looking banner */}
+            <div style={{ background: 'var(--surface)', border: '1px solid rgba(233,30,140,.25)', borderLeft: '3px solid #E91E8C', borderRadius: 14, padding: '20px 24px', marginBottom: 28, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap' }}>
+              <div>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)', marginBottom: 4 }}>Rolling applications — always on</div>
+                <div style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.6 }}>Tell us what you work on and what you want to build. We read every application personally.</div>
               </div>
-            ) : (
-              <div style={{ background: 'var(--surface)', border: '2px solid #E91E8C', borderRadius: 16, padding: '24px 28px', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 20 }}>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 6 }}>NestSales · Global · Remote</div>
-                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 19, color: 'var(--text)', marginBottom: 8 }}>Strategic BD Partner, Data and Intelligence</div>
-                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 5, background: 'rgba(233,30,140,.1)', color: '#E91E8C' }}>Featured</span>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 5, background: 'rgba(255,255,255,.05)', color: 'var(--text2)' }}>Remote</span>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 5, background: 'rgba(255,255,255,.05)', color: 'var(--text2)' }}>High complexity</span>
-                  </div>
-                </div>
-                <button onClick={() => applyFor('Strategic BD Partner, Data and Intelligence')}
-                  style={{ background: '#E91E8C', color: '#fff', fontSize: 13.5, fontWeight: 600, padding: '11px 22px', borderRadius: 10, whiteSpace: 'nowrap', flexShrink: 0, border: 'none', cursor: 'pointer' }}>Apply now</button>
-              </div>
-            )}
+              <button onClick={() => applyFor('Open Application')}
+                style={{ background: '#E91E8C', color: '#fff', fontSize: 13.5, fontWeight: 600, padding: '10px 22px', borderRadius: 10, border: 'none', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>Apply now</button>
+            </div>
 
-            {/* Additional DB jobs */}
-            {extraJobs.map(job => (
+            {/* Active DB jobs if any */}
+            {activeJobs.map(job => (
               <div key={job.id}
-                style={{ display: 'flex', alignItems: 'center', gap: 20, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '16px 20px', marginBottom: 8 }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 20, background: 'var(--surface)', border: '2px solid #E91E8C', borderRadius: 12, padding: '16px 20px', marginBottom: 8 }}>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 4 }}>{job.department} · {job.location}</div>
                   <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)' }}>{job.title}</div>
@@ -155,7 +133,7 @@ export default function CareersPage() {
             ))}
 
             {/* Rolling roles */}
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text3)', margin: '24px 0 12px', paddingTop: 20, borderTop: '1px solid var(--border)' }}>Rolling basis — always open</div>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text3)', margin: '8px 0 12px', paddingTop: 20, borderTop: '1px solid var(--border)' }}>Roles we hire for on a rolling basis</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {ROLLING.map(r => (
                 <div key={r.title}
@@ -197,7 +175,7 @@ export default function CareersPage() {
         </section>
 
         {/* APPLICATION FORM */}
-        <section style={{ padding: '64px 48px', background: 'var(--bg2)' }} id="apply">
+        <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)', background: 'var(--bg2)' }} id="apply">
           <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'start' }}>
             <div>
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Apply</div>
@@ -263,6 +241,99 @@ export default function CareersPage() {
                   <div style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.65 }}>We have your application and will review it properly. If it is a fit, you will hear from us within 3 to 5 business days.</div>
                 </div>
               )}
+            </div>
+          </div>
+        </section>
+
+        {/* FELLOWSHIP COHORT III */}
+        <section style={{ padding: '64px 48px' }} id="fellowship">
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'start' }}>
+              <div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Nestling Fellowship · Cohort III</div>
+                <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(24px,3vw,38px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 14 }}>
+                  Learn by doing real work.<br />
+                  <span style={{ background: 'linear-gradient(100deg,#7C3AED,#2563EB)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Not simulated projects.</span>
+                </h2>
+                <p style={{ fontSize: 15, color: 'var(--text2)', lineHeight: 1.72, marginBottom: 20 }}>
+                  The Nestling Fellowship is a structured learning track for people early in their career who want to work on live data systems, real infrastructure, and problems that do not have textbook answers.
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
+                  {[
+                    { icon: '📅', label: 'Duration', val: '3 months · full-time' },
+                    { icon: '📍', label: 'Location', val: 'Bengaluru, India — in-person' },
+                    { icon: '🏷️', label: 'Tracks', val: 'NestLabs (data) · NestTech (engineering)' },
+                    { icon: '🎓', label: 'Who it is for', val: 'Students and early-career builders — any background' },
+                  ].map(item => (
+                    <div key={item.label} style={{ display: 'flex', gap: 12, alignItems: 'flex-start', fontSize: 13.5, color: 'var(--text2)' }}>
+                      <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>{item.icon}</span>
+                      <span><strong style={{ color: 'var(--text)', fontWeight: 600 }}>{item.label}:</strong> {item.val}</span>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ padding: '14px 18px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, fontSize: 13, color: 'var(--text2)', lineHeight: 1.6 }}>
+                  38 Nestling fellows have come through Cohorts I and II. Most are still building in the ecosystem.
+                </div>
+              </div>
+
+              <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 18, padding: 32, position: 'relative', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg,#7C3AED,#2563EB)' }} />
+                <h3 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 18, color: 'var(--text)', marginBottom: 6 }}>Apply for Cohort III</h3>
+                <p style={{ fontSize: 13, color: 'var(--text2)', marginBottom: 20, lineHeight: 1.6 }}>Tell us your track, what you are working on, and why you want to be a Nestling. No formal requirements.</p>
+                <form onSubmit={async e => {
+                  e.preventDefault()
+                  const form = e.currentTarget
+                  const data = new FormData(form)
+                  await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      name: data.get('name'),
+                      email: data.get('email'),
+                      message: `Track: ${data.get('track')}\nGraduation/Institution: ${data.get('institution')}\n\n${data.get('message')}`,
+                      inquiry_type: 'fellowship-cohort-3',
+                    }),
+                  })
+                  form.innerHTML = '<div style="text-align:center;padding:32px 0"><div style="font-size:38px;margin-bottom:14px">🎓</div><div style="font-family:Bricolage Grotesque,sans-serif;font-weight:800;font-size:18px;color:var(--text);margin-bottom:8px">Application received</div><div style="font-size:13.5px;color:var(--text2);line-height:1.65">We will review your application and reach out if it is a fit. Cohort III applications are reviewed on a rolling basis.</div></div>'
+                }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>Your name</label>
+                      <input name="name" type="text" required placeholder="Full name"
+                        style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none' }} />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>Email</label>
+                      <input name="email" type="email" required placeholder="you@email.com"
+                        style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none' }} />
+                    </div>
+                  </div>
+                  <div style={{ marginBottom: 12 }}>
+                    <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>Track</label>
+                    <select name="track" required
+                      style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none' }}>
+                      <option value="">Select a track</option>
+                      <option value="NestLabs">NestLabs — Data and Research</option>
+                      <option value="NestTech">NestTech — Engineering and Systems</option>
+                    </select>
+                  </div>
+                  <div style={{ marginBottom: 12 }}>
+                    <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>College or institution (optional)</label>
+                    <input name="institution" type="text" placeholder="e.g. RVCE, BITS, self-taught"
+                      style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none' }} />
+                  </div>
+                  <div style={{ marginBottom: 16 }}>
+                    <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>What do you work on and why LabelNest?</label>
+                    <textarea name="message" required rows={4} placeholder="Projects, side work, what you are learning — anything that shows how you think."
+                      style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none', resize: 'vertical', fontFamily: 'Inter, sans-serif' }} />
+                  </div>
+                  <button type="submit"
+                    style={{ width: '100%', background: '#7C3AED', color: '#fff', border: 'none', borderRadius: 10, padding: 13, fontSize: 14.5, fontWeight: 600, cursor: 'pointer', fontFamily: 'Inter, sans-serif' }}>
+                    Apply for Fellowship Cohort III
+                  </button>
+                  <div style={{ fontSize: 11.5, color: 'var(--text3)', textAlign: 'center', marginTop: 10 }}>Goes to hr@labelnest.in · Rolling review</div>
+                </form>
+              </div>
             </div>
           </div>
         </section>
