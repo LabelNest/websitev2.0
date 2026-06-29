@@ -53,7 +53,13 @@ export default function LegalDocView({ doc }: { doc: LegalDocument }) {
           <aside style={{ position: 'sticky', top: 88 }}>
             <Link href="/legal" style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--text2)', marginBottom: 20 }}>← All legal docs</Link>
             <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 15, color: 'var(--text)', marginBottom: 6 }}>{doc.title}</div>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, lineHeight: 1.65, color: 'var(--text3)', marginBottom: 18 }}>{doc.version} · Effective {doc.effective_date}<br />Last updated {doc.last_updated}</div>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, lineHeight: 1.65, color: 'var(--text3)', marginBottom: 14 }}>{doc.version} · Effective {doc.effective_date}<br />Last updated {doc.last_updated}</div>
+            {doc.r2_url && (
+              <a href={doc.r2_url} target="_blank" rel="noopener noreferrer"
+                style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 500, color: 'var(--text2)', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 7, padding: '7px 11px', marginBottom: 18, textDecoration: 'none' }}>
+                ↓ Download document
+              </a>
+            )}
             {toc.length > 0 && (
               <nav style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 {toc.map(item => (
