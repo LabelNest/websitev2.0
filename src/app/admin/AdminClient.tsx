@@ -7,7 +7,7 @@ type Section = 'overview'|'briefings'|'team'|'legal'|'jobs'|'departments'|'uploa
 
 interface Briefing { id:string; slug:string; title:string; author_name:string; scope:string; date:string; read_time:string; is_featured:boolean; cover_image:string|null }
 interface TeamMember { id:string; name:string; role:string; department:string; bio:string|null; linkedin_url:string|null; image_url:string|null; sort_order:number; is_active:boolean }
-interface Alumni { id:string; name:string; role:string; department:string; email:string|null; linkedin_url:string|null; image_url:string|null; now_at_company:string|null; now_at_role:string|null; now_at_url:string|null; update_token:string|null; is_active:boolean }
+interface Alumni { id:string; name:string; role:string; department:string; email:string|null; linkedin_url:string|null; image_url:string|null; now_at_type:string|null; now_at_company:string|null; now_at_role:string|null; now_at_url:string|null; update_token:string|null; is_active:boolean }
 interface Fellow { id:string; name:string; role:string; cohort:string; department:string|null; linkedin_url:string|null; image_url:string|null; is_active:boolean; sort_order:number }
 interface Job { id:string; title:string; department:string; type:string; location:string; complexity:string; apply_url:string; is_active:boolean }
 interface LegalDoc { id:string; slug:string; title:string; intro:string; body_markdown:string; version:string; effective_date:string; last_updated:string }
@@ -211,6 +211,41 @@ function BriefingsSection({ showToast }: { showToast:(m:string)=>void }) {
 }
 
 // ── TEAM MEMBERS PANEL ─────────────────────────────────────────────────────
+function PhotoUpload({ name, folder, value, onChange, showToast }: { name:string; folder:string; value:string; onChange:(v:string)=>void; showToast:(m:string)=>void }) {
+  const [uploading, setUploading] = useState(false)
+  async function pick(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]; if (!file) return
+    setUploading(true)
+    const fd = new FormData(); fd.append('file', file); fd.append('folder', folder); fd.append('name', name)
+    const r = await fetch('/api/admin/upload-photo', { method:'POST', body:fd })
+    const d = await r.json()
+    setUploading(false)
+    if (d.url) { onChange(d.url); showToast('✓ Photo uploaded') }
+    else showToast('Upload failed')
+  }
+  return (
+    <div>
+      <label style={{ fontSize:11.5, fontWeight:600, color:S.text2, display:'block', marginBottom:6 }}>Photo</label>
+      <div style={{ display:'flex', gap:8, alignItems:'center' }}>
+        {value && (
+          <div style={{ width:40, height:40, borderRadius:8, overflow:'hidden', border:`1px solid ${S.border}`, flexShrink:0, position:'relative', background:S.bg3 }}>
+            <img src={value} alt="" style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top' }} />
+          </div>
+        )}
+        <div style={{ flex:1, minWidth:0 }}>
+          <label style={{ display:'flex', alignItems:'center', gap:8, padding:'8px 12px', background:S.bg2, border:`1px solid ${S.bord2}`, borderRadius:8, cursor:'pointer', fontSize:12.5, color:S.text2 }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            {uploading ? 'Uploading…' : value ? 'Change photo' : 'Upload photo'}
+            <input type="file" accept="image/*" style={{ display:'none' }} onChange={pick} disabled={uploading} />
+          </label>
+        </div>
+        {value && <input value={value} onChange={e=>onChange(e.target.value)} placeholder="or paste URL" style={{ flex:1, background:S.bg2, border:`1px solid ${S.bord2}`, borderRadius:8, padding:'8px 10px', fontSize:11.5, color:S.text2, outline:'none', minWidth:0 }} />}
+      </div>
+      {!value && <input value={value} onChange={e=>onChange(e.target.value)} placeholder="or paste R2 URL" style={{ width:'100%', marginTop:6, background:S.bg2, border:`1px solid ${S.bord2}`, borderRadius:8, padding:'8px 12px', fontSize:12.5, color:S.text, outline:'none', boxSizing:'border-box' }} />}
+    </div>
+  )
+}
+
 function TeamMembersPanel({ showToast }: { showToast:(m:string)=>void }) {
   const [rows, setRows] = useState<TeamMember[]>([])
   const [modal, setModal] = useState(false)
@@ -234,12 +269,27 @@ function TeamMembersPanel({ showToast }: { showToast:(m:string)=>void }) {
   async function handleDelete(m:TeamMember) { await fetch('/api/admin/team',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:m.id})}); load(); showToast('✓ Removed') }
 
   const F=(k:keyof typeof form)=>(v:string)=>setForm(f=>({...f,[k]:v}))
-  const tableRows=rows.map(m=>({ Name:m.name, Role:m.role, Department:m.department, Status:<Badge label={m.is_active?'Active':'Inactive'} color={m.is_active?S.green:S.text3} />, __raw:m }))
 
   return (
     <>
       <div style={{ display:'flex', justifyContent:'flex-end', marginBottom:14 }}><Btn label="+ Add member" onClick={openAdd} /></div>
-      <Table cols={['Name','Role','Department','Status']} rows={tableRows} onEdit={openEdit} onDelete={handleDelete} />
+      {/* Photo grid */}
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(110px,1fr))', gap:10, marginBottom:20 }}>
+        {rows.map(m=>(
+          <div key={m.id} onClick={()=>openEdit(m)} style={{ cursor:'pointer', background:S.bg2, border:`1px solid ${S.border}`, borderRadius:12, padding:10, textAlign:'center', transition:'border-color .15s' }}
+            onMouseEnter={e=>e.currentTarget.style.borderColor=S.bord2}
+            onMouseLeave={e=>e.currentTarget.style.borderColor=S.border}>
+            <div style={{ width:52, height:52, borderRadius:'50%', overflow:'hidden', margin:'0 auto 8px', background:S.bg3, position:'relative' }}>
+              {m.image_url
+                ? <img src={m.image_url} alt={m.name} style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top' }} />
+                : <div style={{ width:'100%', height:'100%', display:'flex', alignItems:'center', justifyContent:'center', fontSize:18, fontWeight:800, color:S.pink }}>{m.name[0]}</div>}
+            </div>
+            <div style={{ fontSize:11.5, fontWeight:600, color:S.text, lineHeight:1.3 }}>{m.name.split(' ')[0]}</div>
+            <div style={{ fontSize:10, color:S.text3, marginTop:2 }}>{m.role.split(' ').slice(0,2).join(' ')}</div>
+            {!m.is_active && <div style={{ fontSize:9, color:S.text3, marginTop:2, fontStyle:'italic' }}>hidden</div>}
+          </div>
+        ))}
+      </div>
       {modal && (
         <Modal title={editing?'Edit member':'Add team member'} onClose={()=>setModal(false)} onSave={handleSave} saving={saving}>
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
@@ -252,7 +302,7 @@ function TeamMembersPanel({ showToast }: { showToast:(m:string)=>void }) {
           </div>
           <Input label="Bio" value={form.bio} onChange={F('bio')} rows={3} placeholder="Short biography" />
           <Input label="LinkedIn URL" value={form.linkedin_url} onChange={F('linkedin_url')} placeholder="https://linkedin.com/in/..." />
-          <Input label="Photo URL (R2)" value={form.image_url} onChange={F('image_url')} placeholder="https://assets.labelnest.in/team/..." />
+          <PhotoUpload name={form.name || 'member'} folder="team" value={form.image_url} onChange={F('image_url')} showToast={showToast} />
           <Toggle label="Active (visible on team page)" checked={form.is_active} onChange={v=>setForm(f=>({...f,is_active:v}))} />
         </Modal>
       )}
@@ -268,14 +318,22 @@ function AlumniPanel({ showToast }: { showToast:(m:string)=>void }) {
   const [saving, setSaving] = useState(false)
   const [editing, setEditing] = useState<Alumni|null>(null)
   const [emailModal, setEmailModal] = useState<Alumni|null>(null)
-  const blank = { name:'',role:'',department:'',email:'',linkedin_url:'',image_url:'',now_at_company:'',now_at_role:'',now_at_url:'',is_active:true }
+  const blank = { name:'',role:'',department:'',email:'',linkedin_url:'',image_url:'',now_at_type:'working',now_at_company:'',now_at_role:'',now_at_url:'',is_active:true }
   const [form, setForm] = useState(blank)
+
+  const NOW_AT_TYPES = [
+    { value:'working',    label:'Working at'    },
+    { value:'studying',   label:'Studying at'   },
+    { value:'founding',   label:'Founded'       },
+    { value:'consulting', label:'Consulting at' },
+    { value:'freelance',  label:'Freelancing'   },
+  ]
 
   const load = useCallback(async()=>{ const r=await fetch('/api/admin/alumni'); const d=await r.json(); setRows(d.rows||[]) },[])
   useEffect(()=>{ load() },[load])
 
   function openAdd()  { setEditing(null); setForm(blank); setModal(true) }
-  function openEdit(a:Alumni) { setEditing(a); setForm({ name:a.name,role:a.role,department:a.department,email:a.email||'',linkedin_url:a.linkedin_url||'',image_url:a.image_url||'',now_at_company:a.now_at_company||'',now_at_role:a.now_at_role||'',now_at_url:a.now_at_url||'',is_active:a.is_active }); setModal(true) }
+  function openEdit(a:Alumni) { setEditing(a); setForm({ name:a.name,role:a.role,department:a.department,email:a.email||'',linkedin_url:a.linkedin_url||'',image_url:a.image_url||'',now_at_type:a.now_at_type||'working',now_at_company:a.now_at_company||'',now_at_role:a.now_at_role||'',now_at_url:a.now_at_url||'',is_active:a.is_active }); setModal(true) }
   async function handleSave() {
     setSaving(true); const method=editing?'PUT':'POST'; const body=editing?{...form,id:editing.id}:form
     await fetch('/api/admin/alumni',{method,headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
@@ -348,7 +406,7 @@ contact@labelnest.in`
                 </div>
                 <div style={{ flexShrink:0 }}>
                   {a.now_at_company
-                    ? <Badge label={`Now at ${a.now_at_company}`} color={S.green} />
+                    ? <Badge label={`${NOW_AT_TYPES.find(t=>t.value===a.now_at_type)?.label??'Now at'} ${a.now_at_company}`} color={S.green} />
                     : <Badge label="Not updated" color={S.text3} />}
                 </div>
                 {a.update_token ? (
@@ -383,12 +441,18 @@ contact@labelnest.in`
             <Input label="Email" value={form.email} onChange={F('email')} placeholder="name@example.com" type="email" />
           </div>
           <Input label="LinkedIn URL" value={form.linkedin_url} onChange={F('linkedin_url')} placeholder="https://linkedin.com/in/..." />
-          <Input label="Photo URL (R2)" value={form.image_url} onChange={F('image_url')} placeholder="https://assets.labelnest.in/team/..." />
+          <PhotoUpload name={form.name || 'alumni'} folder="team" value={form.image_url} onChange={F('image_url')} showToast={showToast} />
           <div style={{ borderTop:`1px solid ${S.border}`, paddingTop:12, marginTop:4 }}>
-            <div style={{ fontFamily:'JetBrains Mono,monospace', fontSize:9.5, letterSpacing:'.1em', textTransform:'uppercase', color:S.text3, marginBottom:10 }}>Now at (current employer)</div>
+            <div style={{ fontFamily:'JetBrains Mono,monospace', fontSize:9.5, letterSpacing:'.1em', textTransform:'uppercase', color:S.text3, marginBottom:10 }}>Now at</div>
+            <div style={{ marginBottom:10 }}>
+              <label style={{ fontSize:11.5, fontWeight:600, color:S.text2, display:'block', marginBottom:5 }}>Status</label>
+              <select value={form.now_at_type} onChange={e=>setForm(f=>({...f,now_at_type:e.target.value}))} style={{ width:'100%', background:S.bg2, border:`1px solid ${S.bord2}`, borderRadius:8, padding:'8px 12px', fontSize:12.5, color:S.text, outline:'none' }}>
+                {NOW_AT_TYPES.map(t=><option key={t.value} value={t.value}>{t.label}</option>)}
+              </select>
+            </div>
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
-              <Input label="Company" value={form.now_at_company} onChange={F('now_at_company')} placeholder="Company name" />
-              <Input label="Role" value={form.now_at_role} onChange={F('now_at_role')} placeholder="Current role" />
+              <Input label={form.now_at_type==='studying'?'Institution':'Company'} value={form.now_at_company} onChange={F('now_at_company')} placeholder={form.now_at_type==='studying'?'e.g. IIM Bangalore':'Company name'} />
+              <Input label="Role / Course" value={form.now_at_role} onChange={F('now_at_role')} placeholder="Current role or course" />
             </div>
             <Input label="Profile URL" value={form.now_at_url} onChange={F('now_at_url')} placeholder="https://..." />
           </div>

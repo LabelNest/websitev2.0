@@ -44,6 +44,7 @@ export interface Alumni {
   email: string | null
   image_url: string | null
   linkedin_url: string | null
+  now_at_type: string | null
   now_at_company: string | null
   now_at_role: string | null
   now_at_url: string | null
@@ -217,20 +218,21 @@ export async function updateAlumniNowAt(
   company: string,
   role: string,
   url: string | null,
-  imageUrl?: string | null
+  imageUrl?: string | null,
+  nowAtType?: string
 ): Promise<void> {
   if (imageUrl !== undefined) {
     await sql`
       UPDATE website_alumni
       SET now_at_company = ${company}, now_at_role = ${role}, now_at_url = ${url},
-          image_url = ${imageUrl}, updated_at = NOW()
+          now_at_type = ${nowAtType ?? 'working'}, image_url = ${imageUrl}, updated_at = NOW()
       WHERE id = ${id}
     `
   } else {
     await sql`
       UPDATE website_alumni
       SET now_at_company = ${company}, now_at_role = ${role}, now_at_url = ${url},
-          updated_at = NOW()
+          now_at_type = ${nowAtType ?? 'working'}, updated_at = NOW()
       WHERE id = ${id}
     `
   }

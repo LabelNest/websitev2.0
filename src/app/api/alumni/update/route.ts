@@ -3,7 +3,7 @@ import { getAlumniByToken, updateAlumniNowAt } from '@/lib/db'
 
 export async function POST(req: NextRequest) {
   try {
-    const { token, company, role, url, image_url } = await req.json()
+    const { token, company, role, url, image_url, now_at_type } = await req.json()
     if (!token || !company || !role) {
       return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
     }
@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     if (!alumni) {
       return NextResponse.json({ error: 'Invalid token' }, { status: 404 })
     }
-    await updateAlumniNowAt(alumni.id, company, role, url || null, image_url || undefined)
+    await updateAlumniNowAt(alumni.id, company, role, url || null, image_url || undefined, now_at_type || 'working')
     return NextResponse.json({ ok: true, name: alumni.name })
   } catch (e) {
     console.error(e)

@@ -12,12 +12,21 @@ function AlumniUpdateForm() {
   const [state,      setState]      = useState<State>('loading')
   const [alumniName, setAlumniName] = useState('')
   const [existing,   setExisting]   = useState({ company: '', role: '' })
+  const [nowType,    setNowType]    = useState('working')
   const [company,    setCompany]    = useState('')
   const [role,       setRole]       = useState('')
   const [url,        setUrl]        = useState('')
   const [photo,      setPhoto]      = useState('')
   const [saving,     setSaving]     = useState(false)
   const [error,      setError]      = useState('')
+
+  const NOW_AT_TYPES = [
+    { value: 'working',    label: 'Working at'    },
+    { value: 'studying',   label: 'Studying at'   },
+    { value: 'founding',   label: 'Founded'       },
+    { value: 'consulting', label: 'Consulting at' },
+    { value: 'freelance',  label: 'Freelancing'   },
+  ]
 
   useEffect(() => {
     if (!token) { setState('invalid'); return }
@@ -40,7 +49,7 @@ function AlumniUpdateForm() {
     const res  = await fetch('/api/alumni/update', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token, company: company.trim(), role: role.trim(), url: url.trim(), image_url: photo.trim() || undefined }),
+      body: JSON.stringify({ token, company: company.trim(), role: role.trim(), url: url.trim(), image_url: photo.trim() || undefined, now_at_type: nowType }),
     })
     const data = await res.json()
     setSaving(false)
@@ -95,8 +104,16 @@ function AlumniUpdateForm() {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
               <div>
-                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#a1a1aa', marginBottom: 5 }}>Company *</label>
-                <input style={inp} placeholder="e.g. Google, Accel, your startup name" value={company} onChange={e => setCompany(e.target.value)} />
+                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#a1a1aa', marginBottom: 5 }}>Status</label>
+                <select style={{ ...inp, background: '#111113' }} value={nowType} onChange={e => setNowType(e.target.value)}>
+                  {NOW_AT_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
+                </select>
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#a1a1aa', marginBottom: 5 }}>
+                  {nowType === 'studying' ? 'Institution *' : nowType === 'founding' ? 'Company / Startup *' : 'Company *'}
+                </label>
+                <input style={inp} placeholder={nowType === 'studying' ? 'e.g. IIM Bangalore, BITS Pilani' : 'e.g. Google, Accel, your startup name'} value={company} onChange={e => setCompany(e.target.value)} />
               </div>
               <div>
                 <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#a1a1aa', marginBottom: 5 }}>Role *</label>
@@ -126,7 +143,7 @@ function AlumniUpdateForm() {
             <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(16,185,129,.12)', border: '1px solid rgba(16,185,129,.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', fontSize: 26 }}>✓</div>
             <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 24, color: '#f4f4f5', marginBottom: 10 }}>Done, {alumniName.split(' ')[0]}!</div>
             <p style={{ fontSize: 14, color: '#a1a1aa', lineHeight: 1.65, marginBottom: 28 }}>
-              Your card on the alumni wall has been updated. It'll show "Now at {company}" to anyone who visits.
+              Your card on the alumni wall has been updated. It&apos;ll show &quot;{NOW_AT_TYPES.find(t=>t.value===nowType)?.label} {company}&quot; to anyone who visits.
             </p>
             <Link href="/team" style={{ display: 'inline-block', background: 'rgba(255,255,255,.06)', color: '#f4f4f5', border: '1px solid rgba(255,255,255,.1)', borderRadius: 9, padding: '10px 22px', fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
               View the team wall →
