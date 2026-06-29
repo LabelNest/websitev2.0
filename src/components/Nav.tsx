@@ -85,17 +85,20 @@ export default function Nav() {
         <div className="max-w-[1300px] mx-auto px-6 h-[60px] flex items-center justify-between">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center flex-shrink-0">
-            <div style={{ background:'#fff', borderRadius:10, padding:'4px 10px', display:'flex', alignItems:'center', height:40 }}>
-              <Image
-                src="https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brand/labelnest-logo.jpg"
-                alt="LabelNest"
-                width={120}
-                height={32}
-                style={{ objectFit:'contain', objectPosition:'left center', display:'block' }}
-                priority
-              />
-            </div>
+          <Link href="/" className="flex items-center flex-shrink-0" style={{ height: 40 }}>
+            <Image
+              src="https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brand/labelnest-logo.png"
+              alt="LabelNest"
+              width={110}
+              height={34}
+              style={{
+                objectFit: 'contain',
+                display: 'block',
+                filter: theme === 'dark' ? 'brightness(0) invert(1)' : 'none',
+                transition: 'filter 0.2s',
+              }}
+              priority
+            />
           </Link>
 
           {/* Desktop nav */}
