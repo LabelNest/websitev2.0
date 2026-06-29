@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Metadata } from 'next'
 import { getTeamMembers, getAlumni, getFellows } from '@/lib/db'
+import AlumniGrid from './AlumniGrid'
 
 export const metadata: Metadata = {
   title: 'Team — LabelNest',
@@ -122,34 +123,7 @@ export default async function TeamPage() {
               Everyone who worked at LabelNest stays on this page forever. No exceptions. If you built something here, you belong here.{' '}
               <strong style={{ color: 'var(--text)' }}>Alumni can update their "Now at" via a self-serve link sent by the team.</strong>
             </p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6" style={{ gap: 12 }}>
-              {alumni.map(a => (
-                <div key={a.id}
-                  className="transition-all duration-200 hover:-translate-y-1"
-                  style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: 14 }}>
-                  <div className="overflow-hidden relative flex-shrink-0" style={{ width: 40, height: 40, borderRadius: '50%', marginBottom: 10, background: 'linear-gradient(135deg,rgba(16,185,129,.12),rgba(37,99,235,.08))' }}>
-                    {a.image_url ? (
-                      <Image src={a.image_url} alt={a.name} fill className="object-cover" sizes="40px" />
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center font-display font-bold" style={{ fontSize: 14, color: '#10B981' }}>
-                        {a.name[0]}
-                      </div>
-                    )}
-                  </div>
-                  <div className="font-display font-bold" style={{ fontSize: 12.5, letterSpacing: '-.01em', color: 'var(--text)', marginBottom: 2, lineHeight: 1.3 }}>{a.name}</div>
-                  <div style={{ fontSize: 11, color: 'var(--text2)', marginBottom: 6, lineHeight: 1.4 }}>{a.role}</div>
-                  {a.now_at_company ? (
-                    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.06em', textTransform: 'uppercase', color: '#10B981' }}>
-                      Now at {a.now_at_company}
-                    </div>
-                  ) : (
-                    <button style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.06em', textTransform: 'uppercase', color: 'var(--text3)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
-                      Update now at →
-                    </button>
-                  )}
-                </div>
-              ))}
-            </div>
+            <AlumniGrid initial={alumni} />
           </div>
         </section>
 
