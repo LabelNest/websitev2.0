@@ -83,7 +83,7 @@ export default async function TeamPage() {
                     style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16 }}>
                     <div className="relative" style={{ aspectRatio: '1', background: 'linear-gradient(135deg,rgba(233,30,140,.08),rgba(37,99,235,.06))' }}>
                       {m.image_url ? (
-                        <Image src={m.image_url} alt={m.name} fill className="object-cover object-center" sizes="300px" />
+                        <Image src={m.image_url} alt={m.name} fill className="object-cover object-top" sizes="300px" />
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center font-display font-extrabold" style={{ fontSize: 36, color: 'rgba(255,255,255,.12)' }}>
                           {m.name[0]}
