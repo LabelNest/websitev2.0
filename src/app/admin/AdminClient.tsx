@@ -7,7 +7,7 @@ type Section = 'overview'|'briefings'|'team'|'legal'|'jobs'|'departments'|'uploa
 
 interface Briefing { id:string; slug:string; title:string; author_name:string; scope:string; date:string; read_time:string; is_featured:boolean; cover_image:string|null }
 interface TeamMember { id:string; name:string; role:string; department:string; bio:string|null; linkedin_url:string|null; image_url:string|null; sort_order:number; is_active:boolean }
-interface Alumni { id:string; name:string; role:string; department:string; linkedin_url:string|null; image_url:string|null; now_at_company:string|null; now_at_role:string|null; now_at_url:string|null; is_active:boolean }
+interface Alumni { id:string; name:string; role:string; department:string; email:string|null; linkedin_url:string|null; image_url:string|null; now_at_company:string|null; now_at_role:string|null; now_at_url:string|null; update_token:string|null; is_active:boolean }
 interface Fellow { id:string; name:string; role:string; cohort:string; department:string|null; linkedin_url:string|null; image_url:string|null; is_active:boolean; sort_order:number }
 interface Job { id:string; title:string; department:string; type:string; location:string; complexity:string; apply_url:string; is_active:boolean }
 interface LegalDoc { id:string; slug:string; title:string; intro:string; body_markdown:string; version:string; effective_date:string; last_updated:string }
@@ -260,19 +260,20 @@ function TeamMembersPanel({ showToast }: { showToast:(m:string)=>void }) {
 
 // ── ALUMNI PANEL ───────────────────────────────────────────────────────────
 function AlumniPanel({ showToast }: { showToast:(m:string)=>void }) {
-  const [rows, setRows] = useState<Alumni[]>([])
-  const [modal, setModal] = useState(false)
+  const [tab, setTab]       = useState<'directory'|'outreach'>('directory')
+  const [rows, setRows]     = useState<Alumni[]>([])
+  const [modal, setModal]   = useState(false)
   const [saving, setSaving] = useState(false)
   const [editing, setEditing] = useState<Alumni|null>(null)
-  const blank = { name:'',role:'',department:'',linkedin_url:'',image_url:'',now_at_company:'',now_at_role:'',now_at_url:'',is_active:true }
+  const [emailModal, setEmailModal] = useState<Alumni|null>(null)
+  const blank = { name:'',role:'',department:'',email:'',linkedin_url:'',image_url:'',now_at_company:'',now_at_role:'',now_at_url:'',is_active:true }
   const [form, setForm] = useState(blank)
 
   const load = useCallback(async()=>{ const r=await fetch('/api/admin/alumni'); const d=await r.json(); setRows(d.rows||[]) },[])
   useEffect(()=>{ load() },[load])
 
-  function openAdd() { setEditing(null); setForm(blank); setModal(true) }
-  function openEdit(a:Alumni) { setEditing(a); setForm({ name:a.name,role:a.role,department:a.department,linkedin_url:a.linkedin_url||'',image_url:a.image_url||'',now_at_company:a.now_at_company||'',now_at_role:a.now_at_role||'',now_at_url:a.now_at_url||'',is_active:a.is_active }); setModal(true) }
-
+  function openAdd()  { setEditing(null); setForm(blank); setModal(true) }
+  function openEdit(a:Alumni) { setEditing(a); setForm({ name:a.name,role:a.role,department:a.department,email:a.email||'',linkedin_url:a.linkedin_url||'',image_url:a.image_url||'',now_at_company:a.now_at_company||'',now_at_role:a.now_at_role||'',now_at_url:a.now_at_url||'',is_active:a.is_active }); setModal(true) }
   async function handleSave() {
     setSaving(true); const method=editing?'PUT':'POST'; const body=editing?{...form,id:editing.id}:form
     await fetch('/api/admin/alumni',{method,headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
@@ -281,20 +282,104 @@ function AlumniPanel({ showToast }: { showToast:(m:string)=>void }) {
   async function handleDelete(a:Alumni) { await fetch('/api/admin/alumni',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:a.id})}); load(); showToast('✓ Alumni removed') }
 
   const F=(k:keyof typeof form)=>(v:string)=>setForm(f=>({...f,[k]:v}))
-  const tableRows=rows.map(a=>({ Name:a.name, Role:a.role, 'Now at':a.now_at_company?<span style={{color:S.green}}>{a.now_at_company}</span>:<span style={{color:S.text3,fontStyle:'italic'}}>Not set</span>, Status:<Badge label={a.is_active?'Visible':'Hidden'} color={a.is_active?S.blue:S.text3} />, __raw:a }))
+  const tableRows=rows.map(a=>({ Name:a.name, Role:a.role, Email:a.email?<span style={{color:S.text2,fontFamily:'JetBrains Mono,monospace',fontSize:11}}>{a.email}</span>:<span style={{color:S.text3,fontStyle:'italic',fontSize:11}}>—</span>, 'Now at':a.now_at_company?<span style={{color:S.green}}>{a.now_at_company}</span>:<span style={{color:S.text3,fontStyle:'italic'}}>Not set</span>, Status:<Badge label={a.is_active?'Visible':'Hidden'} color={a.is_active?S.blue:S.text3} />, __raw:a }))
+
+  function copyLink(a:Alumni) {
+    const link = `https://labelnest.in/alumni/update?token=${a.update_token}`
+    navigator.clipboard.writeText(link).then(()=>showToast('✓ Link copied'))
+  }
+
+  function buildEmailTemplate(a:Alumni) {
+    const link = `https://labelnest.in/alumni/update?token=${a.update_token}`
+    const firstName = a.name.split(' ')[0]
+    return {
+      to: a.email || '(add email first)',
+      subject: `Your LabelNest alumni card — update where you are now`,
+      body: `Hi ${firstName},
+
+Hope you're doing well. We've rebuilt the LabelNest team page and every alumni has a card on the wall.
+
+If you'd like, you can update your card to show where you're working now — just takes a minute:
+
+${link}
+
+It'll show "Now at [Company]" on your card at labelnest.in/team.
+
+No rush, and no obligation. The link is yours to use anytime.
+
+— The LabelNest team
+contact@labelnest.in`
+    }
+  }
 
   return (
     <>
-      <div style={{ marginBottom:10, fontSize:12.5, color:S.text3 }}>All alumni are permanent — they are never deleted from the public wall, only hidden.</div>
-      <div style={{ display:'flex', justifyContent:'flex-end', marginBottom:14 }}><Btn label="+ Add alumni" onClick={openAdd} /></div>
-      <Table cols={['Name','Role','Now at','Status']} rows={tableRows} onEdit={openEdit} onDelete={handleDelete} />
+      {/* Tab switcher */}
+      <div style={{ display:'flex', gap:6, marginBottom:20 }}>
+        {(['directory','outreach'] as const).map(t=>(
+          <button key={t} onClick={()=>setTab(t)}
+            style={{ padding:'6px 16px', borderRadius:8, border:`1px solid ${tab===t?S.pink:S.border}`, background:tab===t?`${S.pink}18`:'transparent', color:tab===t?S.pink:S.text2, fontSize:12.5, fontWeight:600, cursor:'pointer', textTransform:'capitalize' }}>
+            {t === 'directory' ? 'Directory' : 'Outreach'}
+          </button>
+        ))}
+      </div>
+
+      {tab === 'directory' && (
+        <>
+          <div style={{ marginBottom:10, fontSize:12.5, color:S.text3 }}>All alumni are permanent — never deleted, only hidden.</div>
+          <div style={{ display:'flex', justifyContent:'flex-end', marginBottom:14 }}><Btn label="+ Add alumni" onClick={openAdd} /></div>
+          <Table cols={['Name','Role','Email','Now at','Status']} rows={tableRows} onEdit={openEdit} onDelete={handleDelete} />
+        </>
+      )}
+
+      {tab === 'outreach' && (
+        <>
+          <div style={{ marginBottom:16, padding:'12px 16px', background:`${S.blue}10`, border:`1px solid ${S.blue}30`, borderRadius:10, fontSize:12.5, color:S.text2, lineHeight:1.65 }}>
+            Each alumni has a personal link. Share it and they can update their "Now at" card themselves. Email service will be wired in — for now copy the link or draft the email.
+          </div>
+          <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
+            {rows.map(a=>(
+              <div key={a.id} style={{ display:'flex', alignItems:'center', gap:12, padding:'12px 16px', background:S.bg2, border:`1px solid ${S.border}`, borderRadius:10 }}>
+                <div style={{ flex:1, minWidth:0 }}>
+                  <div style={{ fontSize:13, fontWeight:600, color:S.text }}>{a.name}</div>
+                  <div style={{ fontSize:11, color:S.text3 }}>{a.role}{a.email ? ` · ${a.email}` : ''}</div>
+                </div>
+                <div style={{ flexShrink:0 }}>
+                  {a.now_at_company
+                    ? <Badge label={`Now at ${a.now_at_company}`} color={S.green} />
+                    : <Badge label="Not updated" color={S.text3} />}
+                </div>
+                {a.update_token ? (
+                  <div style={{ display:'flex', gap:6, flexShrink:0 }}>
+                    <button onClick={()=>copyLink(a)}
+                      style={{ padding:'5px 12px', borderRadius:7, border:`1px solid ${S.bord2}`, background:'transparent', color:S.text2, fontSize:11.5, fontWeight:600, cursor:'pointer', whiteSpace:'nowrap' }}>
+                      Copy link
+                    </button>
+                    <button onClick={()=>setEmailModal(a)}
+                      style={{ padding:'5px 12px', borderRadius:7, border:`1px solid ${S.blue}50`, background:`${S.blue}10`, color:S.blue, fontSize:11.5, fontWeight:600, cursor:'pointer', whiteSpace:'nowrap' }}>
+                      Email draft
+                    </button>
+                  </div>
+                ) : (
+                  <span style={{ fontSize:11, color:S.text3, fontStyle:'italic' }}>No token</span>
+                )}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* Edit/Add modal */}
       {modal && (
         <Modal title={editing?'Edit alumni':'Add alumni'} onClose={()=>setModal(false)} onSave={handleSave} saving={saving}>
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
             <Input label="Name" value={form.name} onChange={F('name')} required />
             <Input label="Role at LabelNest" value={form.role} onChange={F('role')} required />
           </div>
-          <Input label="Department" value={form.department} onChange={F('department')} placeholder="e.g. Data and AI Systems" />
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
+            <Input label="Department" value={form.department} onChange={F('department')} placeholder="e.g. Data and AI Systems" />
+            <Input label="Email" value={form.email} onChange={F('email')} placeholder="name@example.com" type="email" />
+          </div>
           <Input label="LinkedIn URL" value={form.linkedin_url} onChange={F('linkedin_url')} placeholder="https://linkedin.com/in/..." />
           <Input label="Photo URL (R2)" value={form.image_url} onChange={F('image_url')} placeholder="https://assets.labelnest.in/team/..." />
           <div style={{ borderTop:`1px solid ${S.border}`, paddingTop:12, marginTop:4 }}>
@@ -308,6 +393,43 @@ function AlumniPanel({ showToast }: { showToast:(m:string)=>void }) {
           <Toggle label="Visible on alumni wall" checked={form.is_active} onChange={v=>setForm(f=>({...f,is_active:v}))} />
         </Modal>
       )}
+
+      {/* Email draft modal */}
+      {emailModal && (() => {
+        const tpl = buildEmailTemplate(emailModal)
+        const full = `To: ${tpl.to}\nSubject: ${tpl.subject}\n\n${tpl.body}`
+        return (
+          <div onClick={e=>{ if(e.target===e.currentTarget) setEmailModal(null) }} style={{ position:'fixed', inset:0, background:'rgba(0,0,0,.72)', backdropFilter:'blur(6px)', zIndex:500, display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
+            <div style={{ background:S.surface, border:`1px solid ${S.bord2}`, borderRadius:18, padding:32, width:'100%', maxWidth:580, position:'relative', maxHeight:'88vh', overflowY:'auto' }}>
+              <div style={{ position:'absolute', top:0, left:0, right:0, height:3, background:`linear-gradient(90deg,${S.blue},${S.pink})`, borderRadius:'18px 18px 0 0' }} />
+              <button onClick={()=>setEmailModal(null)} style={{ position:'absolute', top:14, right:14, width:28, height:28, borderRadius:7, border:`1px solid ${S.border}`, background:'rgba(255,255,255,.05)', color:S.text2, cursor:'pointer', fontSize:16, display:'flex', alignItems:'center', justifyContent:'center' }}>×</button>
+              <div style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:800, fontSize:18, color:S.text, marginBottom:4 }}>Email draft — {emailModal.name}</div>
+              <div style={{ fontSize:12, color:S.text3, marginBottom:20 }}>Email service will be wired later. Copy this and send manually for now.</div>
+              <div style={{ display:'flex', flexDirection:'column', gap:8, marginBottom:16 }}>
+                <div style={{ display:'flex', gap:8, alignItems:'center' }}>
+                  <span style={{ fontSize:11.5, fontWeight:600, color:S.text2, width:60, flexShrink:0 }}>To:</span>
+                  <span style={{ fontSize:13, color:!emailModal.email?S.orange:S.text, fontFamily:'JetBrains Mono,monospace' }}>{tpl.to}</span>
+                </div>
+                <div style={{ display:'flex', gap:8, alignItems:'center' }}>
+                  <span style={{ fontSize:11.5, fontWeight:600, color:S.text2, width:60, flexShrink:0 }}>Subject:</span>
+                  <span style={{ fontSize:13, color:S.text }}>{tpl.subject}</span>
+                </div>
+              </div>
+              <pre style={{ background:S.bg2, border:`1px solid ${S.border}`, borderRadius:10, padding:16, fontSize:13, color:S.text2, whiteSpace:'pre-wrap', wordBreak:'break-word', lineHeight:1.7, margin:0, marginBottom:16, fontFamily:'Inter,sans-serif' }}>{tpl.body}</pre>
+              <div style={{ display:'flex', gap:10, justifyContent:'flex-end' }}>
+                <button onClick={()=>{ navigator.clipboard.writeText(full); showToast('✓ Email copied') }}
+                  style={{ padding:'9px 18px', borderRadius:8, border:`1px solid ${S.blue}50`, background:`${S.blue}10`, color:S.blue, fontSize:13, fontWeight:600, cursor:'pointer' }}>
+                  Copy full email
+                </button>
+                <button onClick={()=>setEmailModal(null)}
+                  style={{ padding:'9px 18px', borderRadius:8, border:`1px solid ${S.border}`, background:'transparent', color:S.text2, fontSize:13, fontWeight:600, cursor:'pointer' }}>
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )
+      })()}
     </>
   )
 }
