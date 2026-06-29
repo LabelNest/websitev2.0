@@ -12,6 +12,8 @@ interface Fellow { id:string; name:string; role:string; cohort:string; departmen
 interface Job { id:string; title:string; department:string; type:string; location:string; complexity:string; apply_url:string; is_active:boolean }
 interface LegalDoc { id:string; slug:string; title:string; intro:string; body_markdown:string; version:string; effective_date:string; last_updated:string }
 interface Subscriber { id:string; email:string; name:string|null; source:string; status:string; created_at:string }
+interface Submission { id:string; name:string; email:string; phone:string|null; subject:string|null; message:string|null; category:string|null; metadata:Record<string,string>|null; is_read:boolean; created_at:string }
+interface SeoRow { id:string; page_path:string; title:string|null; description:string|null; og_image:string|null; keywords:string|null; updated_at:string|null }
 
 // ── Design tokens ──────────────────────────────────────────────────────────
 const S = {
@@ -869,6 +871,160 @@ const NAV = [
   { id:'settings',     icon:'⚙️', label:'Settings',     group:'System'   },
 ]
 
+// ── SUBMISSIONS SECTION ────────────────────────────────────────────────────
+const CAT_COLOR: Record<string,string> = { career:S.green, contact:S.blue, fellowship:S.purple, newsletter:S.orange, 'fellowship-cohort-3':S.purple }
+
+function SubmissionsSection({ showToast }: { showToast:(m:string)=>void }) {
+  const [rows, setRows]       = useState<Submission[]>([])
+  const [expanded, setExpanded] = useState<string|null>(null)
+  const [filter, setFilter]   = useState<string>('all')
+
+  const load = useCallback(async()=>{ const r=await fetch('/api/admin/submissions'); const d=await r.json(); setRows(d.rows||[]) },[])
+  useEffect(()=>{ load() },[load])
+
+  async function toggleRead(s:Submission) {
+    await fetch('/api/admin/submissions',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:s.id,is_read:!s.is_read})})
+    setRows(prev=>prev.map(r=>r.id===s.id?{...r,is_read:!s.is_read}:r))
+  }
+  async function del(s:Submission) {
+    await fetch('/api/admin/submissions',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:s.id})})
+    setRows(prev=>prev.filter(r=>r.id!==s.id)); showToast('✓ Deleted')
+  }
+
+  const categories = ['all', ...Array.from(new Set(rows.map(r=>r.category||'contact')))]
+  const filtered = filter==='all' ? rows : rows.filter(r=>(r.category||'contact')===filter)
+  const unread = rows.filter(r=>!r.is_read).length
+
+  return (
+    <>
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:20, flexWrap:'wrap', gap:12 }}>
+        <div>
+          <div style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:800, fontSize:20, color:S.text, marginBottom:2 }}>Submissions</div>
+          <div style={{ fontSize:13, color:S.text2 }}>{rows.length} total · {unread} unread · website_submissions</div>
+        </div>
+        <div style={{ display:'flex', gap:6, flexWrap:'wrap' }}>
+          {categories.map(c=>(
+            <button key={c} onClick={()=>setFilter(c)}
+              style={{ padding:'5px 12px', borderRadius:7, border:`1px solid ${filter===c?(CAT_COLOR[c]||S.pink):S.border}`, background:filter===c?`${CAT_COLOR[c]||S.pink}15`:'transparent', color:filter===c?(CAT_COLOR[c]||S.pink):S.text2, fontSize:11.5, fontWeight:600, cursor:'pointer', textTransform:'capitalize' }}>
+              {c}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
+        {filtered.length===0 && <div style={{ padding:40, textAlign:'center', color:S.text3, fontSize:13 }}>No submissions.</div>}
+        {filtered.map(s=>(
+          <div key={s.id} style={{ background:s.is_read?S.bg2:S.bg3, border:`1px solid ${s.is_read?S.border:S.bord2}`, borderRadius:10, overflow:'hidden' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:12, padding:'12px 16px', cursor:'pointer' }} onClick={()=>setExpanded(expanded===s.id?null:s.id)}>
+              <div style={{ width:7, height:7, borderRadius:'50%', background:s.is_read?'transparent':S.pink, border:`1px solid ${s.is_read?S.border:S.pink}`, flexShrink:0 }} />
+              <div style={{ flex:1, minWidth:0 }}>
+                <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:2 }}>
+                  <span style={{ fontSize:13.5, fontWeight:600, color:S.text }}>{s.name}</span>
+                  <Badge label={s.category||'contact'} color={CAT_COLOR[s.category||'contact']||S.blue} />
+                </div>
+                <div style={{ fontSize:11.5, color:S.text3 }}>{s.email}{s.phone?` · ${s.phone}`:''}</div>
+              </div>
+              {s.subject && <div style={{ fontSize:12, color:S.text2, maxWidth:220, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', flexShrink:0 }}>{s.subject}</div>}
+              <div style={{ fontSize:11, color:S.text3, flexShrink:0 }}>{new Date(s.created_at).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'2-digit'})}</div>
+              <span style={{ fontSize:12, color:S.text3 }}>{expanded===s.id?'▲':'▼'}</span>
+            </div>
+            {expanded===s.id && (
+              <div style={{ borderTop:`1px solid ${S.border}`, padding:'14px 16px', background:'rgba(255,255,255,.02)' }}>
+                {s.message && <pre style={{ fontFamily:'Inter,sans-serif', fontSize:13.5, color:S.text2, whiteSpace:'pre-wrap', wordBreak:'break-word', lineHeight:1.7, margin:0, marginBottom:14 }}>{s.message}</pre>}
+                {s.metadata && Object.keys(s.metadata).length>0 && (
+                  <div style={{ marginBottom:14 }}>
+                    {Object.entries(s.metadata).map(([k,v])=>(
+                      <div key={k} style={{ fontSize:11.5, color:S.text3 }}><strong style={{color:S.text2}}>{k}:</strong> {String(v)}</div>
+                    ))}
+                  </div>
+                )}
+                <div style={{ display:'flex', gap:8 }}>
+                  <button onClick={()=>toggleRead(s)} style={{ padding:'5px 12px', borderRadius:7, border:`1px solid ${S.bord2}`, background:'transparent', color:S.text2, fontSize:11.5, fontWeight:600, cursor:'pointer' }}>
+                    Mark {s.is_read?'unread':'read'}
+                  </button>
+                  <a href={`mailto:${s.email}`} style={{ padding:'5px 12px', borderRadius:7, border:`1px solid ${S.blue}40`, background:`${S.blue}10`, color:S.blue, fontSize:11.5, fontWeight:600, textDecoration:'none' }}>
+                    Reply
+                  </a>
+                  <button onClick={()=>del(s)} style={{ padding:'5px 12px', borderRadius:7, border:`1px solid rgba(239,68,68,.3)`, background:'rgba(239,68,68,.08)', color:'#EF4444', fontSize:11.5, fontWeight:600, cursor:'pointer', marginLeft:'auto' }}>
+                    Delete
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </>
+  )
+}
+
+// ── SEO SECTION ────────────────────────────────────────────────────────────
+function SeoSection({ showToast }: { showToast:(m:string)=>void }) {
+  const [rows, setRows]     = useState<SeoRow[]>([])
+  const [editing, setEditing] = useState<SeoRow|null>(null)
+  const [form, setForm]     = useState({ title:'', description:'', og_image:'', keywords:'' })
+  const [saving, setSaving] = useState(false)
+
+  const load = useCallback(async()=>{ const r=await fetch('/api/admin/seo'); const d=await r.json(); setRows(d.rows||[]) },[])
+  useEffect(()=>{ load() },[load])
+
+  function openEdit(r:SeoRow) { setEditing(r); setForm({ title:r.title||'', description:r.description||'', og_image:r.og_image||'', keywords:r.keywords||'' }) }
+  async function save() {
+    if (!editing) return
+    setSaving(true)
+    await fetch('/api/admin/seo',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:editing.id,...form})})
+    setSaving(false); setEditing(null); load(); showToast('✓ SEO updated')
+  }
+  const F=(k:keyof typeof form)=>(v:string)=>setForm(f=>({...f,[k]:v}))
+
+  const charBg = (len:number, max:number) => len===0?'transparent':len>max?'rgba(239,68,68,.12)':len>max*0.9?'rgba(249,115,22,.12)':'rgba(16,185,129,.08)'
+  const charCol = (len:number, max:number) => len===0?S.text3:len>max?'#EF4444':len>max*0.9?S.orange:S.green
+
+  return (
+    <>
+      <div style={{ marginBottom:20 }}>
+        <div style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:800, fontSize:20, color:S.text, marginBottom:2 }}>SEO</div>
+        <div style={{ fontSize:13, color:S.text2 }}>Page-level meta · website_page_seo · {rows.length} pages</div>
+      </div>
+
+      <div style={{ display:'flex', flexDirection:'column', gap:4 }}>
+        {rows.map(r=>(
+          <div key={r.id} style={{ display:'flex', alignItems:'center', gap:12, padding:'11px 14px', background:S.bg2, border:`1px solid ${S.border}`, borderRadius:9 }}>
+            <div style={{ fontFamily:'JetBrains Mono,monospace', fontSize:12, color:S.text2, width:200, flexShrink:0 }}>{r.page_path}</div>
+            <div style={{ flex:1, minWidth:0 }}>
+              <div style={{ fontSize:13, color:r.title?S.text:S.text3, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{r.title||<em>No title</em>}</div>
+              <div style={{ fontSize:11.5, color:S.text3, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', marginTop:1 }}>{r.description||'No description'}</div>
+            </div>
+            <div style={{ display:'flex', gap:4, flexShrink:0, alignItems:'center' }}>
+              {r.title && <span style={{ ...{ fontSize:10, padding:'2px 7px', borderRadius:4, background:'rgba(16,185,129,.1)', color:S.green, fontFamily:'JetBrains Mono,monospace' } }}>{r.title.length}t</span>}
+              {r.description && <span style={{ ...{ fontSize:10, padding:'2px 7px', borderRadius:4, background:'rgba(37,99,235,.1)', color:S.blue, fontFamily:'JetBrains Mono,monospace' } }}>{r.description.length}d</span>}
+              <Btn label="Edit" small onClick={()=>openEdit(r)} />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {editing && (
+        <Modal title={`SEO — ${editing.page_path}`} onClose={()=>setEditing(null)} onSave={save} saving={saving}>
+          <Input label="Title" value={form.title} onChange={F('title')} placeholder="e.g. LabelNest | Data Intelligence Platform"
+            hint={`${form.title.length} / 60 chars recommended`} />
+          <div style={{ fontSize:10, fontFamily:'JetBrains Mono,monospace', padding:'4px 8px', borderRadius:5, background:charBg(form.title.length,60), color:charCol(form.title.length,60), display:'inline-block', marginTop:-8 }}>
+            {form.title.length === 0 ? 'no title' : form.title.length > 60 ? 'too long' : 'good length'}
+          </div>
+          <Input label="Description" value={form.description} onChange={F('description')} rows={3}
+            placeholder="150–160 chars. What this page is about." hint={`${form.description.length} / 160 chars recommended`} />
+          <div style={{ fontSize:10, fontFamily:'JetBrains Mono,monospace', padding:'4px 8px', borderRadius:5, background:charBg(form.description.length,160), color:charCol(form.description.length,160), display:'inline-block', marginTop:-8 }}>
+            {form.description.length === 0 ? 'no description' : form.description.length > 160 ? 'too long' : 'good length'}
+          </div>
+          <Input label="OG Image URL" value={form.og_image} onChange={F('og_image')} placeholder="https://assets.labelnest.in/og/..." />
+          <Input label="Keywords" value={form.keywords} onChange={F('keywords')} placeholder="comma separated — data intelligence, private markets, ..." />
+        </Modal>
+      )}
+    </>
+  )
+}
+
 // ── ROOT ───────────────────────────────────────────────────────────────────
 export default function AdminClient() {
   const [section, setSection] = useState<Section>('overview')
@@ -968,21 +1124,8 @@ export default function AdminClient() {
           {section==='upload' && <UploadSection showToast={showToast} />}
           {section==='newsletter' && <NewsletterSection showToast={showToast} />}
 
-          {section==='submissions' && (
-            <div>
-              <div style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:800, fontSize:20, color:S.text, marginBottom:4 }}>Submissions</div>
-              <div style={{ fontSize:13, color:S.text2, marginBottom:20 }}>Contact and career form submissions · website_submissions</div>
-              <div style={{ background:S.bg3, border:`1px solid ${S.border}`, borderRadius:12, padding:40, textAlign:'center', color:S.text3, fontSize:13 }}>Submissions load from Neon DB once seeded.</div>
-            </div>
-          )}
-
-          {section==='seo' && (
-            <div>
-              <div style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:800, fontSize:20, color:S.text, marginBottom:4 }}>SEO</div>
-              <div style={{ fontSize:13, color:S.text2, marginBottom:20 }}>Page-level meta titles and descriptions · website_page_seo</div>
-              <div style={{ background:S.bg3, border:`1px solid ${S.border}`, borderRadius:12, padding:40, textAlign:'center', color:S.text3, fontSize:13 }}>SEO records load from Neon DB once seeded.</div>
-            </div>
-          )}
+          {section==='submissions' && <SubmissionsSection showToast={showToast} />}
+          {section==='seo' && <SeoSection showToast={showToast} />}
 
           {section==='settings' && (
             <div>
