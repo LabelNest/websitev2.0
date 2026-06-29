@@ -93,6 +93,7 @@ export interface LegalDocument {
   version: string
   effective_date: string
   last_updated: string
+  r2_url: string | null
 }
 
 export interface PageSEO {
@@ -176,7 +177,7 @@ export async function getActiveJobs(): Promise<JobOpening[]> {
 
 export async function getLegalDocuments(): Promise<LegalDocument[]> {
   const rows = await sql`
-    SELECT id, slug, title, intro, version, effective_date, last_updated
+    SELECT id, slug, title, intro, version, effective_date, last_updated, r2_url
     FROM website_legal_documents
     ORDER BY slug ASC
   `
