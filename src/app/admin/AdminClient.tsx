@@ -800,9 +800,75 @@ function NewsletterSection({ showToast }: { showToast:(m:string)=>void }) {
   const [sending, setSending] = useState(false)
   const [composeForm, setComposeForm] = useState({ subject:'', template:'new-briefing', recipients:'all', test_email:'ankit@labelnest.in', html_content:'' })
 
+  // Add-one form
+  const [addEmail, setAddEmail] = useState('')
+  const [addName, setAddName]   = useState('')
+  const [addSource, setAddSource] = useState('manual')
+  const [addBusy, setAddBusy]   = useState(false)
+
+  // Bulk import
+  const [showImport, setShowImport] = useState(false)
+  const [importText, setImportText] = useState('')
+  const [importBusy, setImportBusy] = useState(false)
+
   const load = useCallback(async()=>{ try{ const r=await fetch('/api/admin/newsletter'); const d=await r.json(); setSubs(d.rows||[]) }catch{} },[])
   const loadCampaigns = useCallback(async()=>{ try{ const r=await fetch('/api/admin/newsletter?tab=campaigns'); const d=await r.json(); setCampaigns(d.rows||[]) }catch{} },[])
   useEffect(()=>{ load(); loadCampaigns() },[load, loadCampaigns])
+
+  function exportCSV() {
+    const header = 'email,name,source,status,subscribed_at'
+    const lines = subs.map(s => [s.email, s.name||'', s.source, s.status, s.created_at?.slice(0,10)||''].map(v=>`"${v}"`).join(','))
+    const blob = new Blob([header + '\n' + lines.join('\n')], { type:'text/csv' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a'); a.href=url; a.download='subscribers.csv'; a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  function parseImportText(text: string): { email:string; name:string; source:string }[] {
+    const lines = text.trim().split('\n').filter(Boolean)
+    // detect CSV (has comma) vs one-email-per-line
+    return lines.flatMap(line => {
+      const parts = line.split(',').map(p=>p.trim().replace(/^"|"$/g,''))
+      const email = parts[0]; const name = parts[1]||''; const source = parts[2]||'import'
+      if (!email || !email.includes('@')) return []
+      return [{ email, name, source }]
+    })
+  }
+
+  async function handleImport() {
+    const rows = parseImportText(importText)
+    if (rows.length === 0) { showToast('✗ No valid emails found'); return }
+    setImportBusy(true)
+    try {
+      const r = await fetch('/api/admin/newsletter/import',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({rows})})
+      const d = await r.json()
+      if (r.ok) { showToast(`✓ ${d.inserted} inserted, ${d.skipped} skipped`); setShowImport(false); setImportText(''); load() }
+      else showToast(`✗ ${d.error||'Import failed'}`)
+    } catch { showToast('✗ Import failed — network error') }
+    setImportBusy(false)
+  }
+
+  function onCSVFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]; if (!file) return
+    const reader = new FileReader()
+    reader.onload = ev => setImportText((ev.target?.result as string) || '')
+    reader.readAsText(file)
+    e.target.value = ''
+  }
+
+  async function addOne() {
+    if (!addEmail.trim() || !addEmail.includes('@')) { showToast('✗ Valid email required'); return }
+    setAddBusy(true)
+    try {
+      const rows = [{ email: addEmail.trim(), name: addName.trim()||undefined, source: addSource }]
+      const r = await fetch('/api/admin/newsletter/import',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({rows})})
+      const d = await r.json()
+      if (r.ok && d.inserted > 0) { showToast(`✓ ${addEmail} added`); setAddEmail(''); setAddName(''); load() }
+      else if (r.ok && d.skipped > 0) showToast('✗ Already subscribed')
+      else showToast(`✗ ${d.error||'Add failed'}`)
+    } catch { showToast('✗ Add failed — network error') }
+    setAddBusy(false)
+  }
 
   async function sendBroadcast() {
     if (!composeForm.subject.trim() || !composeForm.html_content.trim()) { showToast('✗ Subject and content are required'); return }
@@ -836,46 +902,82 @@ function NewsletterSection({ showToast }: { showToast:(m:string)=>void }) {
       <SubTabs tabs={NL_TABS} active={NL_TABS.find(t=>t.startsWith(tab)) ?? NL_TABS[0]} onSelect={(t)=>setTab(t.split(' (')[0])} />
 
       {tab==='Subscribers' && (
-        <div style={{ background:S.surface, border:`1px solid ${S.border}`, borderRadius:14, overflow:'hidden' }}>
-          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 18px', borderBottom:`1px solid ${S.border}` }}>
-            <div style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:700, fontSize:14, color:S.text }}>{subs.length || 104} active subscribers</div>
-            <div style={{ display:'flex', gap:7 }}>
-              <Btn label="Bulk import" small outline color={S.text2} />
-              <Btn label="Export CSV" small outline color={S.text2} />
+        <>
+          {/* Add one */}
+          <div style={{ background:S.surface, border:`1px solid ${S.border}`, borderRadius:14, padding:'14px 18px', marginBottom:12 }}>
+            <div style={{ fontFamily:'JetBrains Mono,monospace', fontSize:9.5, letterSpacing:'.1em', textTransform:'uppercase', color:S.text3, marginBottom:10 }}>Add subscriber</div>
+            <div style={{ display:'flex', gap:8, flexWrap:'wrap', alignItems:'flex-end' }}>
+              <div style={{ flex:2, minWidth:180 }}>
+                <input value={addEmail} onChange={e=>setAddEmail(e.target.value)} placeholder="email@example.com" type="email"
+                  style={{ width:'100%', background:S.bg2, border:`1px solid ${S.bord2}`, borderRadius:8, padding:'8px 11px', fontSize:13, color:S.text, outline:'none', boxSizing:'border-box' as const }} />
+              </div>
+              <div style={{ flex:1.5, minWidth:140 }}>
+                <input value={addName} onChange={e=>setAddName(e.target.value)} placeholder="Name (optional)"
+                  style={{ width:'100%', background:S.bg2, border:`1px solid ${S.bord2}`, borderRadius:8, padding:'8px 11px', fontSize:13, color:S.text, outline:'none', boxSizing:'border-box' as const }} />
+              </div>
+              <div style={{ flex:1, minWidth:110 }}>
+                <select value={addSource} onChange={e=>setAddSource(e.target.value)}
+                  style={{ width:'100%', background:S.bg2, border:`1px solid ${S.bord2}`, borderRadius:8, padding:'8px 11px', fontSize:13, color:S.text, outline:'none' }}>
+                  {['manual','website','brevo','import','referral'].map(o=><option key={o} value={o}>{o}</option>)}
+                </select>
+              </div>
+              <Btn label={addBusy ? 'Adding…' : 'Add'} small onClick={addOne} />
             </div>
           </div>
-          <div style={{ overflowX:'auto' }}>
-            <table style={{ width:'100%', borderCollapse:'collapse' }}>
-              <thead>
-                <tr>{['Email','Name','Source','Status','Subscribed',''].map(h=><th key={h} style={{ fontFamily:'JetBrains Mono,monospace', fontSize:9.5, letterSpacing:'.1em', textTransform:'uppercase', color:S.text3, padding:'10px 14px', borderBottom:`1px solid ${S.border}`, textAlign:'left', whiteSpace:'nowrap' }}>{h}</th>)}</tr>
-              </thead>
-              <tbody>
-                {subs.length > 0 ? subs.map((s,i)=>(
-                  <tr key={i} style={{ borderBottom:`1px solid rgba(255,255,255,.04)` }}>
-                    <td style={{ padding:'11px 14px', fontSize:13, color:S.blue }}><a href={`mailto:${s.email}`} style={{ color:S.blue }}>{s.email}</a></td>
-                    <td style={{ padding:'11px 14px', fontSize:12.5, color:S.text2 }}>{s.name||'—'}</td>
-                    <td style={{ padding:'11px 14px' }}><Badge label={s.source} color={S.text3} /></td>
-                    <td style={{ padding:'11px 14px' }}><Badge label={s.status} color={S.green} /></td>
-                    <td style={{ padding:'11px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text3 }}>{s.created_at?.slice(0,10)}</td>
-                    <td style={{ padding:'11px 14px' }}><Btn label="Remove" small outline color='#EF4444' onClick={()=>{ fetch('/api/admin/newsletter',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:s.id})}); load(); showToast('✓ Removed') }} /></td>
-                  </tr>
-                )) : (
-                  // fallback static list matching HTML
-                  ['tusharanand.thakur@labelnest.in','trisha.c@labelnest.in','suhas.bhat@labelnest.in','rahul.kumar@labelnest.in','prajwal.pb@labelnest.in','pallavi.1@labelnest.in','nidhi.singh@labelnest.in','jeevan.prakash.k.v@labelnest.in','himani.bhatt@labelnest.in','ankit.suman@labelnest.in','srishti.shiyal@labelnest.in','sowmya.polakonda@labelnest.in','richa.sharma@labelnest.in','sumedha.pandey@labelnest.in'].map((email,i)=>(
+
+          {/* Bulk import modal */}
+          {showImport && (
+            <div style={{ background:S.surface, border:`1px solid ${S.bord2}`, borderRadius:14, padding:18, marginBottom:12 }}>
+              <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:10 }}>
+                <div style={{ fontFamily:'JetBrains Mono,monospace', fontSize:9.5, letterSpacing:'.1em', textTransform:'uppercase', color:S.text3 }}>Bulk import — CSV or one email per line</div>
+                <button onClick={()=>{ setShowImport(false); setImportText('') }} style={{ background:'none', border:'none', color:S.text3, cursor:'pointer', fontSize:16 }}>✕</button>
+              </div>
+              <div style={{ fontSize:11.5, color:S.text3, marginBottom:8 }}>Columns: <code style={{ background:'rgba(255,255,255,.06)', padding:'1px 5px', borderRadius:4 }}>email, name, source</code> — only email is required. Or upload a .csv file.</div>
+              <div style={{ display:'flex', gap:8, marginBottom:8 }}>
+                <label style={{ background:S.bg2, border:`1px solid ${S.bord2}`, borderRadius:8, padding:'7px 12px', fontSize:12, color:S.text2, cursor:'pointer' }}>
+                  Upload CSV <input type="file" accept=".csv,text/csv" onChange={onCSVFile} style={{ display:'none' }} />
+                </label>
+              </div>
+              <textarea value={importText} onChange={e=>setImportText(e.target.value)} rows={8} placeholder={"email,name,source\njohn@example.com,John Smith,brevo\njane@example.com"}
+                style={{ width:'100%', background:S.bg2, border:`1px solid ${S.bord2}`, borderRadius:8, padding:'9px 12px', fontSize:12.5, color:S.text, outline:'none', fontFamily:'JetBrains Mono,monospace', resize:'vertical', boxSizing:'border-box' as const }} />
+              <div style={{ display:'flex', gap:8, marginTop:10, alignItems:'center' }}>
+                <Btn label={importBusy ? 'Importing…' : `Import ${parseImportText(importText).length} rows`} onClick={handleImport} />
+                <span style={{ fontSize:11.5, color:S.text3 }}>Duplicates are skipped automatically</span>
+              </div>
+            </div>
+          )}
+
+          <div style={{ background:S.surface, border:`1px solid ${S.border}`, borderRadius:14, overflow:'hidden' }}>
+            <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 18px', borderBottom:`1px solid ${S.border}` }}>
+              <div style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:700, fontSize:14, color:S.text }}>{subs.length} active subscribers</div>
+              <div style={{ display:'flex', gap:7 }}>
+                <Btn label="Bulk import" small outline color={S.text2} onClick={()=>setShowImport(v=>!v)} />
+                <Btn label="Export CSV" small outline color={S.text2} onClick={exportCSV} />
+              </div>
+            </div>
+            <div style={{ overflowX:'auto' }}>
+              <table style={{ width:'100%', borderCollapse:'collapse' }}>
+                <thead>
+                  <tr>{['Email','Name','Source','Status','Subscribed',''].map(h=><th key={h} style={{ fontFamily:'JetBrains Mono,monospace', fontSize:9.5, letterSpacing:'.1em', textTransform:'uppercase', color:S.text3, padding:'10px 14px', borderBottom:`1px solid ${S.border}`, textAlign:'left', whiteSpace:'nowrap' }}>{h}</th>)}</tr>
+                </thead>
+                <tbody>
+                  {subs.length > 0 ? subs.map((s,i)=>(
                     <tr key={i} style={{ borderBottom:`1px solid rgba(255,255,255,.04)` }}>
-                      <td style={{ padding:'11px 14px', fontSize:13 }}><a href={`mailto:${email}`} style={{ color:S.blue }}>{email}</a></td>
-                      <td style={{ padding:'11px 14px', fontSize:12.5, color:S.text2 }}>—</td>
-                      <td style={{ padding:'11px 14px' }}><Badge label="manual" color={S.text3} /></td>
-                      <td style={{ padding:'11px 14px' }}><Badge label="active" color={S.green} /></td>
-                      <td style={{ padding:'11px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text3 }}>26/05/2026</td>
-                      <td style={{ padding:'11px 14px' }}><Btn label="Remove" small outline color='#EF4444' /></td>
+                      <td style={{ padding:'11px 14px', fontSize:13, color:S.blue }}><a href={`mailto:${s.email}`} style={{ color:S.blue }}>{s.email}</a></td>
+                      <td style={{ padding:'11px 14px', fontSize:12.5, color:S.text2 }}>{s.name||'—'}</td>
+                      <td style={{ padding:'11px 14px' }}><Badge label={s.source} color={S.text3} /></td>
+                      <td style={{ padding:'11px 14px' }}><Badge label={s.status} color={S.green} /></td>
+                      <td style={{ padding:'11px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text3 }}>{s.created_at?.slice(0,10)}</td>
+                      <td style={{ padding:'11px 14px' }}><Btn label="Remove" small outline color='#EF4444' onClick={()=>{ fetch('/api/admin/newsletter',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:s.id})}); load(); showToast('✓ Removed') }} /></td>
                     </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+                  )) : (
+                    <tr><td colSpan={6} style={{ padding:'32px 14px', textAlign:'center', color:S.text3, fontSize:13 }}>No subscribers yet — add one above or bulk import your Brevo list</td></tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       {tab==='Compose' && (

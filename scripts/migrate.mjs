@@ -162,12 +162,29 @@ async function migrate() {
 
   await sql`
     CREATE TABLE IF NOT EXISTS website_newsletter_subscribers (
-      id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-      email          TEXT NOT NULL UNIQUE,
-      source         TEXT NOT NULL DEFAULT 'website',
-      subscribed_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      id               UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      email            TEXT NOT NULL UNIQUE,
+      name             TEXT,
+      source           TEXT NOT NULL DEFAULT 'website',
+      status           TEXT NOT NULL DEFAULT 'active',
+      subscribed_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      unsubscribed_at  TIMESTAMPTZ,
+      created_at       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      updated_at       TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
   `
+  // Add missing columns to existing deployments (safe — IF NOT EXISTS)
+  await sql`ALTER TABLE website_newsletter_subscribers ADD COLUMN IF NOT EXISTS name TEXT`.catch(()=>{})
+  await sql`ALTER TABLE website_newsletter_subscribers ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'active'`.catch(()=>{})
+  await sql`ALTER TABLE website_newsletter_subscribers ADD COLUMN IF NOT EXISTS unsubscribed_at TIMESTAMPTZ`.catch(()=>{})
+  await sql`ALTER TABLE website_newsletter_subscribers ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()`.catch(()=>{})
+  await sql`ALTER TABLE website_newsletter_subscribers ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()`.catch(()=>{})
+
+  // Add missing columns to website_submissions
+  await sql`ALTER TABLE website_submissions ADD COLUMN IF NOT EXISTS phone TEXT`.catch(()=>{})
+  await sql`ALTER TABLE website_submissions ADD COLUMN IF NOT EXISTS metadata JSONB`.catch(()=>{})
+  await sql`ALTER TABLE website_submissions ADD COLUMN IF NOT EXISTS is_read BOOLEAN NOT NULL DEFAULT false`.catch(()=>{})
+  await sql`ALTER TABLE website_submissions ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()`.catch(()=>{})
 
   await sql`
     CREATE TABLE IF NOT EXISTS website_submissions (
