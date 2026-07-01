@@ -13,51 +13,6 @@ const BRIEFINGS = [
   { href: '/briefings/death-of-black-box-vendor-india-ai', emoji: '🔓', scope: 'Manifesto', title: 'The Death of the "Black Box" Vendor: Why Global Data Giants are Failing Indian AI', read: '2 min · Apr 2026' },
 ]
 
-const CAREER = [
-  {
-    period: 'Nov 2025 — Present',
-    title: 'Founder and Director',
-    company: 'LabelNest India Private Limited · Bengaluru',
-    desc: 'Building the full LabelNest product ecosystem — NestLens, NestHR, Managed Services, and the internal infrastructure that powers all of them.',
-    color: '#E91E8C',
-  },
-  {
-    period: 'Mar 2025 — Nov 2025 · 9 months',
-    title: 'Vice President',
-    company: 'BlackRock · Bengaluru, Hybrid',
-    desc: "Following BlackRock's acquisition of Preqin, transitioned into a VP role. Led data quality and controls at institutional scale.",
-    color: '#2563EB',
-  },
-  {
-    period: 'Jan 2022 — Mar 2025 · 3 years 2 months',
-    title: 'AVP, Lead, and Manager — Data Quality and Controls',
-    company: 'Preqin · Bengaluru, Hybrid',
-    desc: 'Three progressive roles across data management, data controls, and AVP-level quality governance. Led teams of 14–20 across critical data operations programs.',
-    color: '#2563EB',
-  },
-  {
-    period: 'Nov 2020 — Mar 2022 · 1 year 5 months',
-    title: 'Senior Data Operations',
-    company: 'Remote',
-    desc: 'Senior data operations role. Remote. Led structured data programs across clients.',
-    color: '#10B981',
-  },
-  {
-    period: 'Oct 2018 — Jul 2020 · 1 year 10 months',
-    title: 'Analyst',
-    company: 'Microsoft · Bengaluru, India',
-    desc: 'Worked with the Bing BI team on data cleaning and increasing the relevancy of Bing ads.',
-    color: '#10B981',
-  },
-  {
-    period: 'Aug 2016 — Oct 2018 · 2 years 3 months',
-    title: 'Market Research Executive / Team Lead',
-    company: 'CIOReview · Bengaluru, On-site',
-    desc: 'Technology magazine focused on the US market. First professional role in data and research operations.',
-    color: '#F97316',
-    last: true,
-  },
-]
 
 export default function FounderPage() {
   return (
@@ -175,40 +130,99 @@ export default function FounderPage() {
 
             {/* CAREER */}
             <div style={{ marginBottom: 48 }}>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Career</div>
-              <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(18px,2.5vw,26px)', letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 20 }}>
-                Nine years. Four organisations. One diagnosis.
-              </h2>
-              <div className="flex flex-col">
-                {CAREER.map((c, i) => (
-                  <div key={c.period} className="flex" style={{ gap: 16, paddingBottom: c.last ? 0 : 20, position: 'relative' }}>
-                    {!c.last && (
-                      <div className="absolute" style={{ left: 11, top: 22, bottom: 0, width: 1, background: 'var(--border)' }} />
-                    )}
-                    <div className="flex flex-col items-center flex-shrink-0" style={{ width: 22 }}>
-                      <div className="flex items-center justify-center z-10" style={{ width: 22, height: 22, borderRadius: '50%', border: `2px solid ${i === 0 ? c.color : 'var(--border)'}`, background: 'var(--bg)', flexShrink: 0 }}>
-                        <div style={{ width: 8, height: 8, borderRadius: '50%', background: c.color }} />
-                      </div>
-                    </div>
-                    <div style={{ paddingTop: 1 }}>
-                      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 3 }}>{c.period}</div>
-                      <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 1 }}>{c.title}</div>
-                      <div style={{ fontSize: 13, color: 'var(--text2)', marginBottom: 4 }}>{c.company}</div>
-                      <div style={{ fontSize: 12.5, lineHeight: 1.6, color: 'var(--text3)' }}>{c.desc}</div>
-                    </div>
+              <style>{`
+                .career-wrap .tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#4C4868;margin-bottom:8px}
+                .career-wrap .sh{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;letter-spacing:-.025em;color:#EBE8F6;margin-bottom:6px}
+                .career-wrap .intro{font-size:13.5px;color:#8985A6;margin-bottom:36px}
+                .career-wrap .chart{display:grid;grid-template-columns:130px 1fr;gap:16px;height:380px}
+                .career-wrap .y-axis{position:relative;height:100%}
+                .career-wrap .y-label{position:absolute;right:0;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#4C4868;text-align:right;line-height:1.2;transform:translateY(-50%)}
+                .career-wrap .y-label strong{display:block;color:#8985A6;font-weight:600;font-size:12px;letter-spacing:0;text-transform:none;font-family:'Inter',sans-serif}
+                .career-wrap .plot{position:relative;background:linear-gradient(180deg,rgba(233,30,140,.03) 0%,transparent 60%);border-left:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);border-radius:0 0 0 4px}
+                .career-wrap .grid-line{position:absolute;left:0;right:0;height:1px;background:rgba(255,255,255,.04)}
+                .career-wrap svg.path{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+                .career-wrap .firm-label{position:absolute;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:11.5px;color:#EBE8F6;white-space:nowrap;transform:translate(-50%,-100%);padding-bottom:6px;letter-spacing:-.005em}
+                .career-wrap .firm-label span{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:500;color:#4C4868;margin-top:1px;letter-spacing:.04em}
+                .career-wrap .point{position:absolute;width:11px;height:11px;border-radius:50%;background:var(--c);transform:translate(-50%,-50%);box-shadow:0 0 0 3px #09090F,0 0 0 4px var(--c)}
+                .career-wrap .point.current{box-shadow:0 0 0 3px #09090F,0 0 0 4px #E91E8C,0 0 20px #E91E8C}
+                .career-wrap .point.current::after{content:'';position:absolute;inset:-10px;border-radius:50%;border:2px solid #E91E8C;opacity:.5;animation:career-ring 2s ease-in-out infinite}
+                @keyframes career-ring{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:0;transform:scale(1.6)}}
+                .career-wrap .x-axis{display:grid;grid-template-columns:130px 1fr;gap:16px;margin-top:8px}
+                .career-wrap .x-line{position:relative;padding-top:4px}
+                .career-wrap .x-tick{position:absolute;font-family:'JetBrains Mono',monospace;font-size:10px;color:#4C4868;transform:translateX(-50%)}
+                .career-wrap .edu{display:flex;gap:14px;align-items:center;margin-top:42px;padding:14px 18px;background:#111119;border:1px solid rgba(255,255,255,.07);border-radius:11px;max-width:520px}
+                .career-wrap .edu-icon{width:34px;height:34px;border-radius:9px;background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.18);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+                .career-wrap .edu-degree{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:13px;color:#EBE8F6;margin-bottom:2px}
+                .career-wrap .edu-school{font-size:11.5px;color:#8985A6;margin-bottom:2px}
+                .career-wrap .edu-period{font-family:'JetBrains Mono',monospace;font-size:10px;color:#4C4868}
+              `}</style>
+              <div className="career-wrap" dangerouslySetInnerHTML={{ __html: `
+                <div class="tag">Career</div>
+                <div class="sh">Analyst to Founder.</div>
+                <div class="intro">2016 → Present</div>
+                <div class="chart">
+                  <div class="y-axis">
+                    <div class="y-label" style="top:8%"><strong>Founder</strong></div>
+                    <div class="y-label" style="top:24%"><strong>VP</strong></div>
+                    <div class="y-label" style="top:40%"><strong>AVP</strong></div>
+                    <div class="y-label" style="top:56%"><strong>Lead</strong></div>
+                    <div class="y-label" style="top:72%"><strong>Sr Associate</strong></div>
+                    <div class="y-label" style="top:88%"><strong>Analyst</strong></div>
                   </div>
-                ))}
-              </div>
-
-              {/* Education */}
-              <div className="flex items-center" style={{ gap: 16, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '18px 20px', marginTop: 20 }}>
-                <div className="flex items-center justify-center flex-shrink-0" style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(37,99,235,.1)', border: '1px solid rgba(37,99,235,.15)', fontSize: 20 }}>🎓</div>
-                <div>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)', marginBottom: 2 }}>BTech — Electronics and Communication Engineering</div>
-                  <div style={{ fontSize: 12.5, color: 'var(--text2)' }}>Maulana Abul Kalam Azad University of Technology, West Bengal (MAKAUT / WBUT)</div>
-                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--text3)', marginTop: 3 }}>Aug 2012 — Jun 2016</div>
+                  <div class="plot">
+                    <div class="grid-line" style="top:8%"></div>
+                    <div class="grid-line" style="top:24%"></div>
+                    <div class="grid-line" style="top:40%"></div>
+                    <div class="grid-line" style="top:56%"></div>
+                    <div class="grid-line" style="top:72%"></div>
+                    <div class="grid-line" style="top:88%"></div>
+                    <div class="firm-label" style="left:20%;top:88%">CIOReview · Microsoft<span>2016 — 2020</span></div>
+                    <div class="firm-label" style="left:50%;top:72%">Preqin<span>2020 — 2022</span></div>
+                    <div class="firm-label" style="left:70%;top:56%">Preqin<span>2022 — 2024</span></div>
+                    <div class="firm-label" style="left:85%;top:40%">Preqin<span>2024 — 2025</span></div>
+                    <div class="firm-label" style="left:90.85%;top:24%">BlackRock<span>'25</span></div>
+                    <div class="firm-label" style="left:95.85%;top:8%;color:#E91E8C">LabelNest<span style="color:#E91E8C">Now</span></div>
+                    <svg class="path" viewBox="0 0 1000 380" preserveAspectRatio="none">
+                      <defs>
+                        <linearGradient id="stepGrad" x1="0" y1="0" x2="1" y2="0">
+                          <stop offset="0%" stop-color="#06B6D4"/>
+                          <stop offset="40%" stop-color="#10B981"/>
+                          <stop offset="60%" stop-color="#2563EB"/>
+                          <stop offset="80%" stop-color="#1E40AF"/>
+                          <stop offset="90%" stop-color="#7C3AED"/>
+                          <stop offset="100%" stop-color="#E91E8C"/>
+                        </linearGradient>
+                      </defs>
+                      <path d="M 0 334 L 400 334 L 400 274 L 600 274 L 600 213 L 800 213 L 800 152 L 900 152 L 900 91 L 917 91 L 917 30 L 1000 30" fill="none" stroke="url(#stepGrad)" stroke-width="2.5" stroke-linejoin="miter" stroke-linecap="round"/>
+                    </svg>
+                    <div class="point" style="left:0%;top:88%;--c:#06B6D4"></div>
+                    <div class="point" style="left:40%;top:72%;--c:#10B981"></div>
+                    <div class="point" style="left:60%;top:56%;--c:#2563EB"></div>
+                    <div class="point" style="left:80%;top:40%;--c:#1E40AF"></div>
+                    <div class="point" style="left:90%;top:24%;--c:#7C3AED"></div>
+                    <div class="point current" style="left:91.7%;top:8%;--c:#E91E8C"></div>
+                  </div>
                 </div>
-              </div>
+                <div class="x-axis">
+                  <div></div>
+                  <div class="x-line">
+                    <span class="x-tick" style="left:0%">'16</span>
+                    <span class="x-tick" style="left:20%">'18</span>
+                    <span class="x-tick" style="left:40%">'20</span>
+                    <span class="x-tick" style="left:60%">'22</span>
+                    <span class="x-tick" style="left:80%">'24</span>
+                    <span class="x-tick" style="left:100%">'26</span>
+                  </div>
+                </div>
+                <div class="edu">
+                  <div class="edu-icon">🎓</div>
+                  <div>
+                    <div class="edu-degree">BTech — Electronics and Communication Engineering</div>
+                    <div class="edu-school">MAKAUT (formerly WBUT), West Bengal</div>
+                    <div class="edu-period">Aug 2012 — Jun 2016</div>
+                  </div>
+                </div>
+              `}} />
             </div>
 
             {/* WRITING */}
