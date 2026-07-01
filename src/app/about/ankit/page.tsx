@@ -141,7 +141,7 @@ export default function FounderPage() {
                 .career-wrap .plot{position:relative;background:linear-gradient(180deg,rgba(233,30,140,.03) 0%,transparent 60%);border-left:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);border-radius:0 0 0 4px}
                 .career-wrap .grid-line{position:absolute;left:0;right:0;height:1px;background:rgba(255,255,255,.04)}
                 .career-wrap svg.path{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
-                .career-wrap .firm-label{position:absolute;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:11.5px;color:#EBE8F6;white-space:nowrap;transform:translate(-50%,-100%);padding-bottom:6px;letter-spacing:-.005em}
+                .career-wrap .firm-label{position:absolute;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:11.5px;color:#A78BFA;white-space:nowrap;transform:translate(-50%,-100%);padding-bottom:6px;letter-spacing:-.005em}
                 .career-wrap .firm-label span{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:500;color:#4C4868;margin-top:1px;letter-spacing:.04em}
                 .career-wrap .point{position:absolute;width:11px;height:11px;border-radius:50%;background:var(--c);transform:translate(-50%,-50%);box-shadow:0 0 0 3px #09090F,0 0 0 4px var(--c)}
                 .career-wrap .point.current{box-shadow:0 0 0 3px #09090F,0 0 0 4px #E91E8C,0 0 20px #E91E8C}
