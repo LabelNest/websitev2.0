@@ -12,6 +12,7 @@ interface Fellow { id:string; name:string; role:string; cohort:string; departmen
 interface Job { id:string; title:string; department:string; type:string; location:string; complexity:string; apply_url:string; is_active:boolean }
 interface LegalDoc { id:string; slug:string; title:string; intro:string; body_markdown:string; version:string; effective_date:string; last_updated:string }
 interface Subscriber { id:string; email:string; name:string|null; source:string; status:string; created_at:string }
+interface Campaign { id:string; subject:string; template_name:string|null; recipient_count:number; recipient_filter:string; status:string; sent_at:string|null; created_at:string }
 interface Submission { id:string; name:string; email:string; phone:string|null; subject:string|null; message:string|null; category:string|null; metadata:Record<string,string>|null; is_read:boolean; created_at:string }
 interface SeoRow { id:string; page_path:string; title:string|null; description:string|null; og_image:string|null; keywords:string|null; updated_at:string|null }
 
@@ -792,38 +793,49 @@ function UploadSection({ showToast }: { showToast:(m:string)=>void }) {
 }
 
 // ── NEWSLETTER SECTION ─────────────────────────────────────────────────────
-const HISTORY_ROWS = [
-  { subject:'Got a Minute? We\'d Love Your Feedback', template:'custom-html', recipients:104, opens:'30 (34)', clicks:'5 (25)', open_rate:29, ctr:17, sent:'10/06/2026' },
-  { subject:'New drop. Same obsession.', template:'custom-html', recipients:104, opens:'44 (46)', clicks:'9 (39)', open_rate:42, ctr:20, sent:'02/06/2026' },
-  { subject:'Weekly Newsletter is Here!', template:'custom-html', recipients:88, opens:'27 (28)', clicks:'13 (63)', open_rate:31, ctr:48, sent:'26/05/2026' },
-  { subject:'test', template:'monthly-digest', recipients:1, opens:'1 (1)', clicks:'0 (0)', open_rate:100, ctr:0, sent:'21/05/2026' },
-]
-
 function NewsletterSection({ showToast }: { showToast:(m:string)=>void }) {
-  const [tab, setTab] = useState('Subscribers (104)')
+  const [tab, setTab] = useState('Subscribers')
   const [subs, setSubs] = useState<Subscriber[]>([])
-  const [composeForm, setComposeForm] = useState({ subject:'', template:'new-briefing', recipients:'all', test_email:'ankit@labelnest.in' })
+  const [campaigns, setCampaigns] = useState<Campaign[]>([])
+  const [sending, setSending] = useState(false)
+  const [composeForm, setComposeForm] = useState({ subject:'', template:'new-briefing', recipients:'all', test_email:'ankit@labelnest.in', html_content:'' })
 
   const load = useCallback(async()=>{ try{ const r=await fetch('/api/admin/newsletter'); const d=await r.json(); setSubs(d.rows||[]) }catch{} },[])
-  useEffect(()=>{ load() },[load])
+  const loadCampaigns = useCallback(async()=>{ try{ const r=await fetch('/api/admin/newsletter?tab=campaigns'); const d=await r.json(); setCampaigns(d.rows||[]) }catch{} },[])
+  useEffect(()=>{ load(); loadCampaigns() },[load, loadCampaigns])
 
   async function sendBroadcast() {
-    await fetch('/api/admin/newsletter/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(composeForm)})
-    showToast(`✓ Broadcast sent to ${subs.length} subscribers`)
+    if (!composeForm.subject.trim() || !composeForm.html_content.trim()) { showToast('✗ Subject and content are required'); return }
+    setSending(true)
+    try {
+      const r = await fetch('/api/admin/newsletter/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(composeForm)})
+      const d = await r.json()
+      if (r.ok) { showToast(`✓ Broadcast sent to ${d.sent} subscribers`); loadCampaigns() }
+      else showToast(`✗ ${d.error || 'Send failed'}${d.detail ? `: ${d.detail}` : ''}`)
+    } catch { showToast('✗ Send failed — network error') }
+    setSending(false)
   }
   async function sendTest() {
-    await fetch('/api/admin/newsletter/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...composeForm,recipients:composeForm.test_email,test:true})})
-    showToast(`✓ Test sent to ${composeForm.test_email}`)
+    if (!composeForm.subject.trim() || !composeForm.html_content.trim()) { showToast('✗ Subject and content are required'); return }
+    setSending(true)
+    try {
+      const r = await fetch('/api/admin/newsletter/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...composeForm,recipients:composeForm.test_email,test:true})})
+      const d = await r.json()
+      if (r.ok) showToast(`✓ Test sent to ${composeForm.test_email}`)
+      else showToast(`✗ ${d.error || 'Test send failed'}${d.detail ? `: ${d.detail}` : ''}`)
+    } catch { showToast('✗ Test send failed — network error') }
+    setSending(false)
   }
 
   const CF=(k:keyof typeof composeForm)=>(v:string)=>setComposeForm(f=>({...f,[k]:v}))
+  const NL_TABS = [`Subscribers (${subs.length})`,'Compose',`History (${campaigns.length})`]
 
   return (
     <>
-      <SectionHeader title="Newsletter" desc={`${subs.length} subscribers · website_newsletter_subscribers · SendGrid`} />
-      <SubTabs tabs={['Subscribers (104)','Compose','History (4)']} active={tab} onSelect={setTab} />
+      <SectionHeader title="Newsletter" desc={`${subs.length} subscribers · website_newsletter_subscribers · Brevo`} />
+      <SubTabs tabs={NL_TABS} active={NL_TABS.find(t=>t.startsWith(tab)) ?? NL_TABS[0]} onSelect={(t)=>setTab(t.split(' (')[0])} />
 
-      {tab==='Subscribers (104)' && (
+      {tab==='Subscribers' && (
         <div style={{ background:S.surface, border:`1px solid ${S.border}`, borderRadius:14, overflow:'hidden' }}>
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 18px', borderBottom:`1px solid ${S.border}` }}>
             <div style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:700, fontSize:14, color:S.text }}>{subs.length || 104} active subscribers</div>
@@ -874,41 +886,59 @@ function NewsletterSection({ showToast }: { showToast:(m:string)=>void }) {
               <SelectField label="Template" value={composeForm.template} onChange={CF('template')} options={['new-briefing','product-update','monthly-digest','custom-html']} />
               <Input label="Subject" value={composeForm.subject} onChange={CF('subject')} placeholder="Email subject line" />
               <SelectField label="Recipients" value={composeForm.recipients} onChange={CF('recipients')} options={[`All active (${subs.length||104})`,'Manual segment']} />
+              <div>
+                <label style={{ fontSize:12, fontWeight:600, color:S.text, display:'block', marginBottom:5 }}>Email content (HTML)</label>
+                <textarea
+                  value={composeForm.html_content}
+                  onChange={(e)=>CF('html_content')(e.target.value)}
+                  placeholder="<h1>Hello subscribers</h1><p>...</p>"
+                  rows={10}
+                  style={{ width:'100%', background:S.bg2, border:`1px solid ${S.border}`, borderRadius:9, padding:'11px 14px', fontSize:13, color:S.text, outline:'none', fontFamily:'JetBrains Mono,monospace', resize:'vertical' }}
+                />
+              </div>
               <Input label="Test recipients (comma-separated)" value={composeForm.test_email} onChange={CF('test_email')} placeholder="email@example.com" hint="Used only by the Send test button." />
               <div style={{ display:'flex', gap:8, marginTop:4 }}>
-                <Btn label="Send test" outline color={S.text2} onClick={sendTest} />
-                <Btn label={`Send to ${subs.length||104}`} onClick={sendBroadcast} />
+                <Btn label={sending ? 'Sending…' : 'Send test'} outline color={S.text2} onClick={sendTest} />
+                <Btn label={sending ? 'Sending…' : `Send to ${subs.length||0}`} onClick={sendBroadcast} />
               </div>
             </div>
           </div>
-          <div style={{ background:S.bg3, border:`1px solid ${S.border}`, borderRadius:14, minHeight:300, display:'flex', alignItems:'center', justifyContent:'center', flexDirection:'column', gap:8, color:S.text3, fontSize:13 }}>
-            <div style={{ fontSize:28, opacity:.3 }}>📧</div>
-            Configure the template to see preview
+          <div style={{ background:S.bg3, border:`1px solid ${S.border}`, borderRadius:14, minHeight:300, padding:16, overflow:'auto' }}>
+            {composeForm.html_content ? (
+              <div style={{ background:'#fff', borderRadius:8, padding:16, color:'#111' }} dangerouslySetInnerHTML={{ __html: composeForm.html_content }} />
+            ) : (
+              <div style={{ height:'100%', display:'flex', alignItems:'center', justifyContent:'center', flexDirection:'column', gap:8, color:S.text3, fontSize:13 }}>
+                <div style={{ fontSize:28, opacity:.3 }}>📧</div>
+                Type HTML content to see a live preview
+              </div>
+            )}
           </div>
         </div>
       )}
 
-      {tab==='History (4)' && (
+      {tab==='History' && (
         <div style={{ background:S.surface, border:`1px solid ${S.border}`, borderRadius:14, overflow:'hidden' }}>
           <div style={{ padding:'14px 18px', borderBottom:`1px solid ${S.border}` }}>
-            <div style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:700, fontSize:14, color:S.text }}>Send history · 4 broadcasts</div>
+            <div style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:700, fontSize:14, color:S.text }}>Send history · {campaigns.length} broadcasts</div>
           </div>
           <div style={{ overflowX:'auto' }}>
             <table style={{ width:'100%', borderCollapse:'collapse' }}>
               <thead>
-                <tr>{['Subject','Template','Recipients','Opens','Clicks','Open rate','CTR','Sent'].map(h=><th key={h} style={{ fontFamily:'JetBrains Mono,monospace', fontSize:9.5, letterSpacing:'.1em', textTransform:'uppercase', color:S.text3, padding:'10px 14px', borderBottom:`1px solid ${S.border}`, textAlign:'left', whiteSpace:'nowrap' }}>{h}</th>)}</tr>
+                <tr>{['Subject','Template','Recipients','Status','Opens','Clicks','Sent'].map(h=><th key={h} style={{ fontFamily:'JetBrains Mono,monospace', fontSize:9.5, letterSpacing:'.1em', textTransform:'uppercase', color:S.text3, padding:'10px 14px', borderBottom:`1px solid ${S.border}`, textAlign:'left', whiteSpace:'nowrap' }}>{h}</th>)}</tr>
               </thead>
               <tbody>
-                {HISTORY_ROWS.map((r,i)=>(
-                  <tr key={i} style={{ borderBottom:`1px solid rgba(255,255,255,.04)` }}>
+                {campaigns.length === 0 && (
+                  <tr><td colSpan={7} style={{ padding:'24px 14px', textAlign:'center', color:S.text3, fontSize:13 }}>No campaigns sent yet.</td></tr>
+                )}
+                {campaigns.map((r)=>(
+                  <tr key={r.id} style={{ borderBottom:`1px solid rgba(255,255,255,.04)` }}>
                     <td style={{ padding:'12px 14px', fontSize:13, color:S.text, maxWidth:240, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{r.subject}</td>
-                    <td style={{ padding:'12px 14px' }}><Badge label={r.template} color={S.text3} /></td>
-                    <td style={{ padding:'12px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11.5, color:S.text2 }}>{r.recipients}</td>
-                    <td style={{ padding:'12px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11.5, color:S.text2 }}>{r.opens}</td>
-                    <td style={{ padding:'12px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11.5, color:S.text2 }}>{r.clicks}</td>
-                    <td style={{ padding:'12px 14px' }}><span style={{ color:r.open_rate>40?S.green:S.orange, fontFamily:'JetBrains Mono,monospace', fontSize:11.5 }}>{r.open_rate}%</span></td>
-                    <td style={{ padding:'12px 14px' }}><span style={{ color:S.blue, fontFamily:'JetBrains Mono,monospace', fontSize:11.5 }}>{r.ctr}%</span></td>
-                    <td style={{ padding:'12px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text3 }}>{r.sent}</td>
+                    <td style={{ padding:'12px 14px' }}><Badge label={r.template_name || '—'} color={S.text3} /></td>
+                    <td style={{ padding:'12px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11.5, color:S.text2 }}>{r.recipient_count}</td>
+                    <td style={{ padding:'12px 14px' }}><Badge label={r.status} color={r.status==='sent'?S.green:r.status==='failed'?'#EF4444':S.text3} /></td>
+                    <td style={{ padding:'12px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11.5, color:S.text3 }}>—</td>
+                    <td style={{ padding:'12px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11.5, color:S.text3 }}>—</td>
+                    <td style={{ padding:'12px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text3 }}>{r.sent_at ? r.sent_at.slice(0,10) : '—'}</td>
                   </tr>
                 ))}
               </tbody>
