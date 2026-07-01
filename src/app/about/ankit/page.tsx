@@ -81,7 +81,7 @@ export default function FounderPage() {
               <span style={{ fontWeight: 300, color: 'var(--text2)' }}>by necessity.</span>
             </h1>
             <p style={{ fontSize: 'clamp(16px,2vw,19px)', lineHeight: 1.72, color: 'var(--text2)', marginBottom: 36 }}>
-              Ankit Suman founded LabelNest after a decade in data — across operations, quality, management, and governance at CIOReview, Microsoft, Preqin, and BlackRock.{' '}
+              Ankit Suman founded LabelNest after almost a decade in data, across operations, quality, management, and governance at CIOReview, Microsoft, Preqin, and BlackRock.{' '}
               <strong style={{ color: 'var(--text)', fontWeight: 600 }}>The same structural gaps kept appearing. LabelNest is the calculated response.</strong>
             </p>
 
