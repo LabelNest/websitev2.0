@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
@@ -56,6 +56,103 @@ function DataLatticeCanvas() {
   return <canvas ref={ref} className="absolute inset-0 w-full h-full" />
 }
 
+function HeroAnimatedTagline() {
+  const [phase, setPhase] = useState(0);
+
+  useEffect(() => {
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    const run = () => {
+      setPhase(0);
+      timers.push(setTimeout(() => setPhase(1), 1400));
+      timers.push(setTimeout(() => setPhase(2), 2100));
+      timers.push(setTimeout(() => run(), 5200));
+    };
+    run();
+    return () => timers.forEach(clearTimeout);
+  }, []);
+
+  const struckStyle = {
+    position: 'relative' as const,
+    color: phase >= 1 ? 'var(--text3)' : 'var(--text)',
+    transition: 'color 0.4s',
+  };
+  const strikeBar = (on: boolean) => ({
+    position: 'absolute' as const,
+    left: 0, top: '52%', height: 5,
+    width: on ? '100%' : '0%',
+    background: '#DC2626', borderRadius: 2,
+    transition: 'width 0.35s ease-out',
+  });
+
+  return (
+    <h1
+      className="font-display font-extrabold"
+      style={{
+        fontSize: 'clamp(52px,8vw,96px)', letterSpacing: '-.04em', lineHeight: 1.01,
+        color: 'var(--text)', marginBottom: 24,
+        display: 'flex', alignItems: 'baseline', flexWrap: 'wrap',
+        justifyContent: 'center', gap: '0 0.18em',
+      }}
+    >
+      <span>Data</span>
+
+      {/* "Not" — strikes then collapses */}
+      <span style={{
+        display: 'inline-block', overflow: 'hidden',
+        maxWidth: phase >= 2 ? 0 : '3em',
+        opacity: phase >= 2 ? 0 : 1,
+        marginRight: phase >= 2 ? '-0.1em' : 0,
+        transition: 'max-width 0.5s ease, opacity 0.4s, margin 0.5s',
+      }}>
+        <span style={struckStyle}>
+          Not
+          <span style={strikeBar(phase >= 1)} />
+        </span>
+      </span>
+
+      <span>Done</span>
+
+      {/* comma appears when corrected */}
+      <span style={{
+        marginLeft: '-0.1em',
+        opacity: phase >= 2 ? 1 : 0,
+        maxWidth: phase >= 2 ? '0.5em' : 0,
+        transition: 'opacity 0.4s 0.1s, max-width 0.4s',
+        display: 'inline-block', overflow: 'hidden',
+      }}>,</span>
+
+      {/* "Wrong" → gradient "Right." */}
+      <span style={{ position: 'relative', display: 'inline-block' }}>
+        <span style={{
+          ...struckStyle,
+          opacity: phase >= 2 ? 0 : 1,
+          position: phase >= 2 ? 'absolute' : 'relative',
+          transition: 'opacity 0.35s, color 0.4s',
+          whiteSpace: 'nowrap',
+        }}>
+          Wrong
+          <span style={strikeBar(phase >= 1)} />
+        </span>
+        <span style={{
+          background: 'linear-gradient(100deg,#E91E8C,#7C3AED,#2563EB)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+          fontWeight: 800,
+          whiteSpace: 'nowrap',
+          opacity: phase >= 2 ? 1 : 0,
+          transform: phase >= 2 ? 'translateY(0)' : 'translateY(8px)',
+          transition: 'opacity 0.4s 0.15s, transform 0.4s 0.15s',
+          position: phase >= 2 ? 'relative' : 'absolute',
+          left: 0,
+        }}>
+          Right.
+        </span>
+      </span>
+    </h1>
+  );
+}
+
 export default function HomePage() {
   return (
     <>
@@ -74,12 +171,7 @@ export default function HomePage() {
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--blue)', display: 'inline-block', animation: 'pulse 2s ease-in-out infinite' }} />
               Data Intelligence · Bangalore, India
             </div>
-            <h1 className="font-display font-extrabold" style={{ fontSize: 'clamp(52px,8vw,96px)', letterSpacing: '-.04em', lineHeight: 1.01, color: 'var(--text)', marginBottom: 24 }}>
-              Data Done,{' '}
-              <span style={{ background: 'linear-gradient(100deg,#E91E8C,#7C3AED,#2563EB)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-                Right.
-              </span>
-            </h1>
+            <HeroAnimatedTagline />
             <p style={{ fontSize: 'clamp(16px,2vw,20px)', lineHeight: 1.72, color: 'var(--text2)', maxWidth: 560, margin: '0 auto 40px' }}>
               We build <strong style={{ color: 'var(--text)', fontWeight: 600 }}>operating systems for data-intensive industries</strong> — combining expert human reasoning with deterministic automation to solve the world's hardest data problems.
             </p>
