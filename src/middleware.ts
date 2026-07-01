@@ -9,8 +9,8 @@ const SECRET = new TextEncoder().encode(
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Protect /admin routes (but not the login API)
-  if (pathname.startsWith('/admin')) {
+  // Protect /admin routes (but not the login page itself or the login API)
+  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
     const token = request.cookies.get('labelnest_admin_token')?.value
 
     if (!token) {
