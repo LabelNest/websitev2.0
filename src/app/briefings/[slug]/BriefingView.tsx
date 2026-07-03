@@ -26,6 +26,7 @@ function mdToHtml(md: string): string {
     if (lines[0].startsWith('### ')) return `<h3>${lines[0].slice(4)}</h3>${lines.slice(1).map(l => mdLine(l)).join('\n')}`
     if (lines[0].startsWith('# ')) return `<h1>${lines[0].slice(2)}</h1>${lines.slice(1).map(l => mdLine(l)).join('\n')}`
     if (lines[0].match(/^---+$/)) return '<hr>'
+    if (lines[0].trim() === '/page_break') return ''
     if (lines.every(l => l.startsWith('- ') || l.startsWith('* ')))
       return `<ul>${lines.map(l => `<li>${mdInline(l.slice(2))}</li>`).join('')}</ul>`
     if (lines.every(l => /^\d+\. /.test(l)))
