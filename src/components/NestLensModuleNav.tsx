@@ -7,6 +7,7 @@ const TABS = [
   { href: '/nestlens/intelligence', label: 'Intelligence', exact: false },
   { href: '/nestlens/exchange', label: 'Exchange', exact: false },
   { href: '/nestlens/capital', label: 'Capital Readiness', exact: false },
+  { href: '/nestlens/pricing', label: 'Pricing', exact: false },
 ]
 
 export default function NestLensModuleNav() {
