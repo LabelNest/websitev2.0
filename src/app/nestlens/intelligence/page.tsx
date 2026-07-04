@@ -122,12 +122,42 @@ export default function IntelligencePage() {
           </div>
         </section>
 
+        {/* PRICING */}
+        <section style={{ padding: '72px 48px', background: 'var(--bg2)', borderTop: '1px solid var(--border)' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ textAlign: 'center', marginBottom: 36 }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Pricing</div>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>Five tiers, priced by seats and credits.</h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(180px,1fr))', gap: 16 }}>
+              {[
+                { name: 'Individual', price: '₹14,999', unit: '/mo', sub: '1 seat · 50 credits/mo · 250 firm unlocks/yr' },
+                { name: 'Core', price: '₹54,999', unit: '/mo', sub: '2 seats · 100 credits/mo · 1,500 firm unlocks/yr' },
+                { name: 'Growth', price: '₹1,04,999', unit: '/mo', sub: '3 seats · 200 credits/mo · 1 data room' },
+                { name: 'Pro', price: '₹1,64,999', unit: '/mo', sub: '5 seats · 400 credits/mo · 2 data rooms · Priority support', popular: true },
+                { name: 'Enterprise', price: 'Custom', unit: '', sub: 'Custom seats, credits & SLA' },
+              ].map(t => (
+                <div key={t.name} style={{ background: 'var(--surface)', border: `1px solid ${t.popular ? '#2563EB' : 'var(--border)'}`, borderRadius: 14, padding: 20, position: 'relative' }}>
+                  {t.popular && <div style={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)', background: '#2563EB', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 10px', borderRadius: 99, whiteSpace: 'nowrap' }}>MOST POPULAR</div>}
+                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14.5, color: 'var(--text)', marginBottom: 8 }}>{t.name}</div>
+                  <div style={{ marginBottom: 8 }}>
+                    <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 20, fontWeight: 800, color: t.popular ? '#2563EB' : 'var(--text)' }}>{t.price}</span>
+                    <span style={{ fontSize: 11, color: 'var(--text3)' }}>{t.unit}</span>
+                  </div>
+                  <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>{t.sub}</div>
+                </div>
+              ))}
+            </div>
+            <p style={{ textAlign: 'center', fontSize: 12.5, color: 'var(--text3)', marginTop: 24 }}>Also available annually — see <a href="https://nestlens.labelnest.in/pricing" target="_blank" rel="noopener noreferrer" style={{ color: '#2563EB' }}>full pricing ↗</a></p>
+          </div>
+        </section>
+
         {/* CTA */}
-        <section style={{ padding: '64px 48px', background: 'var(--bg2)', textAlign: 'center' }}>
+        <section style={{ padding: '64px 48px', textAlign: 'center' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14, textAlign: 'center' }}>Ready to open Intelligence?</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', maxWidth: 520, margin: '0 auto 12px' }}>40K+ entities. 12K+ contacts. Live today.</h2>
-            <p style={{ fontSize: 15.5, color: 'var(--text2)', maxWidth: 460, margin: '0 auto 32px', lineHeight: 1.7 }}>Credit-based access. No per-seat penalties. No lock-in. Start today and scale as you need.</p>
+            <p style={{ fontSize: 15.5, color: 'var(--text2)', maxWidth: 460, margin: '0 auto 32px', lineHeight: 1.7 }}>Seat- and credit-based pricing. No hidden fees. Start today and scale as you need.</p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="https://nestlens.labelnest.in" target="_blank" rel="noopener noreferrer"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#2563EB', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Intelligence ↗</a>

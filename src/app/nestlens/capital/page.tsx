@@ -117,8 +117,37 @@ export default function CapitalPage() {
           </div>
         </section>
 
+        {/* PRICING */}
+        <section style={{ padding: '72px 48px', background: 'var(--bg2)', borderTop: '1px solid var(--border)' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ textAlign: 'center', marginBottom: 36 }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Pricing</div>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>For founders and fund managers.</h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16 }}>
+              {[
+                { name: 'Founder — India', price: '₹999', unit: '/mo', sub: '1 data room · full legal checklist · investor fit scoring · templates included', popular: true },
+                { name: 'Founder — Global', price: '$30', unit: '/mo', sub: '1 data room · full legal checklist · investor fit scoring · templates included' },
+                { name: 'Fund', price: '$45', unit: '/mo', sub: '1 fund data room included · extra rooms $300/yr or $25/mo' },
+                { name: 'Enterprise', price: 'Custom', unit: '', sub: 'Cohort access for accelerators and incubator programmes' },
+              ].map(t => (
+                <div key={t.name} style={{ background: 'var(--surface)', border: `1px solid ${t.popular ? '#10B981' : 'var(--border)'}`, borderRadius: 14, padding: 20, position: 'relative' }}>
+                  {t.popular && <div style={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)', background: '#10B981', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 10px', borderRadius: 99, whiteSpace: 'nowrap' }}>MOST POPULAR</div>}
+                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>{t.name}</div>
+                  <div style={{ marginBottom: 8 }}>
+                    <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: t.popular ? '#10B981' : 'var(--text)' }}>{t.price}</span>
+                    <span style={{ fontSize: 11, color: 'var(--text3)' }}>{t.unit}</span>
+                  </div>
+                  <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>{t.sub}</div>
+                </div>
+              ))}
+            </div>
+            <p style={{ textAlign: 'center', fontSize: 12.5, color: 'var(--text3)', marginTop: 24 }}>India pricing available for domestic founders — see <a href="https://nestlens.labelnest.in/pricing" target="_blank" rel="noopener noreferrer" style={{ color: '#10B981' }}>full pricing ↗</a></p>
+          </div>
+        </section>
+
         {/* CTA */}
-        <section style={{ padding: '64px 48px', background: 'var(--bg2)', textAlign: 'center' }}>
+        <section style={{ padding: '64px 48px', textAlign: 'center' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14, textAlign: 'center' }}>Start building</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', maxWidth: 520, margin: '0 auto 12px' }}>Start building your data room today</h2>
