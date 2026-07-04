@@ -133,8 +133,36 @@ export default function ExchangePage() {
           </div>
         </section>
 
+        {/* PRICING */}
+        <section style={{ padding: '72px 48px', background: 'var(--bg2)', borderTop: '1px solid var(--border)' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ textAlign: 'center', marginBottom: 36 }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Pricing</div>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>Free to buy. Pay to sell.</h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 16 }}>
+              {[
+                { name: 'Buyer', price: 'Free', unit: '', sub: 'Browse all seller profiles and project briefs free. Pay per project via credits — no subscription needed.' },
+                { name: 'Seller', price: '$199', unit: '/yr', sub: 'Active seller listing · 15 applications/mo included · quarterly rollover up to 45 credits', popular: true },
+                { name: 'Enterprise', price: 'Custom', unit: '', sub: 'High-volume buyer or seller, custom credit arrangements' },
+              ].map(t => (
+                <div key={t.name} style={{ background: 'var(--surface)', border: `1px solid ${t.popular ? '#E91E8C' : 'var(--border)'}`, borderRadius: 14, padding: 22, position: 'relative' }}>
+                  {t.popular && <div style={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)', background: '#E91E8C', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 10px', borderRadius: 99, whiteSpace: 'nowrap' }}>MOST POPULAR</div>}
+                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)', marginBottom: 8 }}>{t.name}</div>
+                  <div style={{ marginBottom: 10 }}>
+                    <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 24, fontWeight: 800, color: t.popular ? '#E91E8C' : 'var(--text)' }}>{t.price}</span>
+                    <span style={{ fontSize: 12, color: 'var(--text3)' }}>{t.unit}</span>
+                  </div>
+                  <div style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.55 }}>{t.sub}</div>
+                </div>
+              ))}
+            </div>
+            <p style={{ textAlign: 'center', fontSize: 12.5, color: 'var(--text3)', marginTop: 24 }}>INR equivalent for sellers: contact us — see <a href="https://nestlens.labelnest.in/pricing" target="_blank" rel="noopener noreferrer" style={{ color: '#E91E8C' }}>full pricing ↗</a></p>
+          </div>
+        </section>
+
         {/* CTA */}
-        <section style={{ padding: '64px 48px', background: 'var(--bg2)', textAlign: 'center' }}>
+        <section style={{ padding: '64px 48px', textAlign: 'center' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14, textAlign: 'center' }}>Buy or sell</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', maxWidth: 520, margin: '0 auto 12px' }}>Browse all listings on Exchange</h2>

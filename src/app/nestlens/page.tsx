@@ -91,29 +91,52 @@ export default function NestLensPage() {
           </div>
         </section>
 
-        {/* PRICING PHILOSOPHY */}
+        {/* PRICING */}
         <section style={{ padding: '72px 48px', background: 'var(--bg2)', borderBottom: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 20, padding: 48, position: 'relative', overflow: 'hidden', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }}>
-              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg,#2563EB,#E91E8C,#7C3AED)' }} />
-              <div>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Pricing philosophy</div>
-                <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 14 }}>Credit-based. No lock-in. No per-seat penalties.</h2>
-                <p style={{ fontSize: 15, lineHeight: 1.72, color: 'var(--text2)' }}>NestLens runs on credits that work across all three modules. You pay for what you use. Adding team members is encouraged, not billed. Same price for a two-person team and a global firm.</p>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {[
-                  'Same price for small teams and global firms',
-                  'No per-seat penalties as you grow',
-                  'No hidden tiers or feature gating',
-                  'Credits work across all three modules',
-                ].map(text => (
-                  <div key={text} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 16px', background: 'rgba(255,255,255,.03)', borderRadius: 9, border: '1px solid rgba(255,255,255,.06)' }}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2"><polyline points="20,6 9,17 4,12" /></svg>
-                    <span style={{ fontSize: 14, color: 'var(--text2)' }}>{text}</span>
+            <div style={{ textAlign: 'center', marginBottom: 40 }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Pricing</div>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 14 }}>Three modules, each priced independently.</h2>
+              <p style={{ fontSize: 15, lineHeight: 1.72, color: 'var(--text2)', maxWidth: 560, margin: '0 auto' }}>Subscribe only to what you need. All plans available monthly or annually — annual saves more. Enterprise and Bundle pricing on request.</p>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20 }}>
+              {[
+                {
+                  accent: '#2563EB', name: 'Intelligence', tagline: 'Private market data on funds, LPs, GPs, and grants.',
+                  from: '₹14,999', unit: '/mo', note: 'Individual · from ₹1,50,000/yr',
+                  popular: 'Pro — ₹1,64,999/mo · 5 seats · 400 credits/mo · 2 data rooms',
+                },
+                {
+                  accent: '#E91E8C', name: 'Exchange', tagline: 'Buy and sell private market data and services.',
+                  from: 'Free', unit: '', note: 'Free to browse, view briefs, and post per-project',
+                  popular: 'Seller — $199/yr · 15 applications/mo · active listing',
+                },
+                {
+                  accent: '#10B981', name: 'Capital Readiness', tagline: 'Data room, legal checklist, investor fit scoring.',
+                  from: '₹999', unit: '/mo', note: 'Founder — India · ₹9,999/yr',
+                  popular: 'Fund — $45/mo · $500/yr · 1 fund data room included',
+                },
+              ].map(m => (
+                <div key={m.name} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: 28, position: 'relative', overflow: 'hidden' }}>
+                  <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: m.accent }} />
+                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 17, color: 'var(--text)', marginBottom: 6 }}>{m.name}</div>
+                  <p style={{ fontSize: 12.5, color: 'var(--text2)', lineHeight: 1.6, marginBottom: 16, minHeight: 38 }}>{m.tagline}</p>
+                  <div style={{ marginBottom: 4 }}>
+                    <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 28, fontWeight: 800, color: m.accent }}>{m.from}</span>
+                    <span style={{ fontSize: 13, color: 'var(--text3)' }}>{m.unit}</span>
                   </div>
-                ))}
-              </div>
+                  <div style={{ fontSize: 11.5, color: 'var(--text3)', marginBottom: 16 }}>{m.note}</div>
+                  <div style={{ fontSize: 11.5, color: 'var(--text2)', padding: '10px 12px', background: 'rgba(255,255,255,.03)', borderRadius: 8, border: '1px solid rgba(255,255,255,.06)', lineHeight: 1.5 }}>
+                    <span style={{ color: m.accent, fontWeight: 600 }}>Most popular: </span>{m.popular}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div style={{ textAlign: 'center', marginTop: 32, display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+              <a href="https://nestlens.labelnest.in/pricing" target="_blank" rel="noopener noreferrer"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#2563EB', color: '#fff', fontSize: 14, fontWeight: 600, padding: '12px 24px', borderRadius: 10 }}>See full pricing ↗</a>
+              <a href="https://nestlens.labelnest.in/enterprise-enquiry" target="_blank" rel="noopener noreferrer"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14, fontWeight: 500, padding: '12px 24px', borderRadius: 10, border: '1px solid rgba(255,255,255,.1)' }}>Enquire about Enterprise or Bundle</a>
             </div>
           </div>
         </section>

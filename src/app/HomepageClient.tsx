@@ -196,7 +196,7 @@ export default function HomePage() {
           <div className="flex" style={{ width: 'max-content', animation: 'marquee 30s linear infinite' }}>
             {[...Array(2)].map((_, rep) => (
               <span key={rep} className="flex">
-                {['Data Done, Right', 'Private Markets Intelligence', 'NestLens Exchange', 'Capital Readiness', 'Expert Human Reasoning', 'Bangalore, India', 'INR-First Pricing'].map(t => (
+                {['Data Done, Right', 'Private Markets Intelligence', 'NestLens Exchange', 'Capital Readiness', 'Expert Human Reasoning', 'Bangalore, India', 'India Pricing Available'].map(t => (
                   <span key={t} className="inline-flex items-center whitespace-nowrap" style={{ gap: 16, padding: '0 28px' }}>
                     <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text3)' }}>{t}</span>
                     <span style={{ color: 'var(--pink)', fontSize: 8 }}>◆</span>
@@ -277,7 +277,7 @@ export default function HomePage() {
                 <div className="flex flex-col" style={{ gap: 12 }}>
                   {[
                     ['Human-verified at every layer', 'Automation handles volume. Humans handle decisions that matter.'],
-                    ['INR-first pricing', 'No forex tax. No institutional-only tiers. Priced for the teams doing the work.'],
+                    ['India pricing available', 'INR pricing on Intelligence and Capital Readiness Founder plans. No institutional-only tiers.'],
                     ['Potential over pedigree', 'We hire for what people can do, not where they studied.'],
                     ['Internal tools first', 'Everything we sell externally was tested on our own data first.'],
                   ].map(([t, d]) => (
