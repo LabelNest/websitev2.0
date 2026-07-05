@@ -110,6 +110,35 @@ async function migrate() {
     )
   `
 
+  // Team member / fellow profile pages (slug, email, expertise tags, quote)
+  await sql`ALTER TABLE website_team_members ADD COLUMN IF NOT EXISTS slug TEXT UNIQUE`.catch(()=>{})
+  await sql`ALTER TABLE website_team_members ADD COLUMN IF NOT EXISTS email TEXT`.catch(()=>{})
+  await sql`ALTER TABLE website_team_members ADD COLUMN IF NOT EXISTS expertise TEXT[]`.catch(()=>{})
+  await sql`ALTER TABLE website_team_members ADD COLUMN IF NOT EXISTS quote TEXT`.catch(()=>{})
+  await sql`UPDATE website_team_members SET slug = lower(regexp_replace(name, '[^a-zA-Z0-9]+', '-', 'g')) WHERE slug IS NULL`
+
+  await sql`ALTER TABLE website_fellows ADD COLUMN IF NOT EXISTS slug TEXT UNIQUE`.catch(()=>{})
+  await sql`ALTER TABLE website_fellows ADD COLUMN IF NOT EXISTS bio TEXT`.catch(()=>{})
+  await sql`ALTER TABLE website_fellows ADD COLUMN IF NOT EXISTS email TEXT`.catch(()=>{})
+  await sql`ALTER TABLE website_fellows ADD COLUMN IF NOT EXISTS expertise TEXT[]`.catch(()=>{})
+  await sql`ALTER TABLE website_fellows ADD COLUMN IF NOT EXISTS quote TEXT`.catch(()=>{})
+  await sql`UPDATE website_fellows SET slug = lower(regexp_replace(name, '[^a-zA-Z0-9]+', '-', 'g')) WHERE slug IS NULL`
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS website_interns (
+      id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      name        TEXT NOT NULL,
+      role        TEXT NOT NULL,
+      cohort      TEXT NOT NULL DEFAULT '',
+      image_url   TEXT,
+      linkedin_url TEXT,
+      slug        TEXT UNIQUE,
+      is_active   BOOLEAN NOT NULL DEFAULT true,
+      sort_order  INTEGER NOT NULL DEFAULT 0,
+      created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )
+  `
+
   await sql`
     CREATE TABLE IF NOT EXISTS website_products (
       id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),

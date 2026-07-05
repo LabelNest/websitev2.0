@@ -3,7 +3,7 @@ import Footer from '@/components/Footer'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Metadata } from 'next'
-import { getTeamMembers, getAlumni, getFellows } from '@/lib/db'
+import { getTeamMembers, getAlumni, getFellows, getInterns } from '@/lib/db'
 import AlumniGrid from './AlumniGrid'
 import { pageMetadata } from '@/lib/seo'
 
@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 export const revalidate = 3600
 
-const DEPT_COLORS: Record<string, string> = {
+export const DEPT_COLORS: Record<string, string> = {
   'NestIntel': '#2563EB',
   'DataNest': '#2563EB',
   'NestHR': '#2563EB',
@@ -25,8 +25,26 @@ const DEPT_COLORS: Record<string, string> = {
   'Founder': '#E91E8C',
 }
 
+function FellowChip({ f, accent, background }: { f: { id: string; name: string; role: string; slug: string | null }; accent: string; background: string }) {
+  const style: React.CSSProperties = { background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: 12 }
+  const content = (
+    <>
+      <div className="flex items-center justify-center font-display font-bold" style={{ width: 36, height: 36, borderRadius: '50%', marginBottom: 8, background, color: accent, fontSize: 13 }}>
+        {f.name[0]}
+      </div>
+      <div className="font-display font-bold" style={{ fontSize: 12, color: 'var(--text)', marginBottom: 2 }}>{f.name}</div>
+      <div style={{ fontSize: 11, color: 'var(--text2)' }}>{f.role}</div>
+    </>
+  )
+  return f.slug ? (
+    <Link href={`/team/${f.slug}`} className="block hover:-translate-y-1 transition-transform duration-200" style={style}>{content}</Link>
+  ) : (
+    <div style={style}>{content}</div>
+  )
+}
+
 export default async function TeamPage() {
-  const [team, alumni, fellows] = await Promise.all([getTeamMembers(), getAlumni(), getFellows()])
+  const [team, alumni, fellows, interns] = await Promise.all([getTeamMembers(), getAlumni(), getFellows(), getInterns()])
 
   const cohort1Labs = fellows.filter(f => f.cohort === 'NestLabs' || f.department === 'NestLabs')
   const cohort1Tech = fellows.filter(f => f.cohort === 'NestTech' || f.department === 'NestTech')
@@ -80,10 +98,8 @@ export default async function TeamPage() {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4" style={{ gap: 16 }}>
               {team.map(m => {
                 const deptColor = DEPT_COLORS[m.department] || '#8985A6'
-                return (
-                  <div key={m.id}
-                    className="overflow-hidden transition-all duration-200 hover:-translate-y-1.5"
-                    style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16 }}>
+                const photoAndName = (
+                  <>
                     <div className="relative" style={{ aspectRatio: '1', background: 'linear-gradient(135deg,rgba(233,30,140,.08),rgba(37,99,235,.06))' }}>
                       {m.image_url ? (
                         <Image src={m.image_url} alt={m.name} fill className="object-cover object-top" sizes="300px" />
@@ -94,16 +110,24 @@ export default async function TeamPage() {
                       )}
                       <span className="absolute" style={{ bottom: 10, left: 10, fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 8px', borderRadius: 4, background: 'rgba(0,0,0,.5)', backdropFilter: 'blur(4px)', color: deptColor }}>{m.department}</span>
                     </div>
-                    <div style={{ padding: 16 }}>
-                      <div className="font-display font-bold" style={{ fontSize: 15, letterSpacing: '-.01em', color: 'var(--text)', marginBottom: 3 }}>{m.name}</div>
+                    <div style={{ padding: '16px 16px 0' }}>
+                      <div className="font-display font-bold group-hover:underline" style={{ fontSize: 15, letterSpacing: '-.01em', color: 'var(--text)', marginBottom: 3 }}>{m.name}</div>
                       <div style={{ fontSize: 12.5, color: 'var(--text2)', lineHeight: 1.4 }}>{m.role}</div>
-                      {m.linkedin_url && (
+                    </div>
+                  </>
+                )
+                return (
+                  <div key={m.id} className="overflow-hidden transition-all duration-200 hover:-translate-y-1.5 group"
+                    style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16 }}>
+                    {m.slug ? <Link href={`/team/${m.slug}`} className="block">{photoAndName}</Link> : photoAndName}
+                    {m.linkedin_url ? (
+                      <div style={{ padding: '10px 16px 16px' }}>
                         <a href={m.linkedin_url} target="_blank" rel="noopener noreferrer"
-                          className="inline-flex items-center" style={{ gap: 5, marginTop: 8, fontSize: 11.5, color: '#2563EB' }}>
+                          className="inline-flex items-center" style={{ gap: 5, fontSize: 11.5, color: '#2563EB' }}>
                           LinkedIn →
                         </a>
-                      )}
-                    </div>
+                      </div>
+                    ) : <div style={{ paddingBottom: 16 }} />}
                   </div>
                 )
               })}
@@ -148,15 +172,7 @@ export default async function TeamPage() {
                     NestLabs · Cohort 1 · Research and Intelligence
                   </div>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6" style={{ gap: 10 }}>
-                    {cohort1Labs.map(f => (
-                      <div key={f.id} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: 12 }}>
-                        <div className="flex items-center justify-center font-display font-bold" style={{ width: 36, height: 36, borderRadius: '50%', marginBottom: 8, background: 'rgba(233,30,140,.1)', color: '#E91E8C', fontSize: 13 }}>
-                          {f.name[0]}
-                        </div>
-                        <div className="font-display font-bold" style={{ fontSize: 12, color: 'var(--text)', marginBottom: 2 }}>{f.name}</div>
-                        <div style={{ fontSize: 11, color: 'var(--text2)' }}>{f.role}</div>
-                      </div>
-                    ))}
+                    {cohort1Labs.map(f => <FellowChip key={f.id} f={f} accent="#E91E8C" background="rgba(233,30,140,.1)" />)}
                   </div>
                 </div>
               )}
@@ -167,15 +183,7 @@ export default async function TeamPage() {
                     NestTech · Cohort 1 · Engineering
                   </div>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6" style={{ gap: 10 }}>
-                    {cohort1Tech.map(f => (
-                      <div key={f.id} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: 12 }}>
-                        <div className="flex items-center justify-center font-display font-bold" style={{ width: 36, height: 36, borderRadius: '50%', marginBottom: 8, background: 'rgba(37,99,235,.1)', color: '#2563EB', fontSize: 13 }}>
-                          {f.name[0]}
-                        </div>
-                        <div className="font-display font-bold" style={{ fontSize: 12, color: 'var(--text)', marginBottom: 2 }}>{f.name}</div>
-                        <div style={{ fontSize: 11, color: 'var(--text2)' }}>{f.role}</div>
-                      </div>
-                    ))}
+                    {cohort1Tech.map(f => <FellowChip key={f.id} f={f} accent="#2563EB" background="rgba(37,99,235,.1)" />)}
                   </div>
                 </div>
               )}
@@ -193,6 +201,21 @@ export default async function TeamPage() {
                 </Link>
               </div>
 
+            </div>
+          </section>
+        )}
+
+        {/* INTERNS */}
+        {interns.length > 0 && (
+          <section className="border-t" style={{ padding: '56px 48px', borderColor: 'var(--border)' }}>
+            <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: '#F97316', marginBottom: 8 }}>Interns</div>
+              <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(20px,3vw,32px)', letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 24 }}>
+                Building alongside the team
+              </h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6" style={{ gap: 10 }}>
+                {interns.map(i => <FellowChip key={i.id} f={i} accent="#F97316" background="rgba(249,115,22,.1)" />)}
+              </div>
             </div>
           </section>
         )}

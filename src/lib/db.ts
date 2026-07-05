@@ -33,6 +33,10 @@ export interface TeamMember {
   image_url: string | null
   sort_order: number
   is_active: boolean
+  slug: string | null
+  email: string | null
+  expertise: string[] | null
+  quote: string | null
 }
 
 export interface Alumni {
@@ -60,6 +64,23 @@ export interface Fellow {
   department: string | null
   image_url: string | null
   linkedin_url: string | null
+  is_active: boolean
+  sort_order: number
+  slug: string | null
+  bio: string | null
+  email: string | null
+  expertise: string[] | null
+  quote: string | null
+}
+
+export interface Intern {
+  id: string
+  name: string
+  role: string
+  cohort: string
+  image_url: string | null
+  linkedin_url: string | null
+  slug: string | null
   is_active: boolean
   sort_order: number
 }
@@ -158,6 +179,51 @@ export async function getFellows(): Promise<Fellow[]> {
     ORDER BY cohort ASC, sort_order ASC
   `
   return rows as Fellow[]
+}
+
+export async function getInterns(): Promise<Intern[]> {
+  const rows = await sql`
+    SELECT * FROM website_interns
+    WHERE is_active = true
+    ORDER BY cohort ASC, sort_order ASC
+  `
+  return rows as Intern[]
+}
+
+export async function getTeamMemberBySlug(slug: string): Promise<TeamMember | null> {
+  const rows = await sql`
+    SELECT * FROM website_team_members
+    WHERE slug = ${slug} AND is_active = true
+    LIMIT 1
+  `
+  return (rows[0] as TeamMember) ?? null
+}
+
+export async function getFellowBySlug(slug: string): Promise<Fellow | null> {
+  const rows = await sql`
+    SELECT * FROM website_fellows
+    WHERE slug = ${slug} AND is_active = true
+    LIMIT 1
+  `
+  return (rows[0] as Fellow) ?? null
+}
+
+export async function getInternBySlug(slug: string): Promise<Intern | null> {
+  const rows = await sql`
+    SELECT * FROM website_interns
+    WHERE slug = ${slug} AND is_active = true
+    LIMIT 1
+  `
+  return (rows[0] as Intern) ?? null
+}
+
+export async function getBriefingsByAuthor(name: string): Promise<Briefing[]> {
+  const rows = await sql`
+    SELECT * FROM website_briefings
+    WHERE author_name = ${name}
+    ORDER BY date DESC
+  `
+  return rows as Briefing[]
 }
 
 export async function getProducts(): Promise<Product[]> {
