@@ -3,10 +3,13 @@ import Footer from '@/components/Footer'
 import HoverDiv from '@/components/HoverDiv'
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'NestHR — People and Operations OS for Startups and Colleges',
-  description: 'Seven purpose-built OS modules for startups and colleges. People management, talent acquisition, placement intelligence, performance, expenses, learning, and analytics.',
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/nesthr', {
+    title: 'NestHR — HR and Placement OS for Startups and Colleges',
+    description: '7 OS modules for people, hiring, campus placement, performance, expenses, learning. PlacementOS learns from every hiring signal. INR pricing. Built for India.',
+  })
 }
 
 const OS_MODULES = [
@@ -57,9 +60,27 @@ const PLACEMENT_STEPS = [
   { step: 'Coming', title: 'Company-side portal', color: '#7C3AED', desc: 'Dedicated portal for companies participating in campus recruitment. View candidates, submit feedback, and manage their own pipeline view.' },
 ]
 
+const SOFTWARE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'NestHR',
+  operatingSystem: 'Web-based',
+  applicationCategory: 'BusinessApplication',
+  applicationSubCategory: 'Human Resources Software',
+  description: 'HR and workforce operations OS for startups and colleges. 7 modules including PlacementOS for campus recruitment.',
+  url: 'https://nesthr.labelnest.in',
+  publisher: { '@type': 'Organization', name: 'LabelNest India Private Limited' },
+  offers: [
+    { '@type': 'Offer', name: 'Starter', price: '799', priceCurrency: 'INR', description: 'Per employee per year, up to 50 employees' },
+    { '@type': 'Offer', name: 'Growth', price: '1299', priceCurrency: 'INR', description: 'Per employee per year, 51-200 employees' },
+  ],
+  featureList: ['People OS', 'Talent OS / PlacementOS', 'Performance OS', 'Expense OS', 'Learning OS', 'Analytics', 'Admin'],
+}
+
 export default function NestHRPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SOFTWARE_SCHEMA) }} />
       <Nav />
       <main style={{ paddingTop: 64 }}>
 

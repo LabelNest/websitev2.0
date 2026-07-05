@@ -2,10 +2,13 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Ecosystem — LabelNest',
-  description: 'One company. Multiple operating systems. NestLens, NestHR, Managed Services, and what is being built next.',
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/ecosystem', {
+    title: 'The LabelNest Ecosystem — NestLens, NestHR, Services, and More',
+    description: 'One company. Multiple operating systems. NestLens for private markets. NestHR for people ops. Managed Services for data operations. Explore the full LabelNest product suite.',
+  })
 }
 
 export default function EcosystemPage() {

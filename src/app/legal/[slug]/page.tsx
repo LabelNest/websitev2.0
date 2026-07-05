@@ -10,8 +10,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const doc = await getLegalDocBySlug(slug).catch(() => null)
   if (!doc) return { title: 'Legal — LabelNest' }
   return {
-    title: `${doc.title} — LabelNest`,
-    description: doc.intro,
+    title: `${doc.title} — LabelNest Legal`,
+    description: `${doc.title} for LabelNest India Private Limited. ${doc.version}, effective ${doc.effective_date}.`,
+    alternates: { canonical: `/legal/${slug}` },
   }
 }
 

@@ -3,10 +3,13 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { getBriefings, Briefing } from '@/lib/db'
+import { pageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Briefings — LabelNest',
-  description: 'Direct writing from the LabelNest team on private markets, India\'s data infrastructure, and what it takes to build things that work.',
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/briefings', {
+    title: 'Briefings — LabelNest on Private Markets, Data, and Building',
+    description: "Direct writing from the LabelNest team on private markets, India's data infrastructure, and building products that work. Read the briefings.",
+  })
 }
 
 function scopeColor(scope: string): string {

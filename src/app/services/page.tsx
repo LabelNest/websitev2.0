@@ -2,15 +2,40 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Managed Services — LabelNest',
-  description: 'Expert human data operations. Data sourcing, enrichment, annotation, quality, and custom workflow design.',
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/services', {
+    title: 'Data Sourcing, Annotation, and Enrichment Services — LabelNest',
+    description: 'Expert human data operations. Data sourcing, AI training data annotation, entity enrichment, document extraction, custom workflows. Nine years of domain experience.',
+  })
+}
+
+const SERVICE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'LabelNest Managed Services',
+  serviceType: 'Data Operations and Enrichment Services',
+  provider: { '@type': 'Organization', name: 'LabelNest India Private Limited' },
+  description: 'Expert human data operations. Data sourcing, AI training data annotation, entity enrichment, document extraction, and custom workflows.',
+  areaServed: 'Worldwide',
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Managed Services',
+    itemListElement: [
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Data Sourcing and Enrichment' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Data Quality and Annotation' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Ongoing Data Operations' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Document and PDF Intelligence' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Custom Data Workflow Design' } },
+    ],
+  },
 }
 
 export default function ServicesPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SERVICE_SCHEMA) }} />
       <style>{`
         .svc-card { background: var(--surface); border: 1px solid rgba(255,255,255,.07); border-radius: 16px; padding: 28px; transition: border-color .2s, transform .2s; }
         .svc-card:hover { border-color: rgba(16,185,129,.3) !important; transform: translateY(-3px); }

@@ -49,6 +49,36 @@ export const metadata: Metadata = {
   },
 }
 
+// On every page — tells Google what LabelNest is as an entity, separate
+// from any single page's content.
+const ORGANIZATION_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'LabelNest India Private Limited',
+  alternateName: 'LabelNest',
+  url: 'https://labelnest.in',
+  logo: 'https://labelnest.in/og-default.png',
+  description: 'Private markets intelligence, data marketplace, and capital readiness platform for emerging managers and analysts.',
+  founders: [{ '@type': 'Person', name: 'Ankit Suman', jobTitle: 'Founder and Director', url: 'https://labelnest.in/about/ankit' }],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'No. 33, 4th Floor, 1st Main, CBI Main Rd, HMT Layout, Ganganagar',
+    addressLocality: 'Bengaluru',
+    addressRegion: 'Karnataka',
+    postalCode: '560032',
+    addressCountry: 'IN',
+  },
+  sameAs: ['https://www.linkedin.com/company/labelnest'],
+  contactPoint: [{ '@type': 'ContactPoint', email: 'contact@labelnest.in', contactType: 'customer support', areaServed: 'IN', availableLanguage: 'English' }],
+}
+
+const WEBSITE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'LabelNest',
+  url: 'https://labelnest.in',
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -71,6 +101,14 @@ export default function RootLayout({
               } catch(e) {}
             `,
           }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_SCHEMA) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_SCHEMA) }}
         />
       </head>
       <body><ScrollToTop />{children}</body>

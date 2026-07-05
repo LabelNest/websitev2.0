@@ -3,10 +3,13 @@ import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { getLegalDocuments, LegalDocument } from '@/lib/db'
 import { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Legal — LabelNest',
-  description: 'All policies, terms, and legal commitments governing LabelNest products and services.',
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/legal', {
+    title: 'Legal — LabelNest Policies, Terms, and Documentation',
+    description: 'All LabelNest legal documents: privacy policy, terms of service, cookie policy, refund policy, security, and product annexures.',
+  })
 }
 
 const GROUPS: { label: string; slugs: string[] }[] = [

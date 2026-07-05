@@ -4,10 +4,13 @@ import NestLensModuleNav from '@/components/NestLensModuleNav'
 import HoverDiv from '@/components/HoverDiv'
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { pageMetadata, breadcrumbSchema } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'NestLens Capital Readiness — Data Room, Investor Matching, Raise Preparation',
-  description: 'A 10-section, 51-item data room with investor tier scoring, LP-GP matching, SP matching, and grant and competition discovery — all live.',
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/nestlens/capital', {
+    title: 'Investor Data Room — Fundraise Prep for Startups | NestLens Capital Readiness',
+    description: 'Build an investor-ready data room in minutes. 10 sections, 51 items. Investor tier scoring, LP-GP matching, grant and competition discovery. For pre-seed to Series A.',
+  })
 }
 
 const DATA_ROOM_SECTIONS = [
@@ -30,9 +33,15 @@ const MATCHING = [
   { icon: '🤝', name: 'Acquisition and Referral Partners', border: '#10B981', desc: 'Connect with strategic acquisition partners, distribution channels, and referral networks matched to your product category.' },
 ]
 
+const BREADCRUMB_SCHEMA = breadcrumbSchema([
+  { name: 'NestLens', path: '/nestlens' },
+  { name: 'Capital Readiness', path: '/nestlens/capital' },
+])
+
 export default function CapitalPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_SCHEMA) }} />
       <Nav />
       <NestLensModuleNav />
       <main style={{ paddingTop: 64 }}>
@@ -143,6 +152,16 @@ export default function CapitalPage() {
               ))}
             </div>
             <p style={{ textAlign: 'center', fontSize: 12.5, color: 'var(--text3)', marginTop: 24 }}>India pricing available for domestic founders — see <a href="https://nestlens.labelnest.in/pricing" target="_blank" rel="noopener noreferrer" style={{ color: '#10B981' }}>full pricing ↗</a></p>
+          </div>
+        </section>
+
+        {/* SEE ALSO */}
+        <section style={{ padding: '40px 48px', borderTop: '1px solid var(--border)' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', gap: 24, flexWrap: 'wrap', fontSize: 13.5, color: 'var(--text2)' }}>
+            <span>See also:</span>
+            <Link href="/nestlens/intelligence" style={{ color: '#2563EB' }}>Investor intelligence for your outreach lists →</Link>
+            <Link href="/vs/docsend" style={{ color: 'var(--text2)', textDecoration: 'underline' }}>How Capital Readiness differs from DocSend</Link>
+            <Link href="/vs/carta" style={{ color: 'var(--text2)', textDecoration: 'underline' }}>Fundraise prep vs cap table management</Link>
           </div>
         </section>
 

@@ -4,15 +4,41 @@ import NestLensModuleNav from '@/components/NestLensModuleNav'
 import HoverLink from '@/components/HoverLink'
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'NestLens — Private Markets OS',
-  description: 'Three modules. One platform. Built for analysts, fund managers, and operators who need structured intelligence, a live data marketplace, and a capital readiness system.',
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/nestlens', {
+    title: 'NestLens — Private Markets OS with Intelligence, Exchange, Data Rooms',
+    description: 'The private markets OS for emerging managers. Track 40,000+ entities, buy verified data on Exchange, build investor-ready data rooms. Credit-based access, no lock-in.',
+  })
+}
+
+const SOFTWARE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'NestLens',
+  operatingSystem: 'Web-based',
+  applicationCategory: 'BusinessApplication',
+  applicationSubCategory: 'Private Markets Intelligence Platform',
+  description: 'Private markets OS with Intelligence, Exchange, and Capital Readiness modules. Track 40,000+ entities, buy verified data, build investor data rooms.',
+  url: 'https://nestlens.labelnest.in',
+  publisher: { '@type': 'Organization', name: 'LabelNest India Private Limited' },
+  offers: { '@type': 'Offer', priceCurrency: 'INR', availability: 'https://schema.org/InStock' },
+  featureList: [
+    '40,000+ tracked entities',
+    '12,000+ verified contacts',
+    'Live market signals',
+    'Data marketplace with KYC verified sellers',
+    'Investor-ready data room builder',
+    'LP-GP matching',
+    'Grant and competition discovery',
+  ],
 }
 
 export default function NestLensPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SOFTWARE_SCHEMA) }} />
       <Nav />
       <NestLensModuleNav />
       <main style={{ paddingTop: 64 }}>
