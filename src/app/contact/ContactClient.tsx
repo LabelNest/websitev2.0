@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import DiyBanner from '@/components/DiyBanner'
 
 export default function ContactClient() {
   const [name, setName] = useState('')
@@ -41,6 +42,7 @@ export default function ContactClient() {
   return (
     <>
       <Nav />
+      <DiyBanner />
       <main className="min-h-screen flex items-center" style={{ paddingTop: '60px' }}>
         <div className="max-w-[1240px] mx-auto px-8 py-16 w-full grid grid-cols-1 md:grid-cols-2 gap-20 items-start">
 

@@ -1,5 +1,6 @@
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import DiyBanner from '@/components/DiyBanner'
 import NestLensModuleNav from '@/components/NestLensModuleNav'
 import HoverLink from '@/components/HoverLink'
 import Link from 'next/link'
@@ -40,6 +41,7 @@ export default function NestLensPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SOFTWARE_SCHEMA) }} />
       <Nav />
+      <DiyBanner />
       <NestLensModuleNav />
       <main style={{ paddingTop: 64 }}>
 

@@ -1,5 +1,6 @@
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import DiyBanner from '@/components/DiyBanner'
 import HoverDiv from '@/components/HoverDiv'
 import Link from 'next/link'
 import { Metadata } from 'next'
@@ -82,6 +83,7 @@ export default function NestHRPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SOFTWARE_SCHEMA) }} />
       <Nav />
+      <DiyBanner />
       <main style={{ paddingTop: 64 }}>
 
         {/* HERO */}
