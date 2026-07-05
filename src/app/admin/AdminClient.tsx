@@ -514,7 +514,7 @@ function FellowsPanel({ showToast }: { showToast:(m:string)=>void }) {
   const [modal, setModal] = useState(false)
   const [saving, setSaving] = useState(false)
   const [editing, setEditing] = useState<Fellow|null>(null)
-  const blank = { name:'',role:'Research Fellow',cohort:'NestLabs · Cohort 1',department:'',linkedin_url:'',image_url:'',is_active:true,sort_order:'99',slug:'',bio:'',email:'',expertise:'',quote:'' }
+  const blank = { name:'',role:'Research Fellow',cohort:'',department:'',linkedin_url:'',image_url:'',is_active:true,sort_order:'99',slug:'',bio:'',email:'',expertise:'',quote:'' }
   const [form, setForm] = useState(blank)
 
   const load = useCallback(async()=>{ const r=await fetch('/api/admin/fellows'); const d=await r.json(); setRows(d.rows||[]) },[])
@@ -543,7 +543,7 @@ function FellowsPanel({ showToast }: { showToast:(m:string)=>void }) {
             <Input label="Name" value={form.name} onChange={F('name')} required />
             <Input label="Role" value={form.role} onChange={F('role')} placeholder="Research Fellow" />
           </div>
-          <SelectField label="Cohort" value={form.cohort} onChange={F('cohort')} options={['NestLabs · Cohort 1','NestTech · Cohort 1']} />
+          <Input label="Cohort" value={form.cohort} onChange={F('cohort')} required placeholder="e.g. NestLabs · Cohort 2 · Data Research" hint="Shown verbatim as the /team section header for this group. New cohorts don't need a code change — just type the label here." />
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
             <Input label="Department (optional)" value={form.department} onChange={F('department')} placeholder="e.g. Data Research" />
             <Input label="Sort order" value={form.sort_order} onChange={F('sort_order')} type="number" />

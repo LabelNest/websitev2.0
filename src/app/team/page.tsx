@@ -46,8 +46,30 @@ function FellowChip({ f, accent, background }: { f: { id: string; name: string; 
 export default async function TeamPage() {
   const [team, alumni, fellows, interns] = await Promise.all([getTeamMembers(), getAlumni(), getFellows(), getInterns()])
 
-  const cohort1Labs = fellows.filter(f => f.cohort === 'NestLabs' || f.department === 'NestLabs')
-  const cohort1Tech = fellows.filter(f => f.cohort === 'NestTech' || f.department === 'NestTech')
+  // Fellows are grouped by their exact `cohort` string (e.g. "NestLabs · Cohort 2 · Data Research"),
+  // newest cohort number first. New cohorts need no code changes — admin just types a new cohort label.
+  const cohortMap = new Map<string, typeof fellows>()
+  for (const f of fellows) {
+    const key = f.cohort || 'Nestling Fellows'
+    if (!cohortMap.has(key)) cohortMap.set(key, [])
+    cohortMap.get(key)!.push(f)
+  }
+  const cohortNumber = (cohort: string) => Number(cohort.match(/(\d+)/)?.[1] ?? 0)
+  const cohortGroups = [...cohortMap.entries()].sort((a, b) => cohortNumber(b[0]) - cohortNumber(a[0]))
+  const cohortNumbers = [...new Set(fellows.map(f => cohortNumber(f.cohort || '')))].filter(Boolean).sort((a, b) => a - b)
+  const cohortHeading = cohortNumbers.length === 0 ? ''
+    : cohortNumbers.length === 1 ? `Cohort ${cohortNumbers[0]}`
+    : `Cohorts ${cohortNumbers.slice(0, -1).join(', ')} & ${cohortNumbers[cohortNumbers.length - 1]}`
+  // Legacy cohort values predate the fuller "· Research and Intelligence" / "· Engineering" copy —
+  // keep that exact wording for them; any newly typed cohort label renders verbatim.
+  const COHORT_LABELS: Record<string, string> = {
+    'NestLabs · Cohort 1': 'NestLabs · Cohort 1 · Research and Intelligence',
+    'NestTech · Cohort 1': 'NestTech · Cohort 1 · Engineering',
+  }
+  const cohortAccent = (cohort: string) =>
+    cohort.includes('NestTech') ? { accent: '#2563EB', background: 'rgba(37,99,235,.1)' }
+    : cohort.includes('NestLabs') ? { accent: '#E91E8C', background: 'rgba(233,30,140,.1)' }
+    : { accent: '#7C3AED', background: 'rgba(124,58,237,.1)' }
 
   return (
     <>
@@ -155,38 +177,27 @@ export default async function TeamPage() {
         </section>
 
         {/* FELLOWS */}
-        {(cohort1Labs.length > 0 || cohort1Tech.length > 0) && (
+        {fellows.length > 0 && (
           <section style={{ padding: '64px 48px' }}>
             <div style={{ maxWidth: 1200, margin: '0 auto' }}>
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: '#7C3AED', marginBottom: 8 }}>Nestling Fellows</div>
               <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(20px,3vw,32px)', letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 8 }}>
-                The Nestling Program — Cohort 1
+                The Nestling Program{cohortHeading && ` — ${cohortHeading}`}
               </h2>
               <p style={{ fontSize: 14.5, color: 'var(--text2)', maxWidth: 520, marginBottom: 40, lineHeight: 1.65 }}>
                 A fellowship for people with the right potential and a clear direction. Not an internship. Not a course. A real build environment.
               </p>
 
-              {cohort1Labs.length > 0 && (
-                <div style={{ marginBottom: 32 }}>
+              {cohortGroups.map(([cohort, group]) => (
+                <div key={cohort} style={{ marginBottom: 32 }}>
                   <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text3)', paddingBottom: 12, marginBottom: 16, borderBottom: '1px solid var(--border)' }}>
-                    NestLabs · Cohort 1 · Research and Intelligence
+                    {COHORT_LABELS[cohort] || cohort}
                   </div>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6" style={{ gap: 10 }}>
-                    {cohort1Labs.map(f => <FellowChip key={f.id} f={f} accent="#E91E8C" background="rgba(233,30,140,.1)" />)}
+                    {group.map(f => <FellowChip key={f.id} f={f} {...cohortAccent(cohort)} />)}
                   </div>
                 </div>
-              )}
-
-              {cohort1Tech.length > 0 && (
-                <div style={{ marginBottom: 32 }}>
-                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text3)', paddingBottom: 12, marginBottom: 16, borderBottom: '1px solid var(--border)' }}>
-                    NestTech · Cohort 1 · Engineering
-                  </div>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6" style={{ gap: 10 }}>
-                    {cohort1Tech.map(f => <FellowChip key={f.id} f={f} accent="#2563EB" background="rgba(37,99,235,.1)" />)}
-                  </div>
-                </div>
-              )}
+              ))}
 
               {/* CTA */}
               <div className="flex items-center justify-between flex-wrap" style={{ gap: 24, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: 32 }}>
