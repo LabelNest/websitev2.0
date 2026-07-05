@@ -5,10 +5,13 @@ import Link from 'next/link'
 import { Metadata } from 'next'
 import { getTeamMembers, getAlumni, getFellows } from '@/lib/db'
 import AlumniGrid from './AlumniGrid'
+import { pageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Team — LabelNest',
-  description: 'The people building LabelNest. Everyone who has ever worked here stays on this page — current team, alumni, and Nestling fellows.',
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/team', {
+    title: 'The LabelNest Team — Built by Operators, Not Vendors',
+    description: 'Meet the LabelNest team building private markets data infrastructure. Operators, analysts, and engineers with domain experience from Preqin, BlackRock, and Microsoft.',
+  })
 }
 export const revalidate = 3600
 

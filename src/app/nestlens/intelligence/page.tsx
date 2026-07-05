@@ -4,10 +4,13 @@ import NestLensModuleNav from '@/components/NestLensModuleNav'
 import HoverDiv from '@/components/HoverDiv'
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { pageMetadata, breadcrumbSchema } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'NestLens Intelligence — Private Markets Intelligence Layer',
-  description: 'NestLens Intelligence tracks 40K+ entities, 12K+ verified contacts, fund activity, deal signals, and market intelligence across private markets.',
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/nestlens/intelligence', {
+    title: 'Private Markets Intelligence — Companies, Funds, Deals, Contacts',
+    description: 'Structured intelligence on 40,000+ private market entities. Verified contacts, live signals, human-reviewed data. Track companies, funds, deals, and people. Credit-based.',
+  })
 }
 
 const ENTITIES = [
@@ -27,9 +30,15 @@ const CAPABILITIES = [
   { icon: '📬', badge: 'Contacts', badgeColor: '#E91E8C', hoverColor: 'rgba(233,30,140,.4)', name: 'Contact Intelligence', desc: 'Verified contact profiles with health scores, email, LinkedIn, title taxonomy, firm history, and people-moves detection. 12K+ contacts and growing.' },
 ]
 
+const BREADCRUMB_SCHEMA = breadcrumbSchema([
+  { name: 'NestLens', path: '/nestlens' },
+  { name: 'Intelligence', path: '/nestlens/intelligence' },
+])
+
 export default function IntelligencePage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_SCHEMA) }} />
       <Nav />
       <NestLensModuleNav />
       <main style={{ paddingTop: 64 }}>
@@ -149,6 +158,17 @@ export default function IntelligencePage() {
               ))}
             </div>
             <p style={{ textAlign: 'center', fontSize: 12.5, color: 'var(--text3)', marginTop: 24 }}>Also available annually — see <a href="https://nestlens.labelnest.in/pricing" target="_blank" rel="noopener noreferrer" style={{ color: '#2563EB' }}>full pricing ↗</a></p>
+          </div>
+        </section>
+
+        {/* SEE ALSO */}
+        <section style={{ padding: '40px 48px', borderTop: '1px solid var(--border)' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', gap: 24, flexWrap: 'wrap', fontSize: 13.5, color: 'var(--text2)' }}>
+            <span>See also:</span>
+            <Link href="/nestlens/exchange" style={{ color: '#E91E8C' }}>Buy specific datasets on the Exchange marketplace →</Link>
+            <Link href="/nestlens/capital" style={{ color: '#10B981' }}>For founders raising capital, see Capital Readiness →</Link>
+            <Link href="/vs/preqin" style={{ color: 'var(--text2)', textDecoration: 'underline' }}>How we compare to Preqin</Link>
+            <Link href="/vs/pitchbook" style={{ color: 'var(--text2)', textDecoration: 'underline' }}>How we compare to PitchBook</Link>
           </div>
         </section>
 

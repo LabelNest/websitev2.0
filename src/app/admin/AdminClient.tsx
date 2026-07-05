@@ -1158,19 +1158,32 @@ function SubmissionsSection({ showToast }: { showToast:(m:string)=>void }) {
 // ── SEO SECTION ────────────────────────────────────────────────────────────
 function SeoSection({ showToast }: { showToast:(m:string)=>void }) {
   const [rows, setRows]     = useState<SeoRow[]>([])
-  const [editing, setEditing] = useState<SeoRow|null>(null)
-  const [form, setForm]     = useState({ title:'', description:'', og_image:'', keywords:'' })
+  const [editing, setEditing] = useState<SeoRow|'new'|null>(null)
+  const [form, setForm]     = useState({ page_path:'', title:'', description:'', og_image:'', keywords:'' })
   const [saving, setSaving] = useState(false)
 
   const load = useCallback(async()=>{ const r=await fetch('/api/admin/seo'); const d=await r.json(); setRows(d.rows||[]) },[])
   useEffect(()=>{ load() },[load])
 
-  function openEdit(r:SeoRow) { setEditing(r); setForm({ title:r.title||'', description:r.description||'', og_image:r.og_image||'', keywords:r.keywords||'' }) }
+  function openEdit(r:SeoRow) { setEditing(r); setForm({ page_path:r.page_path, title:r.title||'', description:r.description||'', og_image:r.og_image||'', keywords:r.keywords||'' }) }
+  function openNew() { setEditing('new'); setForm({ page_path:'', title:'', description:'', og_image:'', keywords:'' }) }
   async function save() {
     if (!editing) return
+    if (editing === 'new') {
+      if (!form.page_path.trim()) return
+      setSaving(true)
+      await fetch('/api/admin/seo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(form)})
+      setSaving(false); setEditing(null); load(); showToast('✓ SEO page added')
+      return
+    }
     setSaving(true)
     await fetch('/api/admin/seo',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:editing.id,...form})})
     setSaving(false); setEditing(null); load(); showToast('✓ SEO updated')
+  }
+  async function remove(r:SeoRow) {
+    if (!confirm(`Delete SEO entry for ${r.page_path}?`)) return
+    await fetch('/api/admin/seo',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:r.id})})
+    load(); showToast('✓ SEO entry deleted')
   }
   const F=(k:keyof typeof form)=>(v:string)=>setForm(f=>({...f,[k]:v}))
 
@@ -1179,9 +1192,12 @@ function SeoSection({ showToast }: { showToast:(m:string)=>void }) {
 
   return (
     <>
-      <div style={{ marginBottom:20 }}>
-        <div style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:800, fontSize:20, color:S.text, marginBottom:2 }}>SEO</div>
-        <div style={{ fontSize:13, color:S.text2 }}>Page-level meta · website_page_seo · {rows.length} pages</div>
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:20 }}>
+        <div>
+          <div style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:800, fontSize:20, color:S.text, marginBottom:2 }}>SEO</div>
+          <div style={{ fontSize:13, color:S.text2 }}>Page-level meta · website_page_seo · {rows.length} pages</div>
+        </div>
+        <Btn label="+ Add page" onClick={openNew} />
       </div>
 
       <div style={{ display:'flex', flexDirection:'column', gap:4 }}>
@@ -1196,13 +1212,17 @@ function SeoSection({ showToast }: { showToast:(m:string)=>void }) {
               {r.title && <span style={{ ...{ fontSize:10, padding:'2px 7px', borderRadius:4, background:'rgba(16,185,129,.1)', color:S.green, fontFamily:'JetBrains Mono,monospace' } }}>{r.title.length}t</span>}
               {r.description && <span style={{ ...{ fontSize:10, padding:'2px 7px', borderRadius:4, background:'rgba(37,99,235,.1)', color:S.blue, fontFamily:'JetBrains Mono,monospace' } }}>{r.description.length}d</span>}
               <Btn label="Edit" small onClick={()=>openEdit(r)} />
+              <button onClick={()=>remove(r)} title="Delete" style={{ fontSize:12, color:S.text3, background:'none', border:'none', cursor:'pointer', padding:'4px 6px' }}>✕</button>
             </div>
           </div>
         ))}
       </div>
 
       {editing && (
-        <Modal title={`SEO — ${editing.page_path}`} onClose={()=>setEditing(null)} onSave={save} saving={saving}>
+        <Modal title={editing === 'new' ? 'Add SEO page' : `SEO — ${editing.page_path}`} onClose={()=>setEditing(null)} onSave={save} saving={saving}>
+          {editing === 'new' && (
+            <Input label="Page path" value={form.page_path} onChange={F('page_path')} placeholder="/nestlens/intelligence" />
+          )}
           <Input label="Title" value={form.title} onChange={F('title')} placeholder="e.g. LabelNest | Data Intelligence Platform"
             hint={`${form.title.length} / 60 chars recommended`} />
           <div style={{ fontSize:10, fontFamily:'JetBrains Mono,monospace', padding:'4px 8px', borderRadius:5, background:charBg(form.title.length,60), color:charCol(form.title.length,60), display:'inline-block', marginTop:-8 }}>

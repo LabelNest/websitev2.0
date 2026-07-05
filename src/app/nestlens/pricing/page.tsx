@@ -3,10 +3,13 @@ import Footer from '@/components/Footer'
 import NestLensModuleNav from '@/components/NestLensModuleNav'
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'NestLens Pricing — Intelligence, Exchange, Capital Readiness',
-  description: 'Full pricing for all three NestLens modules — Intelligence, Exchange, and Capital Readiness — plus Enterprise and Bundle options.',
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/nestlens/pricing', {
+    title: 'NestLens Pricing — Intelligence, Exchange, Capital Readiness',
+    description: 'Full pricing for all three NestLens modules — Intelligence, Exchange, and Capital Readiness — plus Enterprise and Bundle options.',
+  })
 }
 
 export default function NestLensPricingPage() {

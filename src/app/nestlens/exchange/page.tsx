@@ -4,10 +4,13 @@ import NestLensModuleNav from '@/components/NestLensModuleNav'
 import HoverDiv from '@/components/HoverDiv'
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { pageMetadata, breadcrumbSchema } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'NestLens Exchange — Universal Data Marketplace',
-  description: 'Buy, sell, and license any structured dataset. KYC verified sellers. Escrow-protected transactions. QC scored. Universal data marketplace.',
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/nestlens/exchange', {
+    title: 'NestLens Exchange — Data Marketplace for AI, Alternative Data, and Research',
+    description: "Buy and sell structured datasets, AI training data, research reports, and alternative data. KYC-verified sellers, escrow protection, quality scores. India's data marketplace.",
+  })
 }
 
 const CATEGORIES = [
@@ -21,9 +24,15 @@ const CATEGORIES = [
   { icon: '🌍', name: 'Financial and Geospatial', desc: 'Financial data feeds, geospatial datasets, and location intelligence.' },
 ]
 
+const BREADCRUMB_SCHEMA = breadcrumbSchema([
+  { name: 'NestLens', path: '/nestlens' },
+  { name: 'Exchange', path: '/nestlens/exchange' },
+])
+
 export default function ExchangePage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_SCHEMA) }} />
       <Nav />
       <NestLensModuleNav />
       <main style={{ paddingTop: 64 }}>
@@ -158,6 +167,16 @@ export default function ExchangePage() {
               ))}
             </div>
             <p style={{ textAlign: 'center', fontSize: 12.5, color: 'var(--text3)', marginTop: 24 }}>INR equivalent for sellers: contact us — see <a href="https://nestlens.labelnest.in/pricing" target="_blank" rel="noopener noreferrer" style={{ color: '#E91E8C' }}>full pricing ↗</a></p>
+          </div>
+        </section>
+
+        {/* SEE ALSO */}
+        <section style={{ padding: '40px 48px', borderTop: '1px solid var(--border)' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', gap: 24, flexWrap: 'wrap', fontSize: 13.5, color: 'var(--text2)' }}>
+            <span>See also:</span>
+            <Link href="/nestlens/intelligence" style={{ color: '#2563EB' }}>Our own private markets intelligence data is available on Exchange →</Link>
+            <Link href="/services" style={{ color: 'var(--text2)', textDecoration: 'underline' }}>For custom data delivery, see Managed Services</Link>
+            <Link href="/vs/preqin" style={{ color: 'var(--text2)', textDecoration: 'underline' }}>How Exchange differs from Preqin data licensing</Link>
           </div>
         </section>
 

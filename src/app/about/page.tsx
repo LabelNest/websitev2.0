@@ -2,10 +2,13 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'About — LabelNest',
-  description: 'LabelNest is not a passion project. It is a calculated response to structural gaps in how data is built, priced, and delivered.',
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/about', {
+    title: "About LabelNest — Building India's Private Markets Data Infrastructure",
+    description: 'LabelNest builds the data infrastructure private markets need. From 4 years at Preqin and BlackRock to a full product suite for emerging managers and analysts.',
+  })
 }
 
 const TIMELINE = [

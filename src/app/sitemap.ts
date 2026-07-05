@@ -1,0 +1,55 @@
+import { MetadataRoute } from 'next'
+import { getBriefings, getLegalDocuments } from '@/lib/db'
+
+const baseUrl = 'https://labelnest.in'
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [briefings, legalDocs] = await Promise.all([
+    getBriefings().catch(() => []),
+    getLegalDocuments().catch(() => []),
+  ])
+
+  const staticPages: MetadataRoute.Sitemap = [
+    { url: `${baseUrl}/`, lastModified: new Date(), changeFrequency: 'weekly', priority: 1.0 },
+    { url: `${baseUrl}/nestlens`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.95 },
+    { url: `${baseUrl}/nestlens/intelligence`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/nestlens/exchange`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/nestlens/capital`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/nestlens/pricing`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/nesthr`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.85 },
+    { url: `${baseUrl}/services`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${baseUrl}/ecosystem`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/briefings`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.85 },
+    { url: `${baseUrl}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/about/ankit`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/team`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/careers`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.75 },
+    { url: `${baseUrl}/contact`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.6 },
+    { url: `${baseUrl}/legal`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
+  ]
+
+  // Comparison pages — high-intent search traffic, quarterly is close
+  // enough to Next.js's 'monthly' bucket (no 'quarterly' value exists).
+  const vsPages: MetadataRoute.Sitemap = [
+    { url: `${baseUrl}/vs/preqin`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${baseUrl}/vs/pitchbook`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${baseUrl}/vs/docsend`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/vs/carta`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+  ]
+
+  const briefingPages: MetadataRoute.Sitemap = briefings.map(b => ({
+    url: `${baseUrl}/briefings/${b.slug}`,
+    lastModified: b.created_at ? new Date(b.created_at) : new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.75,
+  }))
+
+  const legalPages: MetadataRoute.Sitemap = legalDocs.map(d => ({
+    url: `${baseUrl}/legal/${d.slug}`,
+    lastModified: d.last_updated ? new Date(d.last_updated) : new Date(),
+    changeFrequency: 'yearly' as const,
+    priority: 0.4,
+  }))
+
+  return [...staticPages, ...vsPages, ...briefingPages, ...legalPages]
+}
