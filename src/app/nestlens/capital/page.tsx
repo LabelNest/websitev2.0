@@ -160,8 +160,6 @@ export default function CapitalPage() {
           <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', gap: 24, flexWrap: 'wrap', fontSize: 13.5, color: 'var(--text2)' }}>
             <span>See also:</span>
             <Link href="/nestlens/intelligence" style={{ color: '#2563EB' }}>Investor intelligence for your outreach lists →</Link>
-            <Link href="/vs/docsend" style={{ color: 'var(--text2)', textDecoration: 'underline' }}>How Capital Readiness differs from DocSend</Link>
-            <Link href="/vs/carta" style={{ color: 'var(--text2)', textDecoration: 'underline' }}>Fundraise prep vs cap table management</Link>
           </div>
         </section>
 

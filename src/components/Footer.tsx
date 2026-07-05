@@ -49,15 +49,6 @@ const COLUMNS = [
     ],
   },
   {
-    title: "Compare",
-    links: [
-      { label: "vs Preqin",    href: "/vs/preqin" },
-      { label: "vs PitchBook", href: "/vs/pitchbook" },
-      { label: "vs DocSend",   href: "/vs/docsend" },
-      { label: "vs Carta",     href: "/vs/carta" },
-    ],
-  },
-  {
     title: "Services",
     links: [
       { label: "Managed Services", href: "/services" },
@@ -488,8 +479,8 @@ export default function Footer() {
           className="ln-cols"
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(5, 1fr)",
-            gap: 28, paddingTop: 36,
+            gridTemplateColumns: "repeat(4, 1fr)",
+            gap: 32, paddingTop: 36,
             borderTop: `1px solid ${C.border}`,
           }}
         >

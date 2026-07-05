@@ -167,8 +167,6 @@ export default function IntelligencePage() {
             <span>See also:</span>
             <Link href="/nestlens/exchange" style={{ color: '#E91E8C' }}>Buy specific datasets on the Exchange marketplace →</Link>
             <Link href="/nestlens/capital" style={{ color: '#10B981' }}>For founders raising capital, see Capital Readiness →</Link>
-            <Link href="/vs/preqin" style={{ color: 'var(--text2)', textDecoration: 'underline' }}>How we compare to Preqin</Link>
-            <Link href="/vs/pitchbook" style={{ color: 'var(--text2)', textDecoration: 'underline' }}>How we compare to PitchBook</Link>
           </div>
         </section>
 
