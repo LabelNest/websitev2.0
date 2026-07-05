@@ -11,7 +11,7 @@ interface TableRow {
 interface Cta { href: string; label: string; external?: boolean }
 
 export interface VsPageData {
-  slug: 'preqin' | 'pitchbook' | 'docsend' | 'carta'
+  slug: 'preqin' | 'pitchbook' | 'docsend' | 'carta' | 'datarade' | 'neudata' | 'dakota'
   competitorName: string
   ourName: string // 'LabelNest' or 'Capital Readiness'
   h1: string
@@ -39,6 +39,9 @@ const ALL_VS_PAGES: { slug: string; label: string }[] = [
   { slug: 'pitchbook', label: 'LabelNest vs PitchBook' },
   { slug: 'docsend', label: 'Capital Readiness vs DocSend' },
   { slug: 'carta', label: 'Capital Readiness vs Carta' },
+  { slug: 'datarade', label: 'NestLens Exchange vs Datarade' },
+  { slug: 'neudata', label: 'NestLens vs Neudata' },
+  { slug: 'dakota', label: 'Capital Readiness vs Dakota' },
 ]
 
 const VERDICT_MARK: Record<Verdict, { symbol: string; color: string }> = {

@@ -176,7 +176,6 @@ export default function ExchangePage() {
             <span>See also:</span>
             <Link href="/nestlens/intelligence" style={{ color: '#2563EB' }}>Our own private markets intelligence data is available on Exchange →</Link>
             <Link href="/services" style={{ color: 'var(--text2)', textDecoration: 'underline' }}>For custom data delivery, see Managed Services</Link>
-            <Link href="/vs/preqin" style={{ color: 'var(--text2)', textDecoration: 'underline' }}>How Exchange differs from Preqin data licensing</Link>
           </div>
         </section>
 
