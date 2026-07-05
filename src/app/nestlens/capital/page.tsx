@@ -1,5 +1,6 @@
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import DiyBanner from '@/components/DiyBanner'
 import NestLensModuleNav from '@/components/NestLensModuleNav'
 import HoverDiv from '@/components/HoverDiv'
 import Link from 'next/link'
@@ -43,6 +44,7 @@ export default function CapitalPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_SCHEMA) }} />
       <Nav />
+      <DiyBanner />
       <NestLensModuleNav />
       <main style={{ paddingTop: 64 }}>
 
