@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NestLens Resource Hub — Everything You Need</title>
+<meta name="description" content="Brochures, pricing, FAQs and everything you need to understand NestLens — Intelligence, Capital Readiness, Exchange, and NestHR. No sales call required.">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0D1B5E;--navy-dk:#060E3A;--navy-lt:#EEF2FF;--navy-md:#1E3A8A;
+  --rose:#F43F5E;--rose-lt:#FFF1F3;--rose-bdr:#FECDD3;
+  --green:#059669;--green-lt:#ECFDF5;--green-bdr:#6EE7B7;
+  --teal:#0891B2;--teal-lt:#ECFEFF;
+  --amber:#D97706;--amber-lt:#FFFBEB;
+  --text:#111827;--muted:#6B7280;--dim:#9CA3AF;
+  --border:#E5E7EB;--surface:#F8F9FF;--white:#fff;
+  --r:12px;--r-sm:8px;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--surface);color:var(--text);line-height:1.55}
+
+/* ── TOPBAR ── */
+.topbar{background:var(--navy-dk);height:54px;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;border-bottom:1px solid rgba(255,255,255,.07)}
+.tb-left{display:flex;align-items:center;gap:10px}
+.tb-logo{width:30px;height:30px;background:var(--rose);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;letter-spacing:-.3px;flex-shrink:0}
+.tb-name{font-size:14px;font-weight:600;color:#fff}
+.tb-sep{color:rgba(255,255,255,.25);margin:0 4px}
+.tb-sub{font-size:13px;color:rgba(255,255,255,.45)}
+.tb-cta{font-size:12px;font-weight:600;color:var(--rose);border:1.5px solid var(--rose);border-radius:7px;padding:5px 16px;text-decoration:none;transition:background .15s,color .15s;white-space:nowrap}
+.tb-cta:hover{background:var(--rose);color:#fff}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,var(--navy-dk) 0%,var(--navy) 60%,#1a2d7a 100%);padding:4rem 2rem 3rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;border-radius:50%;border:1px solid rgba(244,63,94,.15);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-100px;left:-60px;width:300px;height:300px;border-radius:50%;border:1px solid rgba(244,63,94,.1);pointer-events:none}
+.hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--rose);text-transform:uppercase;margin-bottom:.75rem}
+.hero-title{font-size:clamp(2rem,5vw,3rem);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.5px;margin-bottom:.75rem}
+.hero-title span{color:var(--rose)}
+.hero-sub{font-size:15px;color:rgba(255,255,255,.55);max-width:540px;margin:0 auto 2rem;line-height:1.65}
+.hero-stats{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-num{font-size:1.6rem;font-weight:800;color:#fff;line-height:1}
+.stat-lbl{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
+
+/* ── STICKY NAV ── */
+.sticky-nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:54px;z-index:150;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.sticky-nav::-webkit-scrollbar{display:none}
+.nav-inner{display:flex;max-width:1000px;margin:0 auto;padding:0 1.5rem}
+.nav-item{font-size:13px;font-weight:500;color:var(--muted);padding:14px 16px;border-bottom:2.5px solid transparent;white-space:nowrap;cursor:pointer;text-decoration:none;transition:color .15s,border-color .15s;display:flex;align-items:center;gap:6px}
+.nav-item:hover{color:var(--navy)}
+.nav-item.active{color:var(--navy);font-weight:700;border-bottom-color:var(--rose)}
+.nav-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+/* ── MAIN ── */
+.main{max-width:1000px;margin:0 auto;padding:0 1.5rem 5rem}
+
+/* ── SECTION ── */
+.section{padding:3.5rem 0 0;scroll-margin-top:110px}
+.section-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.75rem}
+.section-left{}
+.section-eyebrow{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.section-eyebrow::after{content:'';width:32px;height:1.5px;background:currentColor;opacity:.4;border-radius:1px}
+.section-title{font-size:1.6rem;font-weight:800;color:var(--navy);line-height:1.2;letter-spacing:-.3px;margin-bottom:.4rem}
+.section-sub{font-size:14px;color:var(--muted);line-height:1.65;max-width:600px}
+.section-actions{display:flex;gap:.6rem;align-items:center;flex-shrink:0;flex-wrap:wrap}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:.4rem;font-size:13px;font-weight:600;padding:9px 18px;border-radius:var(--r-sm);text-decoration:none;border:none;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap}
+.btn:active{transform:scale(.98)}
+.btn-navy{background:var(--navy);color:#fff}
+.btn-navy:hover{background:#152A6E}
+.btn-rose{background:var(--rose);color:#fff}
+.btn-rose:hover{background:#e02048}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--muted)}
+.btn-outline:hover{border-color:var(--navy);color:var(--navy)}
+.btn-ghost{background:transparent;border:1.5px solid currentColor;padding:7px 14px;font-size:12px}
+.btn-sm{padding:7px 14px;font-size:12px}
+.btn svg{width:14px;height:14px;flex-shrink:0}
+
+/* ── DOC CARD ── */
+.doc-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r);padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;transition:box-shadow .18s,border-color .18s;text-decoration:none;color:inherit}
+.doc-card:hover{box-shadow:0 4px 20px rgba(13,27,94,.08);border-color:rgba(13,27,94,.2)}
+.doc-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
+.doc-info{flex:1;min-width:0}
+.doc-name{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:2px}
+.doc-desc{font-size:12.5px;color:var(--muted);line-height:1.45}
+.doc-dl{display:flex;align-items:center;gap:.35rem;font-size:12px;font-weight:600;color:var(--rose);text-decoration:none;white-space:nowrap;flex-shrink:0}
+.doc-dl:hover{color:#e02048}
+.doc-dl svg{width:14px;height:14px}
+
+/* ── FEATURE GRID ── */
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1.25rem}
+.feat-item{font-size:13px;color:var(--text);display:flex;align-items:flex-start;gap:.5rem;line-height:1.5}
+.feat-item::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:.05rem}
+@media(max-width:560px){.feat-grid{grid-template-columns:1fr}}
+
+/* ── CONTENT CARD ── */
+.content-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r);padding:1.75rem;margin-bottom:1rem}
+.content-card.accent-navy{border-top:3px solid var(--navy)}
+.content-card.accent-rose{border-top:3px solid var(--rose)}
+.content-card.accent-green{border-top:3px solid var(--green)}
+.content-card.accent-teal{border-top:3px solid var(--teal)}
+.content-card.accent-amber{border-top:3px solid var(--amber)}
+
+/* ── PLAN GRID ── */
+.plan-row{display:grid;gap:.75rem;margin-bottom:.75rem}
+.plan-row.cols-4{grid-template-columns:repeat(4,1fr)}
+.plan-row.cols-3{grid-template-columns:repeat(3,1fr)}
+.plan-row.cols-2{grid-template-columns:1fr 1fr}
+@media(max-width:700px){.plan-row.cols-4,.plan-row.cols-3{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.plan-row.cols-4,.plan-row.cols-3,.plan-row.cols-2{grid-template-columns:1fr}}
+
+.mini-plan{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r);padding:1.25rem;position:relative;transition:box-shadow .18s}
+.mini-plan:hover{box-shadow:0 4px 16px rgba(13,27,94,.08)}
+.mini-plan.pop{border-color:var(--rose);box-shadow:0 0 0 3px rgba(244,63,94,.08)}
+.mini-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--rose);color:#fff;font-size:9px;font-weight:800;letter-spacing:.04em;padding:2px 10px;border-radius:99px;white-space:nowrap}
+.mini-plan-name{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:.35rem}
+.mini-price{font-size:1.4rem;font-weight:800;color:var(--text);letter-spacing:-.3px;line-height:1;margin-bottom:.15rem}
+.mini-price .cur{font-size:.9rem;font-weight:500;vertical-align:top;margin-top:.2rem;display:inline-block}
+.mini-price .per{font-size:11px;font-weight:400;color:var(--muted)}
+.mini-price-alt{font-size:11px;color:var(--muted);margin-bottom:.75rem}
+.mini-divider{height:1px;background:var(--border);margin:.6rem 0}
+.mini-row{font-size:11.5px;display:flex;justify-content:space-between;padding:.18rem 0}
+.mini-row .lbl{color:var(--muted)}
+.mini-row .val{font-weight:600;color:var(--navy)}
+.mini-row .val.rose{color:var(--rose)}
+.mini-row .val.green{color:var(--green)}
+.mini-row .val.dash{color:var(--dim);font-weight:400}
+
+/* ── TWO COL ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:600px){.two-col{grid-template-columns:1fr}}
+.col-card{border-radius:var(--r);padding:1.5rem;border:1px solid}
+.col-card.navy{background:var(--navy-lt);border-color:var(--navy-md);border-color:#C7D2FE}
+.col-card.rose{background:var(--rose-lt);border-color:var(--rose-bdr)}
+.col-card.green{background:var(--green-lt);border-color:var(--green-bdr)}
+.col-card.teal{background:var(--teal-lt);border-color:#A5F3FC}
+.col-card-title{font-size:14px;font-weight:700;margin-bottom:.35rem}
+.col-card.navy .col-card-title{color:var(--navy)}
+.col-card.rose .col-card-title{color:#9B1A34}
+.col-card.teal .col-card-title{color:var(--teal)}
+.col-card-sub{font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:.75rem}
+.col-list{list-style:none;display:flex;flex-direction:column;gap:.3rem}
+.col-list li{font-size:12.5px;color:var(--text);display:flex;gap:.5rem;line-height:1.45}
+.col-list li::before{content:'·';color:var(--rose);font-weight:700;flex-shrink:0}
+
+/* ── COHORT TABLE ── */
+.c-table{width:100%;border-collapse:collapse;margin:.75rem 0}
+.c-table th{background:var(--navy-lt);color:var(--navy);font-size:11.5px;font-weight:700;padding:9px 12px;text-align:left;border-bottom:1px solid var(--border)}
+.c-table td{font-size:13px;padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+.c-table tr:nth-child(even) td{background:var(--surface)}
+.c-table tr:last-child td{border-bottom:none;color:var(--muted)}
+.c-table .rose{color:var(--rose);font-weight:700}
+
+/* ── USE CASE CARDS ── */
+.uc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;margin-bottom:1rem}
+@media(max-width:680px){.uc-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:420px){.uc-grid{grid-template-columns:1fr}}
+.uc-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-sm);padding:1rem;transition:border-color .15s}
+.uc-card:hover{border-color:rgba(13,27,94,.3)}
+.uc-icon{font-size:20px;margin-bottom:.4rem}
+.uc-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:.25rem}
+.uc-sub{font-size:11.5px;color:var(--muted);line-height:1.45}
+
+/* ── NESTHR ── */
+.module-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin-bottom:1rem}
+@media(max-width:620px){.module-grid{grid-template-columns:1fr 1fr}}
+.module-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:.85rem}
+.module-name{font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:.2rem}
+.module-desc{font-size:11.5px;color:var(--muted);line-height:1.4}
+
+/* ── PRICING TABLE MINI ── */
+.price-simple{background:var(--white);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:1rem}
+.price-row{display:flex;justify-content:space-between;align-items:center;padding:.85rem 1.25rem;border-bottom:1px solid var(--border)}
+.price-row:last-child{border-bottom:none}
+.price-row:nth-child(even){background:var(--surface)}
+.price-label{font-size:13.5px;font-weight:600;color:var(--text)}
+.price-sub{font-size:11.5px;color:var(--muted);margin-top:1px}
+.price-val{font-size:1.1rem;font-weight:800;color:var(--rose);white-space:nowrap}
+.price-val.contact{font-size:14px;font-weight:700;color:var(--navy)}
+
+/* ── FAQ ── */
+.faq-section{padding:3.5rem 0 0;scroll-margin-top:110px}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 2rem}
+@media(max-width:700px){.faq-grid{grid-template-columns:1fr}}
+.faq-col{}
+.faq-item{border-bottom:1px solid var(--border);overflow:hidden}
+.faq-q{width:100%;background:none;border:none;text-align:left;padding:1rem 0;font-size:14px;font-weight:600;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:.75rem;font-family:inherit;line-height:1.4}
+.faq-q:hover{color:var(--navy)}
+.faq-arrow{flex-shrink:0;width:18px;height:18px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:transform .2s,background .15s}
+.faq-item.open .faq-arrow{transform:rotate(180deg);background:var(--navy-lt)}
+.faq-a{font-size:13.5px;color:var(--muted);line-height:1.7;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .2s}
+.faq-item.open .faq-a{max-height:500px;padding-bottom:1rem}
+
+/* ── DOCS HUB ── */
+.docs-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem}
+@media(max-width:600px){.docs-grid{grid-template-columns:1fr}}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--border);margin:3rem 0 0}
+
+/* ── CTA STRIP ── */
+.cta-strip{background:var(--navy);border-radius:var(--r);padding:2rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;margin-top:2rem}
+.cta-strip-left{}
+.cta-strip-title{font-size:18px;font-weight:800;color:#fff;margin-bottom:.3rem}
+.cta-strip-sub{font-size:13px;color:rgba(255,255,255,.5);line-height:1.55}
+.cta-strip-actions{display:flex;gap:.6rem;flex-wrap:wrap}
+
+/* ── CONTACT FOOTER ── */
+.contact-footer{background:var(--navy-dk);padding:2.5rem 2rem;margin-top:4rem}
+.contact-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+.contact-brand{display:flex;align-items:center;gap:10px}
+.contact-logo{width:32px;height:32px;background:var(--rose);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff}
+.contact-name{font-size:14px;font-weight:700;color:#fff}
+.contact-tagline{font-size:12px;color:rgba(255,255,255,.35);margin-top:2px}
+.contact-links{display:flex;gap:1.5rem;flex-wrap:wrap}
+.contact-link{font-size:13px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .15s}
+.contact-link:hover{color:#fff}
+.contact-link strong{color:rgba(255,255,255,.8);font-weight:600}
+
+/* ── TAG PILL ── */
+.tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.04em;padding:2px 9px;border-radius:99px;vertical-align:middle;margin-left:.4rem}
+.tag-live{background:var(--green-lt);color:var(--green);border:1px solid var(--green-bdr)}
+.tag-coming{background:var(--amber-lt);color:var(--amber);border:1px solid #FDE68A}
+
+/* ── NOTE ── */
+.note{font-size:12px;color:var(--dim);font-style:italic;line-height:1.6;margin-top:.6rem}
+
+/* ── HIGHLIGHT BOX ── */
+.hi-box{border-radius:var(--r);padding:1.25rem 1.5rem;margin:.75rem 0}
+.hi-box.navy{background:var(--navy);border-left:4px solid var(--rose)}
+.hi-box.navy p{color:rgba(255,255,255,.75);font-size:13.5px;line-height:1.65}
+.hi-box.navy strong{color:#fff}
+.hi-box.rose{background:var(--rose-lt);border-left:4px solid var(--rose)}
+.hi-box.rose p{color:#7F1D1D;font-size:13.5px;line-height:1.65}
+
+/* ── CURRENCY SWITCHER ── */
+.switchers{display:flex;flex-direction:column;align-items:center;gap:.65rem;margin-top:1.5rem}
+.switcher-row{display:flex;align-items:center;gap:.75rem}
+.switcher-label{font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.06em;text-transform:uppercase;width:52px;text-align:right}
+.toggle-wrap{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.08);border-radius:99px;padding:4px 6px}
+.toggle-label{font-size:13px;font-weight:500;color:rgba(255,255,255,.5);padding:4px 14px;border-radius:99px;cursor:pointer;transition:all .18s;user-select:none}
+.toggle-label.active{background:var(--rose);color:#fff;font-weight:600}
+.save-badge{font-size:10px;font-weight:700;background:var(--green-lt);color:var(--green);padding:2px 8px;border-radius:99px;margin-left:2px}
+
+/* ── SCROLL INDICATOR ── */
+.scroll-top{position:fixed;bottom:2rem;right:2rem;width:40px;height:40px;background:var(--navy);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:opacity .2s;z-index:100;border:none;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.scroll-top.visible{opacity:1}
+.scroll-top:hover{background:var(--navy-md)}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="tb-left">
+    <div class="tb-logo">LN</div>
+    <span class="tb-name">NestLens</span>
+    <span class="tb-sep">/</span>
+    <span class="tb-sub">Resource Hub</span>
+  </div>
+  <a href="https://nestlens.labelnest.in/enterprise-enquiry" class="tb-cta" target="_blank">Enterprise Enquiry</a>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-eyebrow">NestLens by LabelNest · All products live</p>
+  <h1 class="hero-title">Everything you need.<br><span>No sales call required.</span></h1>
+  <p class="hero-sub">Browse brochures, understand pricing, read FAQs, and get started — all in one place. If you still have questions, we are one email away.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">55,000+</div><div class="stat-lbl">Entities structured</div></div>
+    <div class="stat"><div class="stat-num">70,000+</div><div class="stat-lbl">People & contacts</div></div>
+    <div class="stat"><div class="stat-num">4</div><div class="stat-lbl">Live products</div></div>
+    <div class="stat"><div class="stat-num">EM</div><div class="stat-lbl">Emerging markets first</div></div>
+  </div>
+</div>
+
+<!-- STICKY NAV -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <a class="nav-item active" href="#intelligence">
+      <span class="nav-dot" style="background:#0D1B5E"></span>Intelligence
+    </a>
+    <a class="nav-item" href="#capital-readiness">
+      <span class="nav-dot" style="background:#F43F5E"></span>Capital Readiness
+    </a>
+    <a class="nav-item" href="#exchange">
+      <span class="nav-dot" style="background:#059669"></span>Exchange
+    </a>
+    <a class="nav-item" href="#nesthr">
+      <span class="nav-dot" style="background:#0891B2"></span>NestHR
+    </a>
+    <a class="nav-item" href="#pricing">
+      <span class="nav-dot" style="background:#D97706"></span>Pricing
+    </a>
+    <a class="nav-item" href="#faq">
+      <span class="nav-dot" style="background:#7C3AED"></span>FAQs
+    </a>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- ══════════════════════════════════════════
+     INTELLIGENCE
+══════════════════════════════════════════ -->
+<section class="section" id="intelligence">
+  <div class="section-header">
+    <div class="section-left">
+      <p class="section-eyebrow" style="color:var(--navy)">Intelligence <span class="tag tag-live">Live</span></p>
+      <h2 class="section-title">Know the private market<br>before you enter the room</h2>
+      <p class="section-sub">NestLens Intelligence maps the entities and relationships that drive private capital — capital managers, allocators, funds, founders, and the ecosystem connecting them. It surfaces who is raising, who is moving, and who is connected to whom, so your next conversation starts with context instead of a cold search.</p>
+    </div>
+    <div class="section-actions">
+      <a href="https://nestlens.labelnest.in" class="btn btn-navy" target="_blank">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        Get started
+      </a>
+    </div>
+  </div>
+
+  <!-- Stats strip -->
+  <div class="plan-row cols-4" style="margin-bottom:1.25rem">
+    <div class="content-card" style="text-align:center;padding:1.25rem">
+      <div style="font-size:1.6rem;font-weight:800;color:var(--navy)">15,000+</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:3px">Capital managers mapped</div>
+    </div>
+    <div class="content-card" style="text-align:center;padding:1.25rem">
+      <div style="font-size:1.6rem;font-weight:800;color:var(--navy)">70,000+</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:3px">People & contacts</div>
+    </div>
+    <div class="content-card" style="text-align:center;padding:1.25rem">
+      <div style="font-size:1.6rem;font-weight:800;color:var(--navy)">23,000+</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:3px">Relationships tracked</div>
+    </div>
+    <div class="content-card" style="text-align:center;padding:1.25rem">
+      <div style="font-size:1.6rem;font-weight:800;color:var(--rose)">Live</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:3px">Events & signals feed</div>
+    </div>
+  </div>
+
+  <!-- What we cover -->
+  <div class="content-card accent-navy" style="margin-bottom:1rem">
+    <p style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:1rem">What Intelligence covers</p>
+    <div class="feat-grid">
+      <span class="feat-item">Capital Managers — VCs, PE firms, GPs</span>
+      <span class="feat-item">Capital Providers — LPs and allocators</span>
+      <span class="feat-item">Investment Funds — active vehicles</span>
+      <span class="feat-item">Capital Seekers — startups and founders</span>
+      <span class="feat-item">Ecosystem Partners — advisors, law firms</span>
+      <span class="feat-item">Ecosystem Builders — studios, accelerators</span>
+      <span class="feat-item">People — partners, directors, contacts</span>
+      <span class="feat-item">Market Facilitators — banks, brokers</span>
+    </div>
+    <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem">
+      <span style="background:var(--navy-lt);color:var(--navy);font-size:12px;font-weight:600;padding:4px 12px;border-radius:99px">Explore</span>
+      <span style="background:var(--navy-lt);color:var(--navy);font-size:12px;font-weight:600;padding:4px 12px;border-radius:99px">Signals</span>
+      <span style="background:var(--navy-lt);color:var(--navy);font-size:12px;font-weight:600;padding:4px 12px;border-radius:99px">Track</span>
+      <span style="background:var(--rose-lt);color:#9B1A34;font-size:12px;font-weight:600;padding:4px 12px;border-radius:99px">Relationship-first</span>
+      <span style="background:var(--rose-lt);color:#9B1A34;font-size:12px;font-weight:600;padding:4px 12px;border-radius:99px">Emerging-market depth</span>
+    </div>
+  </div>
+
+  <!-- Who uses it -->
+  <p style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:.75rem">Who uses Intelligence</p>
+  <div class="uc-grid">
+    <div class="uc-card">
+      <div class="uc-icon">🏛</div>
+      <div class="uc-title">Emerging Managers & GPs</div>
+      <div class="uc-sub">Build targeted LP lists, find warm paths to check-writers, time outreach to active allocators.</div>
+    </div>
+    <div class="uc-card">
+      <div class="uc-icon">💼</div>
+      <div class="uc-title">LPs & Allocators</div>
+      <div class="uc-sub">Discover managers early, understand team dynamics, map the field before first meetings.</div>
+    </div>
+    <div class="uc-card">
+      <div class="uc-icon">🚀</div>
+      <div class="uc-title">Founders</div>
+      <div class="uc-sub">Target the right funds by stage and sector, find warm introductions, research before pitching.</div>
+    </div>
+    <div class="uc-card">
+      <div class="uc-icon">⚖️</div>
+      <div class="uc-title">Advisors & Service Providers</div>
+      <div class="uc-sub">Spot new business signals, map your market, track when key contacts change roles.</div>
+    </div>
+    <div class="uc-card">
+      <div class="uc-icon">🏗</div>
+      <div class="uc-title">Ecosystem Builders</div>
+      <div class="uc-sub">Match cohorts to capital, connect founders to investors who actually fit their stage and sector.</div>
+    </div>
+    <div class="uc-card">
+      <div class="uc-icon">📊</div>
+      <div class="uc-title">Research Teams</div>
+      <div class="uc-sub">Structure market landscapes, track fund activity, build data-backed investment theses.</div>
+    </div>
+  </div>
+
+  <!-- Download -->
+  <p style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:.6rem">Download brochure</p>
+  <div class="docs-grid">
+    <a class="doc-card" href="https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brochures/NestLens-Intelligence-Overview.pdf" target="_blank">
+      <div class="doc-icon" style="background:var(--navy-lt)">📘</div>
+      <div class="doc-info">
+        <div class="doc-name">Intelligence Overview</div>
+        <div class="doc-desc">Full product overview, entity coverage, use cases, and why NestLens</div>
+      </div>
+      <div class="doc-dl">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        PDF
+      </div>
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════
+     CAPITAL READINESS
+══════════════════════════════════════════ -->
+<section class="section" id="capital-readiness">
+  <div class="section-header">
+    <div class="section-left">
+      <p class="section-eyebrow" style="color:var(--rose)">Capital Readiness <span class="tag tag-live">Live</span></p>
+      <h2 class="section-title">Be ready before<br>the investor asks</h2>
+      <p class="section-sub">A guided, stage and sector-aware system that takes founders and fund managers from zero to institutional-grade. Structured data room, legal checklist, investor fit scoring, and expert templates — built for emerging markets where institutional prep tools have never existed.</p>
+    </div>
+    <div class="section-actions">
+      <a href="https://nestlens.labelnest.in" class="btn btn-rose" target="_blank">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        Get started
+      </a>
+    </div>
+  </div>
+
+  <!-- Two tracks -->
+  <div class="two-col">
+    <div class="col-card navy">
+      <p class="col-card-title">Founder Track</p>
+      <p class="col-card-sub">For startups raising pre-seed through Series B. Your company profile, team, traction, financials, and legal documents — structured once, shared in one clean link.</p>
+      <ul class="col-list">
+        <li>Structured investor-grade data room</li>
+        <li>Expert-curated pitch, financial, and legal templates</li>
+        <li>Investor fit scoring — matched by stage and sector</li>
+        <li>Per-field visibility controls — public, investor-only, private</li>
+        <li>Document vault — every file tagged and linked</li>
+      </ul>
+    </div>
+    <div class="col-card rose">
+      <p class="col-card-title">Fund Track</p>
+      <p class="col-card-sub">For emerging GPs raising Fund I or Fund II from LPs. LP data room, fund thesis, terms, track record documentation, and LP fit scoring — all structured.</p>
+      <ul class="col-list">
+        <li>LP-ready data room — fund thesis, terms, track record</li>
+        <li>LP fit scoring — matched by mandate and geography</li>
+        <li>Fund documentation templates included</li>
+        <li>Multiple named data rooms — additional rooms available</li>
+        <li>3 collaborators — founder and advisors</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Why it matters -->
+  <div class="hi-box navy">
+    <p><strong>The SF standard:</strong> Silicon Valley investors expect a data room by the second meeting. No room means no meeting three — regardless of how good the pitch was. Most emerging market founders have never seen an institutional data room. Their reference point is a pitch deck and a WhatsApp message. A clean data room is one of the few signals that crosses every geographic and credibility barrier.</p>
+  </div>
+
+  <!-- What lives in your data room -->
+  <p style="font-size:13px;font-weight:700;color:var(--navy);margin:.75rem 0">What lives in your data room</p>
+  <div class="module-grid">
+    <div class="module-card"><div class="module-name">Company & Team</div><div class="module-desc">Profile, founders, key hires, and story</div></div>
+    <div class="module-card"><div class="module-name">Traction & Financials</div><div class="module-desc">Revenue, growth, runway, and unit economics</div></div>
+    <div class="module-card"><div class="module-name">Legal & Cap Table</div><div class="module-desc">Incorporation, agreements, IP, ownership</div></div>
+    <div class="module-card"><div class="module-name">Investment Docs</div><div class="module-desc">Rounds, terms, use of funds, existing investors</div></div>
+    <div class="module-card"><div class="module-name">Document Vault</div><div class="module-desc">Every file stored, tagged, and linked</div></div>
+    <div class="module-card"><div class="module-name">Controlled Sharing</div><div class="module-desc">Investor view or public view, per-field visibility</div></div>
+  </div>
+
+  <!-- Partner programme highlight -->
+  <div class="content-card accent-rose" style="margin-top:1rem">
+    <p style="font-size:13px;font-weight:700;color:#9B1A34;margin-bottom:.4rem">Partner Programme — for accelerators, incubators & fund managers</p>
+    <p style="font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:.75rem">If founders sit anywhere in your world — you serve them, raise for them, build with them, or fund them — their readiness reflects on you. Extend investor-grade Capital Readiness to your founders under your relationship. One cohort fee covers the whole batch. Optional co-branding available.</p>
+    <table class="c-table">
+      <thead><tr><th>Cohort size</th><th>Annual fee</th><th>Per founder</th><th>Includes</th></tr></thead>
+      <tbody>
+        <tr><td>Up to 25 founders</td><td class="rose">$999/year</td><td>~$40</td><td>Full CR + co-branding</td></tr>
+        <tr><td>Up to 50 founders</td><td class="rose">$1,799/year</td><td>~$36</td><td>Full CR + co-branding</td></tr>
+        <tr><td>Up to 100 founders</td><td class="rose">$2,999/year</td><td>~$30</td><td>Full CR + white-label</td></tr>
+        <tr><td>100+ founders</td><td>Custom</td><td>—</td><td>Direct conversation</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Per-founder pricing at $49/founder/year also available. Referral programme: refer a subscribing founder and earn 20% of their annual plan — no cap, no expiry.</p>
+  </div>
+
+  <!-- Downloads -->
+  <p style="font-size:13px;font-weight:700;color:var(--navy);margin:.75rem 0 .6rem">Download brochures</p>
+  <div class="docs-grid">
+    <a class="doc-card" href="https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brochures/NestLens-CapitalReadiness-Founders.pdf" target="_blank">
+      <div class="doc-icon" style="background:var(--rose-lt)">📋</div>
+      <div class="doc-info">
+        <div class="doc-name">Capital Readiness — For Founders</div>
+        <div class="doc-desc">Data room guide, templates, investor fit, and pricing for founders</div>
+      </div>
+      <div class="doc-dl">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>PDF
+      </div>
+    </a>
+    <a class="doc-card" href="https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brochures/NestLens-CapitalReadiness-Partners.pdf" target="_blank">
+      <div class="doc-icon" style="background:var(--rose-lt)">🤝</div>
+      <div class="doc-info">
+        <div class="doc-name">Capital Readiness — Partner Programme</div>
+        <div class="doc-desc">For accelerators, incubators, fund managers, and ecosystem builders</div>
+      </div>
+      <div class="doc-dl">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>PDF
+      </div>
+    </a>
+    <a class="doc-card" href="https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brochures/LabelNest-DataRoom-Benefits.pdf" target="_blank">
+      <div class="doc-icon" style="background:var(--rose-lt)">🏛</div>
+      <div class="doc-info">
+        <div class="doc-name">Why a Data Room Matters</div>
+        <div class="doc-desc">The case for building your data room now — before you need it</div>
+      </div>
+      <div class="doc-dl">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>PDF
+      </div>
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════
+     EXCHANGE
+══════════════════════════════════════════ -->
+<section class="section" id="exchange">
+  <div class="section-header">
+    <div class="section-left">
+      <p class="section-eyebrow" style="color:var(--green)">Exchange <span class="tag tag-live">Live</span></p>
+      <h2 class="section-title">Where data supply meets<br>data demand</h2>
+      <p class="section-sub">NestLens Exchange is the marketplace that connects teams who produce private-market data, research, and reports with teams who need them — without long procurement cycles or middlemen. Discovery is broken, procurement is slow, and trust is missing. Exchange fixes all three.</p>
+    </div>
+    <div class="section-actions">
+      <a href="https://nestlens.labelnest.in" class="btn btn-navy btn-sm" target="_blank">Start buying</a>
+      <a href="https://nestlens.labelnest.in" class="btn btn-outline btn-sm" target="_blank">List as seller</a>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="col-card green">
+      <p class="col-card-title" style="color:var(--green)">For Sellers — Turn data into revenue</p>
+      <p class="col-card-sub">List datasets, custom research capabilities, and report offerings in front of funds, founders, advisors, and research teams actively looking.</p>
+      <ul class="col-list">
+        <li>List once, stay discoverable — clear scope, pricing, delivery terms</li>
+        <li>Respond to intent-driven buyer requests</li>
+        <li>Direct conversations — scope and close in-platform</li>
+        <li>Build a credible verified profile over time</li>
+        <li>Any format — raw data, custom research, recurring feeds, one-off reports</li>
+      </ul>
+    </div>
+    <div class="col-card navy">
+      <p class="col-card-title">For Buyers — Source exactly what you need</p>
+      <p class="col-card-sub">Find vetted providers for datasets, custom research, and reports — or post exactly what you need and let qualified sellers come to you.</p>
+      <ul class="col-list">
+        <li>Browse a curated private-market marketplace</li>
+        <li>Post a request — receive proposals from providers who can deliver</li>
+        <li>Compare providers side by side before committing</li>
+        <li>Verified provider profiles and trust signals</li>
+        <li>Skip the procurement drag — from need to deliverable fast</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <div class="content-card accent-green" style="margin-bottom:1rem">
+    <p style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:.75rem">How the Exchange works — 4 steps each side</p>
+    <div class="two-col" style="margin-bottom:0">
+      <div>
+        <p style="font-size:11px;font-weight:700;color:var(--green);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem">Seller journey</p>
+        <div style="display:flex;flex-direction:column;gap:.5rem">
+          <div style="display:flex;gap:.6rem;align-items:flex-start"><span style="background:var(--rose);color:#fff;font-size:10px;font-weight:800;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</span><div style="font-size:12.5px;color:var(--text)"><strong>Create your profile</strong> — verification builds buyer trust</div></div>
+          <div style="display:flex;gap:.6rem;align-items:flex-start"><span style="background:var(--rose);color:#fff;font-size:10px;font-weight:800;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</span><div style="font-size:12.5px;color:var(--text)"><strong>List your offerings</strong> — datasets, research, reports with clear terms</div></div>
+          <div style="display:flex;gap:.6rem;align-items:flex-start"><span style="background:var(--rose);color:#fff;font-size:10px;font-weight:800;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</span><div style="font-size:12.5px;color:var(--text)"><strong>Respond to requests</strong> — send tailored proposals to matched buyers</div></div>
+          <div style="display:flex;gap:.6rem;align-items:flex-start"><span style="background:var(--rose);color:#fff;font-size:10px;font-weight:800;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">4</span><div style="font-size:12.5px;color:var(--text)"><strong>Close and deliver</strong> — agree in-platform, grow your track record</div></div>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:11px;font-weight:700;color:var(--navy);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem">Buyer journey</p>
+        <div style="display:flex;flex-direction:column;gap:.5rem">
+          <div style="display:flex;gap:.6rem;align-items:flex-start"><span style="background:var(--navy);color:#fff;font-size:10px;font-weight:800;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</span><div style="font-size:12.5px;color:var(--text)"><strong>Browse or post</strong> — explore offerings or post exactly what you need</div></div>
+          <div style="display:flex;gap:.6rem;align-items:flex-start"><span style="background:var(--navy);color:#fff;font-size:10px;font-weight:800;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</span><div style="font-size:12.5px;color:var(--text)"><strong>Receive proposals</strong> — qualified providers respond with tailored scope</div></div>
+          <div style="display:flex;gap:.6rem;align-items:flex-start"><span style="background:var(--navy);color:#fff;font-size:10px;font-weight:800;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</span><div style="font-size:12.5px;color:var(--text)"><strong>Compare providers</strong> — credibility, scope, and terms side by side</div></div>
+          <div style="display:flex;gap:.6rem;align-items:flex-start"><span style="background:var(--navy);color:#fff;font-size:10px;font-weight:800;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">4</span><div style="font-size:12.5px;color:var(--text)"><strong>Engage and receive</strong> — confirm and get your deliverable without sourcing overhead</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a class="doc-card" href="https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brochures/NestLens-Exchange-Overview.pdf" target="_blank" style="margin-bottom:.5rem">
+    <div class="doc-icon" style="background:var(--green-lt)">🔄</div>
+    <div class="doc-info">
+      <div class="doc-name">Exchange Overview</div>
+      <div class="doc-desc">Full two-sided marketplace guide — for sellers and buyers</div>
+    </div>
+    <div class="doc-dl">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>PDF
+    </div>
+  </a>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════
+     NESTHR
+══════════════════════════════════════════ -->
+<section class="section" id="nesthr">
+  <div class="section-header">
+    <div class="section-left">
+      <p class="section-eyebrow" style="color:var(--teal)">NestHR <span class="tag tag-live">Live</span></p>
+      <h2 class="section-title">Run your whole people function<br>on one platform</h2>
+      <p class="section-sub">NestHR is a complete HRMS built for growing companies and institutions — 11 modules covering the full employee lifecycle, a built-in document engine with e-sign, three-way payroll, and work intelligence. Two editions: one for corporates and one for universities and colleges running placement seasons.</p>
+    </div>
+    <div class="section-actions">
+      <a href="mailto:contact@labelnest.in" class="btn btn-navy btn-sm">Book a demo</a>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="col-card teal">
+      <p class="col-card-title">For Corporates</p>
+      <p class="col-card-sub">Full HRMS with work intelligence and a document engine — built for Indian companies, ready to scale. Flat per-employee pricing, no per-module upsells, no forced contracts.</p>
+      <ul class="col-list">
+        <li>People, Attendance, Leave, Performance</li>
+        <li>Three-way compliant Payroll that runs itself</li>
+        <li>Work Intelligence — how your team actually works</li>
+        <li>Document Engine — 16 letter types with built-in e-sign</li>
+        <li>Talent OS — campus and bulk hiring built in</li>
+        <li>Analytics dashboards across every module</li>
+      </ul>
+    </div>
+    <div class="col-card navy">
+      <p class="col-card-title">For Universities & Colleges</p>
+      <p class="col-card-sub">PlacementOS runs the full placement lifecycle — student profiles, company drives, batch evaluations, and offer tracking. Complimentary People OS for your own staff included at every tier.</p>
+      <ul class="col-list">
+        <li>Student Profiles — structured, verified, ready for recruiters</li>
+        <li>Company Drives — manage every visiting company in one place</li>
+        <li>Batch Evaluations — evaluate students at scale across rounds</li>
+        <li>Offer Tracking — tokenized response, accept or decline cleanly</li>
+        <li>Placement Analytics — live view of offers, conversions, outcomes</li>
+        <li>Complimentary HRMS for faculty and staff</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 11 modules -->
+  <p style="font-size:13px;font-weight:700;color:var(--navy);margin:.75rem 0">11 modules — Corporate edition</p>
+  <div class="module-grid">
+    <div class="module-card"><div class="module-name">People</div><div class="module-desc">Employee records, org chart, profiles</div></div>
+    <div class="module-card"><div class="module-name">Attendance</div><div class="module-desc">Time, shifts, presence — flexible policies</div></div>
+    <div class="module-card"><div class="module-name">Leave</div><div class="module-desc">Requests, approvals, balances — automated</div></div>
+    <div class="module-card"><div class="module-name">Work Intelligence</div><div class="module-desc">How your team works, not just what they log</div></div>
+    <div class="module-card"><div class="module-name">Performance</div><div class="module-desc">Goals, reviews, feedback</div></div>
+    <div class="module-card"><div class="module-name">Learning</div><div class="module-desc">Structured upskilling paths</div></div>
+    <div class="module-card"><div class="module-name">Payroll</div><div class="module-desc">Three-way compliant, runs itself</div></div>
+    <div class="module-card"><div class="module-name">Expense</div><div class="module-desc">Claims, approvals, reimbursements</div></div>
+    <div class="module-card"><div class="module-name">Talent</div><div class="module-desc">Campus and bulk recruitment at scale</div></div>
+    <div class="module-card"><div class="module-name">Document Engine</div><div class="module-desc">16 letter types with built-in e-sign</div></div>
+    <div class="module-card"><div class="module-name">Analytics</div><div class="module-desc">Real-time dashboards across every module</div></div>
+  </div>
+
+  <!-- NestHR pricing -->
+  <p style="font-size:13px;font-weight:700;color:var(--navy);margin:1rem 0 .6rem">NestHR Pricing</p>
+  <div class="two-col">
+    <div>
+      <p style="font-size:11.5px;font-weight:700;color:var(--teal);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.4rem">Corporates — per employee / year</p>
+      <div class="price-simple">
+        <div class="price-row"><div><div class="price-label">Standard</div><div class="price-sub">Full HRMS, core modules</div></div><div class="price-val">₹799</div></div>
+        <div class="price-row"><div><div class="price-label">Plus</div><div class="price-sub">Everything + advanced intelligence</div></div><div class="price-val">₹999</div></div>
+      </div>
+    </div>
+    <div>
+      <p style="font-size:11.5px;font-weight:700;color:var(--navy);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.4rem">Campus — per placement batch / year</p>
+      <div class="price-simple">
+        <div class="price-row"><div><div class="price-label">Small</div><div class="price-sub">Up to 100 students</div></div><div class="price-val">₹20,000</div></div>
+        <div class="price-row"><div><div class="price-label">Growing</div><div class="price-sub">101 to 300 students</div></div><div class="price-val">₹40,000</div></div>
+        <div class="price-row"><div><div class="price-label">Large</div><div class="price-sub">301 to 600 students</div></div><div class="price-val">₹60,000</div></div>
+        <div class="price-row"><div><div class="price-label">Institution</div><div class="price-sub">600+ students</div></div><div class="price-val contact">Contact us</div></div>
+      </div>
+    </div>
+  </div>
+  <p class="note">Volume and multi-year terms available. Complimentary People OS for faculty and staff included at every campus tier.</p>
+
+  <!-- Downloads -->
+  <p style="font-size:13px;font-weight:700;color:var(--navy);margin:.75rem 0 .6rem">Download brochures</p>
+  <div class="docs-grid">
+    <a class="doc-card" href="https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brochures/NestHR-Corporate-Brochure.pdf" target="_blank">
+      <div class="doc-icon" style="background:var(--teal-lt)">🏢</div>
+      <div class="doc-info">
+        <div class="doc-name">NestHR — Corporate Brochure</div>
+        <div class="doc-desc">11 modules, pricing, and why NestHR for companies</div>
+      </div>
+      <div class="doc-dl"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>PDF</div>
+    </a>
+    <a class="doc-card" href="https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brochures/NestHR-Campus-Brochure.pdf" target="_blank">
+      <div class="doc-icon" style="background:var(--teal-lt)">🎓</div>
+      <div class="doc-info">
+        <div class="doc-name">NestHR — Campus Brochure</div>
+        <div class="doc-desc">PlacementOS guide for universities and placement cells</div>
+      </div>
+      <div class="doc-dl"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>PDF</div>
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════
+     PRICING
+══════════════════════════════════════════ -->
+<section class="section" id="pricing">
+  <div class="section-header">
+    <div class="section-left">
+      <p class="section-eyebrow" style="color:var(--amber)">Pricing</p>
+      <h2 class="section-title">Simple, transparent pricing.<br>No surprises.</h2>
+      <p class="section-sub">All plans available monthly or annually. Annual plans offer better value. Credits expire monthly unless stated. Enterprise and Bundle on request.</p>
+    </div>
+    <div class="section-actions">
+      <a href="https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brochures/LabelNest-Pricing.pdf" class="btn btn-outline btn-sm" target="_blank">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Full pricing PDF
+      </a>
+      <a href="https://nestlens.labelnest.in/pricing" class="btn btn-navy btn-sm" target="_blank">Live pricing page</a>
+    </div>
+  </div>
+
+  <!-- Intelligence -->
+  <p style="font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.6rem">Intelligence — Unlock-based tiers</p>
+  <div class="plan-row cols-4">
+    <div class="mini-plan">
+      <div class="mini-plan-name">Individual</div>
+      <div class="mini-price"><span class="cur usd-cur">$</span><span class="price-main" data-usd-mo="150" data-usd-yr="1,800" data-inr-mo="14,999" data-inr-yr="1,50,000">150</span><span class="per price-per">/mo</span></div>
+      <div class="mini-price-alt price-alt" data-usd-mo="$1,800/year" data-usd-yr="$150/month" data-inr-mo="INR 1,50,000/year" data-inr-yr="INR 14,999/month">$1,800/year · INR 1,50,000</div>
+      <div class="mini-divider"></div>
+      <div class="mini-row"><span class="lbl">Seats</span><span class="val">1</span></div>
+      <div class="mini-row"><span class="lbl">Credits</span><span class="val">50/mo</span></div>
+      <div class="mini-row"><span class="lbl">Firms</span><span class="val">250</span></div>
+    </div>
+    <div class="mini-plan">
+      <div class="mini-plan-name">Core</div>
+      <div class="mini-price"><span class="cur usd-cur">$</span><span class="price-main" data-usd-mo="600" data-usd-yr="7,200" data-inr-mo="54,999" data-inr-yr="6,00,000">600</span><span class="per price-per">/mo</span></div>
+      <div class="mini-price-alt price-alt" data-usd-mo="$7,200/year" data-usd-yr="$600/month" data-inr-mo="INR 6,00,000/year" data-inr-yr="INR 54,999/month">$7,200/year · INR 6,00,000</div>
+      <div class="mini-divider"></div>
+      <div class="mini-row"><span class="lbl">Seats</span><span class="val">2</span></div>
+      <div class="mini-row"><span class="lbl">Credits</span><span class="val">100/mo</span></div>
+      <div class="mini-row"><span class="lbl">Firms</span><span class="val">1,500</span></div>
+    </div>
+    <div class="mini-plan">
+      <div class="mini-plan-name">Growth</div>
+      <div class="mini-price"><span class="cur usd-cur">$</span><span class="price-main" data-usd-mo="1,200" data-usd-yr="14,400" data-inr-mo="1,04,999" data-inr-yr="12,00,000">1,200</span><span class="per price-per">/mo</span></div>
+      <div class="mini-price-alt price-alt" data-usd-mo="$14,400/year" data-usd-yr="$1,200/month" data-inr-mo="INR 12,00,000/year" data-inr-yr="INR 1,04,999/month">$14,400/year · INR 12,00,000</div>
+      <div class="mini-divider"></div>
+      <div class="mini-row"><span class="lbl">Seats</span><span class="val">3</span></div>
+      <div class="mini-row"><span class="lbl">Credits</span><span class="val">200/mo</span></div>
+      <div class="mini-row"><span class="lbl">Firms</span><span class="val">5,000</span></div>
+      <div class="mini-row"><span class="lbl">Data room</span><span class="val">1</span></div>
+    </div>
+    <div class="mini-plan pop">
+      <div class="mini-badge">Most popular</div>
+      <div class="mini-plan-name" style="margin-top:.4rem">Pro</div>
+      <div class="mini-price" style="color:var(--rose)"><span class="cur usd-cur">$</span><span class="price-main" data-usd-mo="1,800" data-usd-yr="21,600" data-inr-mo="1,64,999" data-inr-yr="18,00,000">1,800</span><span class="per price-per">/mo</span></div>
+      <div class="mini-price-alt price-alt" data-usd-mo="$21,600/year" data-usd-yr="$1,800/month" data-inr-mo="INR 18,00,000/year" data-inr-yr="INR 1,64,999/month">$21,600/year · INR 18,00,000</div>
+      <div class="mini-divider"></div>
+      <div class="mini-row"><span class="lbl">Seats</span><span class="val rose">5</span></div>
+      <div class="mini-row"><span class="lbl">Credits</span><span class="val rose">400/mo</span></div>
+      <div class="mini-row"><span class="lbl">Firms</span><span class="val rose">11,000</span></div>
+      <div class="mini-row"><span class="lbl">Data rooms</span><span class="val rose">2</span></div>
+      <div class="mini-row"><span class="lbl">Support</span><span class="val rose">Priority</span></div>
+    </div>
+  </div>
+  <p class="note" style="margin-bottom:1.25rem">Enterprise: custom seats, firm unlocks, API access, SLA, and dedicated onboarding — contact us.</p>
+
+  <!-- CR -->
+  <p style="font-size:12px;font-weight:700;color:var(--rose);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.6rem">Capital Readiness</p>
+  <div class="plan-row cols-3">
+    <div class="mini-plan">
+      <div class="mini-plan-name">Founder — Global</div>
+      <div class="mini-price"><span class="cur usd-cur">$</span><span class="price-main" data-usd-mo="30" data-usd-yr="299" data-inr-mo="2,499" data-inr-yr="24,999">30</span><span class="per price-per">/mo</span></div>
+      <div class="mini-price-alt price-alt" data-usd-mo="$299/year" data-usd-yr="$25/month" data-inr-mo="INR 24,999/year" data-inr-yr="INR 2,499/month">$299/year</div>
+      <div class="mini-divider"></div>
+      <div class="mini-row"><span class="lbl">Data rooms</span><span class="val">1</span></div>
+      <div class="mini-row"><span class="lbl">Collaborators</span><span class="val">2</span></div>
+    </div>
+    <div class="mini-plan">
+      <div class="mini-plan-name">Founder — India</div>
+      <div class="mini-price" style="font-size:1.2rem"><span class="cur inr-cur" style="font-size:.85rem">₹</span><span class="price-main" data-usd-mo="12" data-usd-yr="120" data-inr-mo="999" data-inr-yr="9,999">999</span><span class="per price-per">/mo</span></div>
+      <div class="mini-price-alt price-alt" data-usd-mo="~$120/year" data-usd-yr="~$10/month" data-inr-mo="INR 9,999/year" data-inr-yr="INR 833/month">₹9,999/year</div>
+      <div class="mini-divider"></div>
+      <div class="mini-row"><span class="lbl">Data rooms</span><span class="val">1</span></div>
+      <div class="mini-row"><span class="lbl">Collaborators</span><span class="val">2</span></div>
+    </div>
+    <div class="mini-plan pop">
+      <div class="mini-badge">Fund managers</div>
+      <div class="mini-plan-name" style="margin-top:.4rem">Fund Track</div>
+      <div class="mini-price" style="color:var(--rose)"><span class="cur usd-cur">$</span><span class="price-main" data-usd-mo="45" data-usd-yr="500" data-inr-mo="3,999" data-inr-yr="41,999">45</span><span class="per price-per">/mo</span></div>
+      <div class="mini-price-alt price-alt" data-usd-mo="$500/year" data-usd-yr="$42/month" data-inr-mo="INR 41,999/year" data-inr-yr="INR 3,499/month">$500/year</div>
+      <div class="mini-divider"></div>
+      <div class="mini-row"><span class="lbl">Data rooms</span><span class="val rose">1 incl.</span></div>
+      <div class="mini-row"><span class="lbl">Extra room</span><span class="val rose">$300/yr</span></div>
+      <div class="mini-row"><span class="lbl">Collaborators</span><span class="val rose">3</span></div>
+    </div>
+  </div>
+  <p class="note" style="margin-bottom:1.25rem">Cohort pricing from $999/year for accelerators and incubators. Per-founder option at $49/year available.</p>
+
+  <!-- Exchange -->
+  <p style="font-size:12px;font-weight:700;color:var(--green);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.6rem">Exchange</p>
+  <div class="plan-row cols-2">
+    <div class="mini-plan">
+      <div class="mini-plan-name">Buyers</div>
+      <div class="mini-price" style="color:var(--green)">Free<span class="per"> to join</span></div>
+      <div class="mini-price-alt">Pay per project only</div>
+      <div class="mini-divider"></div>
+      <div class="mini-row"><span class="lbl">Browse sellers</span><span class="val green">Free</span></div>
+      <div class="mini-row"><span class="lbl">Post briefs</span><span class="val">Credits</span></div>
+    </div>
+    <div class="mini-plan pop">
+      <div class="mini-plan-name">Sellers</div>
+      <div class="mini-price"><span class="cur usd-cur">$</span><span class="price-main" data-usd-mo="17" data-usd-yr="199" data-inr-mo="1,499" data-inr-yr="16,599">199</span><span class="per price-per">/yr</span></div>
+      <div class="mini-price-alt price-alt" data-usd-mo="Active listing on Exchange" data-usd-yr="Active listing on Exchange" data-inr-mo="Active listing on Exchange" data-inr-yr="Active listing on Exchange">Active listing on Exchange</div>
+      <div class="mini-divider"></div>
+      <div class="mini-row"><span class="lbl">Applications</span><span class="val rose">15/mo</span></div>
+      <div class="mini-row"><span class="lbl">Quarterly rollover</span><span class="val rose">45 credits</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════
+     FAQ
+══════════════════════════════════════════ -->
+<section class="faq-section" id="faq">
+  <p class="section-eyebrow" style="color:#7C3AED;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem">FAQs <span style="flex:1;height:1.5px;background:#7C3AED;opacity:.3;border-radius:1px"></span></p>
+  <h2 class="section-title" style="margin-bottom:.4rem">Common questions</h2>
+  <p class="section-sub" style="margin-bottom:1.75rem">Everything you were going to ask on the sales call — answered here.</p>
+
+  <div class="faq-grid">
+    <div class="faq-col">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          What is NestLens and who is it for?
+          <span class="faq-arrow"><svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></span>
+        </button>
+        <div class="faq-a">NestLens is LabelNest's private market intelligence and capital infrastructure platform. It serves emerging fund managers, LPs, founders, advisors, accelerators, and anyone who works in or around private capital markets — particularly in emerging markets like India, Southeast Asia, MENA, and Africa that Preqin and PitchBook treat as an afterthought.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          How is NestLens different from Preqin or PitchBook?
+          <span class="faq-arrow"><svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></span>
+        </button>
+        <div class="faq-a">Preqin and PitchBook were built for established GPs and large funds in developed markets. NestLens covers the entities they ignore — emerging managers raising first and second funds, venture studios, accelerators, incubators, grants, and founders in markets they barely track. We also add Capital Readiness and Exchange — tools Preqin and PitchBook don't offer at all. And we price for the market we serve: emerging managers and founders, not institutional funds with six-figure data budgets.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          What does a "credit" do in Intelligence?
+          <span class="faq-arrow"><svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></span>
+        </button>
+        <div class="faq-a">Credits unlock entity profiles. When you find a fund, GP, startup, or person you want to view in depth, you spend a credit to unlock their full profile including linked contacts. Credits expire at the end of each month — they do not roll over. Your plan includes a set number of credits per month, and your firm unlock limit defines how many total entities you can have unlocked at any time.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          Can I switch between monthly and annual plans?
+          <span class="faq-arrow"><svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></span>
+        </button>
+        <div class="faq-a">Yes. You can start monthly and switch to annual at any time — the difference is prorated. Annual plans offer approximately 17% savings compared to paying month to month. Enterprise plans are annual only.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          Is the Capital Readiness data room secure?
+          <span class="faq-arrow"><svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></span>
+        </button>
+        <div class="faq-a">Yes. You control exactly what each investor sees — every field can be set to public, investor-only, or private. You share via a single clean link. No investor can access your room without your explicit sharing, and you can revoke access at any time. Your data is yours.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          What is included in the Capital Readiness legal checklist?
+          <span class="faq-arrow"><svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></span>
+        </button>
+        <div class="faq-a">The legal checklist covers the documents institutional investors will ask for before or during diligence — incorporation certificate, shareholder agreements, IP assignment, founder agreements, any regulatory filings, ESOP documentation, and more. It is stage-aware, so pre-seed requirements are different from Series A. The Fund edition covers LP-specific requirements including fund formation documents, LPA, and compliance items.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          Do I need a Capital Readiness subscription to use Intelligence?
+          <span class="faq-arrow"><svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></span>
+        </button>
+        <div class="faq-a">No. Intelligence, Capital Readiness, and Exchange are separate products. You can subscribe to any one independently. Intelligence includes free Exchange buyer access on all plans. Capital Readiness is standalone. The Bundle option combines Intelligence and Capital Readiness at a negotiated rate — contact us for Bundle pricing.</div>
+      </div>
+
+    </div>
+    <div class="faq-col">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          How does the Exchange referral programme work?
+          <span class="faq-arrow"><svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></span>
+        </button>
+        <div class="faq-a">If you refer a founder who subscribes to Capital Readiness, you earn 20% of their annual subscription — paid to you directly. There is no cap on referrals and no expiry on the programme. For accelerators and incubators, we have a structured cohort partner programme with flat annual fees and optional co-branding on the data room.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          What kind of sellers are on the Exchange?
+          <span class="faq-arrow"><svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></span>
+        </button>
+        <div class="faq-a">Exchange sellers are vetted data providers who can deliver AI data collection, product annotation, OCR and document processing, catalog enrichment, multilingual datasets, custom market research, and other data work. All sellers go through a verification process before their profiles are listed. We currently have an active and growing network of providers ready to take on project briefs.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          How does NestHR pricing work for small companies?
+          <span class="faq-arrow"><svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></span>
+        </button>
+        <div class="faq-a">NestHR is priced per employee per year — ₹799 for Standard (full HRMS, core modules) and ₹999 for Plus (everything including advanced work intelligence). A 20-person company on the Standard plan pays ₹15,980 per year — less than ₹1,400 per month. Volume and multi-year terms available. No per-module upsells, no forced long-term contracts.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          What is Enterprise and who should apply?
+          <span class="faq-arrow"><svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></span>
+        </button>
+        <div class="faq-a">Enterprise is for organisations that need custom seat counts, credit volumes, firm unlock limits, API access, white-label data rooms, real-time alerts, dedicated support, and SLA agreements. This includes institutional funds, large accelerators managing 100+ founder cohorts, research firms, and VC funds with active portfolio programmes. Every Enterprise enquiry is reviewed personally — you will hear back within 2 business days.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          Is LabelNest available outside India?
+          <span class="faq-arrow"><svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></span>
+        </button>
+        <div class="faq-a">Yes. NestLens Intelligence, Capital Readiness, and Exchange are English-language products built for global use — with a focus on emerging markets including India, Southeast Asia, MENA, Africa, and LatAm. USD pricing is available on all plans. India pricing (INR) is available for domestic subscribers. NestHR is currently India-first but available to teams globally.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          How do I get started quickly?
+          <span class="faq-arrow"><svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></span>
+        </button>
+        <div class="faq-a">Go to nestlens.labelnest.in and sign up — no sales call required. For Intelligence, pick a plan and you are live immediately. For Capital Readiness, create your data room and start from the templates. For Exchange, list as a seller or browse as a buyer — buyers join free. For NestHR, book a short walkthrough at contact@labelnest.in and we will show you the platform against how your team runs HR today. For Enterprise, submit the enquiry form at nestlens.labelnest.in/enterprise-enquiry.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
+          Who built LabelNest and why should I trust the data?
+          <span class="faq-arrow"><svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></span>
+        </button>
+        <div class="faq-a">LabelNest was founded by Ankit, who spent four years at Preqin — as Lead Data Controls, Lead Data Management, and AVP Data Quality and Controls — managing 35+ professionals across seven specialised units covering global investor and fund manager data. When Preqin was acquired by BlackRock, he moved with it as VP Data Quality. The gap LabelNest fills is the gap he watched Preqin leave open. The data is structured, QC'd through NestResolve, and built to institutional standards from day one.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<div class="cta-strip">
+  <div class="cta-strip-left">
+    <div class="cta-strip-title">Still have a question?</div>
+    <div class="cta-strip-sub">We review every message personally. No automated replies, no chatbot. One email usually does it.</div>
+  </div>
+  <div class="cta-strip-actions">
+    <a href="mailto:ankit@labelnest.in" class="btn btn-rose">Email Ankit directly</a>
+    <a href="https://nestlens.labelnest.in/enterprise-enquiry" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,.25)" target="_blank">Enterprise enquiry</a>
+  </div>
+</div>
+
+</main>
+
+<!-- CONTACT FOOTER -->
+<footer class="contact-footer">
+  <div class="contact-inner">
+    <div class="contact-brand">
+      <div class="contact-logo">LN</div>
+      <div>
+        <div class="contact-name">LabelNest India Pvt. Ltd.</div>
+        <div class="contact-tagline">Real Intelligence for Private Capital</div>
+      </div>
+    </div>
+    <div class="contact-links">
+      <a href="https://nestlens.labelnest.in" class="contact-link" target="_blank"><strong>nestlens.labelnest.in</strong></a>
+      <a href="mailto:ankit@labelnest.in" class="contact-link">ankit@labelnest.in</a>
+      <a href="mailto:contact@labelnest.in" class="contact-link">contact@labelnest.in</a>
+      <a href="https://www.linkedin.com/in/ankit-kumar-suman-29159b146/" class="contact-link" target="_blank">LinkedIn</a>
+      <span class="contact-link" style="cursor:default">Bangalore, India</span>
+    </div>
+  </div>
+</footer>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<script>
+// Currency + billing state
+let currentCurrency = 'usd';
+let currentBilling = 'monthly';
+
+function setBilling(mode) {
+  currentBilling = mode;
+  document.getElementById('btn-monthly').classList.toggle('active', mode === 'monthly');
+  document.getElementById('btn-annual').classList.toggle('active', mode === 'annual');
+  updatePrices();
+}
+
+function setCurrency(cur) {
+  currentCurrency = cur;
+  document.getElementById('btn-usd').classList.toggle('active', cur === 'usd');
+  document.getElementById('btn-inr').classList.toggle('active', cur === 'inr');
+  updatePrices();
+}
+
+function updatePrices() {
+  const isAnnual = currentBilling === 'annual';
+  const isINR = currentCurrency === 'inr';
+
+  // Update currency symbols
+  document.querySelectorAll('.usd-cur').forEach(el => {
+    el.textContent = isINR ? '₹' : '$';
+    el.style.display = '';
+  });
+  document.querySelectorAll('.inr-cur').forEach(el => {
+    el.textContent = isINR ? '₹' : '$';
+    el.style.display = '';
+  });
+
+  // Update main prices
+  document.querySelectorAll('.price-main').forEach(el => {
+    const val = el.getAttribute('data-' + (isINR ? 'inr' : 'usd') + '-' + (isAnnual ? 'yr' : 'mo'));
+    if (val) el.textContent = val;
+  });
+
+  // Update period labels
+  document.querySelectorAll('.price-per').forEach(el => {
+    if (el.textContent.includes('join') || el.textContent.includes('project')) return;
+    el.textContent = isAnnual ? '/yr' : '/mo';
+  });
+
+  // Update alt text
+  document.querySelectorAll('.price-alt').forEach(el => {
+    const key = 'data-' + (isINR ? 'inr' : 'usd') + '-' + (isAnnual ? 'yr' : 'mo');
+    const val = el.getAttribute(key);
+    if (val) el.textContent = val;
+  });
+}
+
+// FAQ toggle
+function toggleFAQ(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// Scroll spy
+const sections = ['intelligence','capital-readiness','exchange','nesthr','pricing','faq'];
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      document.querySelectorAll('.nav-item').forEach(n => {
+        n.classList.toggle('active', n.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, {threshold: 0.2, rootMargin: '-100px 0px -55% 0px'});
+sections.forEach(id => { const el = document.getElementById(id); if(el) obs.observe(el); });
+
+// Smooth nav click
+document.querySelectorAll('.nav-item').forEach(a => {
+  a.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({behavior:'smooth'});
+  });
+});
+
+// Scroll to top button
+const scrollBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => {
+  scrollBtn.classList.toggle('visible', window.scrollY > 400);
+});
+</script>
+</body>
+</html>
