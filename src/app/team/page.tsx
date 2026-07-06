@@ -138,10 +138,13 @@ export default async function TeamPage() {
                     </div>
                   </>
                 )
+                // Ankit has a dedicated founder page at /about/ankit — link his
+                // team card there instead of the generic /team/[slug] profile.
+                const profileHref = m.slug === 'ankit-kumar-suman' ? '/about/ankit' : m.slug ? `/team/${m.slug}` : null
                 return (
                   <div key={m.id} className="overflow-hidden transition-all duration-200 hover:-translate-y-1.5 group"
                     style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16 }}>
-                    {m.slug ? <Link href={`/team/${m.slug}`} className="block">{photoAndName}</Link> : photoAndName}
+                    {profileHref ? <Link href={profileHref} className="block">{photoAndName}</Link> : photoAndName}
                     {m.linkedin_url ? (
                       <div style={{ padding: '10px 16px 16px' }}>
                         <a href={m.linkedin_url} target="_blank" rel="noopener noreferrer"
