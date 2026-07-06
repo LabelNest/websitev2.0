@@ -32,6 +32,7 @@ const nextConfig = {
     return [
       { source: '/products/nestlens', destination: '/nestlens', permanent: true },
       { source: '/products/nesthr', destination: '/nesthr', permanent: true },
+      { source: '/team/ankit-kumar-suman', destination: '/about/ankit', permanent: true },
     ]
   },
 }
