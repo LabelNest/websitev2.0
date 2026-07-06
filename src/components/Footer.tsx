@@ -36,7 +36,7 @@ const COLUMNS = [
       { label: "Capital Readiness", href: "/nestlens/capital" },
       { label: "NestHR",            href: "/nesthr" },
       { label: "All products",      href: "/ecosystem" },
-      { label: "Resource Hub",      href: "/DIY" },
+      { label: "Resource Hub",      href: "https://nestlens.labelnest.in/DIY" },
     ],
   },
   {

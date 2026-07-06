@@ -66,7 +66,7 @@ export default function DiyPromoPopup() {
         The NestLens Resource Hub has everything: Intelligence, Capital Readiness, Exchange, and NestHR pricing and brochures.
       </div>
       <a
-        href="/DIY"
+        href="https://nestlens.labelnest.in/DIY"
         style={{
           display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, fontWeight: 600,
           color: '#fff', background: '#0D1B5E', padding: '8px 16px', borderRadius: 9, textDecoration: 'none',
