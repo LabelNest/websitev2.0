@@ -20,6 +20,20 @@
 html{font-size:16px;scroll-behavior:smooth}
 body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--surface);color:var(--text);line-height:1.55}
 
+/* ── EMAIL GATE ── */
+.diy-gate{position:fixed;inset:0;z-index:1000;background:rgba(6,14,58,.72);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:1.5rem}
+.diy-gate-card{background:var(--white);border-radius:16px;max-width:400px;width:100%;padding:2.25rem 2rem;box-shadow:0 24px 60px rgba(0,0,0,.35);text-align:center}
+.diy-gate-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:.6rem}
+.diy-gate-title{font-size:20px;font-weight:800;color:var(--text);margin-bottom:.5rem;line-height:1.3}
+.diy-gate-sub{font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:1.5rem}
+.diy-gate-form{display:flex;flex-direction:column;gap:.65rem}
+.diy-gate-input{width:100%;border:1.5px solid var(--border);border-radius:9px;padding:11px 14px;font-size:14px;outline:none;transition:border-color .15s}
+.diy-gate-input:focus{border-color:var(--rose)}
+.diy-gate-btn{width:100%;border:none;border-radius:9px;padding:12px 14px;font-size:14px;font-weight:700;color:#fff;background:var(--navy);cursor:pointer;transition:opacity .15s}
+.diy-gate-btn:disabled{opacity:.65;cursor:default}
+.diy-gate-error{display:none;font-size:12.5px;color:var(--rose);margin-top:-.15rem}
+.diy-gate-note{font-size:11px;color:var(--dim);margin-top:.9rem}
+
 /* ── TOPBAR ── */
 .topbar{background:var(--navy-dk);height:54px;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;border-bottom:1px solid rgba(255,255,255,.07)}
 .tb-left{display:flex;align-items:center;gap:10px}
@@ -252,6 +266,20 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sur
 </head>
 <body>
 
+<div id="diyGate" class="diy-gate">
+  <div class="diy-gate-card">
+    <div class="diy-gate-eyebrow">No sales call needed</div>
+    <div class="diy-gate-title">Enter your email to unlock the Resource Hub</div>
+    <div class="diy-gate-sub">Every brochure, price, and FAQ for Intelligence, Capital Readiness, Exchange, and NestHR — one page.</div>
+    <form id="diyGateForm" class="diy-gate-form">
+      <input id="diyGateEmail" class="diy-gate-input" type="email" required placeholder="you@company.com" autocomplete="email">
+      <div id="diyGateError" class="diy-gate-error">Enter a valid email address.</div>
+      <button id="diyGateBtn" class="diy-gate-btn" type="submit">Unlock →</button>
+    </form>
+    <div class="diy-gate-note">We'll only use this to follow up if helpful. No spam.</div>
+  </div>
+</div>
+
 <!-- TOPBAR -->
 <header class="topbar">
   <div class="tb-left">
@@ -400,7 +428,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sur
   <!-- Download -->
   <p style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:.6rem">Download brochure</p>
   <div class="docs-grid">
-    <a class="doc-card" href="https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brochures/NestLens-Intelligence-Overview.pdf" target="_blank">
+    <a class="doc-card" href="https://pub-REPLACE.r2.dev/NestLens-Intelligence-Overview.pdf" target="_blank">
       <div class="doc-icon" style="background:var(--navy-lt)">📘</div>
       <div class="doc-info">
         <div class="doc-name">Intelligence Overview</div>
@@ -480,7 +508,8 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sur
   <div class="content-card accent-rose" style="margin-top:1rem">
     <p style="font-size:13px;font-weight:700;color:#9B1A34;margin-bottom:.4rem">Partner Programme — for accelerators, incubators & fund managers</p>
     <p style="font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:.75rem">If founders sit anywhere in your world — you serve them, raise for them, build with them, or fund them — their readiness reflects on you. Extend investor-grade Capital Readiness to your founders under your relationship. One cohort fee covers the whole batch. Optional co-branding available.</p>
-    <table class="c-table">
+    <p style="font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.05em;text-transform:uppercase;margin-bottom:.4rem">Accelerators &amp; Incubators</p>
+    <table class="c-table" style="margin-bottom:1rem">
       <thead><tr><th>Cohort size</th><th>Annual fee</th><th>Per founder</th><th>Includes</th></tr></thead>
       <tbody>
         <tr><td>Up to 25 founders</td><td class="rose">$999/year</td><td>~$40</td><td>Full CR + co-branding</td></tr>
@@ -489,13 +518,25 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sur
         <tr><td>100+ founders</td><td>Custom</td><td>—</td><td>Direct conversation</td></tr>
       </tbody>
     </table>
-    <p class="note">Per-founder pricing at $49/founder/year also available. Referral programme: refer a subscribing founder and earn 20% of their annual plan — no cap, no expiry.</p>
+
+    <p style="font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.05em;text-transform:uppercase;margin-bottom:.4rem">College Entrepreneurship Programmes &amp; E-Cells</p>
+    <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:.6rem">For college entrepreneurship cells, innovation clubs, and student startup programmes. Students learn what institutional investor readiness actually looks like — before they are in the room raising. Priced for college budgets — no approval chain needed for the first two tiers.</p>
+    <table class="c-table" style="margin-bottom:.5rem">
+      <thead><tr><th>Students</th><th>Annual fee (USD)</th><th>Annual fee (INR)</th><th>Per student</th></tr></thead>
+      <tbody>
+        <tr><td>Up to 25 students</td><td class="rose">$499/year</td><td class="rose">INR 41,999/year</td><td>~$20</td></tr>
+        <tr><td>Up to 50 students</td><td class="rose">$899/year</td><td class="rose">INR 74,999/year</td><td>~$18</td></tr>
+        <tr><td>Up to 100 students</td><td class="rose">$1,499/year</td><td class="rose">INR 1,24,999/year</td><td>~$15</td></tr>
+        <tr><td>100+ students</td><td>Custom</td><td>Custom</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Per-founder pricing at $49/founder/year also available for smaller or variable cohorts. Referral programme: refer a subscribing founder and earn 20% of their annual plan — no cap, no expiry.</p>
   </div>
 
   <!-- Downloads -->
   <p style="font-size:13px;font-weight:700;color:var(--navy);margin:.75rem 0 .6rem">Download brochures</p>
   <div class="docs-grid">
-    <a class="doc-card" href="https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brochures/NestLens-CapitalReadiness-Founders.pdf" target="_blank">
+    <a class="doc-card" href="https://pub-REPLACE.r2.dev/NestLens-CapitalReadiness-Founders.pdf" target="_blank">
       <div class="doc-icon" style="background:var(--rose-lt)">📋</div>
       <div class="doc-info">
         <div class="doc-name">Capital Readiness — For Founders</div>
@@ -505,7 +546,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sur
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>PDF
       </div>
     </a>
-    <a class="doc-card" href="https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brochures/NestLens-CapitalReadiness-Partners.pdf" target="_blank">
+    <a class="doc-card" href="https://pub-REPLACE.r2.dev/NestLens-CapitalReadiness-Partners.pdf" target="_blank">
       <div class="doc-icon" style="background:var(--rose-lt)">🤝</div>
       <div class="doc-info">
         <div class="doc-name">Capital Readiness — Partner Programme</div>
@@ -515,7 +556,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sur
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>PDF
       </div>
     </a>
-    <a class="doc-card" href="https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brochures/LabelNest-DataRoom-Benefits.pdf" target="_blank">
+    <a class="doc-card" href="https://pub-REPLACE.r2.dev/LabelNest-DataRoom-Benefits.pdf" target="_blank">
       <div class="doc-icon" style="background:var(--rose-lt)">🏛</div>
       <div class="doc-info">
         <div class="doc-name">Why a Data Room Matters</div>
@@ -596,7 +637,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sur
     </div>
   </div>
 
-  <a class="doc-card" href="https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brochures/NestLens-Exchange-Overview.pdf" target="_blank" style="margin-bottom:.5rem">
+  <a class="doc-card" href="https://pub-REPLACE.r2.dev/NestLens-Exchange-Overview.pdf" target="_blank" style="margin-bottom:.5rem">
     <div class="doc-icon" style="background:var(--green-lt)">🔄</div>
     <div class="doc-info">
       <div class="doc-name">Exchange Overview</div>
@@ -693,7 +734,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sur
   <!-- Downloads -->
   <p style="font-size:13px;font-weight:700;color:var(--navy);margin:.75rem 0 .6rem">Download brochures</p>
   <div class="docs-grid">
-    <a class="doc-card" href="https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brochures/NestHR-Corporate-Brochure.pdf" target="_blank">
+    <a class="doc-card" href="https://pub-REPLACE.r2.dev/NestHR-Corporate-Brochure.pdf" target="_blank">
       <div class="doc-icon" style="background:var(--teal-lt)">🏢</div>
       <div class="doc-info">
         <div class="doc-name">NestHR — Corporate Brochure</div>
@@ -701,7 +742,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sur
       </div>
       <div class="doc-dl"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>PDF</div>
     </a>
-    <a class="doc-card" href="https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brochures/NestHR-Campus-Brochure.pdf" target="_blank">
+    <a class="doc-card" href="https://pub-REPLACE.r2.dev/NestHR-Campus-Brochure.pdf" target="_blank">
       <div class="doc-icon" style="background:var(--teal-lt)">🎓</div>
       <div class="doc-info">
         <div class="doc-name">NestHR — Campus Brochure</div>
@@ -725,7 +766,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sur
       <p class="section-sub">All plans available monthly or annually. Annual plans offer better value. Credits expire monthly unless stated. Enterprise and Bundle on request.</p>
     </div>
     <div class="section-actions">
-      <a href="https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brochures/LabelNest-Pricing.pdf" class="btn btn-outline btn-sm" target="_blank">
+      <a href="https://pub-REPLACE.r2.dev/LabelNest-Pricing.pdf" class="btn btn-outline btn-sm" target="_blank">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
         Full pricing PDF
       </a>
@@ -809,7 +850,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sur
       <div class="mini-row"><span class="lbl">Collaborators</span><span class="val rose">3</span></div>
     </div>
   </div>
-  <p class="note" style="margin-bottom:1.25rem">Cohort pricing from $999/year for accelerators and incubators. Per-founder option at $49/year available.</p>
+  <p class="note" style="margin-bottom:1.25rem">Cohort pricing from $999/year for accelerators and incubators. College E-Cell pricing from $499/year for up to 25 students. Per-founder option at $49/year for smaller cohorts.</p>
 
   <!-- Exchange -->
   <p style="font-size:12px;font-weight:700;color:var(--green);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.6rem">Exchange</p>
@@ -955,6 +996,14 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sur
 
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFAQ(this)">
+          Do you have pricing for college entrepreneurship programmes?
+          <span class="faq-arrow"><svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></span>
+        </button>
+        <div class="faq-a">Yes — we have a specific tier for college E-Cells, innovation clubs, and student entrepreneurship programmes. Starting at $499/year (INR 41,999) for up to 25 students — that is under $20 per student for the year. This sits below the budget threshold that requires institutional approval in most colleges. Students get the full Capital Readiness system — data room framework, legal checklist, investor fit guidance, grants and competition access, and expert templates. They learn what institutional readiness looks like before they are raising real capital. Contact ankit@labelnest.in to get started.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFAQ(this)">
           Who built LabelNest and why should I trust the data?
           <span class="faq-arrow"><svg width="10" height="6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></span>
         </button>
@@ -1093,6 +1142,53 @@ const scrollBtn = document.getElementById('scrollTop');
 window.addEventListener('scroll', () => {
   scrollBtn.classList.toggle('visible', window.scrollY > 400);
 });
+
+// Email gate — friction/attribution gate, not a security wall: once a visitor
+// has entered an email, remember it locally so they don't get re-prompted.
+(function () {
+  const STORAGE_KEY = 'diy_unlocked';
+  const gate = document.getElementById('diyGate');
+  const form = document.getElementById('diyGateForm');
+  const emailInput = document.getElementById('diyGateEmail');
+  const errorEl = document.getElementById('diyGateError');
+  const btn = document.getElementById('diyGateBtn');
+
+  function unlock() {
+    gate.style.display = 'none';
+    document.documentElement.style.overflow = '';
+  }
+
+  let alreadyUnlocked = false;
+  try { alreadyUnlocked = !!localStorage.getItem(STORAGE_KEY); } catch (e) {}
+
+  if (alreadyUnlocked) return;
+
+  gate.style.display = 'flex';
+  document.documentElement.style.overflow = 'hidden';
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const email = emailInput.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errorEl.style.display = 'block';
+      return;
+    }
+    errorEl.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Unlocking…';
+
+    const finish = function () {
+      try { localStorage.setItem(STORAGE_KEY, String(Date.now())); } catch (e) {}
+      unlock();
+    };
+
+    fetch('/api/diy-access', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, path: location.pathname }),
+    }).then(finish).catch(finish);
+  });
+})();
 </script>
 </body>
 </html>

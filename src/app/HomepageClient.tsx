@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import DiyBanner from '@/components/DiyBanner'
 
 const COLORS = ['#E91E8C', '#2563EB', '#10B981', '#7C3AED', '#F97316']
 
@@ -157,6 +158,7 @@ export default function HomePage() {
   return (
     <>
       <Nav />
+      <DiyBanner />
       <main style={{ paddingTop: '60px' }}>
 
         {/* HERO */}
