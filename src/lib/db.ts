@@ -65,6 +65,7 @@ export interface Fellow {
   image_url: string | null
   linkedin_url: string | null
   is_active: boolean
+  status: 'active' | 'completed'
   sort_order: number
   slug: string | null
   bio: string | null
