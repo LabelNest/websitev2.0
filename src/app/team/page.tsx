@@ -25,10 +25,15 @@ export const DEPT_COLORS: Record<string, string> = {
   'Founder': '#E91E8C',
 }
 
-function FellowChip({ f, accent, background }: { f: { id: string; name: string; role: string; slug: string | null }; accent: string; background: string }) {
-  const style: React.CSSProperties = { background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: 12 }
+function FellowChip({ f, accent, background }: { f: { id: string; name: string; role: string; slug: string | null; status?: string }; accent: string; background: string }) {
+  const style: React.CSSProperties = { background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: 12, position: 'relative' }
   const content = (
     <>
+      {f.status === 'completed' && (
+        <div style={{ position: 'absolute', top: 8, right: 8, fontFamily: "'JetBrains Mono', monospace", fontSize: 8.5, letterSpacing: '.06em', textTransform: 'uppercase', color: 'var(--text3)', background: 'var(--bg2, rgba(127,127,127,.12))', border: '1px solid var(--border)', borderRadius: 4, padding: '1px 5px' }}>
+          Completed
+        </div>
+      )}
       <div className="flex items-center justify-center font-display font-bold" style={{ width: 36, height: 36, borderRadius: '50%', marginBottom: 8, background, color: accent, fontSize: 13 }}>
         {f.name[0]}
       </div>

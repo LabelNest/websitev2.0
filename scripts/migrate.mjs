@@ -122,6 +122,9 @@ async function migrate() {
   await sql`ALTER TABLE website_fellows ADD COLUMN IF NOT EXISTS email TEXT`.catch(()=>{})
   await sql`ALTER TABLE website_fellows ADD COLUMN IF NOT EXISTS expertise TEXT[]`.catch(()=>{})
   await sql`ALTER TABLE website_fellows ADD COLUMN IF NOT EXISTS quote TEXT`.catch(()=>{})
+  // 'active' = current cohort member, 'completed' = moved on but stays visible/permanent on /team
+  await sql`ALTER TABLE website_fellows ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'active'`.catch(()=>{})
+  await sql`ALTER TABLE website_fellows ADD CONSTRAINT website_fellows_status_check CHECK (status IN ('active','completed'))`.catch(()=>{})
   await sql`UPDATE website_fellows SET slug = lower(regexp_replace(name, '[^a-zA-Z0-9]+', '-', 'g')) WHERE slug IS NULL`
 
   await sql`

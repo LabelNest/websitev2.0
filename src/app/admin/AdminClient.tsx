@@ -8,7 +8,7 @@ type Section = 'overview'|'briefings'|'team'|'legal'|'jobs'|'departments'|'uploa
 interface Briefing { id:string; slug:string; title:string; author_name:string; scope:string; date:string; read_time:string; is_featured:boolean; cover_image:string|null }
 interface TeamMember { id:string; name:string; role:string; department:string; bio:string|null; linkedin_url:string|null; image_url:string|null; sort_order:number; is_active:boolean; slug:string|null; email:string|null; expertise:string[]|null; quote:string|null }
 interface Alumni { id:string; name:string; role:string; department:string; email:string|null; linkedin_url:string|null; image_url:string|null; now_at_type:string|null; now_at_company:string|null; now_at_role:string|null; now_at_url:string|null; update_token:string|null; is_active:boolean }
-interface Fellow { id:string; name:string; role:string; cohort:string; department:string|null; linkedin_url:string|null; image_url:string|null; is_active:boolean; sort_order:number; slug:string|null; bio:string|null; email:string|null; expertise:string[]|null; quote:string|null }
+interface Fellow { id:string; name:string; role:string; cohort:string; department:string|null; linkedin_url:string|null; image_url:string|null; is_active:boolean; status:'active'|'completed'; sort_order:number; slug:string|null; bio:string|null; email:string|null; expertise:string[]|null; quote:string|null }
 interface Intern { id:string; name:string; role:string; cohort:string; linkedin_url:string|null; image_url:string|null; is_active:boolean; sort_order:number; slug:string|null }
 interface Job { id:string; title:string; department:string; type:string; location:string; complexity:string; apply_url:string; is_active:boolean }
 interface LegalDoc { id:string; slug:string; title:string; intro:string; body_markdown:string; version:string; effective_date:string; last_updated:string }
@@ -514,14 +514,14 @@ function FellowsPanel({ showToast }: { showToast:(m:string)=>void }) {
   const [modal, setModal] = useState(false)
   const [saving, setSaving] = useState(false)
   const [editing, setEditing] = useState<Fellow|null>(null)
-  const blank = { name:'',role:'Research Fellow',cohort:'',department:'',linkedin_url:'',image_url:'',is_active:true,sort_order:'99',slug:'',bio:'',email:'',expertise:'',quote:'' }
+  const blank = { name:'',role:'Research Fellow',cohort:'',department:'',linkedin_url:'',image_url:'',is_active:true,status:'active',sort_order:'99',slug:'',bio:'',email:'',expertise:'',quote:'' }
   const [form, setForm] = useState(blank)
 
   const load = useCallback(async()=>{ const r=await fetch('/api/admin/fellows'); const d=await r.json(); setRows(d.rows||[]) },[])
   useEffect(()=>{ load() },[load])
 
   function openAdd() { setEditing(null); setForm(blank); setModal(true) }
-  function openEdit(f:Fellow) { setEditing(f); setForm({ name:f.name,role:f.role,cohort:f.cohort,department:f.department||'',linkedin_url:f.linkedin_url||'',image_url:f.image_url||'',is_active:f.is_active,sort_order:String(f.sort_order),slug:f.slug||'',bio:f.bio||'',email:f.email||'',expertise:(f.expertise||[]).join(', '),quote:f.quote||'' }); setModal(true) }
+  function openEdit(f:Fellow) { setEditing(f); setForm({ name:f.name,role:f.role,cohort:f.cohort,department:f.department||'',linkedin_url:f.linkedin_url||'',image_url:f.image_url||'',is_active:f.is_active,status:f.status||'active',sort_order:String(f.sort_order),slug:f.slug||'',bio:f.bio||'',email:f.email||'',expertise:(f.expertise||[]).join(', '),quote:f.quote||'' }); setModal(true) }
 
   async function handleSave() {
     setSaving(true); const payload={...form,sort_order:Number(form.sort_order)}; const method=editing?'PUT':'POST'; const body=editing?{...payload,id:editing.id}:payload
@@ -531,7 +531,12 @@ function FellowsPanel({ showToast }: { showToast:(m:string)=>void }) {
   async function handleDelete(f:Fellow) { await fetch('/api/admin/fellows',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:f.id})}); load(); showToast('✓ Removed') }
 
   const F=(k:keyof typeof form)=>(v:string)=>setForm(ff=>({...ff,[k]:v}))
-  const tableRows=rows.map(f=>({ Name:f.name, Role:f.role, Cohort:f.cohort, Status:<Badge label={f.is_active?'Active':'Hidden'} color={f.is_active?S.purple:S.text3} />, __raw:f }))
+  const statusBadge=(f:Fellow)=> !f.is_active
+    ? <Badge label="Hidden" color={S.text3} />
+    : f.status==='completed'
+      ? <Badge label="Completed" color={S.orange} />
+      : <Badge label="Active" color={S.purple} />
+  const tableRows=rows.map(f=>({ Name:f.name, Role:f.role, Cohort:f.cohort, Status:statusBadge(f), __raw:f }))
 
   return (
     <>
@@ -549,7 +554,7 @@ function FellowsPanel({ showToast }: { showToast:(m:string)=>void }) {
             <Input label="Sort order" value={form.sort_order} onChange={F('sort_order')} type="number" />
           </div>
           <Input label="LinkedIn URL" value={form.linkedin_url} onChange={F('linkedin_url')} placeholder="https://linkedin.com/in/..." />
-          <Input label="Photo URL (R2)" value={form.image_url} onChange={F('image_url')} placeholder="https://assets.labelnest.in/team/..." />
+          <PhotoUpload name={form.name || 'fellow'} folder="fellows" value={form.image_url} onChange={F('image_url')} showToast={showToast} />
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
             <Input label="Slug" value={form.slug} onChange={F('slug')} placeholder="url-friendly-slug" />
             <Input label="Email (for Contact button)" value={form.email} onChange={F('email')} placeholder="firstname@labelnest.in" />
@@ -557,6 +562,10 @@ function FellowsPanel({ showToast }: { showToast:(m:string)=>void }) {
           <Input label="Bio" value={form.bio} onChange={F('bio')} rows={3} placeholder="2-3 sentence bio for their profile page" />
           <Input label="Expertise tags (comma-separated)" value={form.expertise} onChange={F('expertise')} placeholder="e.g. Data research, Private markets" />
           <Input label="Quote (optional)" value={form.quote} onChange={F('quote')} rows={2} placeholder="A single quote or what they're working on" />
+          <SelectField label="Cohort status" value={form.status} onChange={F('status')} options={['active','completed']} />
+          <div style={{ fontSize:11, color:S.text3, marginTop:-6, marginBottom:12 }}>
+            &quot;Completed&quot; keeps them visible on /team under their cohort (permanent, like alumni) but flags they&apos;ve moved on — use this once a cohort ends instead of hiding the fellow.
+          </div>
           <Toggle label="Active (visible on team page)" checked={form.is_active} onChange={v=>setForm(f=>({...f,is_active:v}))} />
         </Modal>
       )}
