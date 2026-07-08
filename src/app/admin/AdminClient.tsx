@@ -975,7 +975,7 @@ function NewsletterSection({ showToast }: { showToast:(m:string)=>void }) {
     try {
       const r = await fetch('/api/admin/newsletter/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...composeForm,recipients:composeForm.test_email,test:true})})
       const d = await r.json()
-      if (r.ok) showToast(`✓ Test sent to ${composeForm.test_email}`)
+      if (r.ok) { showToast(`✓ Test sent to ${composeForm.test_email} — tracked in History`); loadCampaigns() }
       else showToast(`✗ ${d.error || 'Test send failed'}${d.detail ? `: ${d.detail}` : ''}`)
     } catch { showToast('✗ Test send failed — network error') }
     setSending(false)
@@ -1128,7 +1128,10 @@ function NewsletterSection({ showToast }: { showToast:(m:string)=>void }) {
                   const ctr = delivered ? Math.round((clicked/delivered)*100) : 0
                   return (
                   <tr key={r.id} onClick={()=>r.status==='sent' && openCtrDrilldown(r)} style={{ borderBottom:`1px solid rgba(255,255,255,.04)`, cursor:r.status==='sent'?'pointer':'default' }}>
-                    <td style={{ padding:'12px 14px', fontSize:13, color:S.text, maxWidth:240, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{r.subject}</td>
+                    <td style={{ padding:'12px 14px', fontSize:13, color:S.text, maxWidth:240, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
+                      {r.subject}
+                      {r.recipient_filter==='test' && <span style={{ marginLeft:8 }}><Badge label="Test" color={S.blue} /></span>}
+                    </td>
                     <td style={{ padding:'12px 14px' }}><Badge label={r.template_name || '—'} color={S.text3} /></td>
                     <td style={{ padding:'12px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11.5, color:S.text2 }}>{r.recipient_count}</td>
                     <td style={{ padding:'12px 14px' }}><Badge label={r.status} color={r.status==='sent'?S.green:r.status==='failed'?'#EF4444':S.text3} /></td>
