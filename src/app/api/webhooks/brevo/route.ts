@@ -39,11 +39,12 @@ export async function POST(req: NextRequest) {
   const body: BrevoEvent = await req.json().catch(() => ({}) as BrevoEvent)
   const { event, email, tags, link, user_agent } = body
   const messageId = body['message-id']
-  // We set tags: [campaignId] at send time (see send/route.ts) — 'test'
-  // sends use tags: ['test'] and have no campaign/recipient row to update.
+  // We set tags: [campaignId] at send time (see send/route.ts) — every send,
+  // test or broadcast, gets a real campaign row now, so this is always a
+  // real UUID.
   const campaignId = tags?.[0]
 
-  if (!event || !email || !campaignId || campaignId === 'test') {
+  if (!event || !email || !campaignId) {
     return NextResponse.json({ ok: true, skipped: true })
   }
 

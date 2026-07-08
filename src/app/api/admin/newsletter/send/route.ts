@@ -15,19 +15,19 @@ interface SendBody {
   test?: boolean
 }
 
-interface Subscriber {
-  id: string
+interface Recipient {
+  id: string | null
   email: string
 }
 
 // Brevo messageId per recipient (via messageVersions, one recipient per
-// version) is what open/click webhook events key off of. The previous
-// approach BCC'd up to 50 subscribers per Brevo call with a single placeholder
-// "to" — Brevo (or anyone) can only attribute an open/click to the addressed
-// "to" recipient, so there was no way to know which of the 50 BCC'd people
-// opened it. Each subscriber now gets their own version/messageId so the
-// webhook receiver (/api/webhooks/brevo) can update the right recipient row.
-async function sendBatch(apiKey: string, subject: string, htmlContent: string, batch: Subscriber[], campaignId: string) {
+// version) is what open/click webhook events key off of. Every send — test
+// or broadcast — is now tracked as a real campaign; there's no untracked
+// path anymore. (Previously test sends were tagged 'test' and explicitly
+// skipped by the webhook receiver, which is why a test send never showed
+// opens/clicks — that also meant there was no way to send a real, trackable
+// email to just one or two addresses without blasting the full list.)
+async function sendBatch(apiKey: string, subject: string, htmlContent: string, batch: Recipient[], campaignId: string) {
   const res = await fetch(BREVO_SEND_URL, {
     method: 'POST',
     headers: { 'api-key': apiKey, 'Content-Type': 'application/json', accept: 'application/json' },
@@ -36,7 +36,7 @@ async function sendBatch(apiKey: string, subject: string, htmlContent: string, b
       subject,
       htmlContent,
       tags: [campaignId],
-      messageVersions: batch.map((s) => ({ to: [{ email: s.email }] })),
+      messageVersions: batch.map((r) => ({ to: [{ email: r.email }] })),
     }),
   })
   if (!res.ok) {
@@ -64,6 +64,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'subject and html_content are required' }, { status: 400 })
   }
 
+  let recipients: Recipient[]
+  let recipientFilter: string
+
   if (test) {
     const toEmails = String(test_email || '')
       .split(',')
@@ -72,28 +75,30 @@ export async function POST(req: NextRequest) {
     if (!toEmails.length) {
       return NextResponse.json({ error: 'No test recipients provided' }, { status: 400 })
     }
-    try {
-      // Test sends aren't tracked as a campaign — tag with a throwaway id so
-      // the Brevo call shape matches production sends exactly.
-      await sendBatch(apiKey, subject, html_content, toEmails.map((email) => ({ id: '', email })), 'test')
-    } catch (e) {
-      const message = e instanceof Error ? e.message : 'Brevo send failed'
-      return NextResponse.json({ error: 'Brevo send failed', detail: message }, { status: 502 })
+    // Match against real subscribers where possible so a test send to a
+    // subscriber's own address links to their subscriber_id like a normal
+    // send would; addresses that aren't subscribers still send and track
+    // fine, just with subscriber_id left null.
+    const matched = await sql`
+      SELECT id, email FROM website_newsletter_subscribers WHERE email = ANY(${toEmails})
+    ` as Recipient[]
+    const matchedEmails = new Set(matched.map((m) => m.email))
+    recipients = [...matched, ...toEmails.filter((e) => !matchedEmails.has(e)).map((email) => ({ id: null, email }))]
+    recipientFilter = 'test'
+  } else {
+    recipients = await sql`
+      SELECT id, email FROM website_newsletter_subscribers WHERE status = 'active'
+    ` as Recipient[]
+    if (!recipients.length) {
+      return NextResponse.json({ error: 'No active subscribers to send to' }, { status: 400 })
     }
-    return NextResponse.json({ ok: true, sent: toEmails.length, test: true })
-  }
-
-  const subscribers = await sql`
-    SELECT id, email FROM website_newsletter_subscribers WHERE status = 'active'
-  ` as Subscriber[]
-  if (!subscribers.length) {
-    return NextResponse.json({ error: 'No active subscribers to send to' }, { status: 400 })
+    recipientFilter = 'all'
   }
 
   const [campaign] = await sql`
     INSERT INTO website_newsletter_campaigns
       (subject, template_name, html_content, recipient_count, recipient_filter, status, sent_by, sent_at)
-    VALUES (${subject}, ${template ?? null}, ${html_content}, ${subscribers.length}, 'all', 'sending', ${admin.email}, NOW())
+    VALUES (${subject}, ${template ?? null}, ${html_content}, ${recipients.length}, ${recipientFilter}, 'sending', ${admin.email}, NOW())
     RETURNING id
   `
   const campaignId = campaign.id as string
@@ -101,8 +106,8 @@ export async function POST(req: NextRequest) {
   let sentCount = 0
   let failedBatch: string | null = null
 
-  for (let i = 0; i < subscribers.length; i += BATCH_SIZE) {
-    const batch = subscribers.slice(i, i + BATCH_SIZE)
+  for (let i = 0; i < recipients.length; i += BATCH_SIZE) {
+    const batch = recipients.slice(i, i + BATCH_SIZE)
     let messageIds: string[]
     try {
       messageIds = await sendBatch(apiKey, subject, html_content, batch, campaignId)
@@ -113,11 +118,11 @@ export async function POST(req: NextRequest) {
 
     // messageIds is positional — same order as the messageVersions we sent.
     for (let j = 0; j < batch.length; j++) {
-      const sub = batch[j]
+      const rec = batch[j]
       const messageId = messageIds[j] ?? null
       await sql`
         INSERT INTO website_newsletter_recipients (campaign_id, subscriber_id, email, message_id, status)
-        VALUES (${campaignId}, ${sub.id}, ${sub.email}, ${messageId}, 'sent')
+        VALUES (${campaignId}, ${rec.id}, ${rec.email}, ${messageId}, 'sent')
         ON CONFLICT (campaign_id, email) DO UPDATE SET message_id = EXCLUDED.message_id
       `
     }
@@ -136,5 +141,5 @@ export async function POST(req: NextRequest) {
   if (failedBatch) {
     return NextResponse.json({ error: 'Brevo send failed', detail: failedBatch, sent: sentCount }, { status: 502 })
   }
-  return NextResponse.json({ ok: true, sent: sentCount, campaign_id: campaignId, test: false })
+  return NextResponse.json({ ok: true, sent: sentCount, campaign_id: campaignId, test: !!test })
 }
