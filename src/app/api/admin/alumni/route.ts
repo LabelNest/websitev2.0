@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { getAdminFromCookies } from '@/lib/auth'
 import { sql } from '@/lib/db'
 
@@ -21,6 +22,7 @@ export async function POST(req: NextRequest) {
     INSERT INTO website_alumni (name,role,department,email,linkedin_url,image_url,now_at_type,now_at_company,now_at_role,now_at_url,is_active)
     VALUES (${a.name},${a.role||''},${a.department||''},${a.email||null},${a.linkedin_url||null},${a.image_url||null},${a.now_at_type||'working'},${a.now_at_company||null},${a.now_at_role||null},${a.now_at_url||null},${a.is_active!==false})
     RETURNING id`
+  revalidatePath('/team')
   return NextResponse.json({ id: row[0].id })
 }
 
@@ -35,6 +37,7 @@ export async function PUT(req: NextRequest) {
       now_at_role=${a.now_at_role||null},now_at_url=${a.now_at_url||null},
       is_active=${a.is_active!==false},updated_at=NOW()
     WHERE id=${a.id}`
+  revalidatePath('/team')
   return NextResponse.json({ ok: true })
 }
 
@@ -42,5 +45,6 @@ export async function DELETE(req: NextRequest) {
   const err = await guard(); if (err) return err
   const { id } = await req.json()
   await sql`DELETE FROM website_alumni WHERE id=${id}`
+  revalidatePath('/team')
   return NextResponse.json({ ok: true })
 }

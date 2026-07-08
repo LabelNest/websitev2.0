@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { getAdminFromCookies } from '@/lib/auth'
 import { sql } from '@/lib/db'
 
@@ -24,6 +25,7 @@ export async function POST(req: NextRequest) {
     INSERT INTO website_fellows (name,role,cohort,department,linkedin_url,image_url,sort_order,is_active,status,slug,bio,email,expertise,quote)
     VALUES (${m.name},${m.role||'Nestling Fellow'},${m.cohort||''},${m.department||null},${m.linkedin_url||null},${m.image_url||null},${m.sort_order||99},${m.is_active!==false},${m.status||'active'},${m.slug||null},${m.bio||null},${m.email||null},${expertise}::text[],${m.quote||null})
     RETURNING id`
+  revalidatePath('/team')
   return NextResponse.json({ id: row[0].id })
 }
 
@@ -41,6 +43,8 @@ export async function PUT(req: NextRequest) {
       is_active=${m.is_active!==false},status=${m.status||'active'},
       slug=${m.slug||null},bio=${m.bio||null},email=${m.email||null},expertise=${expertise}::text[],quote=${m.quote||null}
     WHERE id=${m.id}`
+  revalidatePath('/team')
+  if (m.slug) revalidatePath(`/team/${m.slug}`)
   return NextResponse.json({ ok: true })
 }
 
@@ -48,5 +52,6 @@ export async function DELETE(req: NextRequest) {
   const err = await guard(); if (err) return err
   const { id } = await req.json()
   await sql`DELETE FROM website_fellows WHERE id=${id}`
+  revalidatePath('/team')
   return NextResponse.json({ ok: true })
 }
