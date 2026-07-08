@@ -25,7 +25,7 @@ export const DEPT_COLORS: Record<string, string> = {
   'Founder': '#E91E8C',
 }
 
-function FellowChip({ f, accent, background }: { f: { id: string; name: string; role: string; slug: string | null; status?: string }; accent: string; background: string }) {
+function FellowChip({ f, accent, background }: { f: { id: string; name: string; role: string; slug: string | null; status?: string; image_url?: string | null }; accent: string; background: string }) {
   const style: React.CSSProperties = { background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: 12, position: 'relative' }
   const content = (
     <>
@@ -34,8 +34,8 @@ function FellowChip({ f, accent, background }: { f: { id: string; name: string; 
           Completed
         </div>
       )}
-      <div className="flex items-center justify-center font-display font-bold" style={{ width: 36, height: 36, borderRadius: '50%', marginBottom: 8, background, color: accent, fontSize: 13 }}>
-        {f.name[0]}
+      <div className="relative overflow-hidden flex items-center justify-center font-display font-bold" style={{ width: 36, height: 36, borderRadius: '50%', marginBottom: 8, background, color: accent, fontSize: 13 }}>
+        {f.image_url ? <Image src={f.image_url} alt={f.name} fill className="object-cover object-top" sizes="36px" /> : f.name[0]}
       </div>
       <div className="font-display font-bold" style={{ fontSize: 12, color: 'var(--text)', marginBottom: 2 }}>{f.name}</div>
       <div style={{ fontSize: 11, color: 'var(--text2)' }}>{f.role}</div>
