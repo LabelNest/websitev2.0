@@ -167,8 +167,10 @@ function BriefingsSection({ showToast }: { showToast:(m:string)=>void }) {
   async function handleSave() {
     setSaving(true)
     const method=editing?'PUT':'POST'; const body=editing?{...form,id:editing.id}:form
-    await fetch('/api/admin/briefings',{method,headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
-    setSaving(false); setModal(false); load(); showToast(`✓ Briefing ${editing?'updated':'created'}`)
+    const res = await fetch('/api/admin/briefings',{method,headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+    setSaving(false)
+    if (!res.ok) { showToast('✗ Save failed'); return }
+    setModal(false); load(); showToast(`✓ Briefing ${editing?'updated':'created'}`)
   }
   async function handleDelete(b:Briefing) { await fetch('/api/admin/briefings',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:b.id})}); load(); showToast('✓ Briefing deleted') }
 
@@ -266,8 +268,10 @@ function TeamMembersPanel({ showToast }: { showToast:(m:string)=>void }) {
   async function handleSave() {
     setSaving(true)
     const payload={...form,sort_order:Number(form.sort_order)}; const method=editing?'PUT':'POST'; const body=editing?{...payload,id:editing.id}:payload
-    await fetch('/api/admin/team',{method,headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
-    setSaving(false); setModal(false); load(); showToast(`✓ Team member ${editing?'updated':'added'}`)
+    const res = await fetch('/api/admin/team',{method,headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+    setSaving(false)
+    if (!res.ok) { showToast('✗ Save failed'); return }
+    setModal(false); load(); showToast(`✓ Team member ${editing?'updated':'added'}`)
   }
   async function handleDelete(m:TeamMember) { await fetch('/api/admin/team',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:m.id})}); load(); showToast('✓ Removed') }
 
@@ -657,8 +661,10 @@ function LegalSection({ showToast }: { showToast:(m:string)=>void }) {
 
   async function handleSave() {
     setSaving(true); const method=editing?'PUT':'POST'; const body=editing?{...form,id:editing.id}:form
-    await fetch('/api/admin/legal',{method,headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
-    setSaving(false); setModal(false); load(); showToast(`✓ Legal doc ${editing?'updated':'saved'}`)
+    const res = await fetch('/api/admin/legal',{method,headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+    setSaving(false)
+    if (!res.ok) { showToast('✗ Save failed'); return }
+    setModal(false); load(); showToast(`✓ Legal doc ${editing?'updated':'saved'}`)
   }
   async function handleDelete(d:LegalDoc) { await fetch('/api/admin/legal',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:d.id})}); load(); showToast('✓ Deleted') }
   async function saveMaster() { await fetch('/api/admin/legal/master',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(master)}); showToast('✓ Master Reference saved') }
@@ -733,8 +739,10 @@ function JobsSection({ showToast }: { showToast:(m:string)=>void }) {
 
   async function handleSave() {
     setSaving(true); const method=editing?'PUT':'POST'; const body=editing?{...form,id:editing.id}:form
-    await fetch('/api/admin/jobs',{method,headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
-    setSaving(false); setModal(false); load(); showToast(`✓ Job ${editing?'updated':'added'}`)
+    const res = await fetch('/api/admin/jobs',{method,headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+    setSaving(false)
+    if (!res.ok) { showToast('✗ Save failed'); return }
+    setModal(false); load(); showToast(`✓ Job ${editing?'updated':'added'}`)
   }
   async function handleDelete(j:Job) { await fetch('/api/admin/jobs',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:j.id})}); load(); showToast('✓ Job removed') }
 
