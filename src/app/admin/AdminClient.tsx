@@ -13,7 +13,8 @@ interface Intern { id:string; name:string; role:string; cohort:string; linkedin_
 interface Job { id:string; title:string; department:string; type:string; location:string; complexity:string; apply_url:string; is_active:boolean }
 interface LegalDoc { id:string; slug:string; title:string; intro:string; body_markdown:string; version:string; effective_date:string; last_updated:string }
 interface Subscriber { id:string; email:string; name:string|null; source:string; status:string; created_at:string }
-interface Campaign { id:string; subject:string; template_name:string|null; recipient_count:number; recipient_filter:string; status:string; sent_at:string|null; created_at:string }
+interface Campaign { id:string; subject:string; template_name:string|null; recipient_count:number; recipient_filter:string; status:string; sent_at:string|null; created_at:string; delivered_count:number|string; opened_count:number|string; clicked_count:number|string; failed_count:number|string }
+interface CampaignRecipient { email:string; status:string; open_count:number; click_count:number; first_opened_at:string|null; last_opened_at:string|null; first_clicked_at:string|null; last_clicked_at:string|null }
 interface Submission { id:string; name:string; email:string; phone:string|null; subject:string|null; message:string|null; category:string|null; metadata:Record<string,string>|null; is_read:boolean; created_at:string }
 interface SeoRow { id:string; page_path:string; title:string|null; description:string|null; og_image:string|null; keywords:string|null; updated_at:string|null }
 
@@ -888,6 +889,20 @@ function NewsletterSection({ showToast }: { showToast:(m:string)=>void }) {
   const loadCampaigns = useCallback(async()=>{ try{ const r=await fetch('/api/admin/newsletter?tab=campaigns'); const d=await r.json(); setCampaigns(d.rows||[]) }catch{} },[])
   useEffect(()=>{ load(); loadCampaigns() },[load, loadCampaigns])
 
+  // "Who opened this" drill-down
+  const [ctrCampaign, setCtrCampaign] = useState<Campaign|null>(null)
+  const [ctrRecipients, setCtrRecipients] = useState<CampaignRecipient[]>([])
+  const [ctrLoading, setCtrLoading] = useState(false)
+  async function openCtrDrilldown(c: Campaign) {
+    setCtrCampaign(c); setCtrLoading(true)
+    try {
+      const r = await fetch(`/api/admin/newsletter?tab=campaign-recipients&campaign_id=${c.id}`)
+      const d = await r.json()
+      setCtrRecipients(d.rows || [])
+    } catch { setCtrRecipients([]) }
+    setCtrLoading(false)
+  }
+
   function exportCSV() {
     const header = 'email,name,source,status,subscribed_at'
     const lines = subs.map(s => [s.email, s.name||'', s.source, s.status, s.created_at?.slice(0,10)||''].map(v=>`"${v}"`).join(','))
@@ -1105,19 +1120,60 @@ function NewsletterSection({ showToast }: { showToast:(m:string)=>void }) {
                 {campaigns.length === 0 && (
                   <tr><td colSpan={7} style={{ padding:'24px 14px', textAlign:'center', color:S.text3, fontSize:13 }}>No campaigns sent yet.</td></tr>
                 )}
-                {campaigns.map((r)=>(
-                  <tr key={r.id} style={{ borderBottom:`1px solid rgba(255,255,255,.04)` }}>
+                {campaigns.map((r)=>{
+                  const delivered = Number(r.delivered_count)||0
+                  const opened = Number(r.opened_count)||0
+                  const clicked = Number(r.clicked_count)||0
+                  const openRate = delivered ? Math.round((opened/delivered)*100) : 0
+                  const ctr = delivered ? Math.round((clicked/delivered)*100) : 0
+                  return (
+                  <tr key={r.id} onClick={()=>r.status==='sent' && openCtrDrilldown(r)} style={{ borderBottom:`1px solid rgba(255,255,255,.04)`, cursor:r.status==='sent'?'pointer':'default' }}>
                     <td style={{ padding:'12px 14px', fontSize:13, color:S.text, maxWidth:240, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{r.subject}</td>
                     <td style={{ padding:'12px 14px' }}><Badge label={r.template_name || '—'} color={S.text3} /></td>
                     <td style={{ padding:'12px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11.5, color:S.text2 }}>{r.recipient_count}</td>
                     <td style={{ padding:'12px 14px' }}><Badge label={r.status} color={r.status==='sent'?S.green:r.status==='failed'?'#EF4444':S.text3} /></td>
-                    <td style={{ padding:'12px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11.5, color:S.text3 }}>—</td>
-                    <td style={{ padding:'12px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11.5, color:S.text3 }}>—</td>
+                    <td style={{ padding:'12px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11.5, color:S.text2 }}>{r.status==='sent' ? `${opened} (${openRate}%)` : '—'}</td>
+                    <td style={{ padding:'12px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11.5, color:S.text2 }}>{r.status==='sent' ? `${clicked} (${ctr}%)` : '—'}</td>
                     <td style={{ padding:'12px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text3 }}>{r.sent_at ? r.sent_at.slice(0,10) : '—'}</td>
                   </tr>
-                ))}
+                  )
+                })}
               </tbody>
             </table>
+          </div>
+        </div>
+      )}
+
+      {ctrCampaign && (
+        <div onClick={e=>{ if(e.target===e.currentTarget) setCtrCampaign(null) }} style={{ position:'fixed', inset:0, background:'rgba(0,0,0,.72)', backdropFilter:'blur(6px)', zIndex:500, display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
+          <div style={{ background:S.surface, border:`1px solid ${S.bord2}`, borderRadius:18, padding:32, width:'100%', maxWidth:760, position:'relative', maxHeight:'88vh', overflowY:'auto' }}>
+            <div style={{ position:'absolute', top:0, left:0, right:0, height:3, background:`linear-gradient(90deg,${S.pink},${S.blue})`, borderRadius:'18px 18px 0 0' }} />
+            <button onClick={()=>setCtrCampaign(null)} style={{ position:'absolute', top:14, right:14, width:28, height:28, borderRadius:7, border:`1px solid ${S.border}`, background:'rgba(255,255,255,.05)', color:S.text2, cursor:'pointer', fontSize:16, display:'flex', alignItems:'center', justifyContent:'center' }}>×</button>
+            <div style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:800, fontSize:18, color:S.text, marginBottom:4 }}>{ctrCampaign.subject}</div>
+            <div style={{ fontSize:12, color:S.text3, marginBottom:20 }}>Who opened / clicked · {ctrRecipients.length} recipients</div>
+            {ctrLoading ? (
+              <div style={{ padding:'24px 0', textAlign:'center', color:S.text3, fontSize:13 }}>Loading…</div>
+            ) : (
+              <div style={{ overflowX:'auto' }}>
+                <table style={{ width:'100%', borderCollapse:'collapse' }}>
+                  <thead>
+                    <tr>{['Email','Status','Opens','Last opened','Clicks','Last clicked'].map(h=><th key={h} style={{ fontFamily:'JetBrains Mono,monospace', fontSize:9.5, letterSpacing:'.1em', textTransform:'uppercase', color:S.text3, padding:'8px 12px', borderBottom:`1px solid ${S.border}`, textAlign:'left', whiteSpace:'nowrap' }}>{h}</th>)}</tr>
+                  </thead>
+                  <tbody>
+                    {ctrRecipients.map(rec=>(
+                      <tr key={rec.email} style={{ borderBottom:`1px solid rgba(255,255,255,.04)` }}>
+                        <td style={{ padding:'10px 12px', fontSize:12.5, color:S.text }}>{rec.email}</td>
+                        <td style={{ padding:'10px 12px' }}><Badge label={rec.status} color={rec.status==='clicked'?S.blue:rec.status==='opened'?S.green:rec.status==='bounced'||rec.status==='blocked'||rec.status==='invalid'?'#EF4444':S.text3} /></td>
+                        <td style={{ padding:'10px 12px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text2 }}>{rec.open_count}</td>
+                        <td style={{ padding:'10px 12px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text3 }}>{rec.last_opened_at ? new Date(rec.last_opened_at).toLocaleString() : '—'}</td>
+                        <td style={{ padding:'10px 12px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text2 }}>{rec.click_count}</td>
+                        <td style={{ padding:'10px 12px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text3 }}>{rec.last_clicked_at ? new Date(rec.last_clicked_at).toLocaleString() : '—'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </div>
       )}

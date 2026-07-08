@@ -212,6 +212,84 @@ async function migrate() {
   await sql`ALTER TABLE website_newsletter_subscribers ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()`.catch(()=>{})
   await sql`ALTER TABLE website_newsletter_subscribers ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()`.catch(()=>{})
 
+  // Newsletter campaigns — one row per send. Was previously only created by
+  // scripts/seed.mjs, not this canonical migration script; added here too so
+  // fresh deployments via migrate.mjs get it.
+  await sql`
+    CREATE TABLE IF NOT EXISTS website_newsletter_campaigns (
+      id               UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      subject          TEXT NOT NULL,
+      template_name    TEXT,
+      html_content     TEXT,
+      recipient_count  INTEGER DEFAULT 0,
+      recipient_filter TEXT DEFAULT 'all',
+      brevo_message_id TEXT,
+      status           TEXT DEFAULT 'sent',
+      error_message    TEXT,
+      sent_by          TEXT,
+      sent_at          TIMESTAMPTZ,
+      created_at       TIMESTAMPTZ DEFAULT NOW(),
+      updated_at       TIMESTAMPTZ DEFAULT NOW()
+    )
+  `
+
+  // One row per (campaign, subscriber) — needed because Brevo's per-recipient
+  // messageId is what open/click webhook events key off of (via message-id),
+  // and this is the rollup used for CTR without re-aggregating raw events
+  // every time. status progresses sent -> delivered -> opened -> clicked as
+  // webhook events arrive (see /api/webhooks/brevo).
+  await sql`
+    CREATE TABLE IF NOT EXISTS website_newsletter_recipients (
+      id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      campaign_id    UUID NOT NULL REFERENCES website_newsletter_campaigns(id) ON DELETE CASCADE,
+      subscriber_id  UUID REFERENCES website_newsletter_subscribers(id) ON DELETE SET NULL,
+      email          TEXT NOT NULL,
+      message_id     TEXT,
+      status         TEXT NOT NULL DEFAULT 'sent',
+      open_count     INTEGER NOT NULL DEFAULT 0,
+      click_count    INTEGER NOT NULL DEFAULT 0,
+      first_opened_at TIMESTAMPTZ,
+      last_opened_at  TIMESTAMPTZ,
+      first_clicked_at TIMESTAMPTZ,
+      last_clicked_at  TIMESTAMPTZ,
+      created_at     TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      updated_at     TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      UNIQUE (campaign_id, email)
+    )
+  `
+  await sql`CREATE INDEX IF NOT EXISTS idx_newsletter_recipients_message_id ON website_newsletter_recipients(message_id)`.catch(()=>{})
+  await sql`CREATE INDEX IF NOT EXISTS idx_newsletter_recipients_campaign ON website_newsletter_recipients(campaign_id)`.catch(()=>{})
+
+  // Raw open/click event log — was scaffolded in seed.mjs but never wired to
+  // any application code. Reused here (with message_id/user_agent added) as
+  // the audit trail behind website_newsletter_recipients' rollup counters.
+  await sql`
+    CREATE TABLE IF NOT EXISTS website_newsletter_opens (
+      id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      campaign_id   UUID REFERENCES website_newsletter_campaigns(id) ON DELETE CASCADE,
+      subscriber_id UUID,
+      opened_at     TIMESTAMPTZ DEFAULT NOW()
+    )
+  `
+  await sql`ALTER TABLE website_newsletter_opens ADD COLUMN IF NOT EXISTS message_id TEXT`.catch(()=>{})
+  await sql`ALTER TABLE website_newsletter_opens ADD COLUMN IF NOT EXISTS email TEXT`.catch(()=>{})
+  await sql`ALTER TABLE website_newsletter_opens ADD COLUMN IF NOT EXISTS user_agent TEXT`.catch(()=>{})
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS website_newsletter_clicks (
+      id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      campaign_id   UUID REFERENCES website_newsletter_campaigns(id) ON DELETE CASCADE,
+      subscriber_id UUID,
+      url           TEXT,
+      clicked_at    TIMESTAMPTZ DEFAULT NOW()
+    )
+  `
+  await sql`ALTER TABLE website_newsletter_clicks ADD COLUMN IF NOT EXISTS message_id TEXT`.catch(()=>{})
+  await sql`ALTER TABLE website_newsletter_clicks ADD COLUMN IF NOT EXISTS email TEXT`.catch(()=>{})
+  await sql`ALTER TABLE website_newsletter_clicks ADD COLUMN IF NOT EXISTS user_agent TEXT`.catch(()=>{})
+
+  console.log('✓ website_newsletter_campaigns / recipients / opens / clicks created')
+
   // Add missing columns to website_submissions
   await sql`ALTER TABLE website_submissions ADD COLUMN IF NOT EXISTS phone TEXT`.catch(()=>{})
   await sql`ALTER TABLE website_submissions ADD COLUMN IF NOT EXISTS metadata JSONB`.catch(()=>{})
