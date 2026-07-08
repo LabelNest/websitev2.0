@@ -41,7 +41,7 @@ function FellowChip({ f, accent, background }: { f: { id: string; name: string; 
       <div style={{ fontSize: 11, color: 'var(--text2)' }}>{f.role}</div>
     </>
   )
-  return f.slug ? (
+  return f.slug && f.status !== 'completed' ? (
     <Link href={`/team/${f.slug}`} className="block hover:-translate-y-1 transition-transform duration-200" style={style}>{content}</Link>
   ) : (
     <div style={style}>{content}</div>
@@ -165,28 +165,9 @@ export default async function TeamPage() {
           </div>
         </section>
 
-        {/* ALUMNI */}
-        <section className="border-b" style={{ padding: '64px 48px', background: 'var(--bg2)', borderColor: 'var(--border)' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div className="flex items-center justify-between" style={{ marginBottom: 12 }}>
-              <div>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: '#10B981', marginBottom: 8 }}>Alumni</div>
-                <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(20px,3vw,32px)', letterSpacing: '-.025em', color: 'var(--text)' }}>
-                  {alumni.length || 39} people. All permanent. All on this page.
-                </h2>
-              </div>
-            </div>
-            <p style={{ fontSize: 13.5, color: 'var(--text2)', maxWidth: 520, marginBottom: 32, lineHeight: 1.6 }}>
-              Everyone who worked at LabelNest stays on this page forever. No exceptions. If you built something here, you belong here.{' '}
-              <strong style={{ color: 'var(--text)' }}>Alumni can update their "Now at" via a self-serve link sent by the team.</strong>
-            </p>
-            <AlumniGrid initial={alumni} />
-          </div>
-        </section>
-
         {/* FELLOWS */}
         {fellows.length > 0 && (
-          <section style={{ padding: '64px 48px' }}>
+          <section className="border-b" style={{ padding: '64px 48px', borderColor: 'var(--border)' }}>
             <div style={{ maxWidth: 1200, margin: '0 auto' }}>
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: '#7C3AED', marginBottom: 8 }}>Nestling Fellows</div>
               <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(20px,3vw,32px)', letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 8 }}>
@@ -223,6 +204,25 @@ export default async function TeamPage() {
             </div>
           </section>
         )}
+
+        {/* ALUMNI */}
+        <section className="border-b" style={{ padding: '64px 48px', background: 'var(--bg2)', borderColor: 'var(--border)' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div className="flex items-center justify-between" style={{ marginBottom: 12 }}>
+              <div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: '#10B981', marginBottom: 8 }}>Alumni</div>
+                <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(20px,3vw,32px)', letterSpacing: '-.025em', color: 'var(--text)' }}>
+                  {alumni.length || 39} people. All permanent. All on this page.
+                </h2>
+              </div>
+            </div>
+            <p style={{ fontSize: 13.5, color: 'var(--text2)', maxWidth: 520, marginBottom: 32, lineHeight: 1.6 }}>
+              Everyone who worked at LabelNest stays on this page forever. No exceptions. If you built something here, you belong here.{' '}
+              <strong style={{ color: 'var(--text)' }}>Alumni can update their "Now at" via a self-serve link sent by the team.</strong>
+            </p>
+            <AlumniGrid initial={alumni} />
+          </div>
+        </section>
 
         {/* INTERNS */}
         {interns.length > 0 && (

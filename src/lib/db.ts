@@ -203,7 +203,7 @@ export async function getTeamMemberBySlug(slug: string): Promise<TeamMember | nu
 export async function getFellowBySlug(slug: string): Promise<Fellow | null> {
   const rows = await sql`
     SELECT * FROM website_fellows
-    WHERE slug = ${slug} AND is_active = true
+    WHERE slug = ${slug} AND is_active = true AND status != 'completed'
     LIMIT 1
   `
   return (rows[0] as Fellow) ?? null
