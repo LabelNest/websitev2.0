@@ -117,6 +117,13 @@ async function migrate() {
   await sql`ALTER TABLE website_team_members ADD COLUMN IF NOT EXISTS quote TEXT`.catch(()=>{})
   await sql`UPDATE website_team_members SET slug = lower(regexp_replace(name, '[^a-zA-Z0-9]+', '-', 'g')) WHERE slug IS NULL`
 
+  // updated_at was referenced by the admin PUT routes but never added to these tables —
+  // every edit was failing silently (route threw, frontend didn't check response.ok)
+  await sql`ALTER TABLE website_team_members ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()`.catch(()=>{})
+  await sql`ALTER TABLE website_briefings ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()`.catch(()=>{})
+  await sql`ALTER TABLE website_job_openings ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()`.catch(()=>{})
+  await sql`ALTER TABLE website_legal_documents ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()`.catch(()=>{})
+
   await sql`ALTER TABLE website_fellows ADD COLUMN IF NOT EXISTS slug TEXT UNIQUE`.catch(()=>{})
   await sql`ALTER TABLE website_fellows ADD COLUMN IF NOT EXISTS bio TEXT`.catch(()=>{})
   await sql`ALTER TABLE website_fellows ADD COLUMN IF NOT EXISTS email TEXT`.catch(()=>{})
