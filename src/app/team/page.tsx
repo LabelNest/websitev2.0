@@ -6,6 +6,7 @@ import { Metadata } from 'next'
 import { getTeamMembers, getAlumni, getFellows, getInterns } from '@/lib/db'
 import AlumniGrid from './AlumniGrid'
 import { pageMetadata } from '@/lib/seo'
+import { imgFrameStyle } from '@/lib/image'
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/team', {
@@ -25,7 +26,7 @@ export const DEPT_COLORS: Record<string, string> = {
   'Founder': '#E91E8C',
 }
 
-function FellowChip({ f, accent, background }: { f: { id: string; name: string; role: string; slug: string | null; status?: string; image_url?: string | null }; accent: string; background: string }) {
+function FellowChip({ f, accent, background }: { f: { id: string; name: string; role: string; slug: string | null; status?: string; image_url?: string | null; image_position?: string; image_zoom?: number }; accent: string; background: string }) {
   const style: React.CSSProperties = { background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: 12, position: 'relative' }
   const content = (
     <>
@@ -35,7 +36,7 @@ function FellowChip({ f, accent, background }: { f: { id: string; name: string; 
         </div>
       )}
       <div className="relative overflow-hidden flex items-center justify-center font-display font-bold" style={{ width: 36, height: 36, borderRadius: '50%', marginBottom: 8, background, color: accent, fontSize: 13 }}>
-        {f.image_url ? <Image src={f.image_url} alt={f.name} fill className="object-cover object-top" sizes="36px" /> : f.name[0]}
+        {f.image_url ? <Image src={f.image_url} alt={f.name} fill sizes="36px" style={imgFrameStyle(f.image_position || '50% 0%', f.image_zoom || 1)} /> : f.name[0]}
       </div>
       <div className="font-display font-bold" style={{ fontSize: 12, color: 'var(--text)', marginBottom: 2 }}>{f.name}</div>
       <div style={{ fontSize: 11, color: 'var(--text2)' }}>{f.role}</div>
@@ -129,7 +130,7 @@ export default async function TeamPage() {
                   <>
                     <div className="relative" style={{ aspectRatio: '1', background: 'linear-gradient(135deg,rgba(233,30,140,.08),rgba(37,99,235,.06))' }}>
                       {m.image_url ? (
-                        <Image src={m.image_url} alt={m.name} fill className="object-cover object-top" sizes="300px" />
+                        <Image src={m.image_url} alt={m.name} fill sizes="300px" style={imgFrameStyle(m.image_position || '50% 0%', m.image_zoom || 1)} />
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center font-display font-extrabold" style={{ fontSize: 36, color: 'rgba(255,255,255,.12)' }}>
                           {m.name[0]}

@@ -315,6 +315,24 @@ async function migrate() {
     )
   `
 
+  // Admin focal-point/zoom repositioning for photos (drag+zoom in /admin).
+  // Position defaults match each image's pre-existing hardcoded CSS crop
+  // (people photos were object-top, briefing images were centered) so
+  // existing rows render identically until an admin adjusts them.
+  await sql`ALTER TABLE website_team_members ADD COLUMN IF NOT EXISTS image_position TEXT NOT NULL DEFAULT '50% 0%'`.catch(()=>{})
+  await sql`ALTER TABLE website_team_members ADD COLUMN IF NOT EXISTS image_zoom NUMERIC NOT NULL DEFAULT 1`.catch(()=>{})
+  await sql`ALTER TABLE website_alumni ADD COLUMN IF NOT EXISTS image_position TEXT NOT NULL DEFAULT '50% 0%'`.catch(()=>{})
+  await sql`ALTER TABLE website_alumni ADD COLUMN IF NOT EXISTS image_zoom NUMERIC NOT NULL DEFAULT 1`.catch(()=>{})
+  await sql`ALTER TABLE website_fellows ADD COLUMN IF NOT EXISTS image_position TEXT NOT NULL DEFAULT '50% 0%'`.catch(()=>{})
+  await sql`ALTER TABLE website_fellows ADD COLUMN IF NOT EXISTS image_zoom NUMERIC NOT NULL DEFAULT 1`.catch(()=>{})
+  await sql`ALTER TABLE website_interns ADD COLUMN IF NOT EXISTS image_position TEXT NOT NULL DEFAULT '50% 0%'`.catch(()=>{})
+  await sql`ALTER TABLE website_interns ADD COLUMN IF NOT EXISTS image_zoom NUMERIC NOT NULL DEFAULT 1`.catch(()=>{})
+  await sql`ALTER TABLE website_briefings ADD COLUMN IF NOT EXISTS cover_image_position TEXT NOT NULL DEFAULT '50% 50%'`.catch(()=>{})
+  await sql`ALTER TABLE website_briefings ADD COLUMN IF NOT EXISTS cover_image_zoom NUMERIC NOT NULL DEFAULT 1`.catch(()=>{})
+  await sql`ALTER TABLE website_briefings ADD COLUMN IF NOT EXISTS hero_image_position TEXT NOT NULL DEFAULT '50% 50%'`.catch(()=>{})
+  await sql`ALTER TABLE website_briefings ADD COLUMN IF NOT EXISTS hero_image_zoom NUMERIC NOT NULL DEFAULT 1`.catch(()=>{})
+  console.log('✓ image_position/image_zoom columns added')
+
   console.log('✓ All website_* tables created (or already existed)')
   console.log('')
   console.log('Next: seed an admin user by running:')

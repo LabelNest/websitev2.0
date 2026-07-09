@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import type { Alumni } from '@/lib/db'
+import { imgFrameStyle } from '@/lib/image'
 
 const NOW_AT_TYPES = [
   { value: 'working',    label: 'Working at'    },
@@ -57,7 +58,7 @@ export default function AlumniGrid({ initial }: { initial: Alumni[] }) {
           style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: 14 }}>
           <div className="overflow-hidden relative flex-shrink-0" style={{ width: 40, height: 40, borderRadius: '50%', marginBottom: 10, background: 'linear-gradient(135deg,rgba(16,185,129,.12),rgba(37,99,235,.08))' }}>
             {a.image_url ? (
-              <Image src={a.image_url} alt={a.name} fill className="object-cover object-top" sizes="40px" />
+              <Image src={a.image_url} alt={a.name} fill sizes="40px" style={imgFrameStyle(a.image_position || '50% 0%', a.image_zoom || 1)} />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center font-display font-bold" style={{ fontSize: 14, color: '#10B981' }}>
                 {a.name[0]}

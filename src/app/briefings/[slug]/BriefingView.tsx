@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import { Briefing } from '@/lib/db'
+import { imgFrameStyle } from '@/lib/image'
 
 function mdInline(t: string): string {
   return t
@@ -154,7 +155,17 @@ export default function BriefingView({ briefing, related }: { briefing: Briefing
             {/* Cover */}
             <div style={{ width: '100%', borderRadius: 14, background: 'var(--surface)', border: '1px solid rgba(255,255,255,.07)', overflow: 'hidden', marginBottom: 36 }}>
               {briefing.hero_image || briefing.cover_image ? (
-                <img src={briefing.hero_image ?? briefing.cover_image ?? ''} alt={briefing.title} style={{ width: '100%', height: 260, objectFit: 'cover', display: 'block' }} />
+                <img
+                  src={briefing.hero_image ?? briefing.cover_image ?? ''}
+                  alt={briefing.title}
+                  style={{
+                    ...imgFrameStyle(
+                      (briefing.hero_image ? briefing.hero_image_position : briefing.cover_image_position) || '50% 50%',
+                      (briefing.hero_image ? briefing.hero_image_zoom : briefing.cover_image_zoom) || 1
+                    ),
+                    height: 260, display: 'block',
+                  }}
+                />
               ) : (
                 <div style={{ height: 260, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
                   <span style={{ fontSize: 48, opacity: .2 }}>{scopeEmoji(briefing.scope)}</span>

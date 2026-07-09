@@ -22,8 +22,8 @@ export async function POST(req: NextRequest) {
     ? String(m.expertise).split(',').map((s: string) => s.trim()).filter(Boolean)
     : null
   const row = await sql`
-    INSERT INTO website_team_members (name,role,department,bio,linkedin_url,image_url,sort_order,is_active,slug,email,expertise,quote)
-    VALUES (${m.name},${m.role||''},${m.department||''},${m.bio||null},${m.linkedin_url||null},${m.image_url||null},${m.sort_order||99},${m.is_active!==false},${m.slug||null},${m.email||null},${expertise?JSON.stringify(expertise):null}::jsonb,${m.quote||null})
+    INSERT INTO website_team_members (name,role,department,bio,linkedin_url,image_url,image_position,image_zoom,sort_order,is_active,slug,email,expertise,quote)
+    VALUES (${m.name},${m.role||''},${m.department||''},${m.bio||null},${m.linkedin_url||null},${m.image_url||null},${m.image_position||'50% 0%'},${m.image_zoom||1},${m.sort_order||99},${m.is_active!==false},${m.slug||null},${m.email||null},${expertise?JSON.stringify(expertise):null}::jsonb,${m.quote||null})
     RETURNING id`
   revalidatePath('/team')
   return NextResponse.json({ id: row[0].id })
@@ -39,6 +39,7 @@ export async function PUT(req: NextRequest) {
     UPDATE website_team_members SET
       name=${m.name},role=${m.role||''},department=${m.department||''},bio=${m.bio||null},
       linkedin_url=${m.linkedin_url||null},image_url=${m.image_url||null},
+      image_position=${m.image_position||'50% 0%'},image_zoom=${m.image_zoom||1},
       sort_order=${m.sort_order||99},is_active=${m.is_active!==false},
       slug=${m.slug||null},email=${m.email||null},expertise=${expertise?JSON.stringify(expertise):null}::jsonb,quote=${m.quote||null},
       updated_at=NOW()

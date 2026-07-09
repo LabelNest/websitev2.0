@@ -19,6 +19,10 @@ export interface Briefing {
   author_department: string
   cover_image: string | null
   hero_image: string | null
+  cover_image_position: string
+  cover_image_zoom: number
+  hero_image_position: string
+  hero_image_zoom: number
   is_featured: boolean
   created_at: string
 }
@@ -31,6 +35,8 @@ export interface TeamMember {
   bio: string | null
   linkedin_url: string | null
   image_url: string | null
+  image_position: string
+  image_zoom: number
   sort_order: number
   is_active: boolean
   slug: string | null
@@ -47,6 +53,8 @@ export interface Alumni {
   cohort: string | null
   email: string | null
   image_url: string | null
+  image_position: string
+  image_zoom: number
   linkedin_url: string | null
   now_at_type: string | null
   now_at_company: string | null
@@ -63,6 +71,8 @@ export interface Fellow {
   cohort: string
   department: string | null
   image_url: string | null
+  image_position: string
+  image_zoom: number
   linkedin_url: string | null
   is_active: boolean
   status: 'active' | 'completed'
@@ -80,6 +90,8 @@ export interface Intern {
   role: string
   cohort: string
   image_url: string | null
+  image_position: string
+  image_zoom: number
   linkedin_url: string | null
   slug: string | null
   is_active: boolean

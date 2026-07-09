@@ -1,15 +1,17 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
+import { ImagePositioner } from '@/components/admin/ImagePositioner'
+import { imgFrameStyle } from '@/lib/image'
 
 // ── Types ──────────────────────────────────────────────────────────────────
 type Section = 'overview'|'briefings'|'team'|'legal'|'jobs'|'departments'|'upload'|'newsletter'|'submissions'|'seo'|'settings'
 
-interface Briefing { id:string; slug:string; title:string; author_name:string; scope:string; date:string; read_time:string; is_featured:boolean; cover_image:string|null }
-interface TeamMember { id:string; name:string; role:string; department:string; bio:string|null; linkedin_url:string|null; image_url:string|null; sort_order:number; is_active:boolean; slug:string|null; email:string|null; expertise:string[]|null; quote:string|null }
-interface Alumni { id:string; name:string; role:string; department:string; email:string|null; linkedin_url:string|null; image_url:string|null; now_at_type:string|null; now_at_company:string|null; now_at_role:string|null; now_at_url:string|null; update_token:string|null; is_active:boolean }
-interface Fellow { id:string; name:string; role:string; cohort:string; department:string|null; linkedin_url:string|null; image_url:string|null; is_active:boolean; status:'active'|'completed'; sort_order:number; slug:string|null; bio:string|null; email:string|null; expertise:string[]|null; quote:string|null }
-interface Intern { id:string; name:string; role:string; cohort:string; linkedin_url:string|null; image_url:string|null; is_active:boolean; sort_order:number; slug:string|null }
+interface Briefing { id:string; slug:string; title:string; author_name:string; scope:string; date:string; read_time:string; is_featured:boolean; cover_image:string|null; hero_image:string|null; cover_image_position:string; cover_image_zoom:number; hero_image_position:string; hero_image_zoom:number }
+interface TeamMember { id:string; name:string; role:string; department:string; bio:string|null; linkedin_url:string|null; image_url:string|null; image_position:string; image_zoom:number; sort_order:number; is_active:boolean; slug:string|null; email:string|null; expertise:string[]|null; quote:string|null }
+interface Alumni { id:string; name:string; role:string; department:string; email:string|null; linkedin_url:string|null; image_url:string|null; image_position:string; image_zoom:number; now_at_type:string|null; now_at_company:string|null; now_at_role:string|null; now_at_url:string|null; update_token:string|null; is_active:boolean }
+interface Fellow { id:string; name:string; role:string; cohort:string; department:string|null; linkedin_url:string|null; image_url:string|null; image_position:string; image_zoom:number; is_active:boolean; status:'active'|'completed'; sort_order:number; slug:string|null; bio:string|null; email:string|null; expertise:string[]|null; quote:string|null }
+interface Intern { id:string; name:string; role:string; cohort:string; linkedin_url:string|null; image_url:string|null; image_position:string; image_zoom:number; is_active:boolean; sort_order:number; slug:string|null }
 interface Job { id:string; title:string; department:string; type:string; location:string; complexity:string; apply_url:string; is_active:boolean }
 interface LegalDoc { id:string; slug:string; title:string; intro:string; body_markdown:string; version:string; effective_date:string; last_updated:string }
 interface Subscriber { id:string; email:string; name:string|null; source:string; status:string; created_at:string }
@@ -156,13 +158,13 @@ function BriefingsSection({ showToast }: { showToast:(m:string)=>void }) {
   const [modal, setModal] = useState(false)
   const [saving, setSaving] = useState(false)
   const [editing, setEditing] = useState<Briefing|null>(null)
-  const [form, setForm] = useState({ slug:'',title:'',summary:'',content:'',scope:'',date:'',read_time:'',author_name:'',author_role:'',author_department:'',cover_image:'',hero_image:'',tags:'',cta_label:'',cta_url:'',is_featured:false })
+  const [form, setForm] = useState({ slug:'',title:'',summary:'',content:'',scope:'',date:'',read_time:'',author_name:'',author_role:'',author_department:'',cover_image:'',hero_image:'',cover_image_position:'50% 50%',cover_image_zoom:1,hero_image_position:'50% 50%',hero_image_zoom:1,tags:'',cta_label:'',cta_url:'',is_featured:false })
 
   const load = useCallback(async()=>{ const r=await fetch('/api/admin/briefings'); const d=await r.json(); setRows(d.rows||[]) },[])
   useEffect(()=>{ load() },[load])
 
-  function openAdd() { setEditing(null); setForm({ slug:'',title:'',summary:'',content:'',scope:'',date:'',read_time:'',author_name:'',author_role:'',author_department:'',cover_image:'',hero_image:'',tags:'',cta_label:'',cta_url:'',is_featured:false }); setModal(true) }
-  function openEdit(b:Briefing) { setEditing(b); setForm({ slug:b.slug,title:b.title,summary:'',content:'',scope:b.scope,date:b.date,read_time:b.read_time,author_name:b.author_name,author_role:'',author_department:'',cover_image:b.cover_image||'',hero_image:'',tags:'',cta_label:'',cta_url:'',is_featured:b.is_featured }); setModal(true) }
+  function openAdd() { setEditing(null); setForm({ slug:'',title:'',summary:'',content:'',scope:'',date:'',read_time:'',author_name:'',author_role:'',author_department:'',cover_image:'',hero_image:'',cover_image_position:'50% 50%',cover_image_zoom:1,hero_image_position:'50% 50%',hero_image_zoom:1,tags:'',cta_label:'',cta_url:'',is_featured:false}); setModal(true) }
+  function openEdit(b:Briefing) { setEditing(b); setForm({ slug:b.slug,title:b.title,summary:'',content:'',scope:b.scope,date:b.date,read_time:b.read_time,author_name:b.author_name,author_role:'',author_department:'',cover_image:b.cover_image||'',hero_image:b.hero_image||'',cover_image_position:b.cover_image_position||'50% 50%',cover_image_zoom:b.cover_image_zoom||1,hero_image_position:b.hero_image_position||'50% 50%',hero_image_zoom:b.hero_image_zoom||1,tags:'',cta_label:'',cta_url:'',is_featured:b.is_featured }); setModal(true) }
 
   async function handleSave() {
     setSaving(true)
@@ -200,8 +202,28 @@ function BriefingsSection({ showToast }: { showToast:(m:string)=>void }) {
           </div>
           <Input label="Author department" value={form.author_department} onChange={F('author_department')} placeholder="e.g. Leadership and Strategy" />
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
-            <Input label="Cover image URL (R2)" value={form.cover_image} onChange={F('cover_image')} placeholder="https://assets.labelnest.in/briefings/..." />
-            <Input label="Hero image URL (R2)" value={form.hero_image} onChange={F('hero_image')} placeholder="https://assets.labelnest.in/briefings/hero-..." />
+            <div>
+              <Input label="Cover image URL (R2)" value={form.cover_image} onChange={F('cover_image')} placeholder="https://assets.labelnest.in/briefings/..." />
+              {form.cover_image && (
+                <ImagePositioner
+                  src={form.cover_image} aspect={2.4}
+                  position={form.cover_image_position} zoom={form.cover_image_zoom}
+                  defaultPosition="50% 50%" defaultZoom={1}
+                  onChange={(position,zoom)=>setForm(f=>({...f,cover_image_position:position,cover_image_zoom:zoom}))}
+                />
+              )}
+            </div>
+            <div>
+              <Input label="Hero image URL (R2)" value={form.hero_image} onChange={F('hero_image')} placeholder="https://assets.labelnest.in/briefings/hero-..." />
+              {form.hero_image && (
+                <ImagePositioner
+                  src={form.hero_image} aspect={2.4}
+                  position={form.hero_image_position} zoom={form.hero_image_zoom}
+                  defaultPosition="50% 50%" defaultZoom={1}
+                  onChange={(position,zoom)=>setForm(f=>({...f,hero_image_position:position,hero_image_zoom:zoom}))}
+                />
+              )}
+            </div>
           </div>
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
             <Input label="Tags (comma-separated)" value={form.tags} onChange={F('tags')} placeholder="intelligence, private markets" />
@@ -216,7 +238,7 @@ function BriefingsSection({ showToast }: { showToast:(m:string)=>void }) {
 }
 
 // ── TEAM MEMBERS PANEL ─────────────────────────────────────────────────────
-function PhotoUpload({ name, folder, value, onChange, showToast }: { name:string; folder:string; value:string; onChange:(v:string)=>void; showToast:(m:string)=>void }) {
+function PhotoUpload({ name, folder, value, onChange, showToast, position='50% 0%', zoom=1, onPositionChange }: { name:string; folder:string; value:string; onChange:(v:string)=>void; showToast:(m:string)=>void; position?:string; zoom?:number; onPositionChange?:(position:string,zoom:number)=>void }) {
   const [uploading, setUploading] = useState(false)
   async function pick(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]; if (!file) return
@@ -234,7 +256,7 @@ function PhotoUpload({ name, folder, value, onChange, showToast }: { name:string
       <div style={{ display:'flex', gap:8, alignItems:'center' }}>
         {value && (
           <div style={{ width:40, height:40, borderRadius:8, overflow:'hidden', border:`1px solid ${S.border}`, flexShrink:0, position:'relative', background:S.bg3 }}>
-            <img src={value} alt="" style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top' }} />
+            <img src={value} alt="" style={imgFrameStyle(position, zoom)} />
           </div>
         )}
         <div style={{ flex:1, minWidth:0 }}>
@@ -247,6 +269,13 @@ function PhotoUpload({ name, folder, value, onChange, showToast }: { name:string
         {value && <input value={value} onChange={e=>onChange(e.target.value)} placeholder="or paste URL" style={{ flex:1, background:S.bg2, border:`1px solid ${S.bord2}`, borderRadius:8, padding:'8px 10px', fontSize:11.5, color:S.text2, outline:'none', minWidth:0 }} />}
       </div>
       {!value && <input value={value} onChange={e=>onChange(e.target.value)} placeholder="or paste R2 URL" style={{ width:'100%', marginTop:6, background:S.bg2, border:`1px solid ${S.bord2}`, borderRadius:8, padding:'8px 12px', fontSize:12.5, color:S.text, outline:'none', boxSizing:'border-box' }} />}
+      {value && onPositionChange && (
+        <ImagePositioner
+          src={value} aspect={1} position={position} zoom={zoom}
+          defaultPosition="50% 0%" defaultZoom={1}
+          onChange={onPositionChange}
+        />
+      )}
     </div>
   )
 }
@@ -256,14 +285,14 @@ function TeamMembersPanel({ showToast }: { showToast:(m:string)=>void }) {
   const [modal, setModal] = useState(false)
   const [saving, setSaving] = useState(false)
   const [editing, setEditing] = useState<TeamMember|null>(null)
-  const blank = { name:'',role:'',department:'',bio:'',linkedin_url:'',image_url:'',sort_order:'99',is_active:true,slug:'',email:'',expertise:'',quote:'' }
+  const blank = { name:'',role:'',department:'',bio:'',linkedin_url:'',image_url:'',image_position:'50% 0%',image_zoom:1,sort_order:'99',is_active:true,slug:'',email:'',expertise:'',quote:'' }
   const [form, setForm] = useState(blank)
 
   const load = useCallback(async()=>{ const r=await fetch('/api/admin/team'); const d=await r.json(); setRows(d.rows||[]) },[])
   useEffect(()=>{ load() },[load])
 
   function openAdd() { setEditing(null); setForm(blank); setModal(true) }
-  function openEdit(m:TeamMember) { setEditing(m); setForm({ name:m.name,role:m.role,department:m.department,bio:m.bio||'',linkedin_url:m.linkedin_url||'',image_url:m.image_url||'',sort_order:String(m.sort_order),is_active:m.is_active,slug:m.slug||'',email:m.email||'',expertise:(m.expertise||[]).join(', '),quote:m.quote||'' }); setModal(true) }
+  function openEdit(m:TeamMember) { setEditing(m); setForm({ name:m.name,role:m.role,department:m.department,bio:m.bio||'',linkedin_url:m.linkedin_url||'',image_url:m.image_url||'',image_position:m.image_position||'50% 0%',image_zoom:m.image_zoom||1,sort_order:String(m.sort_order),is_active:m.is_active,slug:m.slug||'',email:m.email||'',expertise:(m.expertise||[]).join(', '),quote:m.quote||'' }); setModal(true) }
 
   async function handleSave() {
     setSaving(true)
@@ -288,7 +317,7 @@ function TeamMembersPanel({ showToast }: { showToast:(m:string)=>void }) {
             onMouseLeave={e=>e.currentTarget.style.borderColor=S.border}>
             <div style={{ width:52, height:52, borderRadius:'50%', overflow:'hidden', margin:'0 auto 8px', background:S.bg3, position:'relative' }}>
               {m.image_url
-                ? <img src={m.image_url} alt={m.name} style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top' }} />
+                ? <img src={m.image_url} alt={m.name} style={imgFrameStyle(m.image_position||'50% 0%', m.image_zoom||1)} />
                 : <div style={{ width:'100%', height:'100%', display:'flex', alignItems:'center', justifyContent:'center', fontSize:18, fontWeight:800, color:S.pink }}>{m.name[0]}</div>}
             </div>
             <div style={{ fontSize:11.5, fontWeight:600, color:S.text, lineHeight:1.3 }}>{m.name.split(' ')[0]}</div>
@@ -315,7 +344,9 @@ function TeamMembersPanel({ showToast }: { showToast:(m:string)=>void }) {
           <Input label="LinkedIn URL" value={form.linkedin_url} onChange={F('linkedin_url')} placeholder="https://linkedin.com/in/..." />
           <Input label="Expertise tags (comma-separated)" value={form.expertise} onChange={F('expertise')} placeholder="e.g. Private markets, Data pipelines, SQL" />
           <Input label="Quote (optional)" value={form.quote} onChange={F('quote')} rows={2} placeholder="A single quote or what they're working on" />
-          <PhotoUpload name={form.name || 'member'} folder="team" value={form.image_url} onChange={F('image_url')} showToast={showToast} />
+          <PhotoUpload name={form.name || 'member'} folder="team" value={form.image_url} onChange={F('image_url')} showToast={showToast}
+            position={form.image_position} zoom={form.image_zoom}
+            onPositionChange={(position,zoom)=>setForm(f=>({...f,image_position:position,image_zoom:zoom}))} />
           <Toggle label="Active (visible on team page)" checked={form.is_active} onChange={v=>setForm(f=>({...f,is_active:v}))} />
         </Modal>
       )}
@@ -331,7 +362,7 @@ function AlumniPanel({ showToast }: { showToast:(m:string)=>void }) {
   const [saving, setSaving] = useState(false)
   const [editing, setEditing] = useState<Alumni|null>(null)
   const [emailModal, setEmailModal] = useState<Alumni|null>(null)
-  const blank = { name:'',role:'',department:'',email:'',linkedin_url:'',image_url:'',now_at_type:'working',now_at_company:'',now_at_role:'',now_at_url:'',is_active:true }
+  const blank = { name:'',role:'',department:'',email:'',linkedin_url:'',image_url:'',image_position:'50% 0%',image_zoom:1,now_at_type:'working',now_at_company:'',now_at_role:'',now_at_url:'',is_active:true }
   const [form, setForm] = useState(blank)
 
   const NOW_AT_TYPES = [
@@ -346,7 +377,7 @@ function AlumniPanel({ showToast }: { showToast:(m:string)=>void }) {
   useEffect(()=>{ load() },[load])
 
   function openAdd()  { setEditing(null); setForm(blank); setModal(true) }
-  function openEdit(a:Alumni) { setEditing(a); setForm({ name:a.name,role:a.role,department:a.department,email:a.email||'',linkedin_url:a.linkedin_url||'',image_url:a.image_url||'',now_at_type:a.now_at_type||'working',now_at_company:a.now_at_company||'',now_at_role:a.now_at_role||'',now_at_url:a.now_at_url||'',is_active:a.is_active }); setModal(true) }
+  function openEdit(a:Alumni) { setEditing(a); setForm({ name:a.name,role:a.role,department:a.department,email:a.email||'',linkedin_url:a.linkedin_url||'',image_url:a.image_url||'',image_position:a.image_position||'50% 0%',image_zoom:a.image_zoom||1,now_at_type:a.now_at_type||'working',now_at_company:a.now_at_company||'',now_at_role:a.now_at_role||'',now_at_url:a.now_at_url||'',is_active:a.is_active }); setModal(true) }
   async function handleSave() {
     setSaving(true); const method=editing?'PUT':'POST'; const body=editing?{...form,id:editing.id}:form
     await fetch('/api/admin/alumni',{method,headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
@@ -454,7 +485,9 @@ contact@labelnest.in`
             <Input label="Email" value={form.email} onChange={F('email')} placeholder="name@example.com" type="email" />
           </div>
           <Input label="LinkedIn URL" value={form.linkedin_url} onChange={F('linkedin_url')} placeholder="https://linkedin.com/in/..." />
-          <PhotoUpload name={form.name || 'alumni'} folder="team" value={form.image_url} onChange={F('image_url')} showToast={showToast} />
+          <PhotoUpload name={form.name || 'alumni'} folder="team" value={form.image_url} onChange={F('image_url')} showToast={showToast}
+            position={form.image_position} zoom={form.image_zoom}
+            onPositionChange={(position,zoom)=>setForm(f=>({...f,image_position:position,image_zoom:zoom}))} />
           <div style={{ borderTop:`1px solid ${S.border}`, paddingTop:12, marginTop:4 }}>
             <div style={{ fontFamily:'JetBrains Mono,monospace', fontSize:9.5, letterSpacing:'.1em', textTransform:'uppercase', color:S.text3, marginBottom:10 }}>Now at</div>
             <div style={{ marginBottom:10 }}>
@@ -519,14 +552,14 @@ function FellowsPanel({ showToast }: { showToast:(m:string)=>void }) {
   const [modal, setModal] = useState(false)
   const [saving, setSaving] = useState(false)
   const [editing, setEditing] = useState<Fellow|null>(null)
-  const blank = { name:'',role:'Research Fellow',cohort:'',department:'',linkedin_url:'',image_url:'',is_active:true,status:'active',sort_order:'99',slug:'',bio:'',email:'',expertise:'',quote:'' }
+  const blank = { name:'',role:'Research Fellow',cohort:'',department:'',linkedin_url:'',image_url:'',image_position:'50% 0%',image_zoom:1,is_active:true,status:'active',sort_order:'99',slug:'',bio:'',email:'',expertise:'',quote:'' }
   const [form, setForm] = useState(blank)
 
   const load = useCallback(async()=>{ const r=await fetch('/api/admin/fellows'); const d=await r.json(); setRows(d.rows||[]) },[])
   useEffect(()=>{ load() },[load])
 
   function openAdd() { setEditing(null); setForm(blank); setModal(true) }
-  function openEdit(f:Fellow) { setEditing(f); setForm({ name:f.name,role:f.role,cohort:f.cohort,department:f.department||'',linkedin_url:f.linkedin_url||'',image_url:f.image_url||'',is_active:f.is_active,status:f.status||'active',sort_order:String(f.sort_order),slug:f.slug||'',bio:f.bio||'',email:f.email||'',expertise:(f.expertise||[]).join(', '),quote:f.quote||'' }); setModal(true) }
+  function openEdit(f:Fellow) { setEditing(f); setForm({ name:f.name,role:f.role,cohort:f.cohort,department:f.department||'',linkedin_url:f.linkedin_url||'',image_url:f.image_url||'',image_position:f.image_position||'50% 0%',image_zoom:f.image_zoom||1,is_active:f.is_active,status:f.status||'active',sort_order:String(f.sort_order),slug:f.slug||'',bio:f.bio||'',email:f.email||'',expertise:(f.expertise||[]).join(', '),quote:f.quote||'' }); setModal(true) }
 
   async function handleSave() {
     setSaving(true); const payload={...form,sort_order:Number(form.sort_order)}; const method=editing?'PUT':'POST'; const body=editing?{...payload,id:editing.id}:payload
@@ -559,7 +592,9 @@ function FellowsPanel({ showToast }: { showToast:(m:string)=>void }) {
             <Input label="Sort order" value={form.sort_order} onChange={F('sort_order')} type="number" />
           </div>
           <Input label="LinkedIn URL" value={form.linkedin_url} onChange={F('linkedin_url')} placeholder="https://linkedin.com/in/..." />
-          <PhotoUpload name={form.name || 'fellow'} folder="fellows" value={form.image_url} onChange={F('image_url')} showToast={showToast} />
+          <PhotoUpload name={form.name || 'fellow'} folder="fellows" value={form.image_url} onChange={F('image_url')} showToast={showToast}
+            position={form.image_position} zoom={form.image_zoom}
+            onPositionChange={(position,zoom)=>setForm(f=>({...f,image_position:position,image_zoom:zoom}))} />
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
             <Input label="Slug" value={form.slug} onChange={F('slug')} placeholder="url-friendly-slug" />
             <Input label="Email (for Contact button)" value={form.email} onChange={F('email')} placeholder="firstname@labelnest.in" />
@@ -584,14 +619,14 @@ function InternsPanel({ showToast }: { showToast:(m:string)=>void }) {
   const [modal, setModal] = useState(false)
   const [saving, setSaving] = useState(false)
   const [editing, setEditing] = useState<Intern|null>(null)
-  const blank = { name:'',role:'Intern',cohort:'',linkedin_url:'',image_url:'',is_active:true,sort_order:'99',slug:'' }
+  const blank = { name:'',role:'Intern',cohort:'',linkedin_url:'',image_url:'',image_position:'50% 0%',image_zoom:1,is_active:true,sort_order:'99',slug:'' }
   const [form, setForm] = useState(blank)
 
   const load = useCallback(async()=>{ const r=await fetch('/api/admin/interns'); const d=await r.json(); setRows(d.rows||[]) },[])
   useEffect(()=>{ load() },[load])
 
   function openAdd() { setEditing(null); setForm(blank); setModal(true) }
-  function openEdit(i:Intern) { setEditing(i); setForm({ name:i.name,role:i.role,cohort:i.cohort,linkedin_url:i.linkedin_url||'',image_url:i.image_url||'',is_active:i.is_active,sort_order:String(i.sort_order),slug:i.slug||'' }); setModal(true) }
+  function openEdit(i:Intern) { setEditing(i); setForm({ name:i.name,role:i.role,cohort:i.cohort,linkedin_url:i.linkedin_url||'',image_url:i.image_url||'',image_position:i.image_position||'50% 0%',image_zoom:i.image_zoom||1,is_active:i.is_active,sort_order:String(i.sort_order),slug:i.slug||'' }); setModal(true) }
 
   async function handleSave() {
     setSaving(true); const payload={...form,sort_order:Number(form.sort_order)}; const method=editing?'PUT':'POST'; const body=editing?{...payload,id:editing.id}:payload
@@ -619,7 +654,9 @@ function InternsPanel({ showToast }: { showToast:(m:string)=>void }) {
           </div>
           <Input label="Slug" value={form.slug} onChange={F('slug')} placeholder="url-friendly-slug" />
           <Input label="LinkedIn URL" value={form.linkedin_url} onChange={F('linkedin_url')} placeholder="https://linkedin.com/in/..." />
-          <PhotoUpload name={form.name || 'intern'} folder="team" value={form.image_url} onChange={F('image_url')} showToast={showToast} />
+          <PhotoUpload name={form.name || 'intern'} folder="team" value={form.image_url} onChange={F('image_url')} showToast={showToast}
+            position={form.image_position} zoom={form.image_zoom}
+            onPositionChange={(position,zoom)=>setForm(f=>({...f,image_position:position,image_zoom:zoom}))} />
           <Toggle label="Active (visible on team page)" checked={form.is_active} onChange={v=>setForm(f=>({...f,is_active:v}))} />
         </Modal>
       )}

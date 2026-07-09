@@ -10,6 +10,7 @@ import {
   getBriefingsByAuthor,
 } from '@/lib/db'
 import { pageMetadata } from '@/lib/seo'
+import { imgFrameStyle } from '@/lib/image'
 import { DEPT_COLORS } from '../page'
 
 type Props = { params: Promise<{ slug: string }> }
@@ -44,6 +45,8 @@ export default async function ProfilePage({ params }: Props) {
   const name = member?.name ?? fellow?.name ?? intern?.name ?? ''
   const role = member?.role ?? fellow?.role ?? intern?.role ?? ''
   const imageUrl = member?.image_url ?? fellow?.image_url ?? intern?.image_url ?? null
+  const imagePosition = member?.image_position ?? fellow?.image_position ?? intern?.image_position ?? '50% 0%'
+  const imageZoom = member?.image_zoom ?? fellow?.image_zoom ?? intern?.image_zoom ?? 1
   const linkedinUrl = member?.linkedin_url ?? fellow?.linkedin_url ?? intern?.linkedin_url ?? null
   const department = member?.department || fellow?.department || fellow?.cohort || intern?.cohort || ''
   const bio = member?.bio ?? fellow?.bio ?? null
@@ -70,7 +73,7 @@ export default async function ProfilePage({ params }: Props) {
             <div className="flex items-start" style={{ gap: 28, marginBottom: 28 }}>
               <div className="relative overflow-hidden flex-shrink-0" style={{ width: 96, height: 96, borderRadius: 20, background: 'linear-gradient(135deg,rgba(233,30,140,.08),rgba(37,99,235,.06))' }}>
                 {imageUrl ? (
-                  <Image src={imageUrl} alt={name} fill className="object-cover object-top" sizes="96px" />
+                  <Image src={imageUrl} alt={name} fill sizes="96px" style={imgFrameStyle(imagePosition, imageZoom)} />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center font-display font-extrabold" style={{ fontSize: 32, color: 'rgba(255,255,255,.15)' }}>
                     {name[0]}
