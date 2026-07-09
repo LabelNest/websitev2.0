@@ -4,22 +4,32 @@ import { sql } from '@/lib/db'
 // The contact page tells visitors submissions go to contact@labelnest.in —
 // until this, that was only ever true of the mailto: link; form submissions
 // just landed in the DB with no notification to anyone.
+//
+// Transport: Brevo (same account as the newsletter sender below), sending as
+// LabelNest <newsletter@labelnest.in>. Previously routed through the shared
+// email-service microservice (AWS SES), which was never deployed
+// (EMAIL_SERVICE_URL unset) — migrated 2026-07-09 at the user's direction:
+// pause AWS everywhere, use Brevo instead.
 async function notifyContactSubmission(senderName: string, senderEmail: string, subject: string, message: string) {
-  const url = process.env.EMAIL_SERVICE_URL
-  const key = process.env.EMAIL_SERVICE_KEY
-  if (!url || !key) {
-    console.warn('[contact] EMAIL_SERVICE_URL/EMAIL_SERVICE_KEY not configured — notification not sent')
+  const apiKey = process.env.BREVO_API_KEY
+  if (!apiKey) {
+    console.warn('[contact] BREVO_API_KEY not configured — notification not sent')
     return
   }
+  const safeName = senderName.replace(/[<>&]/g, '')
+  const safeEmail = senderEmail.replace(/[<>&]/g, '')
+  const safeSubject = subject.replace(/[<>&]/g, '')
+  const safeMessage = message.replace(/[<>&]/g, '').replace(/\n/g, '<br/>')
   try {
-    const res = await fetch(`${url}/send`, {
+    const res = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': key },
+      headers: { 'api-key': apiKey, 'Content-Type': 'application/json', accept: 'application/json' },
       body: JSON.stringify({
-        app: 'website',
-        template: 'contact_form',
-        to: 'contact@labelnest.in',
-        data: { senderName, senderEmail, subject, message },
+        sender: { name: 'LabelNest Website', email: 'newsletter@labelnest.in' },
+        to: [{ email: 'contact@labelnest.in' }],
+        replyTo: { email: senderEmail, name: senderName },
+        subject: `[Contact form] ${safeSubject || 'New submission'}`,
+        htmlContent: `<p><strong>${safeName}</strong> (${safeEmail}) submitted the contact form.</p><p>${safeMessage}</p>`,
       }),
     })
     if (!res.ok) console.error('[contact] notification email failed:', await res.text())
