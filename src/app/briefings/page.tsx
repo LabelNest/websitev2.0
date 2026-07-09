@@ -4,6 +4,7 @@ import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { getBriefings, Briefing } from '@/lib/db'
 import { pageMetadata } from '@/lib/seo'
+import { imgFrameStyle } from '@/lib/image'
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/briefings', {
@@ -96,7 +97,7 @@ export default async function BriefingsPage() {
               <Link href={`/briefings/${featured.slug}`} className="briefing-featured" style={{ display: 'block', background: 'var(--surface)', border: '1px solid rgba(255,255,255,.07)', borderRadius: 18, overflow: 'hidden', marginBottom: 20, transition: 'border-color .2s, transform .2s' }}>
                 <div style={{ height: 180, background: 'linear-gradient(135deg,rgba(249,115,22,.1),rgba(233,30,140,.06))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 48, opacity: .3, borderBottom: '1px solid rgba(255,255,255,.06)', position: 'relative' }}>
                   {featured.cover_image
-                    ? <img src={featured.cover_image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0, opacity: 1 }} />
+                    ? <img src={featured.cover_image} alt="" style={{ ...imgFrameStyle(featured.cover_image_position || '50% 50%', featured.cover_image_zoom || 1), position: 'absolute', inset: 0, opacity: 1 }} />
                     : scopeEmoji(featured.scope)
                   }
                   <span style={{ position: 'absolute', top: 14, left: 14, fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.1em', textTransform: 'uppercase', padding: '4px 10px', borderRadius: 5, background: '#F97316', color: '#fff' }}>Featured</span>
