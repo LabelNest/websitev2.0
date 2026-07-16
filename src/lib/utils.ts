@@ -1,3 +1,19 @@
+// Timestamp display — always IST (Asia/Kolkata), regardless of viewer/server timezone
+export function formatDateTimeIST(value: string | Date): string {
+  return new Date(value).toLocaleString('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    day: 'numeric', month: 'short', year: 'numeric',
+    hour: 'numeric', minute: '2-digit', hour12: true,
+  })
+}
+
+export function formatDateIST(value: string | Date): string {
+  return new Date(value).toLocaleDateString('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    day: 'numeric', month: 'short', year: '2-digit',
+  })
+}
+
 // Markdown → plain HTML (server-side, no heavy dep needed)
 export function mdToHtml(text: string): string {
   if (!text) return ''
