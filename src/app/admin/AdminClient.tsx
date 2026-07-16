@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { ImagePositioner } from '@/components/admin/ImagePositioner'
 import { imgFrameStyle } from '@/lib/image'
+import { formatDateTimeIST, formatDateIST } from '@/lib/utils'
 
 // ── Types ──────────────────────────────────────────────────────────────────
 type Section = 'overview'|'briefings'|'team'|'legal'|'jobs'|'departments'|'upload'|'newsletter'|'submissions'|'seo'|'settings'
@@ -1213,9 +1214,9 @@ function NewsletterSection({ showToast }: { showToast:(m:string)=>void }) {
                         <td style={{ padding:'10px 12px', fontSize:12.5, color:S.text }}>{rec.email}</td>
                         <td style={{ padding:'10px 12px' }}><Badge label={rec.status} color={rec.status==='clicked'?S.blue:rec.status==='opened'?S.green:rec.status==='bounced'||rec.status==='blocked'||rec.status==='invalid'?'#EF4444':S.text3} /></td>
                         <td style={{ padding:'10px 12px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text2 }}>{rec.open_count}</td>
-                        <td style={{ padding:'10px 12px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text3 }}>{rec.last_opened_at ? new Date(rec.last_opened_at).toLocaleString() : '—'}</td>
+                        <td style={{ padding:'10px 12px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text3 }}>{rec.last_opened_at ? formatDateTimeIST(rec.last_opened_at) : '—'}</td>
                         <td style={{ padding:'10px 12px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text2 }}>{rec.click_count}</td>
-                        <td style={{ padding:'10px 12px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text3 }}>{rec.last_clicked_at ? new Date(rec.last_clicked_at).toLocaleString() : '—'}</td>
+                        <td style={{ padding:'10px 12px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text3 }}>{rec.last_clicked_at ? formatDateTimeIST(rec.last_clicked_at) : '—'}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -1299,7 +1300,7 @@ function SubmissionsSection({ showToast }: { showToast:(m:string)=>void }) {
                 <div style={{ fontSize:11.5, color:S.text3 }}>{s.email}{s.phone?` · ${s.phone}`:''}</div>
               </div>
               {s.subject && <div style={{ fontSize:12, color:S.text2, maxWidth:220, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', flexShrink:0 }}>{s.subject}</div>}
-              <div style={{ fontSize:11, color:S.text3, flexShrink:0 }}>{new Date(s.created_at).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'2-digit'})}</div>
+              <div style={{ fontSize:11, color:S.text3, flexShrink:0 }}>{formatDateIST(s.created_at)}</div>
               <span style={{ fontSize:12, color:S.text3 }}>{expanded===s.id?'▲':'▼'}</span>
             </div>
             {expanded===s.id && (
