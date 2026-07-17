@@ -129,47 +129,41 @@ export default function AboutPage() {
 
         {/* TIMELINE + PRINCIPLES */}
         <section className="border-b" style={{ padding: '80px 48px', background: 'var(--bg2)', borderColor: 'var(--border)' }}>
-          <div className="grid grid-cols-1 md:grid-cols-2" style={{ maxWidth: 1200, margin: '0 auto', gap: 72 }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
 
-            {/* Timeline */}
-            <div>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>The build — month by month</div>
-              <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(22px,3vw,34px)', letterSpacing: '-.025em', lineHeight: 1.1, color: 'var(--text)', marginBottom: 32 }}>
-                Started Apr 2025.<br />Moving fast.
-              </h2>
-              <div className="flex flex-col">
-                {TIMELINE.map((t, i) => (
-                  <div key={t.month} className="flex" style={{ gap: 16, paddingBottom: i < TIMELINE.length - 1 ? 24 : 0, position: 'relative' }}>
-                    {i < TIMELINE.length - 1 && (
-                      <div className="absolute" style={{ left: 11, top: 22, bottom: 0, width: 1, background: 'var(--border)' }} />
-                    )}
-                    <div className="flex flex-col items-center flex-shrink-0" style={{ width: 22 }}>
-                      <div className="flex items-center justify-center z-10" style={{ width: 22, height: 22, borderRadius: '50%', border: '2px solid var(--border)', background: 'var(--bg)', flexShrink: 0 }}>
-                        <div style={{ width: 8, height: 8, borderRadius: '50%', background: t.color }} />
-                      </div>
-                    </div>
-                    <div style={{ paddingTop: 1 }}>
-                      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 4 }}>{t.month}</div>
-                      <div className="font-display font-bold" style={{ fontSize: 14.5, color: 'var(--text)', marginBottom: 4 }}>{t.event}</div>
-                      <div style={{ fontSize: 13, lineHeight: 1.6, color: 'var(--text2)' }}>
-                        {t.desc}
-                        {t.link && <> <a href={t.link.href} style={{ color: '#7C3AED' }}>{t.link.label}</a></>}
-                      </div>
-                    </div>
+            {/* Timeline — horizontal, wraps to multiple rows */}
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>The build — month by month</div>
+            <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(22px,3vw,34px)', letterSpacing: '-.025em', lineHeight: 1.1, color: 'var(--text)', marginBottom: 32 }}>
+              Started Apr 2025.<br />Moving fast.
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style={{ gap: 16, marginBottom: 72 }}>
+              {TIMELINE.map((t) => (
+                <div key={t.month} className="flex flex-col relative overflow-hidden" style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '18px 18px' }}>
+                  <div className="absolute top-0 left-0 right-0" style={{ height: 3, background: t.color }} />
+                  <div className="flex items-center" style={{ gap: 8, marginBottom: 8 }}>
+                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: t.color, flexShrink: 0 }} />
+                    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text3)' }}>{t.month}</div>
                   </div>
-                ))}
-              </div>
+                  <div className="font-display font-bold" style={{ fontSize: 14.5, lineHeight: 1.25, color: 'var(--text)', marginBottom: 6 }}>{t.event}</div>
+                  <div style={{ fontSize: 13, lineHeight: 1.6, color: 'var(--text2)' }}>
+                    {t.desc}
+                    {t.link && <> <a href={t.link.href} style={{ color: '#7C3AED' }}>{t.link.label}</a></>}
+                  </div>
+                </div>
+              ))}
             </div>
 
             {/* Before we built — the hours story */}
-            <div>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Before we built</div>
-              <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(22px,3vw,34px)', letterSpacing: '-.025em', lineHeight: 1.1, color: 'var(--text)', marginBottom: 24 }}>
-                Built on understanding.<br />Not around it.
-              </h2>
-              <p style={{ fontSize: 15, lineHeight: 1.72, color: 'var(--text2)', marginBottom: 24 }}>
-                Our five founding principles above are not a values page — they are the decisions that shaped every product, every partnership, and every line of code. They came from years spent inside the data organisations LabelNest was built to answer.
-              </p>
+            <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 48, alignItems: 'start' }}>
+              <div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Before we built</div>
+                <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(22px,3vw,34px)', letterSpacing: '-.025em', lineHeight: 1.1, color: 'var(--text)', marginBottom: 24 }}>
+                  Built on understanding.<br />Not around it.
+                </h2>
+                <p style={{ fontSize: 15, lineHeight: 1.72, color: 'var(--text2)' }}>
+                  Our five founding principles above are not a values page — they are the decisions that shaped every product, every partnership, and every line of code. They came from years spent inside the data organisations LabelNest was built to answer.
+                </p>
+              </div>
 
               {/* Hours box */}
               <div className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg,rgba(37,99,235,.08),rgba(124,58,237,.06))', border: '1px solid rgba(37,99,235,.15)', borderRadius: 16, padding: 28 }}>
