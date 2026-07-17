@@ -1,5 +1,6 @@
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import JourneyMap from '@/components/JourneyMap'
 import Link from 'next/link'
 import { Metadata } from 'next'
 import { pageMetadata } from '@/lib/seo'
@@ -10,21 +11,6 @@ export async function generateMetadata(): Promise<Metadata> {
     description: 'LabelNest is a private market intelligence and capital infrastructure company for emerging managers globally. We operate NestLens — Intelligence, Capital Readiness, and Exchange — the data layer global players were never going to build for India.',
   })
 }
-
-const TIMELINE = [
-  { month: 'Apr 2025', event: 'Planning begins', desc: 'While still at BlackRock (Preqin), Ankit begins planning LabelNest\'s product architecture and market approach.', color: '#2563EB' },
-  { month: 'Nov 2025', event: 'Left BlackRock. LabelNest goes full-time.', desc: 'Ankit leaves his VP role at BlackRock (post Preqin acquisition) to build LabelNest full-time. The public build begins.', color: '#E91E8C' },
-  { month: 'Dec 2025', event: 'NestHR live', desc: 'People and operations OS for startups and colleges. PlacementOS included from day one.', color: '#E91E8C' },
-  { month: 'Jan 2026', event: 'AnnoNest launches', desc: 'First annotation platform goes live.', color: '#E91E8C' },
-  { month: 'Feb 2026', event: 'AnnoNest pivots — internal split', desc: 'Multi-tenant AnnoNest paused and broken into purpose-built internal applications. The right call, not the easy one.', color: '#E91E8C' },
-  { month: 'Mar 2026', event: 'First Nestling cohort + all internal apps live', desc: 'Fellowship program launches. NestLabs and NestTech Cohort 1. All internal infrastructure fully operational.', color: '#10B981' },
-  { month: 'Apr 2026', event: 'NestLens live — Exchange with 10+ sellers', desc: 'Private markets intelligence platform live. Exchange marketplace open with verified sellers from day one.', color: '#E91E8C' },
-  { month: 'May 2026', event: 'Capital Readiness initiated', desc: 'Data room, investor tier scoring, and LP-GP matching begin development inside NestLens.', color: '#E91E8C' },
-  { month: 'Jun 2026', event: 'NestLens completely live', desc: 'All three modules — Intelligence, Exchange, Capital Readiness — fully live. Team at 13. 39 alumni. Website v2 deployed.', color: '#10B981' },
-  { month: 'Jul 2026', event: 'NestResolve multi-tenancy planned', desc: 'QA and governance platform architecture scoped. Early access target: October 2026.', color: '#2563EB' },
-  { month: 'Aug 2026', event: 'Something exciting coming', desc: 'Details soon.', color: '#7C3AED', link: { href: '/signal', label: 'Get early signal →' } },
-  { month: 'Sep 2026', event: 'AnnoNest reborn with a new brand', desc: 'The annotation platform returns — rebuilt, rebranded, and ready for the market.', color: '#F97316' },
-]
 
 export default function AboutPage() {
   return (
@@ -127,33 +113,13 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* TIMELINE + PRINCIPLES */}
+        {/* THE JOURNEY — aerial road-map timeline */}
+        <JourneyMap />
+
+        {/* BEFORE WE BUILT — the hours story */}
         <section className="border-b" style={{ padding: '80px 48px', background: 'var(--bg2)', borderColor: 'var(--border)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
 
-            {/* Timeline — horizontal, wraps to multiple rows */}
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>The build — month by month</div>
-            <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(22px,3vw,34px)', letterSpacing: '-.025em', lineHeight: 1.1, color: 'var(--text)', marginBottom: 32 }}>
-              Started Apr 2025.<br />Moving fast.
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style={{ gap: 16, marginBottom: 72 }}>
-              {TIMELINE.map((t) => (
-                <div key={t.month} className="flex flex-col relative overflow-hidden" style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '18px 18px' }}>
-                  <div className="absolute top-0 left-0 right-0" style={{ height: 3, background: t.color }} />
-                  <div className="flex items-center" style={{ gap: 8, marginBottom: 8 }}>
-                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: t.color, flexShrink: 0 }} />
-                    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text3)' }}>{t.month}</div>
-                  </div>
-                  <div className="font-display font-bold" style={{ fontSize: 14.5, lineHeight: 1.25, color: 'var(--text)', marginBottom: 6 }}>{t.event}</div>
-                  <div style={{ fontSize: 13, lineHeight: 1.6, color: 'var(--text2)' }}>
-                    {t.desc}
-                    {t.link && <> <a href={t.link.href} style={{ color: '#7C3AED' }}>{t.link.label}</a></>}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Before we built — the hours story */}
             <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 48, alignItems: 'start' }}>
               <div>
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Before we built</div>
