@@ -6,8 +6,8 @@ import { pageMetadata } from '@/lib/seo'
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/about', {
-    title: "About LabelNest — Building India's Private Markets Data Infrastructure",
-    description: 'LabelNest builds the data infrastructure private markets need. From 4 years at Preqin and BlackRock to a full product suite for emerging managers and analysts.',
+    title: "About LabelNest — Private Market Intelligence & Capital Infrastructure",
+    description: 'LabelNest is a private market intelligence and capital infrastructure company for emerging managers globally. We operate NestLens — Intelligence, Capital Readiness, and Exchange — the data layer global players were never going to build for India.',
   })
 }
 
@@ -80,6 +80,53 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* WHAT WE DO — company explanation + vision + pillars */}
+        <section className="border-b" style={{ padding: '80px 48px', background: 'var(--bg)', borderColor: 'var(--border)' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+
+            {/* About + Vision */}
+            <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 64, marginBottom: 64 }}>
+              <div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>What we do</div>
+                <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(22px,3vw,34px)', letterSpacing: '-.025em', lineHeight: 1.1, color: 'var(--text)', marginBottom: 20 }}>
+                  Intelligence and capital<br />infrastructure for<br />emerging managers.
+                </h2>
+                <p style={{ fontSize: 16, lineHeight: 1.75, color: 'var(--text2)' }}>
+                  LabelNest is a private market intelligence and capital infrastructure company built for emerging managers globally. We operate NestLens — a multi-product platform giving fund managers, founders, and institutional operators the data, tools, and infrastructure they need to raise capital, deploy it intelligently, and build with confidence. Founded in Bangalore in 2025, we are building the intelligence layer that global players were never going to build for India and the markets that look like India.
+                </p>
+              </div>
+              <div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Our vision</div>
+                <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(22px,3vw,34px)', letterSpacing: '-.025em', lineHeight: 1.1, color: 'var(--text)', marginBottom: 20 }}>
+                  The system of record<br />for private markets.
+                </h2>
+                <p style={{ fontSize: 16, lineHeight: 1.75, color: 'var(--text2)' }}>
+                  Our vision is to become the system of record for private market intelligence and capital infrastructure for emerging managers globally. We believe every fund manager, founder, and operator — regardless of geography — deserves access to institutional-grade data at a price that does not exclude them. Data should be owned, structured, and explainable. Not rented forever from opaque global platforms that treat emerging markets as an afterthought.
+                </p>
+              </div>
+            </div>
+
+            {/* Five founding principles */}
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 20 }}>Five founding principles</div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ gap: 16 }}>
+              {[
+                { title: 'Data That Teaches Machines Right', color: '#2563EB', desc: 'Every dataset we build is structured to be understood, not just consumed. We believe AI is only as trustworthy as the data behind it. We build data that can be explained to an auditor, a regulator, or an LP — not just a model.' },
+                { title: 'Owned, Not Rented', color: '#E91E8C', desc: 'We build infrastructure that organisations can control. No black box vendors, no opaque pricing, no perpetual dependency on platforms that hold your data hostage. Data should belong to the people who generate it and the teams who use it.' },
+                { title: 'Emerging First', color: '#10B981', desc: 'The markets that global platforms treat as afterthoughts are our primary focus. Emerging managers, emerging founders, emerging markets — not because they are second priority, but because they are the most underserved and the most overlooked opportunity in institutional intelligence.' },
+                { title: 'Human Accountability at Every Layer', color: '#F97316', desc: 'Automation speeds up what humans have already figured out. Every workflow we run has a human review layer — not as a checkbox, but because accountability cannot be delegated to an algorithm. If something is wrong in our data, a person is responsible for fixing it.' },
+                { title: 'Built to Last, Not to Flip', color: '#7C3AED', desc: 'We are not building for an exit. We are building for the long-term institutional trust that data companies require. The organisations that rely on our intelligence need to know we will be here in 10 years. That shapes every product decision, every partnership, and every line of code.' },
+              ].map(p => (
+                <div key={p.title} className="flex flex-col" style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '22px 22px', position: 'relative', overflow: 'hidden' }}>
+                  <div className="absolute top-0 left-0" style={{ width: 3, height: '100%', background: p.color }} />
+                  <div className="font-display font-bold" style={{ fontSize: 16.5, letterSpacing: '-.02em', color: 'var(--text)', marginBottom: 8 }}>{p.title}</div>
+                  <div style={{ fontSize: 13.5, lineHeight: 1.6, color: 'var(--text2)' }}>{p.desc}</div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </section>
+
         {/* TIMELINE + PRINCIPLES */}
         <section className="border-b" style={{ padding: '80px 48px', background: 'var(--bg2)', borderColor: 'var(--border)' }}>
           <div className="grid grid-cols-1 md:grid-cols-2" style={{ maxWidth: 1200, margin: '0 auto', gap: 72 }}>
@@ -114,32 +161,18 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* Principles + Hours */}
+            {/* Before we built — the hours story */}
             <div>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Built differently, by design</div>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Before we built</div>
               <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(22px,3vw,34px)', letterSpacing: '-.025em', lineHeight: 1.1, color: 'var(--text)', marginBottom: 24 }}>
-                The same five decisions.<br />Every product.
+                Built on understanding.<br />Not around it.
               </h2>
-              <div className="flex flex-col" style={{ gap: 12 }}>
-                {[
-                  ['Bootstrapped by choice', 'No VC-mandated growth at the expense of quality. Sustainable, piece-by-piece.'],
-                  ['INR-first pricing', 'No forex tax on Indian teams buying intelligence about Indian markets.'],
-                  ['Human verification at the core', 'Automation handles volume. People handle the decisions that actually matter.'],
-                  ['Internal tools become external products', 'DataNest, NestIntel, NestAgent — built for ourselves first, sold externally second.'],
-                  ['Potential over pedigree', 'We do not hire by institution. We hire for what people can do with hard problems.'],
-                ].map(([title, desc]) => (
-                  <div key={title} className="flex items-start" style={{ gap: 12, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 11, padding: '16px 18px' }}>
-                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--blue)', marginTop: 3, flexShrink: 0 }} />
-                    <div>
-                      <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)', marginBottom: 3 }}>{title}</div>
-                      <div style={{ fontSize: 13, lineHeight: 1.55, color: 'var(--text2)' }}>{desc}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <p style={{ fontSize: 15, lineHeight: 1.72, color: 'var(--text2)', marginBottom: 24 }}>
+                Our five founding principles above are not a values page — they are the decisions that shaped every product, every partnership, and every line of code. They came from years spent inside the data organisations LabelNest was built to answer.
+              </p>
 
               {/* Hours box */}
-              <div className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg,rgba(37,99,235,.08),rgba(124,58,237,.06))', border: '1px solid rgba(37,99,235,.15)', borderRadius: 16, padding: 28, marginTop: 24 }}>
+              <div className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg,rgba(37,99,235,.08),rgba(124,58,237,.06))', border: '1px solid rgba(37,99,235,.15)', borderRadius: 16, padding: 28 }}>
                 <div className="absolute top-0 left-0 right-0" style={{ height: 2, background: 'linear-gradient(90deg,#2563EB,#7C3AED)' }} />
                 <div className="font-display font-extrabold" style={{ fontSize: 48, letterSpacing: '-.05em', color: '#2563EB', lineHeight: 1, marginBottom: 8 }}>1,000+</div>
                 <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>Hours of domain knowledge — absorbed before building</div>
