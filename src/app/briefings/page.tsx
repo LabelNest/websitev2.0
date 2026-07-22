@@ -157,6 +157,22 @@ export default async function BriefingsPage() {
               <a href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7472967819387686913" target="_blank" rel="noopener noreferrer" style={{ display: 'block', textAlign: 'center', background: '#F97316', color: '#fff', fontSize: 13, fontWeight: 600, padding: 10, borderRadius: 8 }}>Follow on LinkedIn ↗</a>
             </div>
 
+            {/* Press */}
+            <div style={{ background: 'var(--surface)', border: '1px solid rgba(255,255,255,.07)', borderRadius: 14, padding: 20 }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Press</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                {[
+                  { name: 'The Hindustan Wires', url: 'https://thehindustanwires.com/labelnest-building-the-end-to-end-platform-indias-emerging-private-markets-have-never-had/' },
+                  { name: 'The Entrepreneur Stories', url: 'https://theentrepreneurstories.com/labelnest-building-the-end-to-end-platform-indias-emerging-private-markets-have-never-had/' },
+                  { name: 'The Business Stories', url: 'https://thebusinessstories.com/labelnest-building-the-end-to-end-platform-indias-emerging-private-markets-have-never-had/' },
+                ].map(p => (
+                  <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, fontWeight: 600, color: 'var(--text2)', textDecoration: 'none', lineHeight: 1.4, borderBottom: '1px solid rgba(255,255,255,.06)', paddingBottom: 10 }}>
+                    {p.name} ↗
+                  </a>
+                ))}
+              </div>
+            </div>
+
             {/* Authors */}
             <div style={{ background: 'var(--surface)', border: '1px solid rgba(255,255,255,.07)', borderRadius: 14, padding: 20 }}>
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Authors</div>
