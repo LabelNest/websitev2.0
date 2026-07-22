@@ -41,6 +41,13 @@ function authorGradient(name: string): string {
   return 'rgba(255,255,255,.08)'
 }
 
+const PRESS_MENTIONS = [
+  { name: 'The Hindustan Wires', url: 'https://thehindustanwires.com/labelnest-building-the-end-to-end-platform-indias-emerging-private-markets-have-never-had/' },
+  { name: 'The Entrepreneur Stories', url: 'https://theentrepreneurstories.com/labelnest-building-the-end-to-end-platform-indias-emerging-private-markets-have-never-had/' },
+  { name: 'The Business Stories', url: 'https://thebusinessstories.com/labelnest-building-the-end-to-end-platform-indias-emerging-private-markets-have-never-had/' },
+  { name: 'Dailyhunt', url: 'https://m.dailyhunt.in/news/india/english/thebusinessstories-epaper-dh81e4e6e2104e4dbbb7f32ee26194cfb7/-newsid-dh81e4e6e2104e4dbbb7f32ee26194cfb7_2c239de47aac428993f0e2058ec2aa95?sm=Y' },
+]
+
 export default async function BriefingsPage() {
   let briefings: Briefing[] = []
   try {
@@ -57,9 +64,46 @@ export default async function BriefingsPage() {
       <style>{`
         .briefing-featured:hover { border-color: #F97316 !important; transform: translateY(-3px); }
         .briefing-item:hover { opacity: 0.8; }
+        .press-card:hover { border-color: #F97316 !important; transform: translateY(-2px); }
+        @keyframes press-marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+        @keyframes press-dot { 0%,100% { opacity: 1; transform: scale(1) } 50% { opacity: .4; transform: scale(.7) } }
+        .press-track { animation: press-marquee 32s linear infinite; }
+        .press-band:hover .press-track { animation-play-state: paused; }
+        @media (prefers-reduced-motion: reduce) { .press-track { animation: none; } }
       `}</style>
       <Nav />
       <main style={{ paddingTop: 64 }}>
+
+        {/* PRESS — top of page, animated + highlighted */}
+        <section className="press-band" style={{ position: 'relative', overflow: 'hidden', borderBottom: '1px solid rgba(255,255,255,.06)', background: 'linear-gradient(135deg, rgba(249,115,22,.09), rgba(233,30,140,.05))' }}>
+          <div style={{ position: 'absolute', top: -80, right: -60, width: 360, height: 360, borderRadius: '50%', background: 'rgba(233,30,140,.08)', filter: 'blur(80px)', pointerEvents: 'none' }} />
+          <div style={{ maxWidth: 1200, margin: '0 auto', padding: '28px 48px 0', position: 'relative', zIndex: 2, textAlign: 'center' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: '#F97316', marginBottom: 10 }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#F97316', display: 'inline-block', animation: 'press-dot 2s ease-in-out infinite' }} />
+              In the Press
+            </div>
+            <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 'clamp(20px,2.6vw,30px)', letterSpacing: '-.02em', color: 'var(--text)', margin: '0 auto' }}>
+              What the press is saying about us
+            </h2>
+          </div>
+          <div style={{ overflow: 'hidden', padding: '22px 0 26px' }}>
+            <div className="press-track" style={{ display: 'flex', width: 'max-content', gap: 16 }}>
+              {[...Array(2)].map((_, rep) => (
+                <div key={rep} style={{ display: 'flex', gap: 16 }}>
+                  {PRESS_MENTIONS.map(p => (
+                    <a key={`${rep}-${p.name}`} href={p.url} target="_blank" rel="noopener noreferrer" className="press-card"
+                      style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 260, maxWidth: 260, padding: '16px 18px', background: 'var(--surface)', border: '1px solid rgba(249,115,22,.25)', borderRadius: 14, textDecoration: 'none', flexShrink: 0, transition: 'border-color .2s, transform .2s' }}>
+                      <span style={{ fontSize: 20, color: '#F97316', lineHeight: 1 }}>&ldquo;</span>
+                      <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)' }}>{p.name}</span>
+                      <span style={{ fontSize: 12, color: 'var(--text2)', lineHeight: 1.5 }}>Building the end-to-end platform India&apos;s emerging private markets have never had</span>
+                      <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.08em', textTransform: 'uppercase', color: '#F97316', marginTop: 2 }}>Read the story ↗</span>
+                    </a>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* HERO */}
         <section style={{ padding: '72px 48px 56px', borderBottom: '1px solid rgba(255,255,255,.06)', position: 'relative', overflow: 'hidden' }}>
