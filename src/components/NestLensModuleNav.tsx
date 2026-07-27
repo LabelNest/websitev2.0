@@ -10,6 +10,10 @@ const TABS = [
   { href: '/nestlens/pricing', label: 'Pricing', exact: false },
 ]
 
+// External -- NestLens's own app, not a page on this site -- rendered
+// separately below so it never matches the internal isActive highlighting.
+const MENTOR_APPLY_HREF = 'https://nestlens.labelnest.in/mentors/apply'
+
 export default function NestLensModuleNav() {
   const pathname = usePathname()
   return (
@@ -32,6 +36,13 @@ export default function NestLensModuleNav() {
           </Link>
         )
       })}
+      <a href={MENTOR_APPLY_HREF} target="_blank" rel="noreferrer" style={{
+        fontSize: 13, fontWeight: 500, padding: '7px 18px', borderRadius: 9,
+        textDecoration: 'none', color: 'var(--text2)', border: '1px solid transparent',
+        marginLeft: 'auto',
+      }}>
+        Become a mentor
+      </a>
     </div>
   )
 }
