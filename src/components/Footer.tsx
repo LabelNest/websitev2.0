@@ -507,9 +507,25 @@ export default function Footer() {
           display: "flex", alignItems: "center",
           justifyContent: "space-between", gap: 16, flexWrap: "wrap",
         }}>
-          <div style={{ fontSize: 12, color: C.dim }}>
-            © {new Date().getFullYear()} LabelNest India Private Limited ·
-            CIN: U63111KA2025PTC211812 · All rights reserved.
+          <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+            <div style={{ fontSize: 12, color: C.dim }}>
+              © {new Date().getFullYear()} LabelNest India Private Limited ·
+              CIN: U63111KA2025PTC211812 · All rights reserved.
+            </div>
+            <a
+              href="https://www.sarvam.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 6,
+                padding: "5px 12px", borderRadius: 999,
+                background: "rgba(124,58,237,0.1)", border: `1px solid rgba(124,58,237,0.3)`,
+                fontSize: 11, fontWeight: 700, color: C.purple, textDecoration: "none",
+                whiteSpace: "nowrap",
+              }}
+            >
+              <span style={{ fontSize: 13 }}>⚡</span>Powered by Sarvam
+            </a>
           </div>
           <SignatureLine />
         </div>

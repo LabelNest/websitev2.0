@@ -128,6 +128,37 @@ export default function CapitalPage() {
           </div>
         </section>
 
+        {/* DOCUMENT INTELLIGENCE */}
+        <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)' }}>New · Document Intelligence</div>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(16,185,129,.1)', color: '#10B981' }}>Live</div>
+            </div>
+            <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 12, maxWidth: 640 }}>Upload a document once. Never re-type what it already says.</h2>
+            <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 600, marginBottom: 32, lineHeight: 1.65 }}>
+              Attach a document to a data room field and Capital Readiness reads it — company name, incorporation date, entity type, registration number, headquarters — and shows you exactly what it found versus what&apos;s on file. One click applies it. Nothing is ever overwritten silently.
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 14 }}>
+              {[
+                { icon: '📄', title: 'Real document understanding', desc: 'Reads your Certificate of Incorporation, MOA, GST/PAN — not just OCR, actual structured field extraction with confidence scores.' },
+                { icon: '🔍', title: 'Shows the diff, not a guess', desc: 'Only fields that differ from what you already entered are surfaced. Empty fields get filled; nothing changes without your click.' },
+                { icon: '⚡', title: 'One click to apply', desc: 'Accept a suggestion and it updates the field instantly, linked back to the document it came from — full provenance, always.' },
+              ].map(f => (
+                <div key={f.title} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 22 }}>
+                  <div style={{ fontSize: 22, marginBottom: 10 }}>{f.icon}</div>
+                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14.5, color: 'var(--text)', marginBottom: 6 }}>{f.title}</div>
+                  <div style={{ fontSize: 12.5, color: 'var(--text3)', lineHeight: 1.6 }}>{f.desc}</div>
+                </div>
+              ))}
+            </div>
+            <a href="https://www.sarvam.ai" target="_blank" rel="noopener noreferrer"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 22, padding: '6px 13px', borderRadius: 999, background: 'rgba(124,58,237,.1)', border: '1px solid rgba(124,58,237,.3)', fontSize: 11.5, fontWeight: 700, color: '#7C3AED', textDecoration: 'none' }}>
+              <span style={{ fontSize: 13 }}>⚡</span>Powered by Sarvam
+            </a>
+          </div>
+        </section>
+
         {/* PRICING */}
         <section style={{ padding: '72px 48px', background: 'var(--bg2)', borderTop: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
