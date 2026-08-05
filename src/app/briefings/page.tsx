@@ -201,6 +201,15 @@ export default async function BriefingsPage() {
               <a href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7472967819387686913" target="_blank" rel="noopener noreferrer" style={{ display: 'block', textAlign: 'center', background: '#F97316', color: '#fff', fontSize: 13, fontWeight: 600, padding: 10, borderRadius: 8 }}>Follow on LinkedIn ↗</a>
             </div>
 
+            {/* Observatory */}
+            <div style={{ background: 'var(--surface)', border: '1px solid rgba(255,255,255,.08)', borderRadius: 14, padding: 20, position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg,#2563EB,#06B6D4)' }} />
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.12em', textTransform: 'uppercase', color: '#2563EB', marginBottom: 6 }}>NestLens Observatory</div>
+              <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 15, color: 'var(--text)', marginBottom: 4 }}>📡 Free intelligence reports</div>
+              <div style={{ fontSize: 12.5, color: 'var(--text2)', marginBottom: 14, lineHeight: 1.5 }}>Full relationship-intelligence reads on real venture studios, funds, and firms — no signup required to start reading.</div>
+              <a href="https://nestlens.labelnest.in/observatory" target="_blank" rel="noopener noreferrer" style={{ display: 'block', textAlign: 'center', background: '#2563EB', color: '#fff', fontSize: 13, fontWeight: 600, padding: 10, borderRadius: 8 }}>Explore Observatory ↗</a>
+            </div>
+
             {/* Press */}
             <div style={{ background: 'var(--surface)', border: '1px solid rgba(255,255,255,.07)', borderRadius: 14, padding: 20 }}>
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Press</div>
