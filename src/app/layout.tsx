@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Bricolage_Grotesque, Inter, JetBrains_Mono } from 'next/font/google'
 import ScrollToTop from '@/components/ScrollToTop'
 import DiyPromoPopup from '@/components/DiyPromoPopup'
+import KaiWidget from '@/components/KaiWidget'
 import './globals.css'
 
 const bricolage = Bricolage_Grotesque({
@@ -112,7 +113,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_SCHEMA) }}
         />
       </head>
-      <body><ScrollToTop />{children}<DiyPromoPopup /></body>
+      <body><ScrollToTop />{children}<DiyPromoPopup /><KaiWidget /></body>
     </html>
   )
 }
