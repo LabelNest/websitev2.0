@@ -59,6 +59,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/vs/datasite`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.75 },
     { url: `${baseUrl}/vs/juniper-square`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.75 },
     { url: `${baseUrl}/vs/dynamo`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/vs/allvue`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/vs/efront`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/vs/dealcloud`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/vs/altvia`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/vs/fundcount`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
   ]
 
   const briefingPages: MetadataRoute.Sitemap = briefings.map(b => ({
