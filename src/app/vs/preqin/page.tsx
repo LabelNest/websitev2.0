@@ -11,6 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const DATA: VsPageData = {
   slug: 'preqin',
+  category: 'intelligence',
   competitorName: 'Preqin',
   ourName: 'LabelNest',
   h1: 'LabelNest vs Preqin: Honest Comparison for Emerging Managers',

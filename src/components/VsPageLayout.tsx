@@ -3,6 +3,7 @@ import Footer from '@/components/Footer'
 import Link from 'next/link'
 
 type Verdict = 'win' | 'mid' | 'no'
+type VsCategory = 'intelligence' | 'capital-readiness' | 'fund-data-room' | 'exchange' | 'nesthr'
 interface TableRow {
   feature: string
   competitor: { text: string; verdict: Verdict }
@@ -11,7 +12,8 @@ interface TableRow {
 interface Cta { href: string; label: string; external?: boolean }
 
 export interface VsPageData {
-  slug: 'preqin' | 'pitchbook' | 'docsend' | 'carta' | 'datarade' | 'neudata' | 'dakota'
+  slug: string
+  category: VsCategory
   competitorName: string
   ourName: string // 'LabelNest' or 'Capital Readiness'
   h1: string
@@ -34,14 +36,22 @@ export interface VsPageData {
   finalSecondaryCta: Cta
 }
 
-const ALL_VS_PAGES: { slug: string; label: string }[] = [
-  { slug: 'preqin', label: 'LabelNest vs Preqin' },
-  { slug: 'pitchbook', label: 'LabelNest vs PitchBook' },
-  { slug: 'docsend', label: 'Capital Readiness vs DocSend' },
-  { slug: 'carta', label: 'Capital Readiness vs Carta' },
-  { slug: 'datarade', label: 'NestLens Exchange vs Datarade' },
-  { slug: 'neudata', label: 'NestLens vs Neudata' },
-  { slug: 'dakota', label: 'Capital Readiness vs Dakota' },
+// Single source of truth for cross-linking + sitemap category grouping. Every new
+// /vs/[slug] page must add itself here, or it won't show up in "Also compare" on any
+// page (including its own list of who links back to it).
+export const ALL_VS_PAGES: { slug: string; label: string; category: VsCategory }[] = [
+  { slug: 'preqin', label: 'LabelNest vs Preqin', category: 'intelligence' },
+  { slug: 'pitchbook', label: 'LabelNest vs PitchBook', category: 'intelligence' },
+  { slug: 'docsend', label: 'Capital Readiness vs DocSend', category: 'capital-readiness' },
+  { slug: 'carta', label: 'Capital Readiness vs Carta', category: 'capital-readiness' },
+  { slug: 'datarade', label: 'NestLens Exchange vs Datarade', category: 'exchange' },
+  { slug: 'neudata', label: 'NestLens vs Neudata', category: 'exchange' },
+  { slug: 'dakota', label: 'Capital Readiness vs Dakota', category: 'fund-data-room' },
+  { slug: 'cb-insights', label: 'LabelNest vs CB Insights', category: 'intelligence' },
+  { slug: 'crunchbase', label: 'LabelNest vs Crunchbase', category: 'intelligence' },
+  { slug: 'dealroom', label: 'LabelNest vs Dealroom', category: 'intelligence' },
+  { slug: 'capital-iq', label: 'LabelNest vs S&P Capital IQ', category: 'intelligence' },
+  { slug: 'bloomberg', label: 'LabelNest vs Bloomberg Terminal', category: 'intelligence' },
 ]
 
 const VERDICT_MARK: Record<Verdict, { symbol: string; color: string }> = {
@@ -59,8 +69,14 @@ function CtaButton({ cta, primary }: { cta: Cta; primary?: boolean }) {
     : <Link href={cta.href} style={style}>{cta.label}</Link>
 }
 
+const MAX_ALSO_COMPARE = 6
+
 export default function VsPageLayout(d: VsPageData) {
-  const otherPages = ALL_VS_PAGES.filter(p => p.slug !== d.slug)
+  const rest = ALL_VS_PAGES.filter(p => p.slug !== d.slug)
+  const sameCategory = rest.filter(p => p.category === d.category)
+  const otherPages = sameCategory.length >= MAX_ALSO_COMPARE
+    ? sameCategory.slice(0, MAX_ALSO_COMPARE)
+    : [...sameCategory, ...rest.filter(p => p.category !== d.category)].slice(0, MAX_ALSO_COMPARE)
 
   return (
     <>

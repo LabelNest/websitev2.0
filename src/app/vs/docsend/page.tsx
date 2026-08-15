@@ -11,6 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const DATA: VsPageData = {
   slug: 'docsend',
+  category: 'capital-readiness',
   competitorName: 'DocSend',
   ourName: 'Capital Readiness',
   h1: 'Capital Readiness vs DocSend: Which One Actually Helps You Raise?',
