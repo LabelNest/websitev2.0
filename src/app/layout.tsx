@@ -61,7 +61,7 @@ const ORGANIZATION_SCHEMA = {
   alternateName: 'LabelNest',
   url: 'https://labelnest.in',
   logo: 'https://labelnest.in/og-default.png',
-  description: 'Private markets intelligence, data marketplace, and capital readiness platform for emerging managers and analysts.',
+  description: 'LabelNest builds data systems and intelligence platforms. NestLens is its private markets OS (Intelligence, Exchange, Capital Readiness); NestHR is its HR and campus-placement OS. Built in India.',
   founders: [{ '@type': 'Person', name: 'Ankit Suman', jobTitle: 'Founder and Director', url: 'https://labelnest.in/about/ankit' }],
   address: {
     '@type': 'PostalAddress',
@@ -73,6 +73,28 @@ const ORGANIZATION_SCHEMA = {
   },
   sameAs: ['https://www.linkedin.com/company/labelnest'],
   contactPoint: [{ '@type': 'ContactPoint', email: 'contact@labelnest.in', contactType: 'customer support', areaServed: 'IN', availableLanguage: 'English' }],
+  makesOffer: [
+    {
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'SoftwareApplication',
+        name: 'NestLens',
+        url: 'https://nestlens.labelnest.in',
+        applicationCategory: 'BusinessApplication',
+        description: 'Private markets OS — Intelligence, Exchange, and Capital Readiness modules.',
+      },
+    },
+    {
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'SoftwareApplication',
+        name: 'NestHR',
+        url: 'https://nesthr.labelnest.in',
+        applicationCategory: 'BusinessApplication',
+        description: 'HR and placement OS — 7 modules including PlacementOS for campus recruitment.',
+      },
+    },
+  ],
 }
 
 const WEBSITE_SCHEMA = {
