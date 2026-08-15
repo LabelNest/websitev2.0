@@ -57,6 +57,11 @@ export const ALL_VS_PAGES: { slug: string; label: string; category: VsCategory }
   { slug: 'sourcescrub', label: 'LabelNest vs SourceScrub', category: 'intelligence' },
   { slug: 'grata', label: 'LabelNest vs Grata', category: 'intelligence' },
   { slug: 'factset', label: 'LabelNest vs FactSet', category: 'intelligence' },
+  { slug: 'foundersuite', label: 'Capital Readiness vs Foundersuite', category: 'capital-readiness' },
+  { slug: 'visible', label: 'Capital Readiness vs Visible', category: 'capital-readiness' },
+  { slug: 'pulley', label: 'Capital Readiness vs Pulley', category: 'capital-readiness' },
+  { slug: 'gust', label: 'Capital Readiness vs Gust', category: 'capital-readiness' },
+  { slug: 'angellist', label: 'Capital Readiness vs AngelList', category: 'capital-readiness' },
 ]
 
 const VERDICT_MARK: Record<Verdict, { symbol: string; color: string }> = {
