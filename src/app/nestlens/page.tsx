@@ -23,7 +23,8 @@ const SOFTWARE_SCHEMA = {
   applicationSubCategory: 'Private Markets Intelligence Platform',
   description: 'Private markets OS with Intelligence, Exchange, and Capital Readiness modules. Track 40,000+ entities, buy verified data, build investor data rooms.',
   url: 'https://nestlens.labelnest.in',
-  publisher: { '@type': 'Organization', name: 'LabelNest India Private Limited' },
+  publisher: { '@type': 'Organization', name: 'LabelNest India Private Limited', url: 'https://labelnest.in' },
+  brand: { '@type': 'Brand', name: 'LabelNest', url: 'https://labelnest.in' },
   offers: { '@type': 'Offer', priceCurrency: 'INR', availability: 'https://schema.org/InStock' },
   featureList: [
     '40,000+ tracked entities',

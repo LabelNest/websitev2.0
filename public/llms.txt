@@ -1,0 +1,34 @@
+# LabelNest
+
+> LabelNest is a data systems and intelligence company based in Bengaluru, India. It builds
+> and operates two products: NestLens, a private markets operating system for emerging fund
+> managers and analysts, and NestHR, an HR and campus-placement operating system for startups
+> and colleges. Founder and Director: Ankit Suman.
+
+## Products
+
+- [NestLens](https://labelnest.in/nestlens): Private markets OS with three modules —
+  Intelligence (tracks 40,000+ entities: companies, funds, GPs, LPs, deals, service providers),
+  Exchange (marketplace for buying/selling verified structured private-markets data, KYC-verified
+  sellers), and Capital Readiness (investor-ready data room builder, LP-GP matching). Credit-based
+  access, no lock-in. Live at nestlens.labelnest.in.
+- [NestLens vs Preqin](https://labelnest.in/vs/preqin)
+- [NestLens vs PitchBook](https://labelnest.in/vs/pitchbook)
+- [NestLens vs DocSend](https://labelnest.in/vs/docsend)
+- [NestLens vs Carta](https://labelnest.in/vs/carta)
+- [NestHR](https://labelnest.in/nesthr): HR and placement OS with 7 modules — People, Talent OS /
+  PlacementOS (its flagship module, built for campus recruitment and startup hiring, improves
+  shortlisting accuracy from every selection/rejection signal), Performance, Expense, Learning,
+  Analytics, Admin. INR pricing, built for India. Live at nesthr.labelnest.in.
+
+## Company
+
+- [LabelNest Ecosystem](https://labelnest.in/ecosystem): how NestLens, NestHR, and Managed
+  Services relate, plus the internal infrastructure (DataNest, NestIntel, NestAgent) that powers
+  them — not sold directly.
+- [About](https://labelnest.in/about)
+- [Team](https://labelnest.in/team)
+- [Services](https://labelnest.in/services): managed data operations.
+- [Briefings](https://labelnest.in/briefings): blog and newsletter content.
+- [Careers](https://labelnest.in/careers)
+- [Contact](https://labelnest.in/contact)

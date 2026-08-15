@@ -70,7 +70,8 @@ const SOFTWARE_SCHEMA = {
   applicationSubCategory: 'Human Resources Software',
   description: 'HR and workforce operations OS for startups and colleges. 7 modules including PlacementOS for campus recruitment.',
   url: 'https://nesthr.labelnest.in',
-  publisher: { '@type': 'Organization', name: 'LabelNest India Private Limited' },
+  publisher: { '@type': 'Organization', name: 'LabelNest India Private Limited', url: 'https://labelnest.in' },
+  brand: { '@type': 'Brand', name: 'LabelNest', url: 'https://labelnest.in' },
   offers: [
     { '@type': 'Offer', name: 'Starter', price: '799', priceCurrency: 'INR', description: 'Per employee per year, up to 50 employees' },
     { '@type': 'Offer', name: 'Growth', price: '1299', priceCurrency: 'INR', description: 'Per employee per year, 51-200 employees' },

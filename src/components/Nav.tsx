@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react'
 const links = [
   { href: '/about',     label: 'About'              },
   { href: '/nestlens',  label: 'NestLens'            },
+  { href: '/nesthr',    label: 'NestHR'              },
   { href: '/ecosystem', label: 'Ecosystem'           },
   { href: '/services',  label: 'Services'            },
   { href: '/briefings', label: 'Blogs & Newsletters' },
