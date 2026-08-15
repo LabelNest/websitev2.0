@@ -67,6 +67,11 @@ export const ALL_VS_PAGES: { slug: string; label: string; category: VsCategory }
   { slug: 'datasite', label: 'Capital Readiness vs Datasite', category: 'fund-data-room' },
   { slug: 'juniper-square', label: 'Capital Readiness vs Juniper Square', category: 'fund-data-room' },
   { slug: 'dynamo', label: 'Capital Readiness vs Dynamo Software', category: 'fund-data-room' },
+  { slug: 'allvue', label: 'Capital Readiness vs Allvue Systems', category: 'fund-data-room' },
+  { slug: 'efront', label: 'Capital Readiness vs eFront', category: 'fund-data-room' },
+  { slug: 'dealcloud', label: 'Capital Readiness vs DealCloud', category: 'fund-data-room' },
+  { slug: 'altvia', label: 'Capital Readiness vs Altvia', category: 'fund-data-room' },
+  { slug: 'fundcount', label: 'Capital Readiness vs FundCount', category: 'fund-data-room' },
 ]
 
 const VERDICT_MARK: Record<Verdict, { symbol: string; color: string }> = {
