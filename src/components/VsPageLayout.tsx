@@ -52,6 +52,11 @@ export const ALL_VS_PAGES: { slug: string; label: string; category: VsCategory }
   { slug: 'dealroom', label: 'LabelNest vs Dealroom', category: 'intelligence' },
   { slug: 'capital-iq', label: 'LabelNest vs S&P Capital IQ', category: 'intelligence' },
   { slug: 'bloomberg', label: 'LabelNest vs Bloomberg Terminal', category: 'intelligence' },
+  { slug: 'tracxn', label: 'LabelNest vs Tracxn', category: 'intelligence' },
+  { slug: 'venture-intelligence', label: 'LabelNest vs Venture Intelligence', category: 'intelligence' },
+  { slug: 'sourcescrub', label: 'LabelNest vs SourceScrub', category: 'intelligence' },
+  { slug: 'grata', label: 'LabelNest vs Grata', category: 'intelligence' },
+  { slug: 'factset', label: 'LabelNest vs FactSet', category: 'intelligence' },
 ]
 
 const VERDICT_MARK: Record<Verdict, { symbol: string; color: string }> = {
