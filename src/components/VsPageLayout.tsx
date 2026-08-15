@@ -62,6 +62,11 @@ export const ALL_VS_PAGES: { slug: string; label: string; category: VsCategory }
   { slug: 'pulley', label: 'Capital Readiness vs Pulley', category: 'capital-readiness' },
   { slug: 'gust', label: 'Capital Readiness vs Gust', category: 'capital-readiness' },
   { slug: 'angellist', label: 'Capital Readiness vs AngelList', category: 'capital-readiness' },
+  { slug: 'dropbox', label: 'Capital Readiness vs Dropbox', category: 'capital-readiness' },
+  { slug: 'google-drive', label: 'Capital Readiness vs Google Drive', category: 'capital-readiness' },
+  { slug: 'datasite', label: 'Capital Readiness vs Datasite', category: 'fund-data-room' },
+  { slug: 'juniper-square', label: 'Capital Readiness vs Juniper Square', category: 'fund-data-room' },
+  { slug: 'dynamo', label: 'Capital Readiness vs Dynamo Software', category: 'fund-data-room' },
 ]
 
 const VERDICT_MARK: Record<Verdict, { symbol: string; color: string }> = {
