@@ -11,6 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const DATA: VsPageData = {
   slug: 'carta',
+  category: 'capital-readiness',
   competitorName: 'Carta',
   ourName: 'Capital Readiness',
   h1: 'Capital Readiness vs Carta: Different Jobs, Different Tools.',

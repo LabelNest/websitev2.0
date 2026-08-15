@@ -11,6 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const DATA: VsPageData = {
   slug: 'datarade',
+  category: 'exchange',
   competitorName: 'Datarade',
   ourName: 'NestLens Exchange',
   h1: 'NestLens Exchange vs Datarade: Which Data Marketplace Fits Your Search?',

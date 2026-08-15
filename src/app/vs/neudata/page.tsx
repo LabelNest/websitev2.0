@@ -11,6 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const DATA: VsPageData = {
   slug: 'neudata',
+  category: 'exchange',
   competitorName: 'Neudata',
   ourName: 'NestLens',
   h1: 'NestLens vs Neudata: Research Tool or Marketplace You Can Actually Transact On?',
