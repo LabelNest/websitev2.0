@@ -72,6 +72,11 @@ export const ALL_VS_PAGES: { slug: string; label: string; category: VsCategory }
   { slug: 'dealcloud', label: 'Capital Readiness vs DealCloud', category: 'fund-data-room' },
   { slug: 'altvia', label: 'Capital Readiness vs Altvia', category: 'fund-data-room' },
   { slug: 'fundcount', label: 'Capital Readiness vs FundCount', category: 'fund-data-room' },
+  { slug: 'intralinks', label: 'Capital Readiness vs Intralinks', category: 'fund-data-room' },
+  { slug: 'ideals', label: 'Capital Readiness vs iDeals', category: 'fund-data-room' },
+  { slug: 'aws-data-exchange', label: 'NestLens Exchange vs AWS Data Exchange', category: 'exchange' },
+  { slug: 'snowflake-marketplace', label: 'NestLens Exchange vs Snowflake Marketplace', category: 'exchange' },
+  { slug: 'nasdaq-data-link', label: 'NestLens Exchange vs Nasdaq Data Link', category: 'exchange' },
 ]
 
 const VERDICT_MARK: Record<Verdict, { symbol: string; color: string }> = {
