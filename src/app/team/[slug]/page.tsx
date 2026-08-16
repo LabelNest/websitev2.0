@@ -11,6 +11,7 @@ import {
 } from '@/lib/db'
 import { pageMetadata } from '@/lib/seo'
 import { imgFrameStyle } from '@/lib/image'
+import { normalizeExternalUrl } from '@/lib/utils'
 import { DEPT_COLORS } from '../page'
 
 type Props = { params: Promise<{ slug: string }> }
@@ -47,7 +48,8 @@ export default async function ProfilePage({ params }: Props) {
   const imageUrl = member?.image_url ?? fellow?.image_url ?? intern?.image_url ?? null
   const imagePosition = member?.image_position ?? fellow?.image_position ?? intern?.image_position ?? '50% 0%'
   const imageZoom = member?.image_zoom ?? fellow?.image_zoom ?? intern?.image_zoom ?? 1
-  const linkedinUrl = member?.linkedin_url ?? fellow?.linkedin_url ?? intern?.linkedin_url ?? null
+  const linkedinUrlRaw = member?.linkedin_url ?? fellow?.linkedin_url ?? intern?.linkedin_url ?? null
+  const linkedinUrl = linkedinUrlRaw ? normalizeExternalUrl(linkedinUrlRaw) : null
   const department = member?.department || fellow?.department || fellow?.cohort || intern?.cohort || ''
   const bio = member?.bio ?? fellow?.bio ?? null
   const email = member?.email ?? fellow?.email ?? null

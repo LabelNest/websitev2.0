@@ -7,6 +7,7 @@ import { getTeamMembers, getAlumni, getFellows, getInterns } from '@/lib/db'
 import AlumniGrid from './AlumniGrid'
 import { pageMetadata } from '@/lib/seo'
 import { imgFrameStyle } from '@/lib/image'
+import { normalizeExternalUrl } from '@/lib/utils'
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/team', {
@@ -153,7 +154,7 @@ export default async function TeamPage() {
                     {profileHref ? <Link href={profileHref} className="block">{photoAndName}</Link> : photoAndName}
                     {m.linkedin_url ? (
                       <div style={{ padding: '10px 16px 16px' }}>
-                        <a href={m.linkedin_url} target="_blank" rel="noopener noreferrer"
+                        <a href={normalizeExternalUrl(m.linkedin_url)} target="_blank" rel="noopener noreferrer"
                           className="inline-flex items-center" style={{ gap: 5, fontSize: 11.5, color: '#2563EB' }}>
                           LinkedIn →
                         </a>

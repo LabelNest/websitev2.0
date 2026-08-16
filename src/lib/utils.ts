@@ -1,3 +1,12 @@
+// Admin-entered external URLs (LinkedIn, website, etc.) are sometimes saved without
+// a scheme, e.g. "www.linkedin.com/in/handle" — rendered as <a href> directly, that
+// resolves as a same-origin relative path instead of an external link (confirmed live
+// 2026-08-16 via GSC: labelnest.in/www.linkedin.com/in/jeevanprakashkv showing as a
+// 404 in Coverage). Prepend https:// whenever no scheme is already present.
+export function normalizeExternalUrl(url: string): string {
+  return /^https?:\/\//i.test(url) ? url : `https://${url}`
+}
+
 // Timestamp display — always IST (Asia/Kolkata), regardless of viewer/server timezone
 export function formatDateTimeIST(value: string | Date): string {
   return new Date(value).toLocaleString('en-IN', {
