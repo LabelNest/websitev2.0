@@ -12,9 +12,30 @@ export async function generateMetadata(): Promise<Metadata> {
   })
 }
 
+// Real published tiers only — Enterprise/Custom entries have no fixed price and are
+// intentionally excluded from structured Offer data (schema.org Offer expects a price).
+const PRICING_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  isPartOf: { '@id': 'https://labelnest.in/nestlens#software' },
+  name: 'NestLens',
+  offers: [
+    { '@type': 'Offer', name: 'Intelligence — Individual', price: '14999', priceCurrency: 'INR', priceValidUntil: '2027-08-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Intelligence' },
+    { '@type': 'Offer', name: 'Intelligence — Core', price: '54999', priceCurrency: 'INR', priceValidUntil: '2027-08-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Intelligence' },
+    { '@type': 'Offer', name: 'Intelligence — Growth', price: '104999', priceCurrency: 'INR', priceValidUntil: '2027-08-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Intelligence' },
+    { '@type': 'Offer', name: 'Intelligence — Pro', price: '164999', priceCurrency: 'INR', priceValidUntil: '2027-08-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Intelligence' },
+    { '@type': 'Offer', name: 'Exchange — Buyer', price: '0', priceCurrency: 'USD', priceValidUntil: '2027-08-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Exchange' },
+    { '@type': 'Offer', name: 'Exchange — Seller', price: '199', priceCurrency: 'USD', priceValidUntil: '2027-08-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Exchange' },
+    { '@type': 'Offer', name: 'Capital Readiness — Founder (India)', price: '999', priceCurrency: 'INR', priceValidUntil: '2027-08-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Capital Readiness' },
+    { '@type': 'Offer', name: 'Capital Readiness — Founder (Global)', price: '30', priceCurrency: 'USD', priceValidUntil: '2027-08-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Capital Readiness' },
+    { '@type': 'Offer', name: 'Capital Readiness — Fund', price: '45', priceCurrency: 'USD', priceValidUntil: '2027-08-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Capital Readiness' },
+  ],
+}
+
 export default function NestLensPricingPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(PRICING_SCHEMA) }} />
       <Nav />
       <NestLensModuleNav />
       <main style={{ paddingTop: 64 }}>

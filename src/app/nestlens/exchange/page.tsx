@@ -30,9 +30,22 @@ const BREADCRUMB_SCHEMA = breadcrumbSchema([
   { name: 'Exchange', path: '/nestlens/exchange' },
 ])
 
+const MODULE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'NestLens Exchange',
+  applicationCategory: 'BusinessApplication',
+  applicationSubCategory: 'Data Marketplace',
+  description: "Buy and sell structured datasets, AI training data, research reports, and alternative data. KYC-verified sellers, escrow protection, quality scores. India's data marketplace.",
+  url: 'https://labelnest.in/nestlens/exchange',
+  isPartOf: { '@id': 'https://labelnest.in/nestlens#software' },
+  featureList: CATEGORIES.map(c => `${c.name}: ${c.desc}`),
+}
+
 export default function ExchangePage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(MODULE_SCHEMA) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_SCHEMA) }} />
       <Nav />
       <DiyBanner />

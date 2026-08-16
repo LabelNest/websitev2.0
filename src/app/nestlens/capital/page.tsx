@@ -39,10 +39,23 @@ const BREADCRUMB_SCHEMA = breadcrumbSchema([
   { name: 'Capital Readiness', path: '/nestlens/capital' },
 ])
 
+const MODULE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'NestLens Capital Readiness',
+  applicationCategory: 'BusinessApplication',
+  applicationSubCategory: 'Fundraise Data Room Builder',
+  description: 'Build an investor-ready data room in minutes. 10 sections, 51 items. Investor tier scoring, LP-GP matching, grant and competition discovery. For pre-seed to Series A.',
+  url: 'https://labelnest.in/nestlens/capital',
+  isPartOf: { '@id': 'https://labelnest.in/nestlens#software' },
+  featureList: [...DATA_ROOM_SECTIONS.map(s => `${s.name}: ${s.desc}`), ...MATCHING.map(m => `${m.name}: ${m.desc}`)],
+}
+
 export default function CapitalPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_SCHEMA) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(MODULE_SCHEMA) }} />
       <Nav />
       <DiyBanner />
       <NestLensModuleNav />
