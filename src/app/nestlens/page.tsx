@@ -14,6 +14,53 @@ export async function generateMetadata(): Promise<Metadata> {
   })
 }
 
+// Every answer restates a fact already published elsewhere on this page (module
+// descriptions, pricing table) — nothing here is new/invented copy.
+const FAQS = [
+  {
+    q: 'What is NestLens?',
+    a: 'NestLens is a private markets operating system with three live modules — Intelligence, Exchange, and Capital Readiness — built for analysts, fund managers, and operators who need structured intelligence, a live data marketplace, and a capital readiness system in one place.',
+  },
+  {
+    q: 'What are the three NestLens modules?',
+    a: 'Intelligence tracks 40,000+ private-market entities with 12,000+ verified contacts. Exchange is a marketplace to buy, sell, and license structured datasets with KYC-verified sellers and escrow-protected transactions. Capital Readiness builds an investor-ready data room (10 sections, 51 items) with investor tier scoring and LP-GP matching.',
+  },
+  {
+    q: 'How much does NestLens Intelligence cost?',
+    a: 'NestLens Intelligence starts at ₹14,999/month (Individual plan, or ₹1,50,000/year). The Pro plan is ₹1,64,999/month with 5 seats, 400 credits/month, and 2 data rooms. Enterprise pricing is available on request.',
+  },
+  {
+    q: 'Is NestLens Exchange free to use?',
+    a: 'Yes — Exchange is free to browse, view project briefs, and post as a buyer, paying only per project via credits. Sellers pay $199/year for an active listing with 15 applications/month included.',
+  },
+  {
+    q: 'How much does NestLens Capital Readiness cost?',
+    a: 'Capital Readiness starts at ₹999/month for founders in India (₹9,999/year). A Global founder plan and a Fund plan ($45/month, $500/year, with 1 fund data room included) are also available. Enterprise pricing covers cohort access for accelerators and incubators.',
+  },
+  {
+    q: 'Are NestLens Exchange sellers verified?',
+    a: 'Yes. Every seller is KYC-verified before they can list, transactions are escrow-protected, and datasets carry quality-control scores.',
+  },
+  {
+    q: 'Does NestLens offer Enterprise or Bundle pricing?',
+    a: 'Yes. Enterprise pricing covers custom seats, credit volumes, entity access, and SLA agreements for institutional funds, research firms, and accelerators. Bundle pricing combines Intelligence and Capital Readiness at a negotiated rate.',
+  },
+  {
+    q: 'Is NestLens the same as NestHR?',
+    a: "No. NestLens is LabelNest's private markets OS (Intelligence, Exchange, Capital Readiness). NestHR is a separate product — LabelNest's HR and campus-placement OS, with its own pricing at nesthr.labelnest.in.",
+  },
+]
+
+const FAQ_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map(f => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+}
+
 const SOFTWARE_SCHEMA = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
@@ -42,6 +89,7 @@ export default function NestLensPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SOFTWARE_SCHEMA) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }} />
       <Nav />
       <DiyBanner />
       <NestLensModuleNav />
@@ -167,6 +215,24 @@ export default function NestLensPage() {
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#2563EB', color: '#fff', fontSize: 14, fontWeight: 600, padding: '12px 24px', borderRadius: 10 }}>See full pricing ↗</a>
               <a href="https://nestlens.labelnest.in/enterprise-enquiry" target="_blank" rel="noopener noreferrer"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14, fontWeight: 500, padding: '12px 24px', borderRadius: 10, border: '1px solid rgba(255,255,255,.1)' }}>Enquire about Enterprise or Bundle</a>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section style={{ padding: '72px 48px', borderBottom: '1px solid var(--border)' }}>
+          <div style={{ maxWidth: 800, margin: '0 auto' }}>
+            <div style={{ textAlign: 'center', marginBottom: 32 }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>FAQ</div>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>Common questions</h2>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {FAQS.map(f => (
+                <details key={f.q} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '16px 20px' }}>
+                  <summary style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)', cursor: 'pointer', listStyle: 'none' }}>{f.q}</summary>
+                  <p style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.7, marginTop: 12 }}>{f.a}</p>
+                </details>
+              ))}
             </div>
           </div>
         </section>
