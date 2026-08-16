@@ -4,7 +4,8 @@ import DiyBanner from '@/components/DiyBanner'
 import HoverDiv from '@/components/HoverDiv'
 import Link from 'next/link'
 import { Metadata } from 'next'
-import { pageMetadata } from '@/lib/seo'
+import { pageMetadata, breadcrumbSchema } from '@/lib/seo'
+import { ALL_VS_PAGES } from '@/components/VsPageLayout'
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/nesthr', {
@@ -76,13 +77,66 @@ const SOFTWARE_SCHEMA = {
     { '@type': 'Offer', name: 'Starter', price: '799', priceCurrency: 'INR', description: 'Per employee per year, up to 50 employees' },
     { '@type': 'Offer', name: 'Growth', price: '1299', priceCurrency: 'INR', description: 'Per employee per year, 51-200 employees' },
   ],
-  featureList: ['People OS', 'Talent OS / PlacementOS', 'Performance OS', 'Expense OS', 'Learning OS', 'Analytics', 'Admin'],
+  featureList: OS_MODULES.map(m => `${m.name}: ${m.desc}`),
+}
+
+const BREADCRUMB_SCHEMA = breadcrumbSchema([
+  { name: 'NestHR', path: '/nesthr' },
+])
+
+// Every answer restates a fact already published elsewhere on this page (module
+// descriptions, pricing table, PlacementOS deep dive) — nothing here is invented copy.
+const FAQS = [
+  {
+    q: 'What is NestHR?',
+    a: 'NestHR is an HR and workforce operations OS with seven purpose-built modules — People OS, Talent OS / PlacementOS, Performance OS, Expense OS, Learning OS, Analytics, and Admin — built for startups and colleges.',
+  },
+  {
+    q: 'What is PlacementOS?',
+    a: "PlacementOS is NestHR's flagship module, built for colleges managing campus recruitment and startups managing talent pipelines. It learns from every selection and rejection signal, improving shortlisting accuracy with every hiring cycle — unlike a static ATS that just tracks candidates.",
+  },
+  {
+    q: 'How much does NestHR cost?',
+    a: 'NestHR is priced per employee per year with all seven modules included at every tier. Starter is ₹799/employee/year for teams up to 50. Growth is ₹1,299/employee/year for teams of 51-200. Enterprise (200+ employees or colleges) is custom-priced.',
+  },
+  {
+    q: 'Are all modules included in every plan?',
+    a: 'Yes. Every NestHR plan includes all 7 OS modules — there are no module upsells, no per-seat tricks, and no separate pricing for PlacementOS.',
+  },
+  {
+    q: 'Is NestHR for startups or for colleges?',
+    a: 'Both, on the same platform. Startups use People OS, Performance OS, Expense OS, Talent OS, and Learning OS for general workforce operations. Colleges and institutions use PlacementOS specifically for full campus recruitment cycles, from JD creation to offer letters.',
+  },
+  {
+    q: 'Does NestHR charge in INR?',
+    a: 'Yes. NestHR pricing is entirely INR — no forex tax, no currency conversion on billing.',
+  },
+  {
+    q: 'Is there a free trial?',
+    a: 'Yes, NestHR offers a free trial with all 7 modules available from day one, including PlacementOS.',
+  },
+  {
+    q: 'Is NestHR the same as NestLens?',
+    a: "No. NestHR is LabelNest's HR and campus-placement OS. NestLens is a separate product — LabelNest's private markets OS (Intelligence, Exchange, Capital Readiness), with its own pricing at nestlens.labelnest.in.",
+  },
+]
+
+const FAQ_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map(f => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
 }
 
 export default function NestHRPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SOFTWARE_SCHEMA) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_SCHEMA) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }} />
       <Nav />
       <DiyBanner />
       <main style={{ paddingTop: 64 }}>
@@ -281,6 +335,39 @@ export default function NestHRPage() {
             </div>
             <div style={{ marginTop: 14, padding: '14px 20px', background: 'rgba(255,255,255,.03)', border: '1px solid rgba(255,255,255,.06)', borderRadius: 10, fontSize: 13, color: 'var(--text3)', textAlign: 'center' }}>
               All plans include all 7 modules. No module upsells. No per-seat tricks. INR pricing — no forex tax.
+            </div>
+          </div>
+        </section>
+
+        {/* COMPARE */}
+        <section style={{ padding: '48px 48px', borderBottom: '1px solid var(--border)' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>How NestHR compares</div>
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+              {ALL_VS_PAGES.filter(p => p.category === 'nesthr').map(p => (
+                <Link key={p.slug} href={`/vs/${p.slug}`}
+                  style={{ fontSize: 13, color: 'var(--text2)', padding: '9px 16px', borderRadius: 9, border: '1px solid var(--border)', background: 'var(--surface)', textDecoration: 'none' }}>
+                  {p.label} →
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)' }}>
+          <div style={{ maxWidth: 800, margin: '0 auto' }}>
+            <div style={{ textAlign: 'center', marginBottom: 32 }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>FAQ</div>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>Common questions</h2>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {FAQS.map(f => (
+                <details key={f.q} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '16px 20px' }}>
+                  <summary style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)', cursor: 'pointer', listStyle: 'none' }}>{f.q}</summary>
+                  <p style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.7, marginTop: 12 }}>{f.a}</p>
+                </details>
+              ))}
             </div>
           </div>
         </section>
