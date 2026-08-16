@@ -86,6 +86,11 @@ export const ALL_VS_PAGES: { slug: string; label: string; category: VsCategory }
   { slug: 'darwinbox', label: 'NestHR vs Darwinbox', category: 'nesthr' },
   { slug: 'greythr', label: 'NestHR vs greytHR', category: 'nesthr' },
   { slug: 'zoho-people', label: 'NestHR vs Zoho People', category: 'nesthr' },
+  { slug: 'pocket-hrms', label: 'NestHR vs Pocket HRMS', category: 'nesthr' },
+  { slug: 'hrone', label: 'NestHR vs HROne', category: 'nesthr' },
+  { slug: 'bamboohr', label: 'NestHR vs BambooHR', category: 'nesthr' },
+  { slug: 'rippling', label: 'NestHR vs Rippling', category: 'nesthr' },
+  { slug: 'deel', label: 'NestHR vs Deel', category: 'nesthr' },
 ]
 
 const VERDICT_MARK: Record<Verdict, { symbol: string; color: string }> = {
