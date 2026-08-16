@@ -77,6 +77,10 @@ export const ALL_VS_PAGES: { slug: string; label: string; category: VsCategory }
   { slug: 'aws-data-exchange', label: 'NestLens Exchange vs AWS Data Exchange', category: 'exchange' },
   { slug: 'snowflake-marketplace', label: 'NestLens Exchange vs Snowflake Marketplace', category: 'exchange' },
   { slug: 'nasdaq-data-link', label: 'NestLens Exchange vs Nasdaq Data Link', category: 'exchange' },
+  { slug: 'dawex', label: 'NestLens Exchange vs Dawex', category: 'exchange' },
+  { slug: 'scale-ai', label: 'NestLens Exchange vs Scale AI', category: 'exchange' },
+  { slug: 'appen', label: 'NestLens Exchange vs Appen', category: 'exchange' },
+  { slug: 'labelbox', label: 'NestLens Exchange vs Labelbox', category: 'exchange' },
 ]
 
 const VERDICT_MARK: Record<Verdict, { symbol: string; color: string }> = {
