@@ -2,7 +2,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { Metadata } from 'next'
-import { pageMetadata } from '@/lib/seo'
+import { pageMetadata, breadcrumbSchema } from '@/lib/seo'
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/ecosystem', {
@@ -11,9 +11,14 @@ export async function generateMetadata(): Promise<Metadata> {
   })
 }
 
+const BREADCRUMB_SCHEMA = breadcrumbSchema([
+  { name: 'Ecosystem', path: '/ecosystem' },
+])
+
 export default function EcosystemPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_SCHEMA) }} />
       <style>{`
         .eco-card { transition: border-color .2s, transform .2s; }
         .eco-card:hover { transform: translateY(-4px); }
