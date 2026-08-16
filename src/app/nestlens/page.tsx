@@ -17,6 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const SOFTWARE_SCHEMA = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
+  '@id': 'https://labelnest.in/nestlens#software',
   name: 'NestLens',
   operatingSystem: 'Web-based',
   applicationCategory: 'BusinessApplication',

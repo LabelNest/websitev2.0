@@ -36,10 +36,23 @@ const BREADCRUMB_SCHEMA = breadcrumbSchema([
   { name: 'Intelligence', path: '/nestlens/intelligence' },
 ])
 
+const MODULE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'NestLens Intelligence',
+  applicationCategory: 'BusinessApplication',
+  applicationSubCategory: 'Private Markets Intelligence Platform',
+  description: 'Structured intelligence on 40,000+ private market entities — companies, funds, deals, people, and contacts. Human-verified at the core, credit-based access.',
+  url: 'https://labelnest.in/nestlens/intelligence',
+  isPartOf: { '@id': 'https://labelnest.in/nestlens#software' },
+  featureList: CAPABILITIES.map(c => `${c.name}: ${c.desc}`),
+}
+
 export default function IntelligencePage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_SCHEMA) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(MODULE_SCHEMA) }} />
       <Nav />
       <DiyBanner />
       <NestLensModuleNav />
