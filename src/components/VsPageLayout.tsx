@@ -91,6 +91,9 @@ export const ALL_VS_PAGES: { slug: string; label: string; category: VsCategory }
   { slug: 'bamboohr', label: 'NestHR vs BambooHR', category: 'nesthr' },
   { slug: 'rippling', label: 'NestHR vs Rippling', category: 'nesthr' },
   { slug: 'deel', label: 'NestHR vs Deel', category: 'nesthr' },
+  { slug: 'freshteam', label: 'NestHR vs Freshteam', category: 'nesthr' },
+  { slug: 'greenhouse', label: 'NestHR vs Greenhouse', category: 'nesthr' },
+  { slug: 'ashby', label: 'NestHR vs Ashby', category: 'nesthr' },
 ]
 
 const VERDICT_MARK: Record<Verdict, { symbol: string; color: string }> = {
