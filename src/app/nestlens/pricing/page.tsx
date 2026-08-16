@@ -3,7 +3,7 @@ import Footer from '@/components/Footer'
 import NestLensModuleNav from '@/components/NestLensModuleNav'
 import Link from 'next/link'
 import { Metadata } from 'next'
-import { pageMetadata } from '@/lib/seo'
+import { pageMetadata, breadcrumbSchema } from '@/lib/seo'
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/nestlens/pricing', {
@@ -32,10 +32,16 @@ const PRICING_SCHEMA = {
   ],
 }
 
+const BREADCRUMB_SCHEMA = breadcrumbSchema([
+  { name: 'NestLens', path: '/nestlens' },
+  { name: 'Pricing', path: '/nestlens/pricing' },
+])
+
 export default function NestLensPricingPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(PRICING_SCHEMA) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_SCHEMA) }} />
       <Nav />
       <NestLensModuleNav />
       <main style={{ paddingTop: 64 }}>
