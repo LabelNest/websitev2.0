@@ -81,6 +81,11 @@ export const ALL_VS_PAGES: { slug: string; label: string; category: VsCategory }
   { slug: 'scale-ai', label: 'NestLens Exchange vs Scale AI', category: 'exchange' },
   { slug: 'appen', label: 'NestLens Exchange vs Appen', category: 'exchange' },
   { slug: 'labelbox', label: 'NestLens Exchange vs Labelbox', category: 'exchange' },
+  { slug: 'toloka', label: 'NestLens Exchange vs Toloka', category: 'exchange' },
+  { slug: 'keka', label: 'NestHR vs Keka', category: 'nesthr' },
+  { slug: 'darwinbox', label: 'NestHR vs Darwinbox', category: 'nesthr' },
+  { slug: 'greythr', label: 'NestHR vs greytHR', category: 'nesthr' },
+  { slug: 'zoho-people', label: 'NestHR vs Zoho People', category: 'nesthr' },
 ]
 
 const VERDICT_MARK: Record<Verdict, { symbol: string; color: string }> = {
