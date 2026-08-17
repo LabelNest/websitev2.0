@@ -14,6 +14,10 @@ build/
 .env.*.local
 .env.production
 
+# GCP service account keys — NEVER commit these
+*-service-account*.json
+labelnest-seo-*.json
+
 # Zip reference files and raw data exports (contain PII)
 *.zip
 lovable-extract/
