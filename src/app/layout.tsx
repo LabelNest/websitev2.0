@@ -71,7 +71,7 @@ const ORGANIZATION_SCHEMA = {
     postalCode: '560032',
     addressCountry: 'IN',
   },
-  sameAs: ['https://www.linkedin.com/company/labelnest'],
+  sameAs: ['https://www.linkedin.com/company/labelnest-india'],
   contactPoint: [{ '@type': 'ContactPoint', email: 'contact@labelnest.in', contactType: 'customer support', areaServed: 'IN', availableLanguage: 'English' }],
   makesOffer: [
     {
