@@ -12,32 +12,103 @@ export async function generateMetadata(): Promise<Metadata> {
   })
 }
 
-// Real published tiers only — Enterprise/Custom entries have no fixed price and are
-// intentionally excluded from structured Offer data (schema.org Offer expects a price).
-const PRICING_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type': 'SoftwareApplication',
-  isPartOf: { '@id': 'https://labelnest.in/nestlens#software' },
-  name: 'NestLens',
-  offers: [
-    { '@type': 'Offer', name: 'Intelligence — Individual', price: '14999', priceCurrency: 'INR', priceValidUntil: '2027-08-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Intelligence' },
-    { '@type': 'Offer', name: 'Intelligence — Core', price: '54999', priceCurrency: 'INR', priceValidUntil: '2027-08-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Intelligence' },
-    { '@type': 'Offer', name: 'Intelligence — Growth', price: '104999', priceCurrency: 'INR', priceValidUntil: '2027-08-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Intelligence' },
-    { '@type': 'Offer', name: 'Intelligence — Pro', price: '164999', priceCurrency: 'INR', priceValidUntil: '2027-08-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Intelligence' },
-    { '@type': 'Offer', name: 'Exchange — Buyer', price: '0', priceCurrency: 'USD', priceValidUntil: '2027-08-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Exchange' },
-    { '@type': 'Offer', name: 'Exchange — Seller', price: '199', priceCurrency: 'USD', priceValidUntil: '2027-08-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Exchange' },
-    { '@type': 'Offer', name: 'Capital Readiness — Founder (India)', price: '999', priceCurrency: 'INR', priceValidUntil: '2027-08-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Capital Readiness' },
-    { '@type': 'Offer', name: 'Capital Readiness — Founder (Global)', price: '30', priceCurrency: 'USD', priceValidUntil: '2027-08-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Capital Readiness' },
-    { '@type': 'Offer', name: 'Capital Readiness — Fund', price: '45', priceCurrency: 'USD', priceValidUntil: '2027-08-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Capital Readiness' },
-  ],
-}
-
 const BREADCRUMB_SCHEMA = breadcrumbSchema([
   { name: 'NestLens', path: '/nestlens' },
   { name: 'Pricing', path: '/nestlens/pricing' },
 ])
 
-export default function NestLensPricingPage() {
+// Fetched server-side from NestLens's own public, no-auth plans API — the
+// same endpoint the in-app checkout modal uses (server/routes/public.ts).
+// This page used to keep its own hand-typed copy of every tier's name and
+// price, which is exactly how it drifted: "Individual"/"Core" were stale
+// names from before a 2026-08-09 correction in the live catalog, and a
+// 2026-08-20 pricing-model change (firm-count tiers, real discounts) would
+// otherwise have needed a second manual edit here too. A Server Component
+// fetch avoids CORS entirely (server-to-server, not a browser request) and
+// revalidates hourly so a plan change in the admin panel reaches this page
+// without a redeploy.
+interface ApiPlan {
+  name: string; priceINR?: number; priceUSD?: number | string;
+  monthlyPriceINR?: number; monthlyPriceUSD?: number;
+  originalPriceINR?: number | string | null; originalPriceUSD?: number | string | null;
+  seats?: number; creditsPerMonth?: number; firmUnlocksPerYear?: number;
+  observatoryArticlesIncluded?: number | null;
+  description?: string; popular?: boolean;
+}
+interface ApiPlans { intelligence: Record<string, ApiPlan>; exchange: Record<string, ApiPlan>; cr: Record<string, ApiPlan> }
+
+interface Tier {
+  key: string; name: string; priceMo: string; priceYr: string; sub: string; popular?: boolean;
+}
+
+function fmtInr(n: number): string {
+  return `₹${n.toLocaleString('en-IN')}`
+}
+function fmtUsd(n: number): string {
+  return `$${n.toLocaleString('en-US')}`
+}
+
+function tierFrom(key: string, p: ApiPlan | undefined, opts: { annualOnly?: boolean } = {}): Tier | null {
+  if (!p) return null
+  const useUsd = !p.priceINR && !!p.priceUSD
+  const annual = useUsd ? Number(p.priceUSD) || 0 : Number(p.priceINR) || 0
+  const monthly = useUsd ? Number(p.monthlyPriceUSD) || annual : Number(p.monthlyPriceINR) || annual
+  const fmt = useUsd ? fmtUsd : fmtInr
+  const original = useUsd
+    ? (p.originalPriceUSD ? Number(p.originalPriceUSD) : null)
+    : (p.originalPriceINR ? Number(p.originalPriceINR) : null)
+  const discountNote = original && original > annual ? ` (was ${fmt(original)})` : ''
+  return {
+    key, name: p.name,
+    priceMo: annual === 0 ? 'Free' : opts.annualOnly ? `${fmt(annual)}${discountNote}` : fmt(monthly),
+    priceYr: annual === 0 || opts.annualOnly ? '' : `${fmt(annual)}/yr${discountNote}`,
+    sub: (p.description ?? '').trim(),
+    popular: !!p.popular,
+  }
+}
+
+async function getPlans(): Promise<ApiPlans | null> {
+  try {
+    const res = await fetch('https://nestlens.labelnest.in/api/public/plans', { next: { revalidate: 3600 } })
+    if (!res.ok) return null
+    return await res.json()
+  } catch {
+    return null
+  }
+}
+
+export default async function NestLensPricingPage() {
+  const plans = await getPlans()
+
+  const intelTiers = plans
+    ? (['pre_starter', 'starter', 'growth'] as const)
+        .map(k => tierFrom(k, plans.intelligence[k]))
+        .filter((t): t is Tier => !!t)
+    : []
+  const exchangeBuyer = plans ? tierFrom('buyer', plans.exchange['buyer']) : null
+  const exchangePriority = plans ? tierFrom('priority', plans.exchange['priority'], { annualOnly: true }) : null
+  const crFounder = plans ? tierFrom('founder_paid_solo', plans.cr['founder_paid_solo'], { annualOnly: true }) : null
+  const crFund = plans ? tierFrom('fund_paid', plans.cr['fund_paid'], { annualOnly: true }) : null
+  const crCohort = plans ? tierFrom('founder_paid_cohort', plans.cr['founder_paid_cohort'], { annualOnly: true }) : null
+  const crProgramme = plans ? tierFrom('programme_management', plans.cr['programme_management']) : null
+
+  // Real published tiers only — Enterprise/Custom entries have no fixed price and are
+  // intentionally excluded from structured Offer data (schema.org Offer expects a price).
+  const offers = [
+    ...intelTiers.map(t => ({ '@type': 'Offer', name: `Intelligence — ${t.name}`, price: String(Math.round(Number((t.priceYr || t.priceMo).replace(/[^0-9.]/g, '')) || 0)), priceCurrency: 'INR', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Intelligence' })),
+    exchangePriority ? { '@type': 'Offer', name: 'Exchange — Priority', price: '199', priceCurrency: 'USD', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Exchange' } : null,
+    crFounder ? { '@type': 'Offer', name: 'Capital Readiness — Founder Data Room', price: String(plans?.cr['founder_paid_solo']?.priceINR ?? ''), priceCurrency: 'INR', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Capital Readiness' } : null,
+    crFund ? { '@type': 'Offer', name: 'Capital Readiness — Fund Data Room', price: String(plans?.cr['fund_paid']?.priceUSD ?? ''), priceCurrency: 'USD', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Capital Readiness' } : null,
+  ].filter(Boolean)
+
+  const PRICING_SCHEMA = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    isPartOf: { '@id': 'https://labelnest.in/nestlens#software' },
+    name: 'NestLens',
+    offers,
+  }
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(PRICING_SCHEMA) }} />
@@ -55,6 +126,12 @@ export default function NestLensPricingPage() {
           </div>
         </section>
 
+        {!plans && (
+          <section style={{ padding: '24px 48px', textAlign: 'center' }}>
+            <p style={{ fontSize: 13, color: 'var(--text3)' }}>Live pricing is temporarily unavailable — please check back shortly, or subscribe directly on NestLens.</p>
+          </section>
+        )}
+
         {/* INTELLIGENCE */}
         <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -64,18 +141,15 @@ export default function NestLensPricingPage() {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(180px,1fr))', gap: 16 }}>
               {[
-                { name: 'Individual', priceMo: '₹14,999', priceYr: '₹1,50,000/yr', sub: '1 seat · 50 credits/mo · 250 firm unlocks/yr' },
-                { name: 'Core', priceMo: '₹54,999', priceYr: '₹6,00,000/yr', sub: '2 seats · 100 credits/mo · 1,500 firm unlocks/yr' },
-                { name: 'Growth', priceMo: '₹1,04,999', priceYr: '₹12,00,000/yr', sub: '3 seats · 200 credits/mo · 1 data room' },
-                { name: 'Pro', priceMo: '₹1,64,999', priceYr: '₹18,00,000/yr', sub: '5 seats · 400 credits/mo · 2 data rooms · Priority support', popular: true },
-                { name: 'Enterprise', priceMo: 'Custom', priceYr: '', sub: 'Custom seats, credits & SLA' },
+                ...intelTiers.map(t => ({ name: t.name, priceMo: t.priceMo, priceYr: t.priceYr, sub: t.sub, popular: t.popular })),
+                { name: 'Enterprise', priceMo: 'Custom', priceYr: '', sub: '1,000+ firms · custom seats, credits & SLA · all Observatory reports included', popular: false },
               ].map(t => (
                 <div key={t.name} style={{ background: 'var(--surface)', border: `1px solid ${t.popular ? '#2563EB' : 'var(--border)'}`, borderRadius: 14, padding: 20, position: 'relative' }}>
                   {t.popular && <div style={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)', background: '#2563EB', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 10px', borderRadius: 99, whiteSpace: 'nowrap' }}>MOST POPULAR</div>}
                   <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14.5, color: 'var(--text)', marginBottom: 8 }}>{t.name}</div>
                   <div style={{ marginBottom: 4 }}>
                     <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 20, fontWeight: 800, color: t.popular ? '#2563EB' : 'var(--text)' }}>{t.priceMo}</span>
-                    {t.priceMo !== 'Custom' && <span style={{ fontSize: 11, color: 'var(--text3)' }}>/mo</span>}
+                    {t.priceMo !== 'Custom' && t.priceMo !== 'Free' && <span style={{ fontSize: 11, color: 'var(--text3)' }}>/mo</span>}
                   </div>
                   {t.priceYr && <div style={{ fontSize: 11, color: 'var(--text3)', marginBottom: 8 }}>{t.priceYr}</div>}
                   <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>{t.sub}</div>
@@ -94,8 +168,8 @@ export default function NestLensPricingPage() {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 16 }}>
               {[
-                { name: 'Buyer', price: 'Free', unit: '', sub: 'Browse all seller profiles and project briefs free. Pay per project via credits — no subscription needed.' },
-                { name: 'Seller', price: '$199', unit: '/yr', sub: 'Active seller listing · 15 applications/mo included · quarterly rollover up to 45 credits · INR equivalent: contact us', popular: true },
+                { name: exchangeBuyer?.name ?? 'Free', price: exchangeBuyer?.priceMo ?? 'Free', unit: '', sub: exchangeBuyer?.sub || 'Browse all seller profiles and project briefs free. Pay per project via credits — no subscription needed.' },
+                { name: exchangePriority?.name ?? 'Priority', price: exchangePriority?.priceMo ?? '$199', unit: '/yr', sub: exchangePriority?.sub || 'Active seller listing · 15 applications/mo included · quarterly rollover up to 45 credits', popular: true },
                 { name: 'Enterprise', price: 'Custom', unit: '', sub: 'High-volume buyer or seller, custom credit arrangements' },
               ].map(t => (
                 <div key={t.name} style={{ background: 'var(--surface)', border: `1px solid ${t.popular ? '#E91E8C' : 'var(--border)'}`, borderRadius: 14, padding: 22, position: 'relative' }}>
@@ -121,9 +195,10 @@ export default function NestLensPricingPage() {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16 }}>
               {[
-                { name: 'Founder — India', price: '₹999', unit: '/mo', sub: '₹9,999/yr · 1 data room · full legal checklist · investor fit scoring · templates included', popular: true },
-                { name: 'Founder — Global', price: '$30', unit: '/mo', sub: '$299/yr · 1 data room · full legal checklist · investor fit scoring · templates included' },
-                { name: 'Fund', price: '$45', unit: '/mo', sub: '$500/yr · 1 fund data room included · extra rooms $300/yr or $25/mo' },
+                { name: crProgramme?.name ?? 'Programme Management', price: crProgramme?.priceMo ?? '₹24,999', unit: '/mo', sub: crProgramme?.sub || '₹2,49,999/yr · up to 1,00,000 applications · full screening & review workflow' },
+                { name: crFounder?.name ?? 'Founder Data Room', price: crFounder?.priceMo ?? '₹8,000', unit: '', sub: crFounder?.sub || 'All templates included · 1 complimentary strategy call · priority support', popular: true },
+                { name: crFund?.name ?? 'Fund Data Room', price: crFund?.priceMo ?? '$599', unit: '', sub: crFund?.sub || '2 portfolio company data rooms complimentary' },
+                { name: crCohort?.name ?? 'Cohort / Group', price: crCohort?.priceMo ?? '₹4,999', unit: '', sub: crCohort?.sub || 'Cohort of 25 · +₹4,999 per additional founder beyond 25' },
                 { name: 'Enterprise', price: 'Custom', unit: '', sub: 'Cohort access for accelerators and incubator programmes' },
               ].map(t => (
                 <div key={t.name} style={{ background: 'var(--surface)', border: `1px solid ${t.popular ? '#10B981' : 'var(--border)'}`, borderRadius: 14, padding: 20, position: 'relative' }}>
@@ -153,8 +228,8 @@ export default function NestLensPricingPage() {
                 <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.65 }}>Custom seats, credit volumes, entity access, and SLA agreements — best for institutional funds, research firms, and accelerators with large cohorts.</p>
               </div>
               <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 24 }}>
-                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 16, color: 'var(--text)', marginBottom: 8 }}>Bundle</div>
-                <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.65 }}>Intelligence + Capital Readiness combined at a negotiated rate — best for ecosystem partners and VC funds running portfolio founder programmes.</p>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 16, color: 'var(--text)', marginBottom: 8 }}>Fund Bundle</div>
+                <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.65 }}>1 Fund Data Room + 5 Portfolio Company Data Rooms + Intelligence (2,000 data credits) + Exchange for every connected member, at a negotiated rate — best for VC funds running portfolio founder programmes.</p>
               </div>
             </div>
             <div style={{ textAlign: 'center', display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
