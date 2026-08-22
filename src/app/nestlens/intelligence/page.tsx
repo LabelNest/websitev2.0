@@ -34,13 +34,13 @@ const CAPABILITIES = [
 
 const BREADCRUMB_SCHEMA = breadcrumbSchema([
   { name: 'NestLens', path: '/nestlens' },
-  { name: 'Intelligence', path: '/nestlens/intelligence' },
+  { name: 'Atlas', path: '/nestlens/intelligence' },
 ])
 
 const MODULE_SCHEMA = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
-  name: 'NestLens Intelligence',
+  name: 'NestLens Atlas',
   applicationCategory: 'BusinessApplication',
   applicationSubCategory: 'Private Markets Intelligence Platform',
   description: 'Structured intelligence on 40,000+ private market entities — companies, funds, deals, people, and contacts. Human-verified at the core, credit-based access.',
@@ -64,17 +64,17 @@ export default function IntelligencePage() {
           <div style={{ position: 'absolute', top: -100, left: -80, width: 500, height: 500, borderRadius: '50%', background: 'rgba(37,99,235,.08)', filter: 'blur(90px)', pointerEvents: 'none' }} />
           <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 2, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
             <div>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>NestLens Intelligence · Live module</div>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>NestLens Atlas · Live module</div>
               <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(38px,5.2vw,62px)', fontWeight: 800, letterSpacing: '-.04em', lineHeight: 1.04, color: 'var(--text)', marginBottom: 16 }}>
                 Private markets intelligence.<br />
                 <span style={{ background: 'linear-gradient(100deg,#2563EB,#7C3AED)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Structured, not scraped.</span>
               </h1>
               <p style={{ fontSize: 'clamp(15px,1.8vw,17.5px)', lineHeight: 1.74, color: 'var(--text2)', marginBottom: 28 }}>
-                NestLens Intelligence tracks <strong style={{ color: 'var(--text)', fontWeight: 600 }}>companies, funds, deals, people, and contacts</strong> across private markets. Human-verified at the core. Priced for teams that legacy vendors ignore.
+                NestLens Atlas tracks <strong style={{ color: 'var(--text)', fontWeight: 600 }}>companies, funds, deals, people, and contacts</strong> across private markets. Human-verified at the core. Priced for teams that legacy vendors ignore.
               </p>
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                 <a href="https://nestlens.labelnest.in" target="_blank" rel="noopener noreferrer"
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#2563EB', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Intelligence ↗</a>
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#2563EB', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Atlas ↗</a>
                 <Link href="/contact"
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>Request access</Link>
               </div>
@@ -107,7 +107,7 @@ export default function IntelligencePage() {
         {/* ENTITY TYPES */}
         <section style={{ padding: '64px 48px', background: 'var(--bg2)', borderBottom: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>What NestLens Intelligence tracks</div>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>What NestLens Atlas tracks</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 12 }}>Seven entity types. One structured intelligence layer.</h2>
             <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 520, marginBottom: 36, lineHeight: 1.65 }}>NestLens builds a complete picture of the private markets ecosystem — from fund managers and their portfolios to the contacts who drive decisions.</p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
@@ -189,7 +189,7 @@ export default function IntelligencePage() {
         {/* COMPARE */}
         <section style={{ padding: '32px 48px 48px', borderTop: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>How Intelligence compares</div>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>How Atlas compares</div>
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
               {ALL_VS_PAGES.filter(p => p.category === 'intelligence').map(p => (
                 <Link key={p.slug} href={`/vs/${p.slug}`}
@@ -204,12 +204,12 @@ export default function IntelligencePage() {
         {/* CTA */}
         <section style={{ padding: '64px 48px', textAlign: 'center' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14, textAlign: 'center' }}>Ready to open Intelligence?</div>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14, textAlign: 'center' }}>Ready to open Atlas?</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', maxWidth: 520, margin: '0 auto 12px' }}>40K+ entities. 12K+ contacts. Live today.</h2>
             <p style={{ fontSize: 15.5, color: 'var(--text2)', maxWidth: 460, margin: '0 auto 32px', lineHeight: 1.7 }}>Seat- and credit-based pricing. No hidden fees. Start today and scale as you need.</p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="https://nestlens.labelnest.in" target="_blank" rel="noopener noreferrer"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#2563EB', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Intelligence ↗</a>
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#2563EB', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Atlas ↗</a>
               <Link href="/contact"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>Talk to the team</Link>
             </div>
