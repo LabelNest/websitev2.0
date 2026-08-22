@@ -4,9 +4,12 @@ import { usePathname } from 'next/navigation'
 
 const TABS = [
   { href: '/nestlens', label: 'Overview', exact: true },
-  { href: '/nestlens/intelligence', label: 'Intelligence', exact: false },
+  { href: '/nestlens/intelligence', label: 'Atlas', exact: false },
   { href: '/nestlens/exchange', label: 'Exchange', exact: false },
-  { href: '/nestlens/capital', label: 'Capital Readiness', exact: false },
+  { href: '/nestlens/orbit', label: 'Orbit', exact: false },
+  { href: '/nestlens/capital', label: 'Ascent', exact: false },
+  { href: '/nestlens/command', label: 'Command', exact: false },
+  { href: '/nestlens/connect', label: 'Connect', exact: false },
   { href: '/nestlens/pricing', label: 'Pricing', exact: false },
 ]
 
