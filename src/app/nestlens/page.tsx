@@ -9,7 +9,7 @@ import { pageMetadata } from '@/lib/seo'
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/nestlens', {
-    title: 'NestLens — Private Markets OS with Intelligence, Exchange, Data Rooms',
+    title: 'NestLens — Private Markets OS with Atlas, Exchange, Data Rooms',
     description: 'The private markets OS for emerging managers. Track 40,000+ entities, buy verified data on Exchange, build investor-ready data rooms. Credit-based access, no lock-in.',
   })
 }
@@ -19,15 +19,15 @@ export async function generateMetadata(): Promise<Metadata> {
 const FAQS = [
   {
     q: 'What is NestLens?',
-    a: 'NestLens is a private markets operating system with three live modules — Intelligence, Exchange, and Capital Readiness — built for analysts, fund managers, and operators who need structured intelligence, a live data marketplace, and a capital readiness system in one place.',
+    a: 'NestLens is a private markets operating system with three live modules — Atlas, Exchange, and Capital Readiness — built for analysts, fund managers, and operators who need structured intelligence, a live data marketplace, and a capital readiness system in one place.',
   },
   {
     q: 'What are the three NestLens modules?',
-    a: 'Intelligence tracks 40,000+ private-market entities with 12,000+ verified contacts. Exchange is a marketplace to buy, sell, and license structured datasets with KYC-verified sellers and escrow-protected transactions. Capital Readiness builds an investor-ready data room (10 sections, 51 items) with investor tier scoring and LP-GP matching.',
+    a: 'Atlas tracks 40,000+ private-market entities with 12,000+ verified contacts. Exchange is a marketplace to buy, sell, and license structured datasets with KYC-verified sellers and escrow-protected transactions. Capital Readiness builds an investor-ready data room (10 sections, 51 items) with investor tier scoring and LP-GP matching.',
   },
   {
-    q: 'How much does NestLens Intelligence cost?',
-    a: 'NestLens Intelligence starts at ₹14,999/month (Individual plan, or ₹1,50,000/year). The Pro plan is ₹1,64,999/month with 5 seats, 400 credits/month, and 2 data rooms. Enterprise pricing is available on request.',
+    q: 'How much does NestLens Atlas cost?',
+    a: 'NestLens Atlas starts at ₹14,999/month (Individual plan, or ₹1,50,000/year). The Pro plan is ₹1,64,999/month with 5 seats, 400 credits/month, and 2 data rooms. Enterprise pricing is available on request.',
   },
   {
     q: 'Is NestLens Exchange free to use?',
@@ -43,11 +43,11 @@ const FAQS = [
   },
   {
     q: 'Does NestLens offer Enterprise or Bundle pricing?',
-    a: 'Yes. Enterprise pricing covers custom seats, credit volumes, entity access, and SLA agreements for institutional funds, research firms, and accelerators. Bundle pricing combines Intelligence and Capital Readiness at a negotiated rate.',
+    a: 'Yes. Enterprise pricing covers custom seats, credit volumes, entity access, and SLA agreements for institutional funds, research firms, and accelerators. Bundle pricing combines Atlas and Capital Readiness at a negotiated rate.',
   },
   {
     q: 'Is NestLens the same as NestHR?',
-    a: "No. NestLens is LabelNest's private markets OS (Intelligence, Exchange, Capital Readiness). NestHR is a separate product — LabelNest's HR and campus-placement OS, with its own pricing at nesthr.labelnest.in.",
+    a: "No. NestLens is LabelNest's private markets OS (Atlas, Exchange, Capital Readiness). NestHR is a separate product — LabelNest's HR and campus-placement OS, with its own pricing at nesthr.labelnest.in.",
   },
 ]
 
@@ -69,7 +69,7 @@ const SOFTWARE_SCHEMA = {
   operatingSystem: 'Web-based',
   applicationCategory: 'BusinessApplication',
   applicationSubCategory: 'Private Markets Intelligence Platform',
-  description: 'Private markets OS with Intelligence, Exchange, and Capital Readiness modules. Track 40,000+ entities, buy verified data, build investor data rooms.',
+  description: 'Private markets OS with Atlas, Exchange, and Capital Readiness modules. Track 40,000+ entities, buy verified data, build investor data rooms.',
   url: 'https://nestlens.labelnest.in',
   publisher: { '@type': 'Organization', name: 'LabelNest India Private Limited', url: 'https://labelnest.in' },
   brand: { '@type': 'Brand', name: 'LabelNest', url: 'https://labelnest.in' },
@@ -130,13 +130,13 @@ export default function NestLensPage() {
                 style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderTop: '3px solid #2563EB', borderRadius: 18, padding: 28, display: 'block', transition: 'transform .2s', textDecoration: 'none' }}>
                 <div style={{ fontSize: 28, marginBottom: 14 }}>🔭</div>
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(16,185,129,.1)', color: '#10B981', display: 'inline-block', marginBottom: 10 }}>Live</div>
-                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, color: 'var(--text)', marginBottom: 8 }}>Intelligence</div>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, color: 'var(--text)', marginBottom: 8 }}>Atlas</div>
                 <p style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65, marginBottom: 16 }}>Entity tracking, fund signals, contact intelligence, and live market signals across private markets. 40K+ entities. 12K+ verified contacts.</p>
                 <div style={{ display: 'flex', gap: 16, marginBottom: 16 }}>
                   <div><div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, color: '#2563EB' }}>40K+</div><div style={{ fontSize: 11, color: 'var(--text3)' }}>Entities</div></div>
                   <div><div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, color: '#2563EB' }}>12K+</div><div style={{ fontSize: 11, color: 'var(--text3)' }}>Contacts</div></div>
                 </div>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: '#2563EB' }}>Explore Intelligence →</div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: '#2563EB' }}>Explore Atlas →</div>
               </HoverLink>
 
               <HoverLink href="/nestlens/exchange"
@@ -180,7 +180,7 @@ export default function NestLensPage() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20 }}>
               {[
                 {
-                  accent: '#2563EB', name: 'Intelligence', tagline: 'Private market data on funds, LPs, GPs, and grants.',
+                  accent: '#2563EB', name: 'Atlas', tagline: 'Private market data on funds, LPs, GPs, and grants.',
                   from: '₹14,999', unit: '/mo', note: 'Individual · from ₹1,50,000/yr',
                   popular: 'Pro — ₹1,64,999/mo · 5 seats · 400 credits/mo · 2 data rooms',
                 },
@@ -245,7 +245,7 @@ export default function NestLensPage() {
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14, textAlign: 'center' }}>Get started</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(28px,4vw,48px)', fontWeight: 800, letterSpacing: '-.035em', color: 'var(--text)', marginBottom: 12 }}>Ready to open NestLens?</h2>
-            <p style={{ fontSize: 16, color: 'var(--text2)', maxWidth: 480, margin: '0 auto 32px', lineHeight: 1.72 }}>Platform is live. Start with Intelligence, explore the Exchange, or build your data room in Capital Readiness.</p>
+            <p style={{ fontSize: 16, color: 'var(--text2)', maxWidth: 480, margin: '0 auto 32px', lineHeight: 1.72 }}>Platform is live. Start with Atlas, explore the Exchange, or build your data room in Capital Readiness.</p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="https://nestlens.labelnest.in" target="_blank" rel="noopener noreferrer"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#2563EB', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open NestLens ↗</a>

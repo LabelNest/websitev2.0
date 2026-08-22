@@ -7,8 +7,8 @@ import { pageMetadata, breadcrumbSchema } from '@/lib/seo'
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/nestlens/pricing', {
-    title: 'NestLens Pricing — Intelligence, Exchange, Capital Readiness',
-    description: 'Full pricing for all three NestLens modules — Intelligence, Exchange, and Capital Readiness — plus Enterprise and Bundle options.',
+    title: 'NestLens Pricing — Atlas, Exchange, Capital Readiness',
+    description: 'Full pricing for all three NestLens modules — Atlas, Exchange, and Capital Readiness — plus Enterprise and Bundle options.',
   })
 }
 
@@ -95,7 +95,7 @@ export default async function NestLensPricingPage() {
   // Real published tiers only — Enterprise/Custom entries have no fixed price and are
   // intentionally excluded from structured Offer data (schema.org Offer expects a price).
   const offers = [
-    ...intelTiers.map(t => ({ '@type': 'Offer', name: `Intelligence — ${t.name}`, price: String(Math.round(Number((t.priceYr || t.priceMo).replace(/[^0-9.]/g, '')) || 0)), priceCurrency: 'INR', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Intelligence' })),
+    ...intelTiers.map(t => ({ '@type': 'Offer', name: `Atlas — ${t.name}`, price: String(Math.round(Number((t.priceYr || t.priceMo).replace(/[^0-9.]/g, '')) || 0)), priceCurrency: 'INR', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Atlas' })),
     exchangePriority ? { '@type': 'Offer', name: 'Exchange — Priority', price: '199', priceCurrency: 'USD', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Exchange' } : null,
     crFounder ? { '@type': 'Offer', name: 'Capital Readiness — Founder Data Room', price: String(plans?.cr['founder_paid_solo']?.priceINR ?? ''), priceCurrency: 'INR', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Capital Readiness' } : null,
     crFund ? { '@type': 'Offer', name: 'Capital Readiness — Fund Data Room', price: String(plans?.cr['fund_paid']?.priceUSD ?? ''), priceCurrency: 'USD', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Capital Readiness' } : null,
@@ -122,7 +122,7 @@ export default async function NestLensPricingPage() {
           <div style={{ maxWidth: 900, margin: '0 auto' }}>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Pricing</div>
             <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(32px,5vw,52px)', fontWeight: 800, letterSpacing: '-.03em', color: 'var(--text)', marginBottom: 16 }}>Three modules, priced independently.</h1>
-            <p style={{ fontSize: 15.5, color: 'var(--text2)', lineHeight: 1.7, maxWidth: 600, margin: '0 auto' }}>Subscribe only to what you need — Intelligence, Exchange, or Capital Readiness. Every plan is available monthly or annually where applicable. Enterprise and Bundle pricing on request.</p>
+            <p style={{ fontSize: 15.5, color: 'var(--text2)', lineHeight: 1.7, maxWidth: 600, margin: '0 auto' }}>Subscribe only to what you need — Atlas, Exchange, or Capital Readiness. Every plan is available monthly or annually where applicable. Enterprise and Bundle pricing on request.</p>
           </div>
         </section>
 
@@ -136,7 +136,7 @@ export default async function NestLensPricingPage() {
         <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 28 }}>
-              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(20px,2.5vw,28px)', fontWeight: 800, color: 'var(--text)' }}>Intelligence</h2>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(20px,2.5vw,28px)', fontWeight: 800, color: 'var(--text)' }}>Atlas</h2>
               <Link href="/nestlens/intelligence" style={{ fontSize: 12.5, color: '#2563EB' }}>What it does →</Link>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(180px,1fr))', gap: 16 }}>
@@ -229,7 +229,7 @@ export default async function NestLensPricingPage() {
               </div>
               <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 24 }}>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 16, color: 'var(--text)', marginBottom: 8 }}>Fund Bundle</div>
-                <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.65 }}>1 Fund Data Room + 5 Portfolio Company Data Rooms + Intelligence (2,000 data credits) + Exchange for every connected member, at a negotiated rate — best for VC funds running portfolio founder programmes.</p>
+                <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.65 }}>1 Fund Data Room + 5 Portfolio Company Data Rooms + Atlas (2,000 data credits) + Exchange for every connected member, at a negotiated rate — best for VC funds running portfolio founder programmes.</p>
               </div>
             </div>
             <div style={{ textAlign: 'center', display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
