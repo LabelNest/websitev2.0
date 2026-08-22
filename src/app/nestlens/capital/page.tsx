@@ -10,7 +10,7 @@ import { ALL_VS_PAGES } from '@/components/VsPageLayout'
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/nestlens/capital', {
-    title: 'Investor Data Room — Fundraise Prep for Startups | NestLens Capital Readiness',
+    title: 'Investor Data Room — Fundraise Prep for Startups | NestLens Ascent',
     description: 'Build an investor-ready data room in minutes. 10 sections, 51 items. Investor tier scoring, LP-GP matching, grant and competition discovery. For pre-seed to Series A.',
   })
 }
@@ -37,13 +37,13 @@ const MATCHING = [
 
 const BREADCRUMB_SCHEMA = breadcrumbSchema([
   { name: 'NestLens', path: '/nestlens' },
-  { name: 'Capital Readiness', path: '/nestlens/capital' },
+  { name: 'Ascent', path: '/nestlens/capital' },
 ])
 
 const MODULE_SCHEMA = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
-  name: 'NestLens Capital Readiness',
+  name: 'NestLens Ascent',
   applicationCategory: 'BusinessApplication',
   applicationSubCategory: 'Fundraise Data Room Builder',
   description: 'Build an investor-ready data room in minutes. 10 sections, 51 items. Investor tier scoring, LP-GP matching, grant and competition discovery. For pre-seed to Series A.',
@@ -66,7 +66,7 @@ export default function CapitalPage() {
         <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', top: -100, right: -80, width: 500, height: 500, borderRadius: '50%', background: 'rgba(16,185,129,.07)', filter: 'blur(90px)', pointerEvents: 'none' }} />
           <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 2 }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>NestLens Capital Readiness · Live module</div>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>NestLens Ascent · Live module</div>
             <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(40px,6vw,72px)', fontWeight: 800, letterSpacing: '-.045em', lineHeight: 1.03, color: 'var(--text)', marginBottom: 18, maxWidth: 700 }}>
               Build a data room investors<br />
               actually <span style={{ background: 'linear-gradient(100deg,#10B981,#06B6D4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>trust.</span>
@@ -95,7 +95,7 @@ export default function CapitalPage() {
 
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               <a href="https://nestlens.labelnest.in" target="_blank" rel="noopener noreferrer"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#10B981', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Capital Readiness ↗</a>
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#10B981', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Ascent ↗</a>
               <Link href="/contact"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>Talk to the team</Link>
             </div>
@@ -125,7 +125,7 @@ export default function CapitalPage() {
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Beyond the data room</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 12 }}>Matching and discovery. Find your capital.</h2>
-            <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 520, marginBottom: 36, lineHeight: 1.65 }}>Capital Readiness does not stop at the data room. It connects you to the right investors, service providers, grants, and strategic partners.</p>
+            <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 520, marginBottom: 36, lineHeight: 1.65 }}>Ascent does not stop at the data room. It connects you to the right investors, service providers, grants, and strategic partners.</p>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
               {MATCHING.map(m => (
                 <HoverDiv key={m.name}
@@ -151,7 +151,7 @@ export default function CapitalPage() {
             </div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 12, maxWidth: 640 }}>Upload a document once. Never re-type what it already says.</h2>
             <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 600, marginBottom: 32, lineHeight: 1.65 }}>
-              Attach a document to a data room field and Capital Readiness reads it — company name, incorporation date, entity type, registration number, headquarters — and shows you exactly what it found versus what&apos;s on file. One click applies it. Nothing is ever overwritten silently.
+              Attach a document to a data room field and Ascent reads it — company name, incorporation date, entity type, registration number, headquarters — and shows you exactly what it found versus what&apos;s on file. One click applies it. Nothing is ever overwritten silently.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 14 }}>
               {[
@@ -178,13 +178,13 @@ export default function CapitalPage() {
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: 36 }}>
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Pricing</div>
-              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>For founders and fund managers.</h2>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>For founders raising capital.</h2>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16 }}>
               {[
                 { name: 'Founder — India', price: '₹999', unit: '/mo', sub: '1 data room · full legal checklist · investor fit scoring · templates included', popular: true },
                 { name: 'Founder — Global', price: '$30', unit: '/mo', sub: '1 data room · full legal checklist · investor fit scoring · templates included' },
-                { name: 'Fund', price: '$45', unit: '/mo', sub: '1 fund data room included · extra rooms $300/yr or $25/mo' },
+                { name: 'Cohort / Group', price: '₹4,999', unit: '', sub: 'Cohort of 25 founders, run by an accelerator or incubator' },
                 { name: 'Enterprise', price: 'Custom', unit: '', sub: 'Cohort access for accelerators and incubator programmes' },
               ].map(t => (
                 <div key={t.name} style={{ background: 'var(--surface)', border: `1px solid ${t.popular ? '#10B981' : 'var(--border)'}`, borderRadius: 14, padding: 20, position: 'relative' }}>
@@ -207,13 +207,15 @@ export default function CapitalPage() {
           <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', gap: 24, flexWrap: 'wrap', fontSize: 13.5, color: 'var(--text2)' }}>
             <span>See also:</span>
             <Link href="/nestlens/intelligence" style={{ color: '#2563EB' }}>Investor intelligence for your outreach lists →</Link>
+            <Link href="/nestlens/command" style={{ color: '#F97316' }}>Raising from a fund? See Command's LP-side tools →</Link>
+            <Link href="/nestlens/connect" style={{ color: '#06B6D4' }}>Need a mentor or an audit partner? See Connect →</Link>
           </div>
         </section>
 
         {/* COMPARE */}
         <section style={{ padding: '32px 48px 48px', borderTop: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>How Capital Readiness compares</div>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>How Ascent compares</div>
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
               {ALL_VS_PAGES.filter(p => p.category === 'capital-readiness' || p.category === 'fund-data-room').map(p => (
                 <Link key={p.slug} href={`/vs/${p.slug}`}
@@ -233,7 +235,7 @@ export default function CapitalPage() {
             <p style={{ fontSize: 15.5, color: 'var(--text2)', maxWidth: 460, margin: '0 auto 32px', lineHeight: 1.7 }}>10 sections. 51 items. Investor tier scoring live. LP-GP matching live. All included.</p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="https://nestlens.labelnest.in" target="_blank" rel="noopener noreferrer"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#10B981', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Capital Readiness ↗</a>
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#10B981', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Ascent ↗</a>
               <Link href="/contact"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>Talk to the team</Link>
             </div>
