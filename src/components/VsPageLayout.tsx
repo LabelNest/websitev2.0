@@ -111,15 +111,7 @@ function CtaButton({ cta, primary }: { cta: Cta; primary?: boolean }) {
     : <Link href={cta.href} style={style}>{cta.label}</Link>
 }
 
-const MAX_ALSO_COMPARE = 6
-
 export default function VsPageLayout(d: VsPageData) {
-  const rest = ALL_VS_PAGES.filter(p => p.slug !== d.slug)
-  const sameCategory = rest.filter(p => p.category === d.category)
-  const otherPages = sameCategory.length >= MAX_ALSO_COMPARE
-    ? sameCategory.slice(0, MAX_ALSO_COMPARE)
-    : [...sameCategory, ...rest.filter(p => p.category !== d.category)].slice(0, MAX_ALSO_COMPARE)
-
   return (
     <>
       <Nav />
@@ -226,21 +218,6 @@ export default function VsPageLayout(d: VsPageData) {
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               <CtaButton cta={d.finalPrimaryCta} primary />
               <CtaButton cta={d.finalSecondaryCta} />
-            </div>
-          </div>
-        </section>
-
-        {/* ALSO COMPARE — cross-links other /vs/ pages */}
-        <section style={{ padding: '40px 48px' }}>
-          <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Also compare</div>
-            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-              {otherPages.map(p => (
-                <Link key={p.slug} href={`/vs/${p.slug}`}
-                  style={{ fontSize: 13, color: 'var(--text2)', padding: '9px 16px', borderRadius: 9, border: '1px solid var(--border)', background: 'var(--surface)', textDecoration: 'none' }}>
-                  {p.label} →
-                </Link>
-              ))}
             </div>
           </div>
         </section>

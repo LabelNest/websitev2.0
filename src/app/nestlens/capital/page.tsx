@@ -6,7 +6,6 @@ import HoverDiv from '@/components/HoverDiv'
 import Link from 'next/link'
 import { Metadata } from 'next'
 import { pageMetadata, breadcrumbSchema } from '@/lib/seo'
-import { ALL_VS_PAGES } from '@/components/VsPageLayout'
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/nestlens/capital', {
@@ -212,21 +211,6 @@ export default function CapitalPage() {
             <Link href="/nestlens/intelligence" style={{ color: '#2563EB' }}>Investor intelligence for your outreach lists →</Link>
             <Link href="/nestlens/command" style={{ color: '#F97316' }}>Raising from a fund? See Command's LP-side tools →</Link>
             <Link href="/nestlens/connect" style={{ color: '#06B6D4' }}>Need a mentor or an audit partner? See Connect →</Link>
-          </div>
-        </section>
-
-        {/* COMPARE */}
-        <section style={{ padding: '32px 48px 48px', borderTop: '1px solid var(--border)' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>How Ascent compares</div>
-            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-              {ALL_VS_PAGES.filter(p => p.category === 'capital-readiness' || p.category === 'fund-data-room').map(p => (
-                <Link key={p.slug} href={`/vs/${p.slug}`}
-                  style={{ fontSize: 13, color: 'var(--text2)', padding: '9px 16px', borderRadius: 9, border: '1px solid var(--border)', background: 'var(--surface)', textDecoration: 'none' }}>
-                  {p.label} →
-                </Link>
-              ))}
-            </div>
           </div>
         </section>
 
