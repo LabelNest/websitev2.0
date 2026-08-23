@@ -5,7 +5,6 @@ import HoverDiv from '@/components/HoverDiv'
 import Link from 'next/link'
 import { Metadata } from 'next'
 import { pageMetadata, breadcrumbSchema } from '@/lib/seo'
-import { ALL_VS_PAGES } from '@/components/VsPageLayout'
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/nesthr', {
@@ -335,21 +334,6 @@ export default function NestHRPage() {
             </div>
             <div style={{ marginTop: 14, padding: '14px 20px', background: 'rgba(255,255,255,.03)', border: '1px solid rgba(255,255,255,.06)', borderRadius: 10, fontSize: 13, color: 'var(--text3)', textAlign: 'center' }}>
               All plans include all 7 modules. No module upsells. No per-seat tricks. INR pricing — no forex tax.
-            </div>
-          </div>
-        </section>
-
-        {/* COMPARE */}
-        <section style={{ padding: '48px 48px', borderBottom: '1px solid var(--border)' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>How NestHR compares</div>
-            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-              {ALL_VS_PAGES.filter(p => p.category === 'nesthr').map(p => (
-                <Link key={p.slug} href={`/vs/${p.slug}`}
-                  style={{ fontSize: 13, color: 'var(--text2)', padding: '9px 16px', borderRadius: 9, border: '1px solid var(--border)', background: 'var(--surface)', textDecoration: 'none' }}>
-                  {p.label} →
-                </Link>
-              ))}
             </div>
           </div>
         </section>
