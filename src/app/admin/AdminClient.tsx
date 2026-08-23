@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { ImagePositioner } from '@/components/admin/ImagePositioner'
 import { imgFrameStyle } from '@/lib/image'
@@ -286,6 +286,13 @@ function TeamMembersPanel({ showToast }: { showToast:(m:string)=>void }) {
   const [modal, setModal] = useState(false)
   const [saving, setSaving] = useState(false)
   const [movingToAlumni, setMovingToAlumni] = useState(false)
+  // Real bug found 2026-08-23: `disabled={movingToAlumni}` alone doesn't stop
+  // a genuine fast double-click -- React batches the setState, so both click
+  // handlers can fire before the disabled attribute actually commits to the
+  // DOM. Produced two real duplicate website_alumni rows for one person.
+  // A ref is checked and set synchronously, before any state update, so the
+  // second click sees the lock immediately regardless of render timing.
+  const movingToAlumniLock = useRef(false)
   const [editing, setEditing] = useState<TeamMember|null>(null)
   const blank = { name:'',role:'',department:'',bio:'',linkedin_url:'',image_url:'',image_position:'50% 0%',image_zoom:1,sort_order:'99',is_active:true,slug:'',email:'',expertise:'',quote:'' }
   const [form, setForm] = useState(blank)
@@ -313,17 +320,19 @@ function TeamMembersPanel({ showToast }: { showToast:(m:string)=>void }) {
   // name/role/department/email/linkedin/photo) and deactivates the team
   // member in one action, so nobody is silently both/neither.
   async function moveToAlumni() {
-    if (!editing) return
+    if (!editing || movingToAlumniLock.current) return
+    movingToAlumniLock.current = true
     setMovingToAlumni(true)
     const alumniRes = await fetch('/api/admin/alumni',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
       name:form.name, role:form.role, department:form.department, email:form.email||null,
       linkedin_url:form.linkedin_url||null, image_url:form.image_url||null,
       image_position:form.image_position, image_zoom:form.image_zoom, is_active:true,
     })})
-    if (!alumniRes.ok) { setMovingToAlumni(false); showToast('✗ Could not create alumni record'); return }
+    if (!alumniRes.ok) { movingToAlumniLock.current = false; setMovingToAlumni(false); showToast('✗ Could not create alumni record'); return }
     const deactivateRes = await fetch('/api/admin/team',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({
       ...form, id:editing.id, sort_order:Number(form.sort_order), is_active:false,
     })})
+    movingToAlumniLock.current = false
     setMovingToAlumni(false)
     if (!deactivateRes.ok) { showToast('✗ Alumni record created, but could not hide the team member — hide them manually'); return }
     setModal(false); load(); showToast(`✓ ${form.name} moved to Alumni — edit their "Now at" details from the Alumni tab`)
