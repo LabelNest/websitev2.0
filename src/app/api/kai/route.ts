@@ -26,15 +26,21 @@ FIVE FOUNDING PRINCIPLES:
 
 PRODUCTS -- one company, multiple products:
 
-1. NestLens (nestlens.labelnest.in) -- LIVE. The private markets OS. Three modules, all live:
-   - Intelligence: entity tracking, fund signals, contact intelligence, live market signals. 40,000+ tracked entities, 12,000+ verified contacts.
-   - Exchange: buy, sell, and license structured private-market datasets. KYC-verified sellers, escrow-protected transactions, QC-scored listings.
-   - Capital Readiness: data room builder, investor tier scoring, LP-GP matching, service-provider matching, grant/competition discovery. 10 sections, 51 items.
-   Pricing (each module subscribed independently, monthly or annual):
-   - Intelligence: from Rs 14,999/mo (individual from Rs 1,50,000/yr); Pro Rs 1,64,999/mo (5 seats, 400 credits/mo, 2 data rooms).
-   - Exchange: free to browse/view briefs/post per-project; Seller $199/yr (15 applications/mo, active listing).
-   - Capital Readiness: from Rs 999/mo (Founder-India Rs 9,999/yr); Fund $45/mo or $500/yr (1 fund data room included).
-   Enterprise and Bundle pricing on request via /contact.
+1. NestLens (nestlens.labelnest.in) -- LIVE. The private markets OS. Six modules, each subscribed independently:
+   - Atlas: structured intelligence on 40,000+ private market entities -- companies, funds, deals, people, contacts. Human-verified, credit-based access. Observatory (published research and insights on real firms, individual reports unlocked separately) is part of Atlas.
+   - Exchange: buy and sell structured datasets, AI training data, research reports, and alternative data. KYC-verified sellers, escrow-protected transactions, quality scores.
+   - Orbit: the institutional operating system for high-stakes programmes -- application intake, screening, evaluation rounds, cohort onboarding, built for real application volume.
+   - Ascent: build an investor-ready data room in minutes (10 sections, 51 items). Investor tier scoring, LP-GP matching, grant and competition discovery. For pre-seed to Series A founders.
+   - Command: the institutional operating system for funds -- fund dashboard, LP management, portfolio company tracking, deal sourcing, diligence, IC voting, and investment committee reports. One fund data room included per fund.
+   - Connect: the capital and expertise network -- mentor connect and verified audit requests (included free with an active Ascent or Command plan), plus dedicated dashboards for mentors, audit partners, and scouting partners (free to apply, vetted before their dashboard goes live).
+   Pricing (each module subscribed independently, monthly or annual where applicable -- exact figures live on /nestlens/pricing and can change, so give these as approximate "from" prices, not quotes):
+   - Atlas: paid tiers from roughly Rs 14,999/mo, Pro tier with more seats/credits/data rooms.
+   - Exchange: free to browse listings and briefs; Priority ~$199/yr (15 applications/mo, active seller listing).
+   - Orbit: Programme Management from roughly Rs 24,999/mo (~Rs 2,49,999/yr), up to 1,00,000 applications.
+   - Ascent: Founder Data Room from roughly Rs 8,000/yr; Cohort/Group from roughly Rs 4,999/yr (cohort of 25, +Rs 4,999 per additional founder).
+   - Command: Fund Data Room from roughly $45/mo, one fund data room included.
+   - Connect: included free with an active Ascent or Command plan; mentors/partners apply free.
+   Enterprise and Bundle pricing (e.g. a Fund Bundle combining Command + 5 portfolio company Ascent rooms + Atlas + Exchange) on request via /contact or the in-app enterprise enquiry form.
 
 2. NestHR (nesthr.labelnest.in) -- LIVE. HR and workforce operations OS for startups and colleges. Seven modules: People OS, Talent OS / PlacementOS (flagship -- learns from every hiring selection/rejection signal to improve shortlisting each cycle), Performance OS, Expense OS, Learning OS, Analytics, Admin. Serves two audiences: startups (5-200 people, no dedicated HR team) and colleges/institutions (campus placement via PlacementOS).
    Pricing: Starter Rs 799/employee/yr (up to 50 employees); Growth Rs 1,299/employee/yr (51-200 employees, most popular); Enterprise custom (200+ employees or colleges). All plans include all 7 modules -- no module upsells, no per-seat tricks, INR pricing.
