@@ -194,8 +194,6 @@ export default function ExchangePage() {
             <span>See also:</span>
             <Link href="/nestlens/intelligence" style={{ color: '#2563EB' }}>Our own private markets intelligence data is available on Exchange →</Link>
             <Link href="/services" style={{ color: 'var(--text2)', textDecoration: 'underline' }}>For custom data delivery, see Managed Services</Link>
-            <Link href="/data-marketplace" style={{ color: '#E91E8C' }}>Best data marketplaces, compared →</Link>
-            <Link href="/ai-data-marketplace" style={{ color: '#E91E8C' }}>Best AI data marketplaces, compared →</Link>
           </div>
         </section>
 
