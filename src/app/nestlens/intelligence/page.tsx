@@ -150,6 +150,22 @@ export default function IntelligencePage() {
           </div>
         </section>
 
+        {/* OBSERVATORY */}
+        <section style={{ padding: '56px 48px', borderBottom: '1px solid var(--border)' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ display: 'flex', gap: 24, alignItems: 'center', flexWrap: 'wrap', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: 28 }}>
+              <img src="/logos/observatory.png" alt="" width={56} height={56} style={{ objectFit: 'contain', flexShrink: 0 }} />
+              <div style={{ flex: 1, minWidth: 240 }}>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 6 }}>Part of Atlas</div>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 19, color: 'var(--text)', marginBottom: 6 }}>Atlas Observatory — published research, free to browse</div>
+                <div style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.6 }}>The insights &amp; trends layer for private markets. No Atlas plan required — unlock individual reports as you need them.</div>
+              </div>
+              <Link href="/nestlens/intelligence/observatory"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#7C3AED', color: '#fff', fontSize: 14, fontWeight: 600, padding: '11px 22px', borderRadius: 10, whiteSpace: 'nowrap' }}>Explore the Observatory →</Link>
+            </div>
+          </div>
+        </section>
+
         {/* PRICING */}
         <section style={{ padding: '72px 48px', background: 'var(--bg2)', borderTop: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
