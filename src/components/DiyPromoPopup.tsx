@@ -8,6 +8,10 @@ const SHOW_ON = new Set([
   '/nestlens/intelligence',
   '/nestlens/exchange',
   '/nestlens/capital',
+  '/nestlens/orbit',
+  '/nestlens/command',
+  '/nestlens/connect',
+  '/nestlens/pricing',
   '/nesthr',
   '/contact',
 ])
@@ -63,7 +67,7 @@ export default function DiyPromoPopup() {
         Every brochure, price, and FAQ — one page.
       </div>
       <div style={{ fontSize: 12.5, color: 'var(--text2)', lineHeight: 1.55, marginBottom: 12 }}>
-        The NestLens Resource Hub has everything: Intelligence, Capital Readiness, Exchange, and NestHR pricing and brochures.
+        The NestLens Resource Hub has everything: Atlas, Ascent, Command, Connect, Orbit, Exchange, and NestHR pricing and brochures.
       </div>
       <a
         href="https://nestlens.labelnest.in/DIY"

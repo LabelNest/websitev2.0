@@ -7,8 +7,9 @@ import { useEffect, useRef, useState } from 'react'
 
 const links = [
   { href: '/about',     label: 'About'              },
-  { href: '/nestlens',  label: 'NestLens'            },
-  { href: '/nesthr',    label: 'NestHR'              },
+  { href: '/nestlens',  label: 'NestLens',  group: 'products', groupStart: true  },
+  { href: '/sentinel',  label: 'Sentinel',  group: 'products'                    },
+  { href: '/nesthr',    label: 'NestHR',    group: 'products', groupEnd: true    },
   { href: '/ecosystem', label: 'Ecosystem'           },
   { href: '/services',  label: 'Services'            },
   { href: '/briefings', label: 'Blogs & Newsletters' },
@@ -128,16 +129,21 @@ export default function Nav() {
               }}
             />
 
-            {links.map(({ href, label }) => {
+            {links.map(({ href, label, group, groupStart, groupEnd }) => {
               const active = pathname === href || pathname.startsWith(href + '/')
               const lit    = hovered === href || (!hovered && active)
               return (
-                <li key={href} ref={el => { itemRefs.current[href] = el }} style={{ position:'relative', zIndex:1 }}>
+                <li key={href} ref={el => { itemRefs.current[href] = el }} style={{
+                  position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center',
+                  ...(groupStart ? { marginLeft: 8, paddingLeft: 8, borderLeft: '1px solid var(--border)' } : {}),
+                  ...(groupEnd ? { marginRight: 8, paddingRight: 8, borderRight: '1px solid var(--border)' } : {}),
+                }}>
                   <Link
                     href={href}
                     className="ln-nav-link"
                     onMouseEnter={() => onEnter(href)}
                     onMouseLeave={onLeave}
+                    title={group === 'products' ? `${label} — a LabelNest product` : undefined}
                     style={{
                       display:       'block',
                       fontSize:      13,
@@ -200,12 +206,16 @@ export default function Nav() {
         {/* Mobile menu */}
         {open && (
           <div className="md:hidden border-t px-6 py-4 flex flex-col gap-1" style={{ borderColor:'var(--border)', background:'var(--nav-bg)' }}>
-            {links.map(({ href, label }) => {
+            {links.map(({ href, label, groupStart, groupEnd }) => {
               const active = pathname === href || pathname.startsWith(href + '/')
               return (
                 <Link key={href} href={href} onClick={() => setOpen(false)}
                   className="text-[14px] font-medium py-2.5 px-3 rounded-lg transition-colors"
-                  style={{ color: active ? 'var(--pink)' : 'var(--text2)', background: active ? 'rgba(233,30,140,.07)' : 'transparent' }}>
+                  style={{
+                    color: active ? 'var(--pink)' : 'var(--text2)', background: active ? 'rgba(233,30,140,.07)' : 'transparent',
+                    ...(groupStart ? { marginTop: 6, borderTop: '1px solid var(--border)', paddingTop: 12 } : {}),
+                    ...(groupEnd ? { marginBottom: 6, borderBottom: '1px solid var(--border)', paddingBottom: 12 } : {}),
+                  }}>
                   {label}
                 </Link>
               )
