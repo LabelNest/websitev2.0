@@ -11,6 +11,7 @@ const TABS = [
   { href: '/nestlens/command', label: 'Command', exact: false, icon: '/logos/command-32.png' },
   { href: '/nestlens/connect', label: 'Connect', exact: false, icon: '/logos/connect-32.png' },
   { href: '/nestlens/pricing', label: 'Pricing', exact: false, icon: null },
+  { href: '/access', label: 'Access', exact: false, icon: null },
 ]
 
 // External -- NestLens's own app, not a page on this site -- rendered
