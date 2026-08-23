@@ -282,9 +282,6 @@ export default function NestLensPage() {
               <a href="https://nestlens.labelnest.in/enterprise-enquiry" target="_blank" rel="noopener noreferrer"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14, fontWeight: 500, padding: '12px 24px', borderRadius: 10, border: '1px solid rgba(255,255,255,.1)' }}>Enquire about Enterprise or Bundle</a>
             </div>
-            <p style={{ textAlign: 'center', fontSize: 12.5, color: 'var(--text3)', marginTop: 20 }}>
-              See how NestLens compares: <Link href="/best-private-market-data-platforms" style={{ color: '#2563EB' }}>best private market data platforms →</Link>
-            </p>
           </div>
         </section>
 

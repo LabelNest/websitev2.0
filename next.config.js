@@ -46,6 +46,14 @@ const nextConfig = {
       { source: '/labelnest-platforms', destination: '/ecosystem', permanent: true },
       { source: '/data-research-intelligence', destination: '/nestlens/intelligence', permanent: true },
       { source: '/data-annotation', destination: '/nestlens/exchange', permanent: true },
+      // Named-competitor comparison pages removed 2026-08-23 -- real content
+      // was a comparison table naming specific competitors by name, kept
+      // only for SEO, not meant to be a visible standing part of the site.
+      // Redirected (not 404'd) to each page's own real subject-matter home,
+      // since these may already be indexed/bookmarked.
+      { source: '/ai-data-marketplace', destination: '/nestlens/exchange', permanent: true },
+      { source: '/best-private-market-data-platforms', destination: '/nestlens/intelligence', permanent: true },
+      { source: '/data-marketplace', destination: '/nestlens/exchange', permanent: true },
       { source: '/english-privacy-policy', destination: '/legal/privacy', permanent: true },
       { source: '/copy-of-about-us', destination: '/about', permanent: true },
       { source: '/accessibility-statement', destination: '/legal', permanent: true },
