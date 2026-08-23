@@ -76,7 +76,7 @@ export default function IntelligencePage() {
                 NestLens Atlas tracks <strong style={{ color: 'var(--text)', fontWeight: 600 }}>companies, funds, deals, people, and contacts</strong> across private markets. Human-verified at the core. Priced for teams that legacy vendors ignore.
               </p>
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-                <a href="https://nestlens.labelnest.in" target="_blank" rel="noopener noreferrer"
+                <a href="https://atlas.labelnest.in" target="_blank" rel="noopener noreferrer"
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#2563EB', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Atlas ↗</a>
                 <Link href="/contact"
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>Request access</Link>
@@ -201,7 +201,7 @@ export default function IntelligencePage() {
           <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', gap: 24, flexWrap: 'wrap', fontSize: 13.5, color: 'var(--text2)' }}>
             <span>See also:</span>
             <Link href="/nestlens/exchange" style={{ color: '#E91E8C' }}>Buy specific datasets on the Exchange marketplace →</Link>
-            <Link href="/nestlens/capital" style={{ color: '#10B981' }}>For founders raising capital, see Capital Readiness →</Link>
+            <Link href="/nestlens/capital" style={{ color: '#10B981' }}>For founders raising capital, see Ascent →</Link>
           </div>
         </section>
 
@@ -227,7 +227,7 @@ export default function IntelligencePage() {
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', maxWidth: 520, margin: '0 auto 12px' }}>40K+ entities. 12K+ contacts. Live today.</h2>
             <p style={{ fontSize: 15.5, color: 'var(--text2)', maxWidth: 460, margin: '0 auto 32px', lineHeight: 1.7 }}>Seat- and credit-based pricing. No hidden fees. Start today and scale as you need.</p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-              <a href="https://nestlens.labelnest.in" target="_blank" rel="noopener noreferrer"
+              <a href="https://atlas.labelnest.in" target="_blank" rel="noopener noreferrer"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#2563EB', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Atlas ↗</a>
               <Link href="/contact"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>Talk to the team</Link>
