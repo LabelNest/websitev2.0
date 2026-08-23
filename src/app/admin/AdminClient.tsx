@@ -285,6 +285,7 @@ function TeamMembersPanel({ showToast }: { showToast:(m:string)=>void }) {
   const [rows, setRows] = useState<TeamMember[]>([])
   const [modal, setModal] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [movingToAlumni, setMovingToAlumni] = useState(false)
   const [editing, setEditing] = useState<TeamMember|null>(null)
   const blank = { name:'',role:'',department:'',bio:'',linkedin_url:'',image_url:'',image_position:'50% 0%',image_zoom:1,sort_order:'99',is_active:true,slug:'',email:'',expertise:'',quote:'' }
   const [form, setForm] = useState(blank)
@@ -304,6 +305,29 @@ function TeamMembersPanel({ showToast }: { showToast:(m:string)=>void }) {
     setModal(false); load(); showToast(`✓ Team member ${editing?'updated':'added'}`)
   }
   async function handleDelete(m:TeamMember) { await fetch('/api/admin/team',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:m.id})}); load(); showToast('✓ Removed') }
+
+  // Setting is_active=false alone was leaving people in limbo -- still a
+  // (hidden) team member row, never becoming a real alumni row, so they'd
+  // just vanish from /team with no card anywhere. This creates the real
+  // website_alumni row (pre-filled from the fields the two tables share --
+  // name/role/department/email/linkedin/photo) and deactivates the team
+  // member in one action, so nobody is silently both/neither.
+  async function moveToAlumni() {
+    if (!editing) return
+    setMovingToAlumni(true)
+    const alumniRes = await fetch('/api/admin/alumni',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      name:form.name, role:form.role, department:form.department, email:form.email||null,
+      linkedin_url:form.linkedin_url||null, image_url:form.image_url||null,
+      image_position:form.image_position, image_zoom:form.image_zoom, is_active:true,
+    })})
+    if (!alumniRes.ok) { setMovingToAlumni(false); showToast('✗ Could not create alumni record'); return }
+    const deactivateRes = await fetch('/api/admin/team',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      ...form, id:editing.id, sort_order:Number(form.sort_order), is_active:false,
+    })})
+    setMovingToAlumni(false)
+    if (!deactivateRes.ok) { showToast('✗ Alumni record created, but could not hide the team member — hide them manually'); return }
+    setModal(false); load(); showToast(`✓ ${form.name} moved to Alumni — edit their "Now at" details from the Alumni tab`)
+  }
 
   const F=(k:keyof typeof form)=>(v:string)=>setForm(f=>({...f,[k]:v}))
 
@@ -349,6 +373,17 @@ function TeamMembersPanel({ showToast }: { showToast:(m:string)=>void }) {
             position={form.image_position} zoom={form.image_zoom}
             onPositionChange={(position,zoom)=>setForm(f=>({...f,image_position:position,image_zoom:zoom}))} />
           <Toggle label="Active (visible on team page)" checked={form.is_active} onChange={v=>setForm(f=>({...f,is_active:v}))} />
+          {editing && (
+            <div style={{ borderTop:`1px solid ${S.border}`, paddingTop:12, marginTop:14 }}>
+              <button onClick={moveToAlumni} disabled={movingToAlumni}
+                style={{ width:'100%', padding:'10px 16px', borderRadius:9, border:`1px solid ${S.bord2}`, background:'transparent', color:S.text2, fontSize:12.5, fontWeight:600, cursor:movingToAlumni?'default':'pointer', opacity:movingToAlumni?0.6:1 }}>
+                {movingToAlumni ? 'Moving…' : 'Move to Alumni →'}
+              </button>
+              <div style={{ fontSize:11, color:S.text3, marginTop:6 }}>
+                Creates a real alumni card and hides this team member — separate from the Active toggle above, which only hides them.
+              </div>
+            </div>
+          )}
         </Modal>
       )}
     </>

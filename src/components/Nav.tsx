@@ -5,17 +5,21 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
+// Ecosystem and Services moved out to the footer (already linked there as
+// "All products" / "Managed Services" -- that's the established naming,
+// kept as-is). Contact removed from this list too -- the dedicated pink
+// "Contact Us" CTA button (desktop, right of this list) and its mobile-menu
+// counterpart (bottom of the mobile panel) are the one intentional path to
+// /contact; having a plain "Contact" pill here too was a redundant second
+// way to reach the same page.
 const links = [
   { href: '/about',     label: 'About'              },
   { href: '/nestlens',  label: 'NestLens',  group: 'products', groupStart: true  },
   { href: '/sentinel',  label: 'Sentinel',  group: 'products'                    },
   { href: '/nesthr',    label: 'NestHR',    group: 'products', groupEnd: true    },
-  { href: '/ecosystem', label: 'Ecosystem'           },
-  { href: '/services',  label: 'Services'            },
   { href: '/briefings', label: 'Blogs & Newsletters' },
   { href: '/team',      label: 'Team'                },
   { href: '/careers',   label: 'Careers'             },
-  { href: '/contact',   label: 'Contact'             },
 ]
 
 export default function Nav() {

@@ -31,9 +31,9 @@ const COLUMNS = [
     title: "Products",
     links: [
       { label: "NestLens",          href: "/nestlens" },
-      { label: "Intelligence",      href: "/nestlens/intelligence" },
+      { label: "Atlas",             href: "/nestlens/intelligence" },
       { label: "Exchange",          href: "/nestlens/exchange" },
-      { label: "Capital Readiness", href: "/nestlens/capital" },
+      { label: "Ascent",            href: "/nestlens/capital" },
       { label: "NestHR",            href: "/nesthr" },
       { label: "All products",      href: "/ecosystem" },
       { label: "Resource Hub",      href: "https://nestlens.labelnest.in/DIY" },
