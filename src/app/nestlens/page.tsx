@@ -143,7 +143,7 @@ export default function NestLensPage() {
 
               <HoverLink href="/nestlens/intelligence"
                 style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderTop: '3px solid #2563EB', borderRadius: 18, padding: 28, display: 'block', transition: 'transform .2s', textDecoration: 'none' }}>
-                <div style={{ fontSize: 28, marginBottom: 14 }}>🔭</div>
+                <img src="/logos/atlas.png" alt="" width={40} height={40} style={{ marginBottom: 14, objectFit: 'contain' }} />
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(16,185,129,.1)', color: '#10B981', display: 'inline-block', marginBottom: 10 }}>Live</div>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, color: 'var(--text)', marginBottom: 8 }}>Atlas</div>
                 <p style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65, marginBottom: 16 }}>Entity tracking, fund signals, contact intelligence, and live market signals across private markets. 40K+ entities. 12K+ verified contacts.</p>
@@ -156,7 +156,7 @@ export default function NestLensPage() {
 
               <HoverLink href="/nestlens/exchange"
                 style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderTop: '3px solid #E91E8C', borderRadius: 18, padding: 28, display: 'block', transition: 'transform .2s', textDecoration: 'none' }}>
-                <div style={{ fontSize: 28, marginBottom: 14 }}>⚡</div>
+                <img src="/logos/exchange.png" alt="" width={40} height={40} style={{ marginBottom: 14, objectFit: 'contain' }} />
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(16,185,129,.1)', color: '#10B981', display: 'inline-block', marginBottom: 10 }}>Live</div>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, color: 'var(--text)', marginBottom: 8 }}>Exchange</div>
                 <p style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65, marginBottom: 16 }}>Buy, sell, and license any structured dataset. KYC verified sellers. Escrow-protected transactions. QC scored. Universal data marketplace.</p>
@@ -169,7 +169,7 @@ export default function NestLensPage() {
 
               <HoverLink href="/nestlens/orbit"
                 style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderTop: '3px solid #7C3AED', borderRadius: 18, padding: 28, display: 'block', transition: 'transform .2s', textDecoration: 'none' }}>
-                <div style={{ fontSize: 28, marginBottom: 14 }}>🪐</div>
+                <img src="/logos/orbit.png" alt="" width={40} height={40} style={{ marginBottom: 14, objectFit: 'contain' }} />
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(16,185,129,.1)', color: '#10B981', display: 'inline-block', marginBottom: 10 }}>Live</div>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, color: 'var(--text)', marginBottom: 8 }}>Orbit</div>
                 <p style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65, marginBottom: 16 }}>Application intake, screening, evaluation rounds, and cohort onboarding — for accelerators and incubators running programmes at scale.</p>
@@ -181,7 +181,7 @@ export default function NestLensPage() {
 
               <HoverLink href="/nestlens/capital"
                 style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderTop: '3px solid #10B981', borderRadius: 18, padding: 28, display: 'block', transition: 'transform .2s', textDecoration: 'none' }}>
-                <div style={{ fontSize: 28, marginBottom: 14 }}>🏦</div>
+                <img src="/logos/ascent.png" alt="" width={40} height={40} style={{ marginBottom: 14, objectFit: 'contain' }} />
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(16,185,129,.1)', color: '#10B981', display: 'inline-block', marginBottom: 10 }}>Live</div>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, color: 'var(--text)', marginBottom: 8 }}>Ascent</div>
                 <p style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65, marginBottom: 16 }}>Data room, investor tier scoring, LP-GP matching, SP matching, and grant and competition discovery. 10 sections. 51 items.</p>
@@ -194,7 +194,7 @@ export default function NestLensPage() {
 
               <HoverLink href="/nestlens/command"
                 style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderTop: '3px solid #F97316', borderRadius: 18, padding: 28, display: 'block', transition: 'transform .2s', textDecoration: 'none' }}>
-                <div style={{ fontSize: 28, marginBottom: 14 }}>🎛️</div>
+                <img src="/logos/command.png" alt="" width={40} height={40} style={{ marginBottom: 14, objectFit: 'contain' }} />
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(16,185,129,.1)', color: '#10B981', display: 'inline-block', marginBottom: 10 }}>Live</div>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, color: 'var(--text)', marginBottom: 8 }}>Command</div>
                 <p style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65, marginBottom: 16 }}>Fund dashboard, LP management, portfolio company tracking, deal sourcing, diligence, and IC voting — one workspace for a fund.</p>
@@ -206,7 +206,7 @@ export default function NestLensPage() {
 
               <HoverLink href="/nestlens/connect"
                 style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderTop: '3px solid #06B6D4', borderRadius: 18, padding: 28, display: 'block', transition: 'transform .2s', textDecoration: 'none' }}>
-                <div style={{ fontSize: 28, marginBottom: 14 }}>🤝</div>
+                <img src="/logos/connect.png" alt="" width={40} height={40} style={{ marginBottom: 14, objectFit: 'contain' }} />
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(16,185,129,.1)', color: '#10B981', display: 'inline-block', marginBottom: 10 }}>Live</div>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, color: 'var(--text)', marginBottom: 8 }}>Connect</div>
                 <p style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65, marginBottom: 16 }}>Mentor connect, verified audit requests, and dedicated dashboards for mentors, audit partners, and scouting partners.</p>
