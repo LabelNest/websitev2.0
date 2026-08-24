@@ -7,11 +7,19 @@
 
 ## Products
 
-- [NestLens](https://labelnest.in/nestlens): Private markets OS with three modules —
-  Intelligence (tracks 40,000+ entities: companies, funds, GPs, LPs, deals, service providers),
-  Exchange (marketplace for buying/selling verified structured private-markets data, KYC-verified
-  sellers), and Capital Readiness (investor-ready data room builder, LP-GP matching). Credit-based
-  access, no lock-in. Live at nestlens.labelnest.in.
+- [NestLens](https://labelnest.in/nestlens): Private markets OS with six modules, each also a
+  live satellite subdomain — [Atlas](https://labelnest.in/nestlens/intelligence)
+  (atlas.labelnest.in — structured intelligence on 40,000+ private market entities: companies,
+  funds, GPs, LPs, deals, contacts), [Exchange](https://labelnest.in/nestlens/exchange)
+  (exchange.labelnest.in — marketplace for buying/selling structured datasets, AI training data,
+  and research, KYC-verified sellers, escrow protection), [Ascent](https://labelnest.in/nestlens/capital)
+  (ascent.labelnest.in — investor-ready data room builder, LP-GP matching, for pre-seed to Series A
+  startups), [Command](https://labelnest.in/nestlens/command) (command.labelnest.in — fund-side
+  operating system: fund dashboard, LP management, portfolio tracking, deal sourcing, IC voting),
+  [Connect](https://labelnest.in/nestlens/connect) (connect.labelnest.in — mentor connect and
+  verified audit partners), and [Orbit](https://labelnest.in/nestlens/orbit) (orbit.labelnest.in —
+  programme management for accelerators/incubators: application intake, screening, evaluation,
+  cohort onboarding). Credit-based access, no lock-in. Hub at nestlens.labelnest.in.
 - [NestLens vs Preqin](https://labelnest.in/vs/preqin)
 - [NestLens vs PitchBook](https://labelnest.in/vs/pitchbook)
 - [NestLens vs DocSend](https://labelnest.in/vs/docsend)
