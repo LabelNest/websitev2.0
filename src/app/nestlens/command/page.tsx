@@ -14,6 +14,75 @@ export async function generateMetadata(): Promise<Metadata> {
   })
 }
 
+const CONNECTIONS = [
+  { from: 'Atlas', to: 'Deal Sourcing & Startup Search', desc: 'Same structured data layer Atlas tracks — no separate tool for finding your next deal.', c: '#0891B2' },
+  { from: 'Ascent', to: 'Command Portfolio', desc: "A portfolio company's own metrics sync in once they accept your invite — headcount, revenue, burn, runway, valuation.", c: '#7C3AED' },
+  { from: 'Valuation', to: 'NAV · TVPI · DPI · IRR', desc: 'Save a fair value on a portfolio company and the fund\'s returns recompute immediately — not on the next report cycle.', c: '#10B981' },
+]
+
+const STATS = [
+  { v: '119', l: 'Vault fields', c: '#7C3AED' },
+  { v: '10', l: 'Data room sections', c: '#2563EB' },
+  { v: '8', l: 'Fund-ops capabilities', c: '#10B981' },
+  { v: '3', l: 'Live automations', c: '#F97316' },
+]
+
+// Fills use var(--surface)/var(--text)/var(--text2) instead of hardcoded
+// pastels so it stays correct in this site's dark-first theme. Three real
+// sources, matching CONNECTIONS above -- Atlas feeds Deal Sourcing/Startup
+// Search (the same claim this page's own Deal Sourcing capability copy
+// already makes), Ascent feeds portfolio metrics, Valuation feeds NAV.
+const CONNECTION_DIAGRAM_SVG = `<svg width="100%" viewBox="0 0 680 360" role="img">
+<title>Command data flow</title>
+<desc>Atlas, Ascent, and Valuation data flowing into Command</desc>
+<defs>
+  <marker id="cmdArr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+    .cdt { font: 600 13px/1 'Bricolage Grotesque',sans-serif; }
+    .cds { font: 400 11px/1 system-ui,sans-serif; }
+    .cring { fill:none; stroke:#7C3AED; stroke-width:1; opacity:0.18; }
+    @keyframes cSpinA { to { transform: rotate(360deg); } }
+    @keyframes cSpinB { to { transform: rotate(-360deg); } }
+    @keyframes cDash  { to { stroke-dashoffset: -24; } }
+    @keyframes cGlow  { 0%,100%{opacity:.25} 50%{opacity:.6} }
+    .cr1 { transform-origin:340px 175px; animation:cSpinA 20s linear infinite; }
+    .cr2 { transform-origin:340px 175px; animation:cSpinB 32s linear infinite; }
+    .cf1 { stroke-dasharray:6 8; animation:cDash 1.4s linear infinite; }
+    .cf2 { stroke-dasharray:6 8; animation:cDash 1.8s linear infinite; }
+    .cf3 { stroke-dasharray:6 8; animation:cDash 2.0s linear infinite; }
+    .cgw { animation:cGlow 3s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) { .cr1,.cr2,.cf1,.cf2,.cf3,.cgw { animation: none; } }
+  </style>
+</defs>
+<circle class="cring cr1" cx="340" cy="175" r="120"/>
+<circle class="cring cr2" cx="340" cy="175" r="95" stroke-dasharray="3 10"/>
+<line x1="102" y1="90"  x2="294" y2="155" stroke="#0891B2" stroke-width="1.5" fill="none" class="cf1" marker-end="url(#cmdArr)"/>
+<line x1="102" y1="175" x2="294" y2="175" stroke="#7C3AED" stroke-width="1.5" fill="none" class="cf2" marker-end="url(#cmdArr)"/>
+<line x1="102" y1="260" x2="294" y2="195" stroke="#10B981" stroke-width="1.5" fill="none" class="cf3" marker-end="url(#cmdArr)"/>
+<circle r="3.5" fill="#0891B2"><animateMotion dur="1.4s" repeatCount="indefinite"><mpath href="#cp1"/></animateMotion></circle>
+<path id="cp1" d="M102,90 L294,155" fill="none" stroke="none"/>
+<circle r="3.5" fill="#7C3AED"><animateMotion dur="1.8s" repeatCount="indefinite"><mpath href="#cp2"/></animateMotion></circle>
+<path id="cp2" d="M102,175 L294,175" fill="none" stroke="none"/>
+<circle r="3.5" fill="#10B981"><animateMotion dur="2.0s" repeatCount="indefinite"><mpath href="#cp3"/></animateMotion></circle>
+<path id="cp3" d="M102,260 L294,195" fill="none" stroke="none"/>
+<circle cx="340" cy="175" r="50" fill="var(--surface)" stroke="#7C3AED" stroke-width="1.5" class="cgw"/>
+<circle cx="340" cy="175" r="38" fill="#7C3AED1A" stroke="#7C3AED" stroke-width="0.5"/>
+<text x="340" y="170" class="cdt" text-anchor="middle" fill="#7C3AED" font-size="17">⌘</text>
+<text x="340" y="187" class="cdt" text-anchor="middle" fill="#7C3AED">Command</text>
+<rect x="22" y="66" width="80" height="48" rx="7" fill="var(--surface)" stroke="#0891B2" stroke-width="1"/>
+<text x="62" y="87" class="cdt" text-anchor="middle" fill="var(--text)">Atlas</text>
+<text x="62" y="104" class="cds" text-anchor="middle" fill="var(--text2)">Market data</text>
+<rect x="22" y="151" width="80" height="48" rx="7" fill="var(--surface)" stroke="#7C3AED" stroke-width="1"/>
+<text x="62" y="172" class="cdt" text-anchor="middle" fill="var(--text)">Ascent</text>
+<text x="62" y="189" class="cds" text-anchor="middle" fill="var(--text2)">Startup metrics</text>
+<rect x="22" y="236" width="80" height="48" rx="7" fill="var(--surface)" stroke="#10B981" stroke-width="1"/>
+<text x="62" y="257" class="cdt" text-anchor="middle" fill="var(--text)">Valuation</text>
+<text x="62" y="274" class="cds" text-anchor="middle" fill="var(--text2)">NAV · TVPI</text>
+<text x="340" y="332" class="cds" text-anchor="middle" fill="var(--text3)">Deal sourcing · Cap table · NAV · TVPI/DPI/IRR · LP reports</text>
+</svg>`
+
 const CAPABILITIES = [
   { icon: '📊', badge: 'Overview', badgeColor: '#F97316', hoverColor: 'rgba(249,115,22,.4)', name: 'Fund Dashboard', desc: 'A live view of your fund — portfolio health, LP commitments, pipeline stage, and deal flow, in one place.' },
   { icon: '🗄️', badge: 'Data room', badgeColor: '#2563EB', hoverColor: 'rgba(37,99,235,.4)', name: 'Fund Data Room', desc: 'Your fund\'s own investor-facing data room — one included per fund, extra rooms available for co-investors or portfolio companies.' },
@@ -54,7 +123,7 @@ export default function CommandPage() {
 
         {/* HERO */}
         <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', top: -100, right: -80, width: 500, height: 500, borderRadius: '50%', background: 'rgba(249,115,22,.08)', filter: 'blur(90px)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', top: -100, right: -80, width: 500, height: 500, borderRadius: '50%', background: 'rgba(124,58,237,.10)', filter: 'blur(90px)', pointerEvents: 'none' }} />
           <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 2 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
               <img src="/logos/command-32.png" alt="" width={20} height={20} style={{ objectFit: 'contain' }} />
@@ -62,17 +131,46 @@ export default function CommandPage() {
             </div>
             <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(40px,6vw,68px)', fontWeight: 800, letterSpacing: '-.045em', lineHeight: 1.03, color: 'var(--text)', marginBottom: 18, maxWidth: 720 }}>
               The operating system<br />
-              your fund <span style={{ background: 'linear-gradient(100deg,#F97316,#E91E8C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>runs on.</span>
+              your fund <span style={{ background: 'linear-gradient(100deg,#7C3AED,#E91E8C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>runs on.</span>
             </h1>
             <p style={{ fontSize: 'clamp(15px,1.8vw,18px)', lineHeight: 1.72, color: 'var(--text2)', maxWidth: 620, marginBottom: 28 }}>
               <strong style={{ color: 'var(--text)', fontWeight: 600 }}>Fund dashboard, LP management, portfolio tracking, deal sourcing, and IC voting</strong> — one workspace for a VC or PE fund, built on the same structured data layer Atlas tracks.
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               <a href="https://command.labelnest.in" target="_blank" rel="noopener noreferrer"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#F97316', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Command ↗</a>
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#7C3AED', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Command ↗</a>
               <Link href="/contact"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>Talk to the team</Link>
             </div>
+          </div>
+        </section>
+
+        {/* CONNECTIONS -- the three real automations, plus the diagram that
+            ships inside Command itself */}
+        <section style={{ padding: '56px 48px', borderBottom: '1px solid var(--border)' }}>
+          <div style={{ maxWidth: 680, margin: '0 auto' }} dangerouslySetInnerHTML={{ __html: CONNECTION_DIAGRAM_SVG }} />
+          <div style={{ maxWidth: 680, margin: '40px auto 0' }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', textAlign: 'center', marginBottom: 16 }}>Three live automations</div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 10 }}>
+              {CONNECTIONS.map(conn => (
+                <div key={conn.from} style={{ padding: '14px 16px', background: 'var(--surface)', borderRadius: 10, border: '1px solid var(--border)', borderLeft: `3px solid ${conn.c}` }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginBottom: 6 }}>
+                    <span style={{ fontSize: 12.5, fontWeight: 700, color: conn.c }}>{conn.from}</span>
+                    <span style={{ fontSize: 11, color: 'var(--text3)' }}>→</span>
+                    <span style={{ fontSize: 12, fontWeight: 600, color: conn.c }}>{conn.to}</span>
+                  </div>
+                  <div style={{ fontSize: 12, color: 'var(--text2)', lineHeight: 1.6 }}>{conn.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div style={{ display: 'flex', maxWidth: 680, margin: '40px auto 0', borderTop: '1px solid var(--border)', paddingTop: 28, justifyContent: 'center' }}>
+            {STATS.map((s, i) => (
+              <div key={s.l} style={{ flex: 1, textAlign: 'center', padding: '0 12px', borderRight: i < STATS.length - 1 ? '1px solid var(--border)' : 'none' }}>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 26, fontWeight: 800, color: s.c, lineHeight: 1 }}>{s.v}</div>
+                <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 5 }}>{s.l}</div>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -144,7 +242,7 @@ export default function CommandPage() {
             <p style={{ fontSize: 15.5, color: 'var(--text2)', maxWidth: 460, margin: '0 auto 32px', lineHeight: 1.7 }}>Fund dashboard, LP management, and portfolio tracking — live today.</p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="https://command.labelnest.in" target="_blank" rel="noopener noreferrer"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#F97316', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Command ↗</a>
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#7C3AED', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Command ↗</a>
               <Link href="/contact"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>Talk to the team</Link>
             </div>
