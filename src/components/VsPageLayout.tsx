@@ -1,6 +1,7 @@
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
+import { WhoWeServeBanner } from '@/components/WhoWeServe'
 
 type Verdict = 'win' | 'mid' | 'no'
 type VsCategory = 'intelligence' | 'capital-readiness' | 'fund-data-room' | 'exchange' | 'nesthr'
@@ -129,6 +130,11 @@ export default function VsPageLayout(d: VsPageData) {
             </div>
           </div>
         </section>
+
+        {/* WHO THIS IS FOR -- skipped for 'nesthr' (different product,
+            different audience; WhoWeServeBanner also self-guards on an
+            unmapped category, this is just the explicit intent). */}
+        {d.category !== 'nesthr' && <WhoWeServeBanner category={d.category} />}
 
         {/* TL;DR */}
         <section style={{ padding: '56px 48px', background: 'var(--bg2)', borderBottom: '1px solid var(--border)' }}>

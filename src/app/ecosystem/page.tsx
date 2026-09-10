@@ -3,6 +3,7 @@ import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { Metadata } from 'next'
 import { pageMetadata, breadcrumbSchema } from '@/lib/seo'
+import { WhoWeServeTable } from '@/components/WhoWeServe'
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/ecosystem', {
@@ -51,6 +52,17 @@ export default function EcosystemPage() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* WHO WE SERVE -- compact, links out to /who-we-serve for the full
+            persona-first breakdown; this page stays product-first below. */}
+        <section style={{ padding: '48px 48px 0' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Who we serve</div>
+            <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 20 }}>Not sure where to start? Find yourself.</h2>
+            <WhoWeServeTable />
+            <Link href="/who-we-serve" style={{ display: 'inline-block', marginTop: 16, fontSize: 13, fontWeight: 600, color: 'var(--text2)' }}>See the full breakdown →</Link>
           </div>
         </section>
 
