@@ -16,6 +16,13 @@ import { PERSONAS, ATLAS_NOTE, WHO_WE_SERVE_TAGLINE, PersonaKey, VS_CATEGORY_TO_
 // - WhoWeServeTable  -- /ecosystem, under its hero
 // - WhoWeServeBanner -- every /vs/[slug] page via VsPageLayout.tsx,
 //   category-aware (highlights the persona(s) relevant to that comparison)
+//
+// Every persona link here routes to its own /who-we-serve/[key] page (see
+// src/lib/icpPages.ts) rather than straight to the product -- that page is
+// what carries the visitor the rest of the way (how it connects to the
+// other products, then the real "Open <Product>" CTA). Keeps the site from
+// fragmenting between product domains, which was the whole point of adding
+// these pages.
 
 export function WhoWeServeTopBar() {
   return (
@@ -28,7 +35,7 @@ export function WhoWeServeTopBar() {
           {PERSONAS.map(p => (
             <Link
               key={p.key}
-              href={p.stackHref}
+              href={`/who-we-serve/${p.key}`}
               className="inline-flex items-center gap-1.5 transition-all hover:-translate-y-0.5"
               style={{
                 fontSize: 12.5, fontWeight: 600, letterSpacing: '.01em',
@@ -51,7 +58,7 @@ export function WhoWeServeCards() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 16 }}>
       {PERSONAS.map(p => (
-        <Link key={p.key} href={p.stackHref}
+        <Link key={p.key} href={`/who-we-serve/${p.key}`}
           className="relative overflow-hidden transition-all duration-200 hover:-translate-y-1.5 block"
           style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 18, padding: 28 }}
           onMouseEnter={e => (e.currentTarget.style.borderColor = p.color)}
@@ -96,7 +103,7 @@ export function WhoWeServeTable() {
             <tr key={p.key}>
               <td style={{ padding: '13px 20px', fontSize: 13.5, fontWeight: 600, color: 'var(--text)', borderBottom: i === PERSONAS.length - 1 ? 'none' : '1px solid var(--border)' }}>{p.icon} {p.label}</td>
               <td style={{ padding: '13px 20px', borderBottom: i === PERSONAS.length - 1 ? 'none' : '1px solid var(--border)' }}>
-                <Link href={p.stackHref} style={{ fontSize: 13.5, fontWeight: 600, color: p.color, textDecoration: 'none' }}>{p.stack} →</Link>
+                <Link href={`/who-we-serve/${p.key}`} style={{ fontSize: 13.5, fontWeight: 600, color: p.color, textDecoration: 'none' }}>{p.stack} →</Link>
               </td>
             </tr>
           ))}
@@ -122,7 +129,7 @@ export function WhoWeServeBanner({ category }: { category: string }) {
           {PERSONAS.map(p => {
             const lit = highlighted.has(p.key)
             return (
-              <Link key={p.key} href={p.stackHref}
+              <Link key={p.key} href={`/who-we-serve/${p.key}`}
                 className="inline-flex items-center gap-2 transition-all"
                 style={{
                   fontSize: 12.5, fontWeight: lit ? 700 : 500, padding: '7px 13px', borderRadius: 100,
