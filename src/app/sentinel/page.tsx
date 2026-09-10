@@ -69,13 +69,15 @@ export default function SentinelPage() {
               <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderTop: '3px solid #2563EB', borderRadius: 18, padding: 28 }}>
                 <div style={{ fontSize: 28, marginBottom: 14 }}>📊</div>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, color: 'var(--text)', marginBottom: 8 }}>Sentinel Risk</div>
-                <p style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65 }}>Portfolio concentration, valuation integrity, exit risk, stress testing, and operational signals — continuously monitored across your entire private markets portfolio.</p>
+                <p style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65, marginBottom: 10 }}>Portfolio concentration, valuation integrity, exit risk, stress testing, and operational signals — continuously monitored across your entire private markets portfolio.</p>
+                <p style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.6 }}>Not a manual quarterly review that misses what changed in between.</p>
               </div>
 
               <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderTop: '3px solid #B478FF', borderRadius: 18, padding: 28 }}>
                 <div style={{ fontSize: 28, marginBottom: 14 }}>🤖</div>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, color: 'var(--text)', marginBottom: 8 }}>Sentinel AI</div>
-                <p style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65 }}>Hallucination risk, model dependency, regulatory compliance, cost prediction, data security, talent concentration, and wrong-AI-use — scored across every AI system you&apos;ve deployed.</p>
+                <p style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65, marginBottom: 10 }}>Hallucination risk, model dependency, regulatory compliance, cost prediction, data security, talent concentration, and wrong-AI-use — scored across every AI system you&apos;ve deployed.</p>
+                <p style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.6 }}>Not finding out about a model's blind spot from a customer complaint.</p>
               </div>
 
             </div>
