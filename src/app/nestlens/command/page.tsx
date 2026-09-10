@@ -84,14 +84,14 @@ const CONNECTION_DIAGRAM_SVG = `<svg width="100%" viewBox="0 0 680 360" role="im
 </svg>`
 
 const CAPABILITIES = [
-  { icon: '📊', badge: 'Overview', badgeColor: '#F97316', hoverColor: 'rgba(249,115,22,.4)', name: 'Fund Dashboard', desc: 'A live view of your fund — portfolio health, LP commitments, pipeline stage, and deal flow, in one place.' },
-  { icon: '🗄️', badge: 'Data room', badgeColor: '#2563EB', hoverColor: 'rgba(37,99,235,.4)', name: 'Fund Data Room', desc: 'Your fund\'s own investor-facing data room — one included per fund, extra rooms available for co-investors or portfolio companies.' },
-  { icon: '🏦', badge: 'LPs', badgeColor: '#10B981', hoverColor: 'rgba(16,185,129,.4)', name: 'LP Management', desc: 'Track commitments, capital calls, and reporting cadence across your limited partners — and discover new LP-side opportunities.' },
-  { icon: '🚀', badge: 'Portfolio', badgeColor: '#7C3AED', hoverColor: 'rgba(124,58,237,.4)', name: 'Portfolio Company Tracking', desc: 'Every portfolio company\'s own data room, health, and metrics rolled up into one fund-level view.' },
-  { icon: '🔍', badge: 'Sourcing', badgeColor: '#E91E8C', hoverColor: 'rgba(233,30,140,.4)', name: 'Deal Sourcing and Startup Search', desc: 'Search and pipeline new deals directly from the same structured data layer Atlas tracks — no separate tool needed.' },
-  { icon: '📝', badge: 'Diligence', badgeColor: '#F97316', hoverColor: 'rgba(249,115,22,.4)', name: 'Diligence and Term Sheets', desc: 'Run diligence checklists and manage term sheets for deals in your pipeline, start to close.' },
-  { icon: '✅', badge: 'IC', badgeColor: '#2563EB', hoverColor: 'rgba(37,99,235,.4)', name: 'IC Voting and Reports', desc: 'Investment committee voting on live deals, with structured IC reports generated from the same pipeline data.' },
-  { icon: '📈', badge: 'Analysis', badgeColor: '#10B981', hoverColor: 'rgba(16,185,129,.4)', name: 'Comparable Deals and Reports', desc: 'Portfolio and LP reports plus comparable-deal analysis, without leaving the fund workspace.' },
+  { icon: '📊', badge: 'Overview', badgeColor: '#F97316', hoverColor: 'rgba(249,115,22,.4)', name: 'Fund Dashboard', desc: 'A live view of your fund — portfolio health, LP commitments, pipeline stage, and deal flow, in one place. No pulling four spreadsheets together before you can answer "how are we doing."' },
+  { icon: '🗄️', badge: 'Data room', badgeColor: '#2563EB', hoverColor: 'rgba(37,99,235,.4)', name: 'Fund Data Room', desc: 'Your fund\'s own investor-facing data room — one included per fund, extra rooms available for co-investors or portfolio companies. The version an LP opens is always current, not a PDF you exported six weeks ago.' },
+  { icon: '🏦', badge: 'LPs', badgeColor: '#10B981', hoverColor: 'rgba(16,185,129,.4)', name: 'LP Management', desc: 'Track commitments, capital calls, and reporting cadence across your limited partners — and discover new LP-side opportunities. Stop chasing capital call status across email threads.' },
+  { icon: '🚀', badge: 'Portfolio', badgeColor: '#7C3AED', hoverColor: 'rgba(124,58,237,.4)', name: 'Portfolio Company Tracking', desc: 'Every portfolio company\'s own data room, health, and metrics rolled up into one fund-level view — instead of a folder per company on someone\'s laptop.' },
+  { icon: '🔍', badge: 'Sourcing', badgeColor: '#E91E8C', hoverColor: 'rgba(233,30,140,.4)', name: 'Deal Sourcing and Startup Search', desc: 'Search and pipeline new deals directly from the same structured data layer Atlas tracks — no separate tool needed, no re-keying a company\'s details once you decide to track it.' },
+  { icon: '📝', badge: 'Diligence', badgeColor: '#F97316', hoverColor: 'rgba(249,115,22,.4)', name: 'Diligence and Term Sheets', desc: 'Run diligence checklists and manage term sheets for deals in your pipeline, start to close — one record per deal instead of a folder of email attachments.' },
+  { icon: '✅', badge: 'IC', badgeColor: '#2563EB', hoverColor: 'rgba(37,99,235,.4)', name: 'IC Voting and Reports', desc: 'Investment committee voting on live deals, with structured IC reports generated from the same pipeline data — a decision trail your LPs and auditors can actually follow, not a call made over Slack.' },
+  { icon: '📈', badge: 'Analysis', badgeColor: '#10B981', hoverColor: 'rgba(16,185,129,.4)', name: 'Comparable Deals and Reports', desc: 'Portfolio and LP reports plus comparable-deal analysis, without leaving the fund workspace or re-exporting into a deck the night before it\'s due.' },
 ]
 
 const BREADCRUMB_SCHEMA = breadcrumbSchema([
@@ -133,8 +133,11 @@ export default function CommandPage() {
               The operating system<br />
               your fund <span style={{ background: 'linear-gradient(100deg,#7C3AED,#E91E8C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>runs on.</span>
             </h1>
-            <p style={{ fontSize: 'clamp(15px,1.8vw,18px)', lineHeight: 1.72, color: 'var(--text2)', maxWidth: 620, marginBottom: 28 }}>
+            <p style={{ fontSize: 'clamp(15px,1.8vw,18px)', lineHeight: 1.72, color: 'var(--text2)', maxWidth: 620, marginBottom: 18 }}>
               <strong style={{ color: 'var(--text)', fontWeight: 600 }}>Fund dashboard, LP management, portfolio tracking, deal sourcing, and IC voting</strong> — one workspace for a VC or PE fund, built on the same structured data layer Atlas tracks.
+            </p>
+            <p style={{ fontSize: 14, lineHeight: 1.7, color: 'var(--text3)', maxWidth: 580, marginBottom: 28 }}>
+              No re-typing a portfolio company's numbers into a fourth spreadsheet. No NAV that's stale until the next report cycle. No LP update stitched together the night before it's due. One data layer that every part of the fund reads from — not five tools you reconcile by hand.
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               <a href="https://command.labelnest.in" target="_blank" rel="noopener noreferrer"
@@ -150,6 +153,9 @@ export default function CommandPage() {
         <section style={{ padding: '56px 48px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 680, margin: '0 auto' }} dangerouslySetInnerHTML={{ __html: CONNECTION_DIAGRAM_SVG }} />
           <div style={{ maxWidth: 680, margin: '40px auto 0' }}>
+            <p style={{ fontSize: 14, lineHeight: 1.7, color: 'var(--text2)', textAlign: 'center', maxWidth: 560, margin: '0 auto 22px' }}>
+              Most fund software ends at your own four walls — the moment a number lives outside your account, someone's copying it in by hand. Command's data layer runs across the whole relationship: what a portfolio company reports, what Atlas already knows about the market, and what you save in a valuation all update the same fund in real time.
+            </p>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', textAlign: 'center', marginBottom: 16 }}>Three live automations</div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 10 }}>
               {CONNECTIONS.map(conn => (
@@ -177,8 +183,11 @@ export default function CommandPage() {
         {/* CAPABILITIES */}
         <section style={{ padding: '64px 48px', background: 'var(--bg2)', borderBottom: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>What Command does</div>
-            <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 32 }}>Eight fund-operations capabilities</h2>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>What Command replaces</div>
+            <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 14 }}>Eight fund-operations capabilities.</h2>
+            <p style={{ fontSize: 14.5, lineHeight: 1.7, color: 'var(--text2)', maxWidth: 640, marginBottom: 32 }}>
+              Most funds run this on a CRM for deal flow, a data room tool for diligence, a spreadsheet for the cap table, a shared drive for LP documents, and email for everything in between — five logins, none of them talking to each other. Command runs it on one.
+            </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {CAPABILITIES.map(c => (
                 <HoverDiv key={c.name}
@@ -202,6 +211,9 @@ export default function CommandPage() {
             <div style={{ textAlign: 'center', marginBottom: 36 }}>
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Pricing</div>
               <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>One fund data room included per fund.</h2>
+              <p style={{ fontSize: 13.5, lineHeight: 1.7, color: 'var(--text2)', maxWidth: 480, margin: '12px auto 0' }}>
+                Priced like software, not like institutional fund infrastructure. No per-LP seat fees, no multi-year contract just to see whether it fits how your fund actually works.
+              </p>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16, maxWidth: 500, margin: '0 auto' }}>
               <div style={{ background: 'var(--surface)', border: '1px solid #F97316', borderRadius: 14, padding: 20, position: 'relative' }}>
@@ -239,7 +251,7 @@ export default function CommandPage() {
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14, textAlign: 'center' }}>Ready to run your fund on Command?</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', maxWidth: 520, margin: '0 auto 12px' }}>One workspace, from sourcing to IC vote.</h2>
-            <p style={{ fontSize: 15.5, color: 'var(--text2)', maxWidth: 460, margin: '0 auto 32px', lineHeight: 1.7 }}>Fund dashboard, LP management, and portfolio tracking — live today.</p>
+            <p style={{ fontSize: 15.5, color: 'var(--text2)', maxWidth: 480, margin: '0 auto 32px', lineHeight: 1.7 }}>Fund dashboard, LP management, and portfolio tracking — live today, not on a roadmap.</p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="https://command.labelnest.in" target="_blank" rel="noopener noreferrer"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#7C3AED', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Command ↗</a>
