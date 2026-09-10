@@ -16,7 +16,16 @@ export interface Capability {
   icon: string
   name: string
   desc: string
+}
+
+// One tab per real product this persona's workflow touches -- always the
+// diagram's center + its satellite nodes, same set, same order. Clicking a
+// tab shows that product's own capabilities, sourced from its own page.
+export interface ProductTab {
+  product: string
   color: string
+  href: string
+  capabilities: Capability[]
 }
 
 export interface RelatedLink {
@@ -39,7 +48,7 @@ export interface IcpPageData {
   journeyHeading: string
   journey: JourneyStep[]
   capabilitiesHeading: string
-  capabilities: Capability[]
+  productTabs: ProductTab[]
   related: RelatedLink[]
 }
 
@@ -68,12 +77,38 @@ export const ICP_PAGES: Record<string, IcpPageData> = {
       { product: 'Ascent', color: '#10B981', text: 'Once a portfolio company accepts your invite, their headcount, revenue, burn, runway, and valuation sync into your fund view — instead of a folder per company on someone’s laptop.' },
       { product: 'Connect', color: '#06B6D4', text: 'Your portfolio companies request mentorship or a verified audit directly from their own Ascent room — Connect routes it to a vetted partner, off your plate.' },
     ],
-    capabilitiesHeading: 'What Command gives a fund',
-    capabilities: [
-      { icon: '📊', name: 'Fund Dashboard', desc: 'A live view of your fund — portfolio health, LP commitments, pipeline stage, and deal flow, in one place.', color: '#F97316' },
-      { icon: '🏦', name: 'LP Management', desc: 'Track commitments, capital calls, and reporting cadence across your limited partners.', color: '#10B981' },
-      { icon: '🔍', name: 'Deal Sourcing', desc: 'Search and pipeline new deals directly from the same structured data layer Atlas tracks.', color: '#2563EB' },
-      { icon: '✅', name: 'IC Voting & Reports', desc: 'Investment committee voting on live deals, with structured IC reports generated from the same pipeline data.', color: '#7C3AED' },
+    capabilitiesHeading: 'The stack behind a fund',
+    productTabs: [
+      {
+        product: 'Command', color: '#F97316', href: '/nestlens/command',
+        capabilities: [
+          { icon: '📊', name: 'Fund Dashboard', desc: 'A live view of your fund — portfolio health, LP commitments, pipeline stage, and deal flow, in one place.' },
+          { icon: '🏦', name: 'LP Management', desc: 'Track commitments, capital calls, and reporting cadence across your limited partners.' },
+          { icon: '🔍', name: 'Deal Sourcing', desc: 'Search and pipeline new deals directly from the same structured data layer Atlas tracks.' },
+          { icon: '✅', name: 'IC Voting & Reports', desc: 'Investment committee voting on live deals, with structured IC reports generated from the same pipeline data.' },
+        ],
+      },
+      {
+        product: 'Atlas', color: '#2563EB', href: '/nestlens/intelligence',
+        capabilities: [
+          { icon: '🔍', name: 'Intelligence Engine', desc: 'Central entity intelligence tracking companies, funds, deals, people, GPs, LPs, and service providers with full relationship mapping.' },
+          { icon: '📡', name: 'Live Market Signals', desc: 'AI-detected events: funding rounds, leadership changes, deal activity, regulatory filings, and competitive moves.' },
+        ],
+      },
+      {
+        product: 'Ascent', color: '#10B981', href: '/nestlens/capital',
+        capabilities: [
+          { icon: '💰', name: 'Financials', desc: 'Revenue, burn rate, runway, and projections — synced into your Command portfolio view once a company accepts your invite.' },
+          { icon: '📈', name: 'Investment Docs', desc: 'Cap table, SAFE, term sheet, and use of funds, visible the moment you\'re invited in.' },
+        ],
+      },
+      {
+        product: 'Connect', color: '#06B6D4', href: '/nestlens/connect',
+        capabilities: [
+          { icon: '🤝', name: 'Mentor Connect', desc: 'Your portfolio companies request mentorship directly from their own Ascent room — routed to a vetted mentor.' },
+          { icon: '✅', name: 'Verified Audit Requests', desc: 'Request a verified audit on a portfolio company\'s data room from a vetted audit partner.' },
+        ],
+      },
     ],
     related: [
       { slug: 'lp', label: 'LP / Investor' },
@@ -105,12 +140,36 @@ export const ICP_PAGES: Record<string, IcpPageData> = {
       { product: 'Ascent', color: '#10B981', text: 'Founders raising get matched to LPs and GPs whose investment criteria align on stage, sector, geography, and check size — including non-institutional investors, not just funds.' },
       { product: 'Exchange', color: '#E91E8C', text: 'Need one specific dataset rather than a full platform subscription? Buy it directly, KYC-verified and escrow-protected.' },
     ],
-    capabilitiesHeading: 'What Atlas gives an investor',
-    capabilities: [
-      { icon: '🔍', name: 'Intelligence Engine', desc: 'Central entity intelligence tracking companies, funds, deals, people, GPs, LPs, and service providers with full relationship mapping.', color: '#2563EB' },
-      { icon: '📡', name: 'Live Market Signals', desc: 'AI-detected events: funding rounds, leadership changes, deal activity, regulatory filings, and competitive moves.', color: '#F97316' },
-      { icon: '🌐', name: 'Global Search & Filters', desc: 'Unified search across all entity types, filtered by sector, stage, geography, fund size, and deal type.', color: '#10B981' },
-      { icon: '🏠', name: 'Family Offices Role (Command)', desc: 'A portfolio-first lens on the same data a fund sees, with no deal pipeline or LP clutter you don’t need.', color: '#F97316' },
+    capabilitiesHeading: 'The stack behind an investor',
+    productTabs: [
+      {
+        product: 'Atlas', color: '#2563EB', href: '/nestlens/intelligence',
+        capabilities: [
+          { icon: '🔍', name: 'Intelligence Engine', desc: 'Central entity intelligence tracking companies, funds, deals, people, GPs, LPs, and service providers with full relationship mapping.' },
+          { icon: '📡', name: 'Live Market Signals', desc: 'AI-detected events: funding rounds, leadership changes, deal activity, regulatory filings, and competitive moves.' },
+          { icon: '🌐', name: 'Global Search & Filters', desc: 'Unified search across all entity types, filtered by sector, stage, geography, fund size, and deal type.' },
+        ],
+      },
+      {
+        product: 'Command', color: '#F97316', href: '/nestlens/command',
+        capabilities: [
+          { icon: '🏠', name: 'Family Offices Role', desc: 'A portfolio-first lens on the same data a fund sees, with no deal pipeline or LP clutter you don\'t need.' },
+          { icon: '👁️', name: 'External Advisors Role', desc: 'See exactly the rooms you\'ve been invited into, and nothing else — always current, never a stale export.' },
+        ],
+      },
+      {
+        product: 'Ascent', color: '#10B981', href: '/nestlens/capital',
+        capabilities: [
+          { icon: '🏦', name: 'LP-GP Matching', desc: 'Founders raising get matched to LPs and GPs whose criteria align on stage, sector, geography, and check size — including non-institutional investors.' },
+        ],
+      },
+      {
+        product: 'Exchange', color: '#E91E8C', href: '/nestlens/exchange',
+        capabilities: [
+          { icon: '📊', name: 'Datasets', desc: 'Company data, fund performance, deal flow, financials, and market intelligence — buy the one dataset you need.' },
+          { icon: '✅', name: 'KYC Verified Sellers', desc: 'Every seller has completed identity and business verification before any listing goes live.' },
+        ],
+      },
     ],
     related: [
       { slug: 'gp', label: 'GP / Fund' },
@@ -143,12 +202,36 @@ export const ICP_PAGES: Record<string, IcpPageData> = {
       { product: 'Command', color: '#F97316', text: 'Once a fund invites you in, your headcount, revenue, burn, runway, and valuation sync straight into their portfolio view — you update it once.' },
       { product: 'Orbit', color: '#7C3AED', text: 'If you were selected into an accelerator or incubator cohort, your onboarding there carries straight into Ascent for your own fundraise prep.' },
     ],
-    capabilitiesHeading: 'What Ascent gives a founder',
-    capabilities: [
-      { icon: '🏢', name: 'Profile & Identity', desc: 'Company name, website, stage, business model, location.', color: '#10B981' },
-      { icon: '📈', name: 'Investment Docs', desc: 'Cap table, SAFE, term sheet, use of funds.', color: '#2563EB' },
-      { icon: '🏦', name: 'LP-GP Matching', desc: 'Matched to limited partners and general partners whose investment criteria align with your stage, sector, geography, and check size.', color: '#2563EB' },
-      { icon: '🏆', name: 'Grant & Competition Discovery', desc: 'Non-dilutive capital — government grants, accelerator programs, startup competitions, and innovation awards matched to your profile.', color: '#F97316' },
+    capabilitiesHeading: 'The stack behind a founder',
+    productTabs: [
+      {
+        product: 'Ascent', color: '#10B981', href: '/nestlens/capital',
+        capabilities: [
+          { icon: '🏢', name: 'Profile & Identity', desc: 'Company name, website, stage, business model, location.' },
+          { icon: '📈', name: 'Investment Docs', desc: 'Cap table, SAFE, term sheet, use of funds.' },
+          { icon: '🏦', name: 'LP-GP Matching', desc: 'Matched to limited partners and general partners whose investment criteria align with your stage, sector, geography, and check size.' },
+          { icon: '🏆', name: 'Grant & Competition Discovery', desc: 'Non-dilutive capital — government grants, accelerator programs, startup competitions, and innovation awards matched to your profile.' },
+        ],
+      },
+      {
+        product: 'Command', color: '#F97316', href: '/nestlens/command',
+        capabilities: [
+          { icon: '🚀', name: 'Portfolio Company Tracking', desc: 'Once a fund invites you in, your headcount, revenue, burn, runway, and valuation sync straight into their view — you update it once.' },
+        ],
+      },
+      {
+        product: 'Connect', color: '#06B6D4', href: '/nestlens/connect',
+        capabilities: [
+          { icon: '🤝', name: 'Mentor Connect', desc: 'Request mentorship directly from your data room — routed to a vetted mentor.' },
+          { icon: '✅', name: 'Verified Audit Requests', desc: 'Request a verified audit on your data room from a vetted audit partner.' },
+        ],
+      },
+      {
+        product: 'Orbit', color: '#7C3AED', href: '/nestlens/orbit',
+        capabilities: [
+          { icon: '🎓', name: 'Cohort Onboarding', desc: 'If you were selected into an accelerator or incubator cohort, your onboarding there carries straight into Ascent for your own fundraise prep.' },
+        ],
+      },
     ],
     related: [
       { slug: 'incubator', label: 'Incubator / Accelerator' },
@@ -179,12 +262,29 @@ export const ICP_PAGES: Record<string, IcpPageData> = {
       { product: 'Ascent', color: '#10B981', text: 'Selected startups onboard directly into a cohort — carrying straight into Ascent for their own fundraise prep, with a real completeness score, not a spreadsheet you chase.' },
       { product: 'Connect', color: '#06B6D4', text: 'Your mentor network is a directory assigned to startups, with every session logged against the pairing — visible to you, not scattered across calendars.' },
     ],
-    capabilitiesHeading: 'What Orbit gives a programme',
-    capabilities: [
-      { icon: '📥', name: 'Application Intake', desc: 'A configurable application form for your programme, built for real volume.', color: '#7C3AED' },
-      { icon: '🔍', name: 'Screening & Shortlisting', desc: 'Structured screening criteria and shortlisting workflow so your team reviews consistently at scale.', color: '#2563EB' },
-      { icon: '🎓', name: 'Cohort Onboarding', desc: 'Selected startups onboard directly into a cohort — carrying straight into Ascent for their own fundraise prep.', color: '#10B981' },
-      { icon: '🧭', name: 'Mentor Network', desc: 'A directory of external mentors, assigned to startups, with every session logged against the pairing.', color: '#0D9488' },
+    capabilitiesHeading: 'The stack behind a programme',
+    productTabs: [
+      {
+        product: 'Orbit', color: '#7C3AED', href: '/nestlens/orbit',
+        capabilities: [
+          { icon: '📥', name: 'Application Intake', desc: 'A configurable application form for your programme, built for real volume.' },
+          { icon: '🔍', name: 'Screening & Shortlisting', desc: 'Structured screening criteria and shortlisting workflow so your team reviews consistently at scale.' },
+          { icon: '🎓', name: 'Cohort Onboarding', desc: 'Selected startups onboard directly into a cohort — carrying straight into Ascent for their own fundraise prep.' },
+          { icon: '🧭', name: 'Mentor Network', desc: 'A directory of external mentors, assigned to startups, with every session logged against the pairing.' },
+        ],
+      },
+      {
+        product: 'Ascent', color: '#10B981', href: '/nestlens/capital',
+        capabilities: [
+          { icon: '🏢', name: 'Data Room', desc: 'Every selected startup gets a real 10-section data room — a completeness score you can see, not a spreadsheet you chase.' },
+        ],
+      },
+      {
+        product: 'Connect', color: '#06B6D4', href: '/nestlens/connect',
+        capabilities: [
+          { icon: '✅', name: 'Verified Audit Requests', desc: 'Your cohort companies can request a verified audit on their data room from a vetted partner.' },
+        ],
+      },
     ],
     related: [
       { slug: 'founder', label: 'Founder / Startup' },
@@ -216,12 +316,35 @@ export const ICP_PAGES: Record<string, IcpPageData> = {
       { product: 'Ascent', color: '#10B981', text: 'Founders request mentorship or a verified audit directly from their own data room — routed to you through Connect, built into their workflow.' },
       { product: 'Command', color: '#F97316', text: 'Funds request the same for their portfolio companies — the same vetted network, reached from the fund side.' },
     ],
-    capabilitiesHeading: 'What Connect gives a vetted partner',
-    capabilities: [
-      { icon: '🤝', name: 'Mentor Connect', desc: 'Founders request mentorship directly from Ascent or Command; mentors run their own dashboard to accept requests and track engagements.', color: '#06B6D4' },
-      { icon: '✅', name: 'Verified Audit Requests', desc: 'Founders request a verified audit on their data room from a vetted audit partner — built into the workflow, not a separate tool.', color: '#7C3AED' },
-      { icon: '📋', name: 'Audit Partner Dashboard', desc: 'Audit partners get their own account and dashboard — never the founder-facing navigation, just their real request queue.', color: '#F97316' },
-      { icon: '🔭', name: 'Scouting Partner Dashboard', desc: 'Scouting partners get a dedicated workspace to track the founders and funds they refer into the ecosystem.', color: '#10B981' },
+    capabilitiesHeading: 'The stack behind a partner',
+    productTabs: [
+      {
+        product: 'Atlas', color: '#2563EB', href: '/nestlens/intelligence',
+        capabilities: [
+          { icon: '🔍', name: 'Intelligence Engine', desc: 'Tracked as a service-provider entity in the same layer GPs, LPs, and founders search when they need a partner.' },
+        ],
+      },
+      {
+        product: 'Connect', color: '#06B6D4', href: '/nestlens/connect',
+        capabilities: [
+          { icon: '🤝', name: 'Mentor Connect', desc: 'Founders request mentorship directly from Ascent or Command; mentors run their own dashboard to accept requests and track engagements.' },
+          { icon: '✅', name: 'Verified Audit Requests', desc: 'Founders request a verified audit on their data room from a vetted audit partner — built into the workflow, not a separate tool.' },
+          { icon: '📋', name: 'Audit Partner Dashboard', desc: 'Audit partners get their own account and dashboard — never the founder-facing navigation, just their real request queue.' },
+          { icon: '🔭', name: 'Scouting Partner Dashboard', desc: 'Scouting partners get a dedicated workspace to track the founders and funds they refer into the ecosystem.' },
+        ],
+      },
+      {
+        product: 'Ascent', color: '#10B981', href: '/nestlens/capital',
+        capabilities: [
+          { icon: '🔧', name: 'SP Matching', desc: 'Matched to service providers based on what a company needs, where they are, and who has helped companies like them before.' },
+        ],
+      },
+      {
+        product: 'Command', color: '#F97316', href: '/nestlens/command',
+        capabilities: [
+          { icon: '✅', name: 'Verified Audit Requests', desc: 'Funds request the same vetted network for their portfolio companies, reached from the fund side.' },
+        ],
+      },
     ],
     related: [
       { slug: 'incubator', label: 'Incubator / Accelerator' },
@@ -253,12 +376,36 @@ export const ICP_PAGES: Record<string, IcpPageData> = {
       { product: 'Exchange', color: '#E91E8C', text: 'Need one specific dataset instead of a platform subscription? Buy it directly, KYC-verified and escrow-protected, with a quality score attached.' },
       { product: 'Command', color: '#F97316', text: 'If your research turns into a direct check, Command gives you the same cap table and returns tooling a fund uses.' },
     ],
-    capabilitiesHeading: 'What Atlas gives a researcher',
-    capabilities: [
-      { icon: '🌐', name: 'Global Search & Filters', desc: 'Unified search across all entity types with structured filtering by sector, stage, geography, fund size, deal type, and contact role.', color: '#10B981' },
-      { icon: '📡', name: 'Live Market Signals', desc: 'AI-detected events: funding rounds, leadership changes, deal activity, regulatory filings, and competitive moves.', color: '#F97316' },
-      { icon: '📬', name: 'Contact Intelligence', desc: 'Verified contact profiles with health scores, email, LinkedIn, title taxonomy, firm history, and people-moves detection.', color: '#E91E8C' },
-      { icon: '📊', name: 'Exports & Workflow Tools', desc: 'Export structured data, track entities across sessions, set alerts for changes, and compare companies side-by-side.', color: '#7C3AED' },
+    capabilitiesHeading: 'The stack behind a researcher',
+    productTabs: [
+      {
+        product: 'Atlas', color: '#2563EB', href: '/nestlens/intelligence',
+        capabilities: [
+          { icon: '🌐', name: 'Global Search & Filters', desc: 'Unified search across all entity types with structured filtering by sector, stage, geography, fund size, deal type, and contact role.' },
+          { icon: '📡', name: 'Live Market Signals', desc: 'AI-detected events: funding rounds, leadership changes, deal activity, regulatory filings, and competitive moves.' },
+          { icon: '📬', name: 'Contact Intelligence', desc: 'Verified contact profiles with health scores, email, LinkedIn, title taxonomy, firm history, and people-moves detection.' },
+          { icon: '📊', name: 'Exports & Workflow Tools', desc: 'Export structured data, track entities across sessions, set alerts for changes, and compare companies side-by-side.' },
+        ],
+      },
+      {
+        product: 'Observatory', color: '#7C3AED', href: '/nestlens/intelligence/observatory',
+        capabilities: [
+          { icon: '🔭', name: 'Published Research', desc: 'Insights and trends for private markets, free to browse — no Atlas plan required to unlock an individual report.' },
+        ],
+      },
+      {
+        product: 'Exchange', color: '#E91E8C', href: '/nestlens/exchange',
+        capabilities: [
+          { icon: '📊', name: 'Datasets', desc: 'Company data, fund performance, deal flow, financials, market intelligence — one dataset instead of a platform subscription.' },
+          { icon: '🤖', name: 'AI Training Data', desc: 'Labelled datasets, annotation outputs, domain-specific training data.' },
+        ],
+      },
+      {
+        product: 'Command', color: '#F97316', href: '/nestlens/command',
+        capabilities: [
+          { icon: '🏠', name: 'Family Offices Role', desc: 'If your research turns into a direct check, the same cap table and returns tooling a fund uses.' },
+        ],
+      },
     ],
     related: [
       { slug: 'lp', label: 'LP / Investor' },
@@ -289,12 +436,29 @@ export const ICP_PAGES: Record<string, IcpPageData> = {
       { product: 'Atlas', color: '#2563EB', text: 'Browsing for market context before you buy? The same entity intelligence layer that powers Atlas informs what’s available and how it’s categorized.' },
       { product: 'Command', color: '#F97316', text: 'Fund teams buying comparable-deal or market datasets to support their own diligence and LP reports are some of Exchange’s regular buyers.' },
     ],
-    capabilitiesHeading: 'What Exchange covers',
-    capabilities: [
-      { icon: '📊', name: 'Datasets', desc: 'Company data, fund performance, deal flow, financials, market intelligence.', color: '#2563EB' },
-      { icon: '🤖', name: 'AI Training Data', desc: 'Labelled datasets, annotation outputs, domain-specific training data.', color: '#7C3AED' },
-      { icon: '✅', name: 'KYC Verified Sellers', desc: 'Every seller has completed identity and business verification before any listing goes live.', color: '#10B981' },
-      { icon: '🔒', name: 'Escrow Protected', desc: 'Payment held in escrow until delivery is confirmed — no upfront risk for buyers, guaranteed payment for sellers.', color: '#F97316' },
+    capabilitiesHeading: 'The stack behind a data buyer or seller',
+    productTabs: [
+      {
+        product: 'Exchange', color: '#E91E8C', href: '/nestlens/exchange',
+        capabilities: [
+          { icon: '📊', name: 'Datasets', desc: 'Company data, fund performance, deal flow, financials, market intelligence.' },
+          { icon: '🤖', name: 'AI Training Data', desc: 'Labelled datasets, annotation outputs, domain-specific training data.' },
+          { icon: '✅', name: 'KYC Verified Sellers', desc: 'Every seller has completed identity and business verification before any listing goes live.' },
+          { icon: '🔒', name: 'Escrow Protected', desc: 'Payment held in escrow until delivery is confirmed — no upfront risk for buyers, guaranteed payment for sellers.' },
+        ],
+      },
+      {
+        product: 'Atlas', color: '#2563EB', href: '/nestlens/intelligence',
+        capabilities: [
+          { icon: '🔍', name: 'Intelligence Engine', desc: 'The same entity intelligence layer that powers Atlas informs what\'s available on Exchange and how it\'s categorized.' },
+        ],
+      },
+      {
+        product: 'Command', color: '#F97316', href: '/nestlens/command',
+        capabilities: [
+          { icon: '📈', name: 'Comparable Deals & Reports', desc: 'Fund teams buying comparable-deal or market datasets to support their own diligence and LP reports are regular Exchange buyers.' },
+        ],
+      },
     ],
     related: [
       { slug: 'researcher', label: 'Researcher / Boutique Firm' },

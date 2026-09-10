@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
@@ -10,9 +13,16 @@ import { WhoWeServeTopBar } from '@/components/WhoWeServe'
 // /vs/[slug] pages. See src/lib/icpPages.ts for the content and the
 // per-entry comment naming which real product page each claim is sourced
 // from.
+//
+// productTabs is always the diagram's center product plus its satellite
+// nodes, same set and order -- clicking a tab shows that product's own
+// capabilities instead of stacking every product's capabilities in one
+// long scroll.
 
 export default function IcpPageLayout(d: IcpPageData) {
   const diagramSvg = renderIcpDiagram(d.diagramCenter, d.diagramNodes, d.diagramFooter)
+  const [activeTab, setActiveTab] = useState(0)
+  const active = d.productTabs[activeTab]
 
   return (
     <>
@@ -63,13 +73,32 @@ export default function IcpPageLayout(d: IcpPageData) {
           </div>
         </section>
 
-        {/* CAPABILITIES */}
+        {/* CAPABILITIES -- tabbed by product */}
         <section style={{ padding: '64px 48px', background: 'var(--bg2)', borderBottom: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>{d.capabilitiesHeading}</div>
-            <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 14 }}>
-              {d.capabilities.map(c => (
-                <div key={c.name} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, borderLeft: `3px solid ${c.color}`, padding: '18px 20px' }}>
+
+            <div className="flex flex-wrap" style={{ gap: 8, marginBottom: 28 }}>
+              {d.productTabs.map((tab, i) => {
+                const isActive = i === activeTab
+                return (
+                  <button key={tab.product} onClick={() => setActiveTab(i)}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 8, fontSize: 13.5, fontWeight: 600, cursor: 'pointer',
+                      padding: '9px 18px', borderRadius: 10, fontFamily: 'inherit',
+                      background: isActive ? `${tab.color}18` : 'var(--surface)',
+                      border: isActive ? `1px solid ${tab.color}` : '1px solid var(--border)',
+                      color: isActive ? tab.color : 'var(--text2)',
+                    }}>
+                    {tab.product}
+                  </button>
+                )
+              })}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 14, marginBottom: 20 }}>
+              {active.capabilities.map(c => (
+                <div key={c.name} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, borderLeft: `3px solid ${active.color}`, padding: '18px 20px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
                     <span style={{ fontSize: 18 }}>{c.icon}</span>
                     <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14.5, color: 'var(--text)' }}>{c.name}</span>
@@ -78,6 +107,7 @@ export default function IcpPageLayout(d: IcpPageData) {
                 </div>
               ))}
             </div>
+            <Link href={active.href} style={{ fontSize: 13, fontWeight: 600, color: active.color, textDecoration: 'none' }}>Open {active.product} →</Link>
           </div>
         </section>
 
