@@ -28,9 +28,9 @@ const DATA_ROOM_SECTIONS = [
 ]
 
 const MATCHING = [
-  { icon: '🏦', name: 'LP-GP Matching', border: '#2563EB', desc: 'Matched to limited partners and general partners whose investment criteria align with your stage, sector, geography, and check size.' },
-  { icon: '🔧', name: 'SP Matching', border: '#7C3AED', desc: 'Matched to service providers based on what your company needs, where you are, and who has helped companies like yours before.' },
-  { icon: '🏆', name: 'Grant and Competition Discovery', border: '#F97316', desc: 'Discover non-dilutive capital — government grants, accelerator programs, startup competitions, and innovation awards matched to your profile.' },
+  { icon: '🏦', name: 'LP-GP Matching', border: '#2563EB', desc: 'Matched to limited partners and general partners whose investment criteria align with your stage, sector, geography, and check size — instead of cold-emailing a spreadsheet of funds who never invest at your stage.' },
+  { icon: '🔧', name: 'SP Matching', border: '#7C3AED', desc: 'Matched to service providers based on what your company needs, where you are, and who has helped companies like yours before — not a Google search and a coin flip.' },
+  { icon: '🏆', name: 'Grant and Competition Discovery', border: '#F97316', desc: 'Discover non-dilutive capital — government grants, accelerator programs, startup competitions, and innovation awards matched to your profile, surfaced instead of found by accident.' },
   { icon: '🤝', name: 'Acquisition and Referral Partners', border: '#10B981', desc: 'Connect with strategic acquisition partners, distribution channels, and referral networks matched to your product category.' },
 ]
 
@@ -73,8 +73,11 @@ export default function CapitalPage() {
               Build a data room investors<br />
               actually <span style={{ background: 'linear-gradient(100deg,#10B981,#06B6D4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>trust.</span>
             </h1>
-            <p style={{ fontSize: 'clamp(15px,1.8vw,18px)', lineHeight: 1.72, color: 'var(--text2)', maxWidth: 600, marginBottom: 28 }}>
+            <p style={{ fontSize: 'clamp(15px,1.8vw,18px)', lineHeight: 1.72, color: 'var(--text2)', maxWidth: 600, marginBottom: 18 }}>
               A <strong style={{ color: 'var(--text)', fontWeight: 600 }}>10-section, 51-item data room</strong> with investor tier scoring, LP-GP matching, SP matching, and grant and competition discovery — all in one place, all live.
+            </p>
+            <p style={{ fontSize: 14, lineHeight: 1.7, color: 'var(--text3)', maxWidth: 560, marginBottom: 28 }}>
+              No Google Drive folder an investor can't navigate. No rebuilding the same deck for every different type of investor. No wondering if you're even ready to ask — a real score tells you before the meeting, not after the rejection.
             </p>
 
             {/* Tier pills */}

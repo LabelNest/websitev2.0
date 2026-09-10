@@ -60,8 +60,11 @@ export default function ConnectPage() {
               The capital and expertise<br />
               <span style={{ background: 'linear-gradient(100deg,#06B6D4,#7C3AED)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>network.</span>
             </h1>
-            <p style={{ fontSize: 'clamp(15px,1.8vw,18px)', lineHeight: 1.72, color: 'var(--text2)', maxWidth: 600, marginBottom: 28 }}>
+            <p style={{ fontSize: 'clamp(15px,1.8vw,18px)', lineHeight: 1.72, color: 'var(--text2)', maxWidth: 600, marginBottom: 16 }}>
               Mentors, audit partners, and scouting partners — <strong style={{ color: 'var(--text)', fontWeight: 600 }}>connected directly into the same rooms founders and funds already work in</strong>, not a separate directory to search.
+            </p>
+            <p style={{ fontSize: 13.5, lineHeight: 1.68, color: 'var(--text3)', maxWidth: 560, marginBottom: 28 }}>
+              No cold DM to a mentor who never replies. No unvetted "audit partner" found through a LinkedIn post. A request from your actual data room, routed to someone already vetted.
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               <a href="https://connect.labelnest.in" target="_blank" rel="noopener noreferrer"

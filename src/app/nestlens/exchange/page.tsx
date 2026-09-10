@@ -65,8 +65,11 @@ export default function ExchangePage() {
                 Buy. Sell. License.<br />
                 <span style={{ background: 'linear-gradient(100deg,#E91E8C,#C026D3)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Any structured data.</span>
               </h1>
-              <p style={{ fontSize: 'clamp(15px,1.8vw,17.5px)', lineHeight: 1.74, color: 'var(--text2)', marginBottom: 20 }}>
+              <p style={{ fontSize: 'clamp(15px,1.8vw,17.5px)', lineHeight: 1.74, color: 'var(--text2)', marginBottom: 12 }}>
                 A <strong style={{ color: 'var(--text)', fontWeight: 600 }}>universal data marketplace</strong> — not limited to private markets. Datasets, AI training data, research reports, audio, video, financial data, geospatial. If it is structured and has value, it belongs here.
+              </p>
+              <p style={{ fontSize: 13.5, lineHeight: 1.68, color: 'var(--text3)', marginBottom: 20 }}>
+                No wire transfer before you've even seen a sample. No listing that turns out to be three-year-old data with a new filename. Verified sellers, escrowed payment, a quality score you can actually check.
               </p>
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 24 }}>
                 {[

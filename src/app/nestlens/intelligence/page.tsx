@@ -24,11 +24,11 @@ const ENTITIES = [
 ]
 
 const CAPABILITIES = [
-  { icon: '🔍', badge: 'Core', badgeColor: '#2563EB', hoverColor: 'rgba(37,99,235,.4)', name: 'Intelligence Engine', desc: 'Central entity intelligence layer tracking companies, funds, deals, people, contacts, GPs, LPs, and service providers with full relationship mapping.' },
-  { icon: '📡', badge: 'Real-time', badgeColor: '#F97316', hoverColor: 'rgba(249,115,22,.4)', name: 'Live Market Signals', desc: 'AI-detected events: funding rounds, leadership changes, deal activity, regulatory filings, and competitive moves. Daily signal cadence.' },
-  { icon: '🌐', badge: 'Discovery', badgeColor: '#10B981', hoverColor: 'rgba(16,185,129,.4)', name: 'Global Search and Filters', desc: 'Unified search across all entity types with structured filtering by sector, stage, geography, fund size, deal type, and contact role.' },
-  { icon: '📊', badge: 'Workflow', badgeColor: '#7C3AED', hoverColor: 'rgba(124,58,237,.4)', name: 'Exports and Workflow Tools', desc: 'Export structured data, track entities across sessions, set alerts for changes, and compare companies side-by-side.' },
-  { icon: '📬', badge: 'Contacts', badgeColor: '#E91E8C', hoverColor: 'rgba(233,30,140,.4)', name: 'Contact Intelligence', desc: 'Verified contact profiles with health scores, email, LinkedIn, title taxonomy, firm history, and people-moves detection. 12K+ contacts and growing.' },
+  { icon: '🔍', badge: 'Core', badgeColor: '#2563EB', hoverColor: 'rgba(37,99,235,.4)', name: 'Intelligence Engine', desc: 'Central entity intelligence layer tracking companies, funds, deals, people, contacts, GPs, LPs, and service providers with full relationship mapping — one connected graph instead of a spreadsheet per entity type that\'s already stale by the time you open it.' },
+  { icon: '📡', badge: 'Real-time', badgeColor: '#F97316', hoverColor: 'rgba(249,115,22,.4)', name: 'Live Market Signals', desc: 'AI-detected events: funding rounds, leadership changes, deal activity, regulatory filings, and competitive moves. Daily signal cadence — the round you\'d otherwise hear about a week late, from someone else.' },
+  { icon: '🌐', badge: 'Discovery', badgeColor: '#10B981', hoverColor: 'rgba(16,185,129,.4)', name: 'Global Search and Filters', desc: 'Unified search across all entity types with structured filtering by sector, stage, geography, fund size, deal type, and contact role — not a search box that only matches exact company names.' },
+  { icon: '📊', badge: 'Workflow', badgeColor: '#7C3AED', hoverColor: 'rgba(124,58,237,.4)', name: 'Exports and Workflow Tools', desc: 'Export structured data, track entities across sessions, set alerts for changes, and compare companies side-by-side — without three browser tabs and a notepad.' },
+  { icon: '📬', badge: 'Contacts', badgeColor: '#E91E8C', hoverColor: 'rgba(233,30,140,.4)', name: 'Contact Intelligence', desc: 'Verified contact profiles with health scores, email, LinkedIn, title taxonomy, firm history, and people-moves detection. 12K+ contacts and growing — a verified email that doesn\'t bounce, not a guessed one.' },
 ]
 
 const BREADCRUMB_SCHEMA = breadcrumbSchema([
@@ -71,8 +71,11 @@ export default function IntelligencePage() {
                 Private markets intelligence.<br />
                 <span style={{ background: 'linear-gradient(100deg,#2563EB,#7C3AED)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Structured, not scraped.</span>
               </h1>
-              <p style={{ fontSize: 'clamp(15px,1.8vw,17.5px)', lineHeight: 1.74, color: 'var(--text2)', marginBottom: 28 }}>
+              <p style={{ fontSize: 'clamp(15px,1.8vw,17.5px)', lineHeight: 1.74, color: 'var(--text2)', marginBottom: 18 }}>
                 NestLens Atlas tracks <strong style={{ color: 'var(--text)', fontWeight: 600 }}>companies, funds, deals, people, and contacts</strong> across private markets. Human-verified at the core. Priced for teams that legacy vendors ignore.
+              </p>
+              <p style={{ fontSize: 14, lineHeight: 1.7, color: 'var(--text3)', marginBottom: 28 }}>
+                No cross-referencing five browser tabs to check if a fund actually closed. No paying for a scraped, three-month-old company profile passed off as data. One structured layer, verified at the core, not five sources you reconcile by hand.
               </p>
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                 <a href="https://atlas.labelnest.in" target="_blank" rel="noopener noreferrer"
