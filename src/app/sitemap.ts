@@ -1,12 +1,13 @@
 import { MetadataRoute } from 'next'
-import { getBriefings, getLegalDocuments } from '@/lib/db'
+import { getBriefings, getLegalDocuments, getTeamMembers } from '@/lib/db'
 
 const baseUrl = 'https://labelnest.in'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [briefings, legalDocs] = await Promise.all([
+  const [briefings, legalDocs, teamMembers] = await Promise.all([
     getBriefings().catch(() => []),
     getLegalDocuments().catch(() => []),
+    getTeamMembers().catch(() => []),
   ])
 
   const staticPages: MetadataRoute.Sitemap = [
@@ -21,9 +22,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/who-we-serve/exchange`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
     { url: `${baseUrl}/nestlens`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.95 },
     { url: `${baseUrl}/nestlens/intelligence`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/nestlens/intelligence/observatory`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
     { url: `${baseUrl}/nestlens/exchange`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
     { url: `${baseUrl}/nestlens/capital`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/nestlens/orbit`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/nestlens/command`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/nestlens/connect`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.85 },
     { url: `${baseUrl}/nestlens/pricing`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/sentinel`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.75 },
+    { url: `${baseUrl}/access`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
     { url: `${baseUrl}/nesthr`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.85 },
     { url: `${baseUrl}/services`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
     { url: `${baseUrl}/ecosystem`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
@@ -109,5 +116,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.4,
   }))
 
-  return [...staticPages, ...vsPages, ...briefingPages, ...legalPages]
+  // Only members with a real slug have a /team/[slug] page at all --
+  // TeamMember.slug is nullable (see lib/db.ts).
+  const teamPages: MetadataRoute.Sitemap = teamMembers
+    .filter(m => m.slug)
+    .map(m => ({
+      url: `${baseUrl}/team/${m.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.5,
+    }))
+
+  return [...staticPages, ...vsPages, ...briefingPages, ...legalPages, ...teamPages]
 }
