@@ -7,35 +7,41 @@ import { PERSONAS, ATLAS_NOTE, WHO_WE_SERVE_TAGLINE, PersonaKey, VS_CATEGORY_TO_
 // for the single source of truth. Edit copy/routing there; these are
 // layout only.
 //
-// - WhoWeServePills  -- homepage hero, directly under the tagline
+// - WhoWeServeTopBar -- homepage, a full-width strip directly under Nav /
+//   DiyBanner and above the Hero -- above the fold on any screen size,
+//   unlike the old in-hero placement which sat below a 100vh animated
+//   tagline and needed a scroll to reach. Full persona labels (not
+//   truncated), each a direct link.
 // - WhoWeServeCards  -- the dedicated /who-we-serve page
 // - WhoWeServeTable  -- /ecosystem, under its hero
 // - WhoWeServeBanner -- every /vs/[slug] page via VsPageLayout.tsx,
 //   category-aware (highlights the persona(s) relevant to that comparison)
 
-export function WhoWeServePills() {
+export function WhoWeServeTopBar() {
   return (
-    <div style={{ marginTop: 28 }}>
-      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 12 }}>
-        Who are you?
-      </div>
-      <div className="flex items-center justify-center flex-wrap" style={{ gap: 8 }}>
-        {PERSONAS.map(p => (
-          <Link
-            key={p.key}
-            href={p.stackHref}
-            className="inline-flex items-center gap-2 transition-all hover:-translate-y-0.5"
-            style={{
-              fontFamily: "'JetBrains Mono', monospace", fontSize: 11.5, letterSpacing: '.02em',
-              padding: '8px 14px', borderRadius: 100, border: '1px solid var(--bord2)',
-              background: 'var(--bg3)', color: 'var(--text2)', textDecoration: 'none',
-            }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = p.color; e.currentTarget.style.color = p.color }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--bord2)'; e.currentTarget.style.color = 'var(--text2)' }}
-          >
-            <span>{p.icon}</span>{p.label}
-          </Link>
-        ))}
+    <div style={{ borderBottom: '1px solid var(--border)', background: 'var(--bg2)', padding: '14px 48px' }}>
+      <div className="flex items-center flex-wrap" style={{ maxWidth: 1300, margin: '0 auto', gap: 14, justifyContent: 'center' }}>
+        <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', flexShrink: 0, whiteSpace: 'nowrap' }}>
+          Different players, one ecosystem — <span style={{ fontWeight: 400, color: 'var(--text2)' }}>find yourself:</span>
+        </div>
+        <div className="flex items-center flex-wrap justify-center" style={{ gap: 8 }}>
+          {PERSONAS.map(p => (
+            <Link
+              key={p.key}
+              href={p.stackHref}
+              className="inline-flex items-center gap-1.5 transition-all hover:-translate-y-0.5"
+              style={{
+                fontSize: 12.5, fontWeight: 600, letterSpacing: '.01em',
+                padding: '7px 13px', borderRadius: 100, border: '1px solid var(--bord2)',
+                background: 'var(--surface)', color: 'var(--text2)', textDecoration: 'none', whiteSpace: 'nowrap',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = p.color; e.currentTarget.style.color = p.color }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--bord2)'; e.currentTarget.style.color = 'var(--text2)' }}
+            >
+              <span>{p.icon}</span>{p.label}
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   )

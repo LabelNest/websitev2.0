@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import DiyBanner from '@/components/DiyBanner'
-import { WhoWeServePills } from '@/components/WhoWeServe'
+import { WhoWeServeTopBar } from '@/components/WhoWeServe'
 
 const COLORS = ['#E91E8C', '#2563EB', '#10B981', '#7C3AED', '#F97316']
 
@@ -161,6 +161,7 @@ export default function HomePage() {
       <Nav />
       <DiyBanner />
       <main style={{ paddingTop: '60px' }}>
+        <WhoWeServeTopBar />
 
         {/* HERO */}
         <section className="relative flex flex-col items-center justify-center overflow-hidden text-center"
@@ -191,7 +192,6 @@ export default function HomePage() {
                 Our story
               </Link>
             </div>
-            <WhoWeServePills />
           </div>
         </section>
 
