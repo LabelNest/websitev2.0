@@ -3,7 +3,7 @@ import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { Metadata } from 'next'
 import { pageMetadata, breadcrumbSchema } from '@/lib/seo'
-import { WhoWeServeCards, WhoWeServeAtlasNote } from '@/components/WhoWeServe'
+import { WhoWeServeCards, WhoWeServeAtlasNote, WhoWeServeTopBar } from '@/components/WhoWeServe'
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/who-we-serve', {
@@ -22,6 +22,7 @@ export default function WhoWeServePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_SCHEMA) }} />
       <Nav />
       <main style={{ paddingTop: 64 }}>
+        <WhoWeServeTopBar />
 
         {/* HERO */}
         <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
