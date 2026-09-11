@@ -27,23 +27,23 @@ const FAQS = [
   },
   {
     q: 'How much does NestLens Atlas cost?',
-    a: 'NestLens Atlas starts at ₹14,999/month (Individual plan, or ₹1,50,000/year). The Pro plan is ₹1,64,999/month with 5 seats, 400 credits/month, and 2 data rooms. Enterprise pricing is available on request.',
+    a: 'NestLens Atlas is sold as firm-unlock bundles: Essentials is ₹1,50,000/year for 250 firm unlocks, Starter is ₹2,75,000/year for 500, and Growth is ₹10,00,000/year for 2,000. Enterprise pricing is available on request.',
   },
   {
     q: 'Is NestLens Exchange free to use?',
-    a: 'Yes — Exchange is free to browse, view project briefs, and post as a buyer, paying only per project via credits. Sellers pay $199/year for an active listing with 15 applications/month included.',
+    a: 'Yes — Exchange is free to browse, view project briefs, and post up to 5 requirements/month as a buyer; requirements beyond that cost 100 credits each. Sellers pay ₹19,999/year ($235) for an active listing with a 15% platform fee on closed deals, versus 25% on the free tier.',
   },
   {
     q: 'How much does NestLens Ascent cost?',
-    a: 'Ascent starts at ₹999/month for founders in India (₹9,999/year); a Global founder plan is also available. Cohort/group access for accelerators and incubators starts at ₹4,999. Enterprise pricing covers institution-wide cohort access.',
+    a: 'Ascent is ₹14,999/year ($299), discounted from ₹19,999, or ₹1,499/month discounted from ₹1,999. Cohort/group access for accelerators and incubators is ₹4,999 for a cohort of 25 founders. Enterprise pricing covers institution-wide cohort access.',
   },
   {
     q: 'How much does NestLens Command cost?',
-    a: 'Command starts at $45/month for a fund, with 1 fund data room included; extra data rooms are $300/year or $25/month. Enterprise pricing covers multiple funds and custom room counts.',
+    a: 'Command has two tiers: Data Room is ₹44,999/year ($499) for a fund data room; Full OS is ₹4,99,999/year ($9,999) for the complete fund operating system — data room, LP management, deal pipeline, cap table & valuation, and IC voting. Enterprise pricing covers multiple funds and custom room counts.',
   },
   {
     q: 'How much does NestLens Orbit cost?',
-    a: 'Orbit starts at ₹24,999/month (₹2,49,999/year), covering up to 1,00,000 applications with full screening and review workflow. Enterprise pricing covers multiple simultaneous programmes.',
+    a: 'Orbit PM starts at ₹2,499/month and scales with cohort size and application intake. Orbit OS, the full programme ERP, is ₹29,999/month (₹2,99,999/year), covering cohort management, mentor matching, application review, and batch reporting. Enterprise pricing covers multiple simultaneous programmes.',
   },
   {
     q: 'Is NestLens Connect a separate subscription?',
@@ -232,28 +232,28 @@ export default function NestLensPage() {
               {[
                 {
                   accent: '#2563EB', name: 'Atlas', tagline: 'Private market data on funds, LPs, GPs, and grants.',
-                  from: '₹14,999', unit: '/mo', note: 'Individual · from ₹1,50,000/yr',
-                  popular: 'Pro — ₹1,64,999/mo · 5 seats · 400 credits/mo · 2 data rooms',
+                  from: '₹1,50,000', unit: '/yr', note: 'Essentials · 250 firm unlocks/yr',
+                  popular: 'Growth — ₹10,00,000/yr · 2,000 firm unlocks · 4,000 credits/yr',
                 },
                 {
                   accent: '#E91E8C', name: 'Exchange', tagline: 'Buy and sell private market data and services.',
-                  from: 'Free', unit: '', note: 'Free to browse, view briefs, and post per-project',
-                  popular: 'Seller — $199/yr · 15 applications/mo · active listing',
+                  from: 'Free', unit: '', note: '5 free requirements/mo, then 100 credits each',
+                  popular: 'Seller — ₹19,999/yr · 15% platform fee (vs. 25% free tier)',
                 },
                 {
                   accent: '#7C3AED', name: 'Orbit', tagline: 'Programme management for accelerators and incubators.',
-                  from: '₹24,999', unit: '/mo', note: 'Programme Management · ₹2,49,999/yr',
-                  popular: 'Up to 1,00,000 applications · full screening & review workflow',
+                  from: '₹2,499', unit: '/mo', note: 'Orbit PM · scales with cohort size',
+                  popular: 'Orbit OS — ₹29,999/mo (₹2,99,999/yr) · full programme ERP',
                 },
                 {
                   accent: '#10B981', name: 'Ascent', tagline: 'Founder data room, legal checklist, investor fit scoring.',
-                  from: '₹999', unit: '/mo', note: 'Founder — India · ₹9,999/yr',
+                  from: '₹1,499', unit: '/mo', note: 'Founder Data Room · ₹14,999/yr (25% off)',
                   popular: 'Cohort / Group — ₹4,999 for a cohort of 25 founders',
                 },
                 {
                   accent: '#F97316', name: 'Command', tagline: 'Fund operations, LP management, deal sourcing, IC voting.',
-                  from: '$45', unit: '/mo', note: 'Fund · 1 fund data room included',
-                  popular: 'Extra data rooms — $300/yr or $25/mo',
+                  from: '₹44,999', unit: '/yr', note: 'Data Room · $499/yr',
+                  popular: 'Full OS — ₹4,99,999/yr ($9,999) · complete fund operating system',
                 },
                 {
                   accent: '#06B6D4', name: 'Connect', tagline: 'Mentor connect and verified audit partners.',

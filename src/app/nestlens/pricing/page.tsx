@@ -89,17 +89,21 @@ export default async function NestLensPricingPage() {
   const exchangePriority = plans ? tierFrom('priority', plans.exchange['priority'], { annualOnly: true }) : null
   const crFounder = plans ? tierFrom('founder_paid_solo', plans.cr['founder_paid_solo'], { annualOnly: true }) : null
   const crFund = plans ? tierFrom('fund_paid', plans.cr['fund_paid'], { annualOnly: true }) : null
+  const crFundBundle = plans ? tierFrom('fund_bundle', plans.cr['fund_bundle'], { annualOnly: true }) : null
   const crCohort = plans ? tierFrom('founder_paid_cohort', plans.cr['founder_paid_cohort'], { annualOnly: true }) : null
   const crProgramme = plans ? tierFrom('programme_management', plans.cr['programme_management']) : null
+  const crOrbitPm = plans ? tierFrom('orbit_pm', plans.cr['orbit_pm']) : null
 
   // Real published tiers only — Enterprise/Custom entries have no fixed price and are
   // intentionally excluded from structured Offer data (schema.org Offer expects a price).
   const offers = [
     ...intelTiers.map(t => ({ '@type': 'Offer', name: `Atlas — ${t.name}`, price: String(Math.round(Number((t.priceYr || t.priceMo).replace(/[^0-9.]/g, '')) || 0)), priceCurrency: 'INR', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Atlas' })),
-    exchangePriority ? { '@type': 'Offer', name: 'Exchange — Priority', price: '199', priceCurrency: 'USD', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Exchange' } : null,
+    exchangePriority ? { '@type': 'Offer', name: 'Exchange — Seller', price: String(plans?.exchange['priority']?.priceUSD ?? ''), priceCurrency: 'USD', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Exchange' } : null,
     crFounder ? { '@type': 'Offer', name: 'Ascent — Founder Data Room', price: String(plans?.cr['founder_paid_solo']?.priceINR ?? ''), priceCurrency: 'INR', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Ascent' } : null,
-    crFund ? { '@type': 'Offer', name: 'Command — Fund Data Room', price: String(plans?.cr['fund_paid']?.priceUSD ?? ''), priceCurrency: 'USD', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Command' } : null,
-    crProgramme ? { '@type': 'Offer', name: 'Orbit — Programme Management', price: String(plans?.cr['programme_management']?.priceINR ?? ''), priceCurrency: 'INR', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Orbit' } : null,
+    crFund ? { '@type': 'Offer', name: 'Command — Data Room', price: String(plans?.cr['fund_paid']?.priceUSD ?? ''), priceCurrency: 'USD', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Command' } : null,
+    crFundBundle ? { '@type': 'Offer', name: 'Command — Full OS', price: String(plans?.cr['fund_bundle']?.priceUSD ?? ''), priceCurrency: 'USD', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Command' } : null,
+    crProgramme ? { '@type': 'Offer', name: 'Orbit — Orbit OS', price: String(plans?.cr['programme_management']?.priceINR ?? ''), priceCurrency: 'INR', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Orbit' } : null,
+    crOrbitPm ? { '@type': 'Offer', name: 'Orbit — Orbit PM', price: String(plans?.cr['orbit_pm']?.priceINR ?? ''), priceCurrency: 'INR', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Orbit' } : null,
   ].filter(Boolean)
 
   const PRICING_SCHEMA = {
@@ -169,8 +173,8 @@ export default async function NestLensPricingPage() {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 16 }}>
               {[
-                { name: exchangeBuyer?.name ?? 'Free', price: exchangeBuyer?.priceMo ?? 'Free', unit: '', sub: exchangeBuyer?.sub || 'Browse all seller profiles and project briefs free. Pay per project via credits — no subscription needed.' },
-                { name: exchangePriority?.name ?? 'Priority', price: exchangePriority?.priceMo ?? '$199', unit: '/yr', sub: exchangePriority?.sub || 'Active seller listing · 15 applications/mo included · quarterly rollover up to 45 credits', popular: true },
+                { name: exchangeBuyer?.name ?? 'Free', price: exchangeBuyer?.priceMo ?? 'Free', unit: '', sub: exchangeBuyer?.sub || 'Free to browse & post 5 requirements/mo — requirements 5–100/mo cost 100 credits each, no subscription needed.' },
+                { name: exchangePriority?.name ?? 'Seller', price: exchangePriority?.priceMo ?? '₹19,999', unit: '/yr', sub: exchangePriority?.sub || 'Active seller listing · 15% platform fee on closed deals (vs. 25% free tier)', popular: true },
                 { name: 'Enterprise', price: 'Custom', unit: '', sub: 'High-volume buyer or seller, custom credit arrangements' },
               ].map(t => (
                 <div key={t.name} style={{ background: 'var(--surface)', border: `1px solid ${t.popular ? '#E91E8C' : 'var(--border)'}`, borderRadius: 14, padding: 22, position: 'relative' }}>
@@ -196,7 +200,8 @@ export default async function NestLensPricingPage() {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16 }}>
               {[
-                { name: crProgramme?.name ?? 'Programme Management', price: crProgramme?.priceMo ?? '₹24,999', unit: '/mo', sub: crProgramme?.sub || '₹2,49,999/yr · up to 1,00,000 applications · full screening & review workflow', popular: true },
+                { name: crOrbitPm?.name ?? 'Orbit PM', price: crOrbitPm?.priceMo ?? '₹2,499', unit: '/mo', sub: 'Starts at — scales with cohort size and application intake' },
+                { name: crProgramme?.name ?? 'Orbit OS', price: crProgramme?.priceMo ?? '₹29,999', unit: '/mo', sub: crProgramme?.sub || '₹2,99,999/yr · full programme ERP — cohort management, mentor matching, application review, batch reporting', popular: true },
                 { name: 'Enterprise', price: 'Custom', unit: '', sub: 'Multiple simultaneous programmes, custom application volume, and SLA' },
               ].map(t => (
                 <div key={t.name} style={{ background: 'var(--surface)', border: `1px solid ${t.popular ? '#7C3AED' : 'var(--border)'}`, borderRadius: 14, padding: 20, position: 'relative' }}>
@@ -222,7 +227,7 @@ export default async function NestLensPricingPage() {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16 }}>
               {[
-                { name: crFounder?.name ?? 'Founder Data Room', price: crFounder?.priceMo ?? '₹8,000', unit: '', sub: crFounder?.sub || 'All templates included · 1 complimentary strategy call · priority support', popular: true },
+                { name: crFounder?.name ?? 'Founder Data Room', price: crFounder?.priceMo ?? '₹14,999 (was ₹19,999)', unit: '', sub: crFounder?.sub || 'All templates included · 1 complimentary strategy call · priority support · free Exchange access · 3 months free NestHR', popular: true },
                 { name: crCohort?.name ?? 'Cohort / Group', price: crCohort?.priceMo ?? '₹4,999', unit: '', sub: crCohort?.sub || 'Cohort of 25 · +₹4,999 per additional founder beyond 25' },
                 { name: 'Enterprise', price: 'Custom', unit: '', sub: 'Cohort access for accelerators and incubator programmes' },
               ].map(t => (
@@ -249,7 +254,14 @@ export default async function NestLensPricingPage() {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16 }}>
               {[
-                { name: crFund?.name ?? 'Fund Data Room', price: crFund?.priceMo ?? '$45', unit: '/mo', sub: crFund?.sub || '1 fund data room included · extra rooms $300/yr or $25/mo', popular: true },
+                // Real bug fixed 2026-09-11: crFund/crFundBundle are built
+                // with { annualOnly: true }, so .priceMo already holds the
+                // annual figure (see tierFrom above) -- this unit was
+                // hardcoded '/mo' regardless, mislabeling an annual price as
+                // monthly. Left blank now, same as every other annualOnly
+                // card on this page (Ascent, above).
+                { name: crFund?.name ?? 'Command — Data Room', price: crFund?.priceMo ?? '₹44,999', unit: '', sub: crFund?.sub || 'Fund data room · free Exchange access · 3 months free NestHR', popular: true },
+                { name: crFundBundle?.name ?? 'Command — Full OS', price: crFundBundle?.priceMo ?? '₹4,99,999', unit: '', sub: crFundBundle?.sub || 'Full fund operating system — data room, LP management, deal pipeline, cap table & valuation, IC voting' },
                 { name: 'Enterprise', price: 'Custom', unit: '', sub: 'Multiple funds, custom LP/portfolio room counts, and SLA' },
               ].map(t => (
                 <div key={t.name} style={{ background: 'var(--surface)', border: `1px solid ${t.popular ? '#F97316' : 'var(--border)'}`, borderRadius: 14, padding: 20, position: 'relative' }}>
@@ -300,14 +312,16 @@ export default async function NestLensPricingPage() {
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Enterprise & Bundle</div>
               <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,32px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>Institutional and cross-module needs</h2>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 20, marginBottom: 32 }}>
+            {/* "Fund Bundle" used to be a special negotiated-rate callout
+                here -- 2026-09-11: it's Command's real, fixed-price "Full
+                OS" tier now (Command section above), not a bespoke deal, so
+                the duplicate description describing it as "negotiated"
+                would have been actively wrong. Enterprise is still genuinely
+                custom/on-request, so it stays. */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 20, marginBottom: 32, maxWidth: 480, margin: '0 auto 32px' }}>
               <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 24 }}>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 16, color: 'var(--text)', marginBottom: 8 }}>Enterprise</div>
                 <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.65 }}>Custom seats, credit volumes, entity access, and SLA agreements — best for institutional funds, research firms, and accelerators with large cohorts.</p>
-              </div>
-              <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 24 }}>
-                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 16, color: 'var(--text)', marginBottom: 8 }}>Fund Bundle</div>
-                <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.65 }}>1 Fund Data Room + 5 Portfolio Company Data Rooms + Atlas (2,000 data credits) + Exchange for every connected member, at a negotiated rate — best for VC funds running portfolio founder programmes.</p>
               </div>
             </div>
             <div style={{ textAlign: 'center', display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>

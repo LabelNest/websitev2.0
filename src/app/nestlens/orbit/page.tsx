@@ -139,20 +139,21 @@ export default function OrbitPage() {
               <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>Priced for institutional volume.</h2>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16, maxWidth: 780, margin: '0 auto' }}>
-              <div style={{ background: 'var(--surface)', border: '1px solid #7C3AED', borderRadius: 14, padding: 20, position: 'relative' }}>
+              <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 20 }}>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>Orbit PM</div>
                 <div style={{ marginBottom: 8 }}>
-                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: '#7C3AED' }}>₹24,999</span>
+                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: 'var(--text)' }}>₹2,499</span>
                   <span style={{ fontSize: 11, color: 'var(--text3)' }}>/mo</span>
                 </div>
-                <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>₹2,49,999/yr · up to 1,00,000 applications · full screening &amp; review workflow</div>
+                <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>Starts at — scales with cohort size and application intake</div>
               </div>
-              <div style={{ background: 'var(--surface)', border: '1px solid #1D4ED8', borderRadius: 14, padding: 20 }}>
+              <div style={{ background: 'var(--surface)', border: '1px solid #7C3AED', borderRadius: 14, padding: 20, position: 'relative' }}>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>Orbit OS</div>
                 <div style={{ marginBottom: 8 }}>
-                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: '#1D4ED8' }}>Custom</span>
+                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: '#7C3AED' }}>₹29,999</span>
+                  <span style={{ fontSize: 11, color: 'var(--text3)' }}>/mo</span>
                 </div>
-                <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>Startups, mentors, MOMs, grants, compliance &amp; alumni — the full incubation ERP after selection</div>
+                <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>₹2,99,999/yr · full programme ERP — cohort management, mentor matching, application review, batch reporting</div>
               </div>
               <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 20 }}>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>Enterprise</div>

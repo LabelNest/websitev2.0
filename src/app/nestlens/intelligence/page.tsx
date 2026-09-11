@@ -173,14 +173,13 @@ export default function IntelligencePage() {
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: 36 }}>
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Pricing</div>
-              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>Five tiers, priced by seats and credits.</h2>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>Firm-unlock bundles, priced by volume.</h2>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(180px,1fr))', gap: 16 }}>
               {[
-                { name: 'Individual', price: '₹14,999', unit: '/mo', sub: '1 seat · 50 credits/mo · 250 firm unlocks/yr' },
-                { name: 'Core', price: '₹54,999', unit: '/mo', sub: '2 seats · 100 credits/mo · 1,500 firm unlocks/yr' },
-                { name: 'Growth', price: '₹1,04,999', unit: '/mo', sub: '3 seats · 200 credits/mo · 1 data room' },
-                { name: 'Pro', price: '₹1,64,999', unit: '/mo', sub: '5 seats · 400 credits/mo · 2 data rooms · Priority support', popular: true },
+                { name: 'Essentials', price: '₹1,50,000', unit: '/yr', sub: '250 firm unlocks/yr · 500 credits/yr · Exchange included' },
+                { name: 'Starter', price: '₹2,75,000', unit: '/yr', sub: '500 firm unlocks/yr · 1,000 credits/yr · Exchange included' },
+                { name: 'Growth', price: '₹10,00,000', unit: '/yr', sub: '2,000 firm unlocks/yr · 4,000 credits/yr · Exchange included', popular: true },
                 { name: 'Enterprise', price: 'Custom', unit: '', sub: 'Custom seats, credits & SLA' },
               ].map(t => (
                 <div key={t.name} style={{ background: 'var(--surface)', border: `1px solid ${t.popular ? '#2563EB' : 'var(--border)'}`, borderRadius: 14, padding: 20, position: 'relative' }}>
