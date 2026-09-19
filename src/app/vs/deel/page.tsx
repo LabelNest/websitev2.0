@@ -5,7 +5,7 @@ import VsPageLayout, { VsPageData } from '@/components/VsPageLayout'
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/vs/deel', {
     title: 'Deel Alternatives for India — NestHR vs Deel',
-    description: 'Looking for a Deel alternative for your India team? How NestHR compares — INR per-employee-per-year HR pricing with PlacementOS included vs Deel\'s USD EOR/global payroll pricing for hiring abroad.',
+    description: 'Looking for a Deel alternative for your India team? How NestHR compares — INR flat annual HR pricing with PlacementOS included vs Deel\'s USD EOR/global payroll pricing for hiring abroad.',
   })
 }
 
@@ -48,7 +48,7 @@ const DATA: VsPageData = {
     heading: 'Global employment infrastructure vs. HR for a team you already employ in India.',
     body: "Deel's assumption: companies need to hire people in countries where they have no entity, so employment infrastructure — EOR, global payroll, compliance — is the product. NestHR's assumption: if you already employ your team directly in India, you need HR and hiring tools — including campus recruitment — not cross-border employment infrastructure. These solve different problems entirely.",
   },
-  finalTag: 'Simple. Per employee. No hidden modules.',
+  finalTag: 'Simple. Flat annual pricing. No hidden modules.',
   finalHeading: 'All 7 OS modules included. INR pricing.',
   finalBody: 'No forex tax, no per-seat tricks. See what NestHR includes at every tier.',
   finalPrimaryCta: { href: 'https://nesthr.labelnest.in', label: 'Try NestHR ↗', external: true },

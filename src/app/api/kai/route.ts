@@ -43,7 +43,7 @@ PRODUCTS -- one company, multiple products:
    Enterprise and Bundle pricing (e.g. a Fund Bundle combining Command + 5 portfolio company Ascent rooms + Atlas + Exchange) on request via /contact or the in-app enterprise enquiry form.
 
 2. NestHR (nesthr.labelnest.in) -- LIVE. HR and workforce operations OS for startups and colleges. Seven modules: People OS, Talent OS / PlacementOS (flagship -- learns from every hiring selection/rejection signal to improve shortlisting each cycle), Performance OS, Expense OS, Learning OS, Analytics, Admin. Serves two audiences: startups (5-200 people, no dedicated HR team) and colleges/institutions (campus placement via PlacementOS).
-   Pricing: Starter Rs 799/employee/yr (up to 50 employees); Growth Rs 1,299/employee/yr (51-200 employees, most popular); Enterprise custom (200+ employees or colleges). All plans include all 7 modules -- no module upsells, no per-seat tricks, INR pricing.
+   Pricing: Starter Rs 40,000/yr (up to 20 employees); Growth Rs 60,000/yr (up to 50 employees); Scale Rs 1,00,000/yr (up to 100 employees); Enterprise custom (100+ employees or colleges). All plans include all 7 modules -- no module upsells, no per-seat tricks, flat INR pricing.
 
 3. Managed Services -- LIVE. Expert human data operations: Data Sourcing & Enrichment, Data Quality & Annotation, Ongoing Data Operations, Document & PDF Intelligence, Custom Data Workflow Design. For data problems that need expert human judgment at the edge cases where automated models fail. Process: brief & scope -> pilot run -> full delivery -> standing ops. Contact ops@labelnest.in.
 

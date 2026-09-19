@@ -5,7 +5,7 @@ import VsPageLayout, { VsPageData } from '@/components/VsPageLayout'
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/vs/bamboohr', {
     title: 'NestHR vs BambooHR — HR Software Comparison for India',
-    description: 'How NestHR compares to BambooHR on pricing, modules, and campus placement — INR per-employee-per-year pricing with PlacementOS included vs BambooHR\'s USD per-employee-per-month tiers with paid add-ons.',
+    description: 'How NestHR compares to BambooHR on pricing, modules, and campus placement — INR flat annual pricing with PlacementOS included vs BambooHR\'s USD per-employee-per-month tiers with paid add-ons.',
   })
 }
 
@@ -15,7 +15,7 @@ const DATA: VsPageData = {
   competitorName: 'BambooHR',
   ourName: 'NestHR',
   h1: 'NestHR vs BambooHR: Honest Comparison for Indian HR Teams',
-  subhead: 'BambooHR is a well-known US-built HRMS — $10-$25/employee/month across tiers, with a $250/month minimum for small teams and paid add-ons ($2-5/employee/month each) for performance management and time tracking. NestHR is INR-native, per-employee-per-year, with PlacementOS and every module included.',
+  subhead: 'BambooHR is a well-known US-built HRMS — $10-$25/employee/month across tiers, with a $250/month minimum for small teams and paid add-ons ($2-5/employee/month each) for performance management and time tracking. NestHR is INR-native, flat annual pricing by team size, with PlacementOS and every module included.',
   primaryCta: { href: '/nesthr', label: 'Explore NestHR →' },
   secondaryCta: { href: '/contact', label: 'Talk to a real person' },
   tldrHeading: 'When BambooHR is right. When NestHR is right.',
@@ -34,10 +34,10 @@ const DATA: VsPageData = {
     'You are an Indian startup or college that needs PlacementOS specifically',
   ],
   tableRows: [
-    { feature: 'Pricing model', competitor: { text: '$10-$25/employee/month (USD), $250/month minimum for teams under 25', verdict: 'no' }, labelnest: { text: '₹799-₹1,299/employee/year (INR), no forex tax', verdict: 'win' } },
+    { feature: 'Pricing model', competitor: { text: '$10-$25/employee/month (USD), $250/month minimum for teams under 25', verdict: 'no' }, labelnest: { text: '₹40,000-₹1,00,000/year flat (INR), no forex tax', verdict: 'win' } },
     { feature: 'Add-on costs', competitor: { text: 'Performance, wellbeing, time tracking billed separately at $2-5/employee/month each', verdict: 'no' }, labelnest: { text: 'All modules included, no add-on fees', verdict: 'win' } },
     { feature: 'Campus / placement hiring', competitor: { text: 'Not offered', verdict: 'no' }, labelnest: { text: 'PlacementOS — learns from every selection/rejection signal', verdict: 'win' } },
-    { feature: 'Small-team pricing', competitor: { text: 'Flat $250/month floor makes small teams pay a high effective per-employee rate', verdict: 'no' }, labelnest: { text: 'Starter tier priced per employee from day one, no floor penalty', verdict: 'win' } },
+    { feature: 'Small-team pricing', competitor: { text: 'Flat $250/month floor makes small teams pay a high effective per-employee rate', verdict: 'no' }, labelnest: { text: 'Starter tier flat at ₹40,000/year for up to 20 employees — well under BambooHR\'s monthly floor', verdict: 'win' } },
     { feature: 'Market presence', competitor: { text: 'Globally established HRMS brand', verdict: 'win' }, labelnest: { text: 'India-focused, newer to market', verdict: 'no' } },
     { feature: 'India-specific compliance', competitor: { text: 'Not a specialization — US-built platform', verdict: 'no' }, labelnest: { text: 'Native Indian founder and compliance context', verdict: 'win' } },
   ],
@@ -48,7 +48,7 @@ const DATA: VsPageData = {
     heading: 'Global HRMS with USD add-ons vs. India-native HR + placement OS, all-inclusive.',
     body: "BambooHR's assumption: a globally proven core HRMS, with performance and wellbeing tooling sold as separate add-ons, priced in USD. NestHR's assumption: Indian startups and colleges need INR-native pricing with every module — including campus hiring — bundled in from the start, without forex friction or add-on fees.",
   },
-  finalTag: 'Simple. Per employee. No hidden modules.',
+  finalTag: 'Simple. Flat annual pricing. No hidden modules.',
   finalHeading: 'All 7 OS modules included. INR pricing.',
   finalBody: 'No forex tax, no per-seat tricks. See what NestHR includes at every tier.',
   finalPrimaryCta: { href: 'https://nesthr.labelnest.in', label: 'Try NestHR ↗', external: true },

@@ -5,7 +5,7 @@ import VsPageLayout, { VsPageData } from '@/components/VsPageLayout'
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/vs/rippling', {
     title: 'Rippling Alternatives for India — NestHR vs Rippling',
-    description: 'Looking for a Rippling alternative for your India team? How NestHR compares — INR per-employee-per-year pricing with PlacementOS included vs Rippling\'s USD modular pricing built for global/US-first companies.',
+    description: 'Looking for a Rippling alternative for your India team? How NestHR compares — INR flat annual pricing with PlacementOS included vs Rippling\'s USD modular pricing built for global/US-first companies.',
   })
 }
 
@@ -31,10 +31,10 @@ const DATA: VsPageData = {
     'You are an India-based startup or college that doesn\'t need global IT/payroll infrastructure',
     'You want INR-native pricing without a mandatory platform fee or modular add-ons',
     'You need campus recruitment or startup hiring tools, not global HR+IT',
-    'You want every module included at a flat per-employee-per-year price',
+    'You want every module included at a flat annual price based on team size',
   ],
   tableRows: [
-    { feature: 'Pricing model', competitor: { text: 'From $8/employee/month base + $35-40/month platform fee; most pay $25-$50+/employee/month with modules', verdict: 'no' }, labelnest: { text: '₹799-₹1,299/employee/year (INR), all modules included', verdict: 'win' } },
+    { feature: 'Pricing model', competitor: { text: 'From $8/employee/month base + $35-40/month platform fee; most pay $25-$50+/employee/month with modules', verdict: 'no' }, labelnest: { text: '₹40,000-₹1,00,000/year flat (INR), all modules included', verdict: 'win' } },
     { feature: 'Campus / placement hiring', competitor: { text: 'Not offered', verdict: 'no' }, labelnest: { text: 'PlacementOS — learns from every selection/rejection signal', verdict: 'win' } },
     { feature: 'IT device management', competitor: { text: 'Included as a module (adds $8-12/employee)', verdict: 'win' }, labelnest: { text: 'Not offered — HR and hiring focused', verdict: 'no' } },
     { feature: 'Multi-country payroll / EOR', competitor: { text: 'Global EOR from $499-$599/employee/month per country', verdict: 'win' }, labelnest: { text: 'Not offered — India-focused', verdict: 'no' } },
@@ -48,7 +48,7 @@ const DATA: VsPageData = {
     heading: 'Global HR+IT infrastructure vs. India-native HR + placement OS.',
     body: "Rippling's assumption: growing companies need unified HR, IT, and payroll across multiple countries, priced modularly in USD. NestHR's assumption: an India-based startup or college doesn't need global IT infrastructure — it needs HR and campus hiring bundled together, priced simply in INR without forex friction.",
   },
-  finalTag: 'Simple. Per employee. No hidden modules.',
+  finalTag: 'Simple. Flat annual pricing. No hidden modules.',
   finalHeading: 'All 7 OS modules included. INR pricing.',
   finalBody: 'No forex tax, no per-seat tricks. See what NestHR includes at every tier.',
   finalPrimaryCta: { href: 'https://nesthr.labelnest.in', label: 'Try NestHR ↗', external: true },
