@@ -5,7 +5,7 @@ import VsPageLayout, { VsPageData } from '@/components/VsPageLayout'
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/vs/hrone', {
     title: 'HROne Alternatives for Startups — NestHR vs HROne',
-    description: 'Looking for an HROne alternative? How NestHR compares on pricing, modules, and campus placement — flat per-employee pricing with PlacementOS included, no 50-user minimum.',
+    description: 'Looking for an HROne alternative? How NestHR compares on pricing, modules, and campus placement — flat annual pricing by team size with PlacementOS included, no 50-user minimum.',
   })
 }
 
@@ -34,7 +34,7 @@ const DATA: VsPageData = {
     'You are a startup or college that needs PlacementOS specifically',
   ],
   tableRows: [
-    { feature: 'Pricing model', competitor: { text: '₹85-115/user/month, published, but 50-user minimum on every plan', verdict: 'mid' }, labelnest: { text: '₹799-₹1,299/employee/year flat, no minimum team size', verdict: 'win' } },
+    { feature: 'Pricing model', competitor: { text: '₹85-115/user/month, published, but 50-user minimum on every plan', verdict: 'mid' }, labelnest: { text: '₹40,000-₹1,00,000/year flat, no minimum team size', verdict: 'win' } },
     { feature: 'Minimum company size', competitor: { text: '50 users minimum on all plans', verdict: 'no' }, labelnest: { text: 'No minimum stated', verdict: 'win' } },
     { feature: 'Campus / placement hiring', competitor: { text: 'Recruitment module present but not campus/placement-specific', verdict: 'no' }, labelnest: { text: 'PlacementOS — learns from every selection/rejection signal', verdict: 'win' } },
     { feature: 'Module access', competitor: { text: 'Tiered — Basic, Professional, Enterprise unlock more features', verdict: 'mid' }, labelnest: { text: 'All 7 OS modules included at every tier', verdict: 'win' } },
@@ -48,7 +48,7 @@ const DATA: VsPageData = {
     heading: 'SMB/mid-market HRMS vs. startup-and-college-first HR + placement OS.',
     body: "HROne's assumption: companies with 50+ employees need a productivity-focused HRMS with deep compliance tooling. NestHR's assumption: startups and colleges — regardless of size — need HR and campus hiring bundled together, with no minimum team size. If you're earlier-stage than HROne's 50-user floor, NestHR was built for you.",
   },
-  finalTag: 'Simple. Per employee. No hidden modules.',
+  finalTag: 'Simple. Flat annual pricing. No hidden modules.',
   finalHeading: 'All 7 OS modules included. INR pricing.',
   finalBody: 'No forex tax, no per-seat tricks. See what NestHR includes at every tier.',
   finalPrimaryCta: { href: 'https://nesthr.labelnest.in', label: 'Try NestHR ↗', external: true },

@@ -5,7 +5,7 @@ import VsPageLayout, { VsPageData } from '@/components/VsPageLayout'
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/vs/pocket-hrms', {
     title: 'Pocket HRMS Alternatives for Startups — NestHR vs Pocket HRMS',
-    description: 'Looking for a Pocket HRMS alternative? How NestHR compares on pricing, modules, and campus placement for startups — flat per-employee-per-year pricing with PlacementOS included.',
+    description: 'Looking for a Pocket HRMS alternative? How NestHR compares on pricing, modules, and campus placement for startups — flat annual pricing by team size with PlacementOS included.',
   })
 }
 
@@ -15,7 +15,7 @@ const DATA: VsPageData = {
   competitorName: 'Pocket HRMS',
   ourName: 'NestHR',
   h1: 'Pocket HRMS Alternatives for Startups: NestHR vs Pocket HRMS',
-  subhead: 'Pocket HRMS is an AI-powered Indian HRMS — tiered pricing from ₹2,995/month (Standard, up to 50 employees) plus per-employee overage, with a one-time implementation fee. NestHR bundles everything, including PlacementOS for campus and startup hiring, into simple per-employee-per-year pricing.',
+  subhead: 'Pocket HRMS is an AI-powered Indian HRMS — tiered pricing from ₹2,995/month (Standard, up to 50 employees) plus per-employee overage, with a one-time implementation fee. NestHR bundles everything, including PlacementOS for campus and startup hiring, into simple flat annual pricing by team size.',
   primaryCta: { href: '/nesthr', label: 'Explore NestHR →' },
   secondaryCta: { href: '/contact', label: 'Talk to a real person' },
   tldrHeading: 'When Pocket HRMS is right. When NestHR is right.',
@@ -28,13 +28,13 @@ const DATA: VsPageData = {
     'You\'re prepared for a one-time implementation fee based on customization complexity',
   ],
   tldrRightPoints: [
-    'You want simple flat per-employee-per-year pricing, not a tiered base-plus-overage model',
+    'You want simple flat annual pricing based on team size, not a tiered base-plus-overage model',
     'You need campus recruitment or startup hiring tools, not just general HR',
     'You want all modules included at every tier, no separate implementation fee',
     'You are a startup that needs PlacementOS specifically',
   ],
   tableRows: [
-    { feature: 'Pricing model', competitor: { text: 'Tiered (₹2,995-₹4,495/month for 50 employees) plus ₹60-90/employee overage, +GST', verdict: 'mid' }, labelnest: { text: '₹799-₹1,299/employee/year flat, all modules included', verdict: 'win' } },
+    { feature: 'Pricing model', competitor: { text: 'Tiered (₹2,995-₹4,495/month for 50 employees) plus ₹60-90/employee overage, +GST', verdict: 'mid' }, labelnest: { text: '₹40,000-₹1,00,000/year flat, all modules included', verdict: 'win' } },
     { feature: 'Implementation fee', competitor: { text: 'One-time fee based on customization and data migration complexity', verdict: 'no' }, labelnest: { text: 'No stated separate implementation fee', verdict: 'win' } },
     { feature: 'Campus / placement hiring', competitor: { text: 'Not offered', verdict: 'no' }, labelnest: { text: 'PlacementOS — learns from every selection/rejection signal', verdict: 'win' } },
     { feature: 'AI-powered HR tools', competitor: { text: 'Included on Premium tier', verdict: 'win' }, labelnest: { text: 'PlacementOS uses signal learning; broader AI tooling not the primary pitch', verdict: 'mid' } },
@@ -46,9 +46,9 @@ const DATA: VsPageData = {
   extra: {
     tag: 'The philosophical difference',
     heading: 'Tiered AI-HRMS vs. HR + placement OS, all-inclusive.',
-    body: "Pocket HRMS's assumption: companies pay more per tier for AI-powered HR tooling and support. NestHR's assumption: every company should get all 7 modules — including campus hiring — at every tier, priced simply per employee per year. If you need placement-specific hiring, NestHR was built for that.",
+    body: "Pocket HRMS's assumption: companies pay more per tier for AI-powered HR tooling and support. NestHR's assumption: every company should get all 7 modules — including campus hiring — at every tier, priced with flat annual tiers based on team size. If you need placement-specific hiring, NestHR was built for that.",
   },
-  finalTag: 'Simple. Per employee. No hidden modules.',
+  finalTag: 'Simple. Flat annual pricing. No hidden modules.',
   finalHeading: 'All 7 OS modules included. INR pricing.',
   finalBody: 'No forex tax, no per-seat tricks. See what NestHR includes at every tier.',
   finalPrimaryCta: { href: 'https://nesthr.labelnest.in', label: 'Try NestHR ↗', external: true },

@@ -73,8 +73,9 @@ const SOFTWARE_SCHEMA = {
   publisher: { '@type': 'Organization', name: 'LabelNest India Private Limited', url: 'https://labelnest.in' },
   brand: { '@type': 'Brand', name: 'LabelNest', url: 'https://labelnest.in' },
   offers: [
-    { '@type': 'Offer', name: 'Starter', price: '799', priceCurrency: 'INR', description: 'Per employee per year, up to 50 employees' },
-    { '@type': 'Offer', name: 'Growth', price: '1299', priceCurrency: 'INR', description: 'Per employee per year, 51-200 employees' },
+    { '@type': 'Offer', name: 'Starter', price: '40000', priceCurrency: 'INR', description: 'Flat annual price, up to 20 employees' },
+    { '@type': 'Offer', name: 'Growth', price: '60000', priceCurrency: 'INR', description: 'Flat annual price, up to 50 employees' },
+    { '@type': 'Offer', name: 'Scale', price: '100000', priceCurrency: 'INR', description: 'Flat annual price, up to 100 employees' },
   ],
   featureList: OS_MODULES.map(m => `${m.name}: ${m.desc}`),
 }
@@ -96,7 +97,7 @@ const FAQS = [
   },
   {
     q: 'How much does NestHR cost?',
-    a: 'NestHR is priced per employee per year with all seven modules included at every tier. Starter is ₹799/employee/year for teams up to 50. Growth is ₹1,299/employee/year for teams of 51-200. Enterprise (200+ employees or colleges) is custom-priced.',
+    a: 'NestHR is priced as a flat annual fee based on team size, with all seven modules included at every tier. Starter is ₹40,000/year for teams up to 20. Growth is ₹60,000/year for teams up to 50. Scale is ₹1,00,000/year for teams up to 100. Enterprise (100+ employees or colleges) is custom-priced.',
   },
   {
     q: 'Are all modules included in every plan?',
@@ -234,7 +235,7 @@ export default function NestHRPage() {
                 {
                   icon: '🚀', name: 'Startups', border: '#7C3AED', checkColor: '#7C3AED',
                   desc: 'Teams of 5 to 200. Moving fast. No dedicated HR team. Need people operations that do not require a specialist to run. NestHR gives founders and ops leads a complete workforce system without the enterprise bloat.',
-                  features: ['People OS + Performance OS + Expense OS', 'Talent OS for hiring pipelines', 'Learning OS for onboarding and upskilling', 'Starting at ₹799 per employee per year'],
+                  features: ['People OS + Performance OS + Expense OS', 'Talent OS for hiring pipelines', 'Learning OS for onboarding and upskilling', 'Starting at ₹40,000 per year, flat'],
                 },
                 {
                   icon: '🎓', name: 'Colleges and Institutions', border: '#E91E8C', checkColor: '#E91E8C',
@@ -283,36 +284,41 @@ export default function NestHRPage() {
         <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Pricing</div>
-            <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 12 }}>Simple. Per employee. No hidden modules.</h2>
-            <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 520, marginBottom: 36, lineHeight: 1.65 }}>You pay per employee per year. All seven modules included. No per-seat tricks, no module upsells, no annual contract requirements.</p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14 }}>
+            <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 12 }}>Simple. Flat annual pricing. No hidden modules.</h2>
+            <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 520, marginBottom: 36, lineHeight: 1.65 }}>You pay a flat annual fee based on team size. All seven modules included. No per-employee metering, no module upsells, no annual contract requirements.</p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14 }}>
               {[
                 {
                   label: 'Starter', labelColor: 'var(--text3)', border: '1px solid var(--border)', topBar: '#8985A6',
-                  price: '₹799', unit: '/employee/yr', sub: 'For teams up to 50',
+                  price: '₹40,000', unit: '/yr', sub: 'For teams up to 20',
                   checkColor: '#10B981',
                   features: ['All 7 OS modules', 'PlacementOS included', 'Email support'],
                   cta: null,
                 },
                 {
-                  label: 'Growth', labelColor: '#7C3AED', border: '2px solid #7C3AED', topBar: '#7C3AED',
-                  price: '₹1,299', unit: '/employee/yr', sub: 'For teams of 51 to 200',
-                  badge: 'Most popular',
+                  label: 'Growth', labelColor: '#7C3AED', border: '1px solid var(--border)', topBar: '#7C3AED',
+                  price: '₹60,000', unit: '/yr', sub: 'For teams up to 50',
                   checkColor: '#7C3AED',
+                  features: ['All 7 OS modules', 'PlacementOS included', 'Priority support'],
+                  cta: null,
+                },
+                {
+                  label: 'Scale', labelColor: '#2563EB', border: '1px solid var(--border)', topBar: '#2563EB',
+                  price: '₹1,00,000', unit: '/yr', sub: 'For teams up to 100',
+                  checkColor: '#2563EB',
                   features: ['All 7 OS modules', 'PlacementOS with signal learning', 'Priority support', 'Advanced analytics'],
                   cta: null,
                 },
                 {
-                  label: 'Enterprise', labelColor: '#2563EB', border: '1px solid var(--border)', topBar: '#2563EB',
-                  price: 'Custom', unit: '', sub: 'For 200+ or colleges',
-                  checkColor: '#2563EB',
+                  label: 'Enterprise', labelColor: '#E91E8C', border: '1px solid var(--border)', topBar: '#E91E8C',
+                  price: 'Custom', unit: '', sub: 'For 100+ employees or colleges',
+                  checkColor: '#E91E8C',
                   features: ['All 7 OS modules', 'Full PlacementOS for colleges', 'Dedicated support and onboarding', 'Custom integrations available'],
                   cta: '/contact',
                 },
               ].map(plan => (
                 <div key={plan.label} style={{ background: 'var(--surface)', border: plan.border, borderRadius: 16, padding: 28, position: 'relative', overflow: 'hidden' }}>
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: plan.topBar }} />
-                  {plan.badge && <div style={{ position: 'absolute', top: 14, right: 14, fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(124,58,237,.15)', color: '#7C3AED' }}>{plan.badge}</div>}
                   <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: plan.labelColor, marginBottom: 12 }}>{plan.label}</div>
                   <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 36, color: 'var(--text)', marginBottom: 4 }}>
                     {plan.price}<span style={{ fontSize: 16, fontWeight: 400, color: 'var(--text2)' }}>{plan.unit}</span>
