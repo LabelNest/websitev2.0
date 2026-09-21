@@ -9,7 +9,7 @@ const TABS = [
   { href: '/nestlens/orbit', label: 'Orbit', exact: false, icon: '/logos/orbit-32.png' },
   { href: '/nestlens/capital', label: 'Ascent', exact: false, icon: '/logos/ascent-32.png' },
   { href: '/nestlens/command', label: 'Command', exact: false, icon: '/logos/command-32.png' },
-  { href: '/nestlens/connect', label: 'Connect', exact: false, icon: '/logos/connect-32.png' },
+  { href: '/nestlens/connect', label: 'Connect', exact: false, icon: '/logos/connect-v2-32.png' },
   { href: '/nestlens/pricing', label: 'Pricing', exact: false, icon: null },
   { href: '/access', label: 'Access', exact: false, icon: null },
 ]
