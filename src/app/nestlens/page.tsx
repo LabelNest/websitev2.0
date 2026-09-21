@@ -206,7 +206,7 @@ export default function NestLensPage() {
 
               <HoverLink href="/nestlens/connect"
                 style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderTop: '3px solid #06B6D4', borderRadius: 18, padding: 28, display: 'block', transition: 'transform .2s', textDecoration: 'none' }}>
-                <img src="/logos/connect.png" alt="" width={40} height={40} style={{ marginBottom: 14, objectFit: 'contain' }} />
+                <img src="/logos/connect-v2.png" alt="" width={40} height={40} style={{ marginBottom: 14, objectFit: 'contain' }} />
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(16,185,129,.1)', color: '#10B981', display: 'inline-block', marginBottom: 10 }}>Live</div>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 20, color: 'var(--text)', marginBottom: 8 }}>Connect</div>
                 <p style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65, marginBottom: 16 }}>Mentor connect, verified audit requests, and dedicated dashboards for mentors, audit partners, and scouting partners.</p>
