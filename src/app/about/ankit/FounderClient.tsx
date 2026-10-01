@@ -19,17 +19,17 @@ export default function FounderClient() {
     <>
       <Nav />
       <main style={{ paddingTop: '60px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '64px 48px 0', display: 'grid', gridTemplateColumns: '340px 1fr', gap: 64, alignItems: 'start' }}>
+        <div className="grid grid-cols-1 md:grid-cols-[340px_1fr] items-start gap-8 md:gap-16 px-5 pt-10 md:px-12 md:pt-16" style={{ maxWidth: 1200, margin: '0 auto' }}>
 
           {/* PORTRAIT CARD */}
-          <div className="md:sticky" style={{ top: 88, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 20, overflow: 'hidden' }}>
+          <div className="md:sticky w-full max-w-[380px] mx-auto md:max-w-none md:mx-0" style={{ top: 88, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 20, overflow: 'hidden' }}>
             <div className="relative" style={{ aspectRatio: '3/4', background: 'linear-gradient(135deg,rgba(233,30,140,.12),rgba(37,99,235,.08))' }}>
               <Image
                 src="https://hdwfndjlgkjcjwxxciwn.supabase.co/storage/v1/object/public/site-assets/team/1775127976877.png"
                 alt="Ankit Suman"
                 fill
                 className="object-cover object-center"
-                sizes="340px"
+                sizes="(max-width: 768px) 380px, 340px"
               />
             </div>
             <div style={{ padding: 24 }}>
