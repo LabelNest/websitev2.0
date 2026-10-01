@@ -46,7 +46,7 @@ export default function ServicesPage() {
         {/* HERO */}
         <section style={{ padding: '64px 48px', borderBottom: '1px solid rgba(255,255,255,.06)', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', top: -100, left: -80, width: 500, height: 500, borderRadius: '50%', background: 'rgba(16,185,129,.07)', filter: 'blur(90px)', pointerEvents: 'none' }} />
-          <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 2, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16" style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 2, alignItems: 'center' }}>
             <div>
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Managed Services · LabelNest</div>
               <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(38px,5.2vw,62px)', fontWeight: 800, letterSpacing: '-.04em', lineHeight: 1.04, color: 'var(--text)', marginBottom: 16 }}>
@@ -87,7 +87,7 @@ export default function ServicesPage() {
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>What we offer</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 32 }}>Five service areas. One consistent standard.</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+            <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 14 }}>
               {[
                 {
                   icon: '🗂️', border: '#10B981', title: 'Data Sourcing and Enrichment',
@@ -122,13 +122,13 @@ export default function ServicesPage() {
 
               {/* Wide card - Custom Workflow */}
               <div className="svc-card" style={{ gridColumn: 'span 2', borderTop: '3px solid #E91E8C' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, alignItems: 'start' }}>
+                <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 24, alignItems: 'start' }}>
                   <div>
                     <div style={{ fontSize: 28, marginBottom: 12 }}>🏗️</div>
                     <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 17, color: 'var(--text)', marginBottom: 8 }}>Custom Data Workflow Design</div>
                     <p style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.68 }}>Need something specific that does not fit a standard service? We design and operate bespoke data workflows from intake to structured output for research teams, funds, and platforms.</p>
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 5, paddingTop: 52 }}>
+                  <div className="md:pt-[52px]" style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
                     {['Workflow scoping and specification', 'Custom field taxonomy design', 'Pilot run with quality benchmarking', 'Scale-up with standing QA cadence', 'Output format matched to your system'].map(item => (
                       <div key={item} style={{ fontSize: 12, color: 'var(--text3)' }}>✓ {item}</div>
                     ))}
@@ -144,7 +144,7 @@ export default function ServicesPage() {
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>How it works</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 32 }}>From brief to structured output. Four steps.</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12 }}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {[
                 { num: '01', title: 'Brief and scope', desc: 'You describe the data problem. We define the workflow, timeline, and team.' },
                 { num: '02', title: 'Pilot run', desc: 'Small-scale pilot to validate the workflow and establish quality benchmarks.' },

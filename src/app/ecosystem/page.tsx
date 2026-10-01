@@ -74,7 +74,7 @@ export default function EcosystemPage() {
 
             {/* NestLens flagship */}
             <div style={{ background: 'var(--surface)', border: '1px solid rgba(255,255,255,.07)', borderRadius: 20, overflow: 'hidden', marginBottom: 14 }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 260px' }}>
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_260px]">
                 <div style={{ padding: 36, borderLeft: '4px solid #2563EB' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
                     <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(37,99,235,.1)', color: '#2563EB' }}>Flagship · Live</span>
@@ -109,7 +109,7 @@ export default function EcosystemPage() {
             </div>
 
             {/* NestHR + Managed Services */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+            <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 14 }}>
               <Link href="/nesthr" className="eco-card eco-nesthr" style={{ background: 'var(--surface)', border: '1px solid rgba(255,255,255,.07)', borderTop: '3px solid #7C3AED', borderRadius: 16, padding: 28, display: 'block' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
                   <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(16,185,129,.1)', color: '#10B981' }}>Live</span>
@@ -139,7 +139,7 @@ export default function EcosystemPage() {
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Coming soon</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 32 }}>What is being built next</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14 }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ gap: 14 }}>
               <div style={{ background: 'var(--surface)', border: '1px solid rgba(249,115,22,.15)', borderRadius: 16, padding: 28, position: 'relative', overflow: 'hidden' }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: '#F97316', opacity: .5 }} />
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(249,115,22,.1)', color: '#F97316', display: 'inline-block', marginBottom: 14 }}>Early access · Oct 2026</div>
@@ -168,14 +168,14 @@ export default function EcosystemPage() {
         {/* INTERNAL ENGINES */}
         <section style={{ padding: '64px 48px' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 48, alignItems: 'center', marginBottom: 32 }}>
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 md:gap-12" style={{ alignItems: 'center', marginBottom: 32 }}>
               <div>
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Internal infrastructure</div>
                 <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>The engines that power what you see</h2>
               </div>
               <p style={{ fontSize: 14.5, color: 'var(--text2)', lineHeight: 1.7 }}>DataNest, NestIntel, and NestAgent are internal systems — not products we sell directly. They are the infrastructure that makes NestLens, Managed Services, and every external product work. Mentioned here because they are real.</p>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {[
                 { dot: '#2563EB', name: 'DataNest', desc: 'Full-stack data intelligence OS. Central entity registry tracking companies, funds, deals, contacts, GPs, LPs, and service providers.', powers: 'Powers NestLens Intelligence' },
                 { dot: '#F97316', name: 'NestIntel', desc: 'Unified intelligence engine. AI research agents, forensic document extraction, news intelligence. Three-provider LLM fallback chain.', powers: 'Powers DataNest · NestLens Signals' },

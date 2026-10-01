@@ -144,7 +144,7 @@ export default function NestHRPage() {
         {/* HERO */}
         <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', top: -120, right: -80, width: 520, height: 520, borderRadius: '50%', background: 'rgba(124,58,237,.08)', filter: 'blur(90px)', pointerEvents: 'none' }} />
-          <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 2, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16" style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 2, alignItems: 'center' }}>
             <div>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text3)', border: '1px solid rgba(255,255,255,.08)', background: 'rgba(255,255,255,.03)', padding: '6px 16px', borderRadius: 100, marginBottom: 24 }}>
                 <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#7C3AED', display: 'inline-block' }} />
@@ -201,7 +201,7 @@ export default function NestHRPage() {
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Seven OS modules</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 12 }}>Every part of people operations. One platform.</h2>
             <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 520, marginBottom: 36, lineHeight: 1.65 }}>Purpose-built modules that work independently or together. No bloat. No features you do not need. Each OS does exactly what it says.</p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {OS_MODULES.map(m => (
                 <HoverDiv key={m.name}
                   hoverBorderColor={`${m.border}59`}
@@ -213,7 +213,7 @@ export default function NestHRPage() {
                     {m.badge && <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 4, background: 'rgba(233,30,140,.1)', color: '#E91E8C' }}>{m.badge}</span>}
                   </div>
                   <p style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65, marginBottom: 12 }}>{m.desc}</p>
-                  <div style={{ display: m.grid2col ? 'grid' : 'flex', gridTemplateColumns: m.grid2col ? '1fr 1fr' : undefined, flexDirection: m.grid2col ? undefined : 'column', gap: 4 }}>
+                  <div className={m.grid2col ? 'grid grid-cols-1 sm:grid-cols-2' : 'flex flex-col'} style={{ gap: 4 }}>
                     {m.features.map(f => (
                       <div key={f} style={{ fontSize: 12, color: 'var(--text3)' }}>✓ {f}</div>
                     ))}
@@ -230,7 +230,7 @@ export default function NestHRPage() {
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Who uses NestHR</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 12 }}>Built for two kinds of organisations.</h2>
             <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 520, marginBottom: 36, lineHeight: 1.65 }}>The same platform serves both. PlacementOS is the module that makes it work for colleges. Everything else works for startups. You only pay for what you use.</p>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 16 }}>
               {[
                 {
                   icon: '🚀', name: 'Startups', border: '#7C3AED', checkColor: '#7C3AED',
@@ -268,7 +268,7 @@ export default function NestHRPage() {
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>PlacementOS — flagship module</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 12 }}>The HR module that gets smarter every cycle.</h2>
             <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 560, marginBottom: 36, lineHeight: 1.65 }}>Most ATS systems are static — they help you manage candidates but they do not learn. PlacementOS learns from every signal your team produces and uses that to improve the next cycle.</p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {PLACEMENT_STEPS.map(s => (
                 <div key={s.title} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderLeft: `3px solid ${s.color}`, borderRadius: 14, padding: 22 }}>
                   <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.1em', textTransform: 'uppercase', color: s.color, marginBottom: 10 }}>{s.step}</div>
@@ -286,7 +286,7 @@ export default function NestHRPage() {
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Pricing</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 12 }}>Simple. Flat annual pricing. No hidden modules.</h2>
             <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 520, marginBottom: 36, lineHeight: 1.65 }}>You pay a flat annual fee based on team size. All seven modules included. No per-employee metering, no module upsells, no annual contract requirements.</p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14 }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style={{ gap: 14 }}>
               {[
                 {
                   label: 'Starter', labelColor: 'var(--text3)', border: '1px solid var(--border)', topBar: '#8985A6',

@@ -133,7 +133,7 @@ export default async function BriefingsPage() {
         </section>
 
         {/* CONTENT + SIDEBAR */}
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '48px', display: 'grid', gridTemplateColumns: '1fr 300px', gap: 48, alignItems: 'start' }}>
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-8 md:gap-12 px-5 py-10 md:px-12 md:py-12" style={{ maxWidth: 1200, margin: '0 auto', alignItems: 'start' }}>
 
           {/* MAIN FEED */}
           <div>
@@ -191,7 +191,7 @@ export default async function BriefingsPage() {
           </div>
 
           {/* SIDEBAR */}
-          <div style={{ position: 'sticky', top: 88, display: 'flex', flexDirection: 'column', gap: 14 }}>
+          <div className="md:sticky" style={{ top: 88, display: 'flex', flexDirection: 'column', gap: 14 }}>
             {/* Newsletter */}
             <div style={{ background: 'var(--surface)', border: '1px solid rgba(255,255,255,.08)', borderRadius: 14, padding: 20, position: 'relative', overflow: 'hidden' }}>
               <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg,#F97316,#E91E8C)' }} />

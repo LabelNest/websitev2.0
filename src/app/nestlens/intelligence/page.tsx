@@ -61,7 +61,7 @@ export default function IntelligencePage() {
         {/* HERO */}
         <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', top: -100, left: -80, width: 500, height: 500, borderRadius: '50%', background: 'rgba(37,99,235,.08)', filter: 'blur(90px)', pointerEvents: 'none' }} />
-          <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 2, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16" style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 2, alignItems: 'center' }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
                 <img src="/logos/atlas-32.png" alt="" width={20} height={20} style={{ objectFit: 'contain' }} />
@@ -115,7 +115,7 @@ export default function IntelligencePage() {
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>What NestLens Atlas tracks</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 12 }}>Seven entity types. One structured intelligence layer.</h2>
             <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 520, marginBottom: 36, lineHeight: 1.65 }}>NestLens builds a complete picture of the private markets ecosystem — from fund managers and their portfolios to the contacts who drive decisions.</p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {ENTITIES.map(e => (
                 <HoverDiv key={e.name}
                   hoverBorderColor="rgba(255,255,255,.15)"

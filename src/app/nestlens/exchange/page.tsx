@@ -55,7 +55,7 @@ export default function ExchangePage() {
         {/* HERO */}
         <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', top: -100, left: -80, width: 500, height: 500, borderRadius: '50%', background: 'rgba(233,30,140,.08)', filter: 'blur(90px)', pointerEvents: 'none' }} />
-          <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 2, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16" style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 2, alignItems: 'center' }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
                 <img src="/logos/exchange-32.png" alt="" width={20} height={20} style={{ objectFit: 'contain' }} />
@@ -124,7 +124,7 @@ export default function ExchangePage() {
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>What you can buy and sell</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 12 }}>Every structured data type. One marketplace.</h2>
             <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 520, marginBottom: 36, lineHeight: 1.65 }}>Exchange is not limited to private markets data. Any structured dataset with provenance can be listed, licensed, or sold.</p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12 }}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {CATEGORIES.map(c => (
                 <HoverDiv key={c.name}
                   hoverBorderColor="rgba(233,30,140,.3)"
@@ -145,7 +145,7 @@ export default function ExchangePage() {
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>The LabelNest trust layer</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 12 }}>Every dataset verified. Every transaction protected.</h2>
             <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 520, marginBottom: 36, lineHeight: 1.65 }}>Three mechanisms that make Exchange safe for buyers and fair for sellers.</p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
+            <div className="grid grid-cols-1 sm:grid-cols-3" style={{ gap: 16 }}>
               {[
                 { icon: '✅', name: 'KYC Verified Sellers', color: 'rgba(16,185,129,.3)', desc: 'Every seller has completed identity and business verification before any listing goes live. You know exactly who you are buying from.' },
                 { icon: '🔒', name: 'Escrow Protected', color: 'rgba(37,99,235,.3)', desc: 'Payment held in escrow until delivery is confirmed. No upfront risk for buyers. Guaranteed payment for sellers on delivery.' },

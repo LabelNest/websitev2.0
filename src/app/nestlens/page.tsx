@@ -139,7 +139,7 @@ export default function NestLensPage() {
         <section style={{ padding: '72px 48px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 8, textAlign: 'center' }}>Six modules — all live</div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16, marginTop: 32 }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ gap: 16, marginTop: 32 }}>
 
               <HoverLink href="/nestlens/intelligence"
                 style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderTop: '3px solid #2563EB', borderRadius: 18, padding: 28, display: 'block', transition: 'transform .2s', textDecoration: 'none' }}>
@@ -228,7 +228,7 @@ export default function NestLensPage() {
               <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 14 }}>Six modules, each priced independently.</h2>
               <p style={{ fontSize: 15, lineHeight: 1.72, color: 'var(--text2)', maxWidth: 560, margin: '0 auto' }}>Subscribe only to what you need. All plans available monthly or annually — annual saves more. Enterprise and Bundle pricing on request.</p>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20 }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ gap: 20 }}>
               {[
                 {
                   accent: '#2563EB', name: 'Atlas', tagline: 'Private market data on funds, LPs, GPs, and grants.',

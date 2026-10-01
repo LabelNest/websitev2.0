@@ -118,7 +118,7 @@ export default function BriefingView({ briefing, related }: { briefing: Briefing
 
       <Nav />
       <main style={{ paddingTop: 64 }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '48px 48px 80px', display: 'grid', gridTemplateColumns: '1fr 280px', gap: 56, alignItems: 'start' }}>
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-8 md:gap-14 px-5 md:px-12" style={{ maxWidth: 1100, margin: '0 auto', paddingTop: 48, paddingBottom: 80, alignItems: 'start' }}>
 
           {/* ARTICLE */}
           <article>
@@ -183,7 +183,7 @@ export default function BriefingView({ briefing, related }: { briefing: Briefing
           </article>
 
           {/* SIDEBAR */}
-          <aside style={{ position: 'sticky', top: 88, display: 'flex', flexDirection: 'column', gap: 14 }}>
+          <aside className="md:sticky" style={{ top: 88, display: 'flex', flexDirection: 'column', gap: 14 }}>
             {/* Share */}
             <div style={{ background: 'var(--surface)', border: '1px solid rgba(255,255,255,.07)', borderRadius: 14, padding: 18 }}>
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 10 }}>Share</div>
