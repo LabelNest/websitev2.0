@@ -1,8 +1,38 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 
 type ChatMsg = { role: 'user' | 'assistant'; content: string }
+
+// Kai's replies reference pages as bare paths ("/contact") or domains
+// ("nestlens.labelnest.in") in plain prose per its system prompt -- this
+// turns those into actual clickable links instead of inert text.
+const LINK_PATTERN = /https?:\/\/[^\s)]+|(?<!@)(?:[a-z0-9-]+\.)*labelnest\.in(?:\/[^\s).,!?]*)?|(?<![\w/])\/[a-zA-Z][\w\-/]*/gi
+
+function renderMessageContent(text: string): React.ReactNode[] {
+  const nodes: React.ReactNode[] = []
+  let lastIndex = 0
+  let key = 0
+  for (const match of text.matchAll(LINK_PATTERN)) {
+    const raw = match[0]
+    const start = match.index ?? 0
+    const trimmed = raw.replace(/[.,!?;:]+$/, '')
+    const trailing = raw.slice(trimmed.length)
+    if (start > lastIndex) nodes.push(text.slice(lastIndex, start))
+    const linkStyle: React.CSSProperties = { color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 2 }
+    if (trimmed.startsWith('/')) {
+      nodes.push(<Link key={key++} href={trimmed} style={linkStyle}>{trimmed}</Link>)
+    } else {
+      const href = trimmed.startsWith('http') ? trimmed : `https://${trimmed}`
+      nodes.push(<a key={key++} href={href} target="_blank" rel="noopener noreferrer" style={linkStyle}>{trimmed}</a>)
+    }
+    if (trailing) nodes.push(trailing)
+    lastIndex = start + raw.length
+  }
+  if (lastIndex < text.length) nodes.push(text.slice(lastIndex))
+  return nodes
+}
 
 // Same video-outside/static-inside-open-chat pattern as NestLens's KaiAvatar
 // and NestHR's LumiAvatar: the looping video is Kai's idle/closed presence,
@@ -53,6 +83,42 @@ export default function KaiWidget() {
   const [sending, setSending] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
+
+  // Drag-to-move: offset from the panel's default corner position. Reset
+  // on every open so a panel dragged off-screen doesn't stay lost.
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
+  const dragState = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null)
+
+  useEffect(() => {
+    if (open) setDragOffset({ x: 0, y: 0 })
+  }, [open])
+
+  function onDragPointerDown(e: React.PointerEvent) {
+    dragState.current = { startX: e.clientX, startY: e.clientY, origX: dragOffset.x, origY: dragOffset.y }
+    e.currentTarget.setPointerCapture(e.pointerId)
+  }
+  function onDragPointerMove(e: React.PointerEvent) {
+    if (!dragState.current || !panelRef.current) return
+    const { startX, startY, origX, origY } = dragState.current
+    const rect = panelRef.current.getBoundingClientRect()
+    const margin = 8
+    // The panel's position with zero drag offset, so we can clamp the new
+    // offset to keep it on-screen regardless of where dragging started.
+    const baseLeft = rect.left - dragOffset.x
+    const baseTop = rect.top - dragOffset.y
+    const minX = margin - baseLeft
+    const maxX = window.innerWidth - margin - rect.width - baseLeft
+    const minY = margin - baseTop
+    const maxY = window.innerHeight - margin - rect.height - baseTop
+    const nextX = Math.min(Math.max(origX + (e.clientX - startX), minX), maxX)
+    const nextY = Math.min(Math.max(origY + (e.clientY - startY), minY), maxY)
+    setDragOffset({ x: nextX, y: nextY })
+  }
+  function onDragPointerUp(e: React.PointerEvent) {
+    dragState.current = null
+    e.currentTarget.releasePointerCapture(e.pointerId)
+  }
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' })
@@ -94,15 +160,22 @@ export default function KaiWidget() {
 
       {open && (
         <div
+          ref={panelRef}
           className="kai-panel"
           style={{
             position: 'fixed', zIndex: 350, left: 20, bottom: 92,
             width: 360, maxWidth: 'calc(100vw - 32px)', height: 480,
             background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 20,
             boxShadow: '0 20px 48px rgba(0,0,0,.28)', display: 'flex', flexDirection: 'column', overflow: 'hidden',
+            transform: `translate(${dragOffset.x}px, ${dragOffset.y}px)`,
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 16px', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
+          <div
+            onPointerDown={onDragPointerDown}
+            onPointerMove={onDragPointerMove}
+            onPointerUp={onDragPointerUp}
+            style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 16px', borderBottom: '1px solid var(--border)', flexShrink: 0, cursor: 'grab', touchAction: 'none' }}
+          >
             <KaiAvatar size={34} staticImage />
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--text)' }}>Kai</div>
@@ -110,6 +183,7 @@ export default function KaiWidget() {
             </div>
             <button
               onClick={() => setOpen(false)}
+              onPointerDown={e => e.stopPropagation()}
               aria-label="Close"
               style={{ width: 26, height: 26, borderRadius: '50%', border: 'none', background: 'transparent', color: 'var(--text3)', fontSize: 15, cursor: 'pointer' }}
             >
@@ -152,7 +226,7 @@ export default function KaiWidget() {
                     color: m.role === 'user' ? '#fff' : 'var(--text2)',
                   }}
                 >
-                  {m.content}
+                  {renderMessageContent(m.content)}
                 </div>
               </div>
             ))}

@@ -21,18 +21,19 @@ const MENTOR_APPLY_HREF = 'https://nestlens.labelnest.in/mentors/apply'
 export default function NestLensModuleNav() {
   const pathname = usePathname()
   return (
-    <div style={{
-      display: 'flex', gap: 4, padding: '12px 48px',
+    <div className="hide-scrollbar px-5 md:px-12" style={{
+      display: 'flex', gap: 4, paddingTop: 12, paddingBottom: 12,
       background: 'var(--bg2)', borderBottom: '1px solid var(--border)',
       position: 'sticky', top: 64, zIndex: 90,
+      overflowX: 'auto', WebkitOverflowScrolling: 'touch',
     }}>
       {TABS.map(tab => {
         const isActive = tab.exact ? pathname === tab.href : pathname.startsWith(tab.href)
         return (
           <Link key={tab.href} href={tab.href} style={{
-            display: 'flex', alignItems: 'center', gap: 7,
+            display: 'flex', alignItems: 'center', gap: 7, flexShrink: 0,
             fontSize: 13, fontWeight: 500, padding: '7px 18px', borderRadius: 9,
-            transition: 'all .15s', textDecoration: 'none',
+            transition: 'all .15s', textDecoration: 'none', whiteSpace: 'nowrap',
             color: isActive ? 'var(--text)' : 'var(--text2)',
             background: isActive ? 'rgba(255,255,255,.07)' : 'transparent',
             border: isActive ? '1px solid rgba(255,255,255,.1)' : '1px solid transparent',
@@ -43,9 +44,9 @@ export default function NestLensModuleNav() {
         )
       })}
       <a href={MENTOR_APPLY_HREF} target="_blank" rel="noreferrer" style={{
-        fontSize: 13, fontWeight: 500, padding: '7px 18px', borderRadius: 9,
+        fontSize: 13, fontWeight: 500, padding: '7px 18px', borderRadius: 9, flexShrink: 0,
         textDecoration: 'none', color: 'var(--text2)', border: '1px solid transparent',
-        marginLeft: 'auto',
+        whiteSpace: 'nowrap', marginLeft: 'auto',
       }}>
         Become a mentor
       </a>
