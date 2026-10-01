@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { pageMetadata } from '@/lib/seo'
+import { getTeamMemberBySlug } from '@/lib/db'
 import FounderClient from './FounderClient'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -24,11 +25,17 @@ const PERSON_SCHEMA = {
   knowsAbout: ['Private Markets Data', 'Data Quality Management', 'Data Operations', 'Fund Intelligence', 'Alternative Data'],
 }
 
-export default function FounderPage() {
+export default async function FounderPage() {
+  const member = await getTeamMemberBySlug('ankit-kumar-suman').catch(() => null)
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(PERSON_SCHEMA) }} />
-      <FounderClient />
+      <FounderClient
+        imageUrl={member?.image_url ?? undefined}
+        imagePosition={member?.image_position ?? undefined}
+        imageZoom={member?.image_zoom ?? undefined}
+      />
     </>
   )
 }

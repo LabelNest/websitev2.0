@@ -3,6 +3,15 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Image from 'next/image'
 import Link from 'next/link'
+import { imgFrameStyle } from '@/lib/image'
+
+const FALLBACK_IMAGE_URL = 'https://hdwfndjlgkjcjwxxciwn.supabase.co/storage/v1/object/public/site-assets/team/1775127976877.png'
+
+type FounderClientProps = {
+  imageUrl?: string | null
+  imagePosition?: string
+  imageZoom?: number
+}
 
 const BRIEFINGS = [
   { href: '/briefings/introducing-nestlens-intelligence-venture-platforms', emoji: '📊', scope: 'Private Market Intelligence', title: 'Introducing NestLens Intelligence: Mapping the Architecture of Venture Platforms', read: '8 min · May 2026' },
@@ -14,7 +23,7 @@ const BRIEFINGS = [
 ]
 
 
-export default function FounderClient() {
+export default function FounderClient({ imageUrl, imagePosition = 'center', imageZoom = 1 }: FounderClientProps) {
   return (
     <>
       <Nav />
@@ -25,10 +34,10 @@ export default function FounderClient() {
           <div className="md:sticky w-full max-w-[380px] mx-auto md:max-w-none md:mx-0" style={{ top: 88, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 20, overflow: 'hidden' }}>
             <div className="relative" style={{ aspectRatio: '3/4', background: 'linear-gradient(135deg,rgba(233,30,140,.12),rgba(37,99,235,.08))' }}>
               <Image
-                src="https://hdwfndjlgkjcjwxxciwn.supabase.co/storage/v1/object/public/site-assets/team/1775127976877.png"
+                src={imageUrl || FALLBACK_IMAGE_URL}
                 alt="Ankit Suman"
                 fill
-                className="object-cover object-center"
+                style={imgFrameStyle(imagePosition, imageZoom)}
                 sizes="(max-width: 768px) 380px, 340px"
               />
             </div>
