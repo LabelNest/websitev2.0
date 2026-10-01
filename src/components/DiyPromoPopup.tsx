@@ -45,6 +45,7 @@ export default function DiyPromoPopup() {
 
   return (
     <div
+      className="diy-promo-popup"
       style={{
         position: 'fixed', bottom: 20, right: 20, zIndex: 300,
         maxWidth: 320, background: 'var(--surface)', border: '1px solid var(--border)',
@@ -52,7 +53,14 @@ export default function DiyPromoPopup() {
         padding: '16px 18px', animation: 'diy-pop-in .35s ease-out',
       }}
     >
-      <style>{`@keyframes diy-pop-in { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }`}</style>
+      <style>{`
+        @keyframes diy-pop-in { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+        /* Below this width the Kai chat launcher (bottom-left, 64px) can sit
+           under this popup's left edge -- clear it and go full-width instead. */
+        @media (max-width: 480px) {
+          .diy-promo-popup { left: 12px !important; right: 12px !important; bottom: 96px !important; max-width: none !important; }
+        }
+      `}</style>
       <button
         onClick={dismiss}
         aria-label="Dismiss"

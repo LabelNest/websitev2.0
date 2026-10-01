@@ -85,39 +85,57 @@ export default function KaiWidget() {
   const scrollRef = useRef<HTMLDivElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
 
-  // Drag-to-move: offset from the panel's default corner position. Reset
-  // on every open so a panel dragged off-screen doesn't stay lost.
+  // Drag-to-move: a single offset shared by the closed launcher button and
+  // the open panel, so the whole widget can be repositioned either way and
+  // the panel opens near wherever the launcher was left.
+  const launcherRef = useRef<HTMLDivElement>(null)
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
-  const dragState = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null)
+  const dragState = useRef<{ startX: number; startY: number; origX: number; origY: number; el: HTMLElement } | null>(null)
+  const didDragRef = useRef(false)
 
-  useEffect(() => {
-    if (open) setDragOffset({ x: 0, y: 0 })
-  }, [open])
-
-  function onDragPointerDown(e: React.PointerEvent) {
-    dragState.current = { startX: e.clientX, startY: e.clientY, origX: dragOffset.x, origY: dragOffset.y }
-    e.currentTarget.setPointerCapture(e.pointerId)
-  }
-  function onDragPointerMove(e: React.PointerEvent) {
-    if (!dragState.current || !panelRef.current) return
-    const { startX, startY, origX, origY } = dragState.current
-    const rect = panelRef.current.getBoundingClientRect()
+  // `rect` must reflect `appliedOffset` (the offset already committed to the
+  // DOM when the rect was measured) -- that's how we back out the element's
+  // zero-offset base position to clamp a new candidate offset against.
+  function clamp(candidate: { x: number; y: number }, rect: DOMRect, appliedOffset: { x: number; y: number }) {
     const margin = 8
-    // The panel's position with zero drag offset, so we can clamp the new
-    // offset to keep it on-screen regardless of where dragging started.
-    const baseLeft = rect.left - dragOffset.x
-    const baseTop = rect.top - dragOffset.y
+    const baseLeft = rect.left - appliedOffset.x
+    const baseTop = rect.top - appliedOffset.y
     const minX = margin - baseLeft
     const maxX = window.innerWidth - margin - rect.width - baseLeft
     const minY = margin - baseTop
     const maxY = window.innerHeight - margin - rect.height - baseTop
-    const nextX = Math.min(Math.max(origX + (e.clientX - startX), minX), maxX)
-    const nextY = Math.min(Math.max(origY + (e.clientY - startY), minY), maxY)
-    setDragOffset({ x: nextX, y: nextY })
+    return { x: Math.min(Math.max(candidate.x, minX), maxX), y: Math.min(Math.max(candidate.y, minY), maxY) }
+  }
+
+  // The panel is much bigger than the launcher -- when it opens, nudge a
+  // shared offset back on-screen rather than snapping to the default corner.
+  useEffect(() => {
+    if (!open || !panelRef.current) return
+    setDragOffset(prev => clamp(prev, panelRef.current!.getBoundingClientRect(), prev))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open])
+
+  function onDragPointerDown(e: React.PointerEvent, el: HTMLElement) {
+    dragState.current = { startX: e.clientX, startY: e.clientY, origX: dragOffset.x, origY: dragOffset.y, el }
+    didDragRef.current = false
+    e.currentTarget.setPointerCapture(e.pointerId)
+  }
+  function onDragPointerMove(e: React.PointerEvent) {
+    const ds = dragState.current
+    if (!ds) return
+    const dx = e.clientX - ds.startX
+    const dy = e.clientY - ds.startY
+    if (Math.abs(dx) > 4 || Math.abs(dy) > 4) didDragRef.current = true
+    const rect = ds.el.getBoundingClientRect()
+    setDragOffset(prev => clamp({ x: ds.origX + dx, y: ds.origY + dy }, rect, prev))
   }
   function onDragPointerUp(e: React.PointerEvent) {
     dragState.current = null
     e.currentTarget.releasePointerCapture(e.pointerId)
+  }
+  function handleLauncherClick() {
+    if (didDragRef.current) { didDragRef.current = false; return }
+    setOpen(o => !o)
   }
 
   useEffect(() => {
@@ -171,7 +189,7 @@ export default function KaiWidget() {
           }}
         >
           <div
-            onPointerDown={onDragPointerDown}
+            onPointerDown={e => onDragPointerDown(e, panelRef.current!)}
             onPointerMove={onDragPointerMove}
             onPointerUp={onDragPointerUp}
             style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 16px', borderBottom: '1px solid var(--border)', flexShrink: 0, cursor: 'grab', touchAction: 'none' }}
@@ -261,20 +279,27 @@ export default function KaiWidget() {
         </div>
       )}
 
-      <button
-        className="kai-launcher"
-        onClick={() => setOpen(o => !o)}
-        aria-label={open ? 'Close Kai chat' : 'Open Kai chat'}
-        style={{
-          position: 'fixed', zIndex: 350, left: 20, bottom: 20,
-          width: 64, height: 64, borderRadius: '50%', border: '1px solid var(--border)',
-          background: 'var(--surface)', boxShadow: '0 8px 24px rgba(0,0,0,.24)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          cursor: 'pointer', transition: 'transform .15s',
-        }}
+      <div
+        ref={launcherRef}
+        style={{ position: 'fixed', zIndex: 350, left: 20, bottom: 20, transform: `translate(${dragOffset.x}px, ${dragOffset.y}px)` }}
       >
-        {open ? <span style={{ fontSize: 20, color: 'var(--text2)' }}>✕</span> : <KaiAvatar size={52} />}
-      </button>
+        <button
+          className="kai-launcher"
+          onClick={handleLauncherClick}
+          onPointerDown={e => onDragPointerDown(e, launcherRef.current!)}
+          onPointerMove={onDragPointerMove}
+          onPointerUp={onDragPointerUp}
+          aria-label={open ? 'Close Kai chat' : 'Open Kai chat'}
+          style={{
+            width: 64, height: 64, borderRadius: '50%', border: '1px solid var(--border)',
+            background: 'var(--surface)', boxShadow: '0 8px 24px rgba(0,0,0,.24)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'grab', transition: 'transform .15s', touchAction: 'none',
+          }}
+        >
+          {open ? <span style={{ fontSize: 20, color: 'var(--text2)' }}>✕</span> : <KaiAvatar size={52} />}
+        </button>
+      </div>
     </>
   )
 }
