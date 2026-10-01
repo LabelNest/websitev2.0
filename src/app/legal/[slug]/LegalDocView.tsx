@@ -121,10 +121,10 @@ export default function LegalDocView({ doc }: { doc: LegalDocument }) {
           </div>
         </div>
 
-        <div style={{ maxWidth: 1000, margin: '0 auto', padding: '40px 48px 80px', display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48, alignItems: 'start' }}>
+        <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 md:gap-12 px-5 md:px-12" style={{ maxWidth: 1000, margin: '0 auto', paddingTop: 40, paddingBottom: 80, alignItems: 'start' }}>
 
           {/* TOC SIDEBAR */}
-          <aside style={{ position: 'sticky', top: 88 }}>
+          <aside className="md:sticky" style={{ top: 88 }}>
             {toc.length > 0 && (
               <>
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 10 }}>Contents</div>

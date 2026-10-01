@@ -82,8 +82,8 @@ export default function AccessPage() {
             <p style={{ fontSize: 13.5, color: 'var(--text3)', marginBottom: 28 }}>Every module below has a real self-serve tier. Enterprise is request-only everywhere — that&apos;s by design, not a limitation of any one module.</p>
             <div style={{ border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden' }}>
               {MODULES.map((m, i) => (
-                <div key={m.name} style={{
-                  display: 'grid', gridTemplateColumns: '120px 1fr 1fr', gap: 16, padding: '18px 22px',
+                <div key={m.name} className="grid grid-cols-1 sm:grid-cols-[120px_1fr_1fr]" style={{
+                  gap: 10, padding: '18px 22px',
                   borderBottom: i < MODULES.length - 1 ? '1px solid var(--border)' : 'none',
                   background: i % 2 === 0 ? 'var(--surface)' : 'var(--bg2)',
                 }}>
@@ -110,13 +110,13 @@ export default function AccessPage() {
               Every workspace has a real Members page. Invite a colleague by email — the link expires in 7 days — and assign their role. Admins can change anyone&apos;s role or remove them; other roles can only view who&apos;s there.
             </p>
             <div style={{ border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden', maxWidth: 700 }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '110px 1fr', padding: '10px 20px', background: 'var(--surface)', borderBottom: '1px solid var(--border)' }}>
+              <div className="hidden sm:grid" style={{ gridTemplateColumns: '110px 1fr', padding: '10px 20px', background: 'var(--surface)', borderBottom: '1px solid var(--border)' }}>
                 <div style={{ fontSize: 10.5, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '.05em' }}>Role</div>
                 <div style={{ fontSize: 10.5, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '.05em' }}>Can do</div>
               </div>
               {ROLES.map((r, i) => (
-                <div key={r.role} style={{
-                  display: 'grid', gridTemplateColumns: '110px 1fr', gap: 12, padding: '14px 20px',
+                <div key={r.role} className="grid grid-cols-1 sm:grid-cols-[110px_1fr]" style={{
+                  gap: 4, padding: '14px 20px',
                   borderBottom: i < ROLES.length - 1 ? '1px solid var(--border)' : 'none',
                   background: i % 2 === 0 ? 'var(--bg2)' : 'var(--surface)',
                 }}>

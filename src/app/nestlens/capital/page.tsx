@@ -113,7 +113,7 @@ export default function CapitalPage() {
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>The data room</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 12 }}>10 sections. 51 items. Everything investors ask for.</h2>
             <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 520, marginBottom: 36, lineHeight: 1.65 }}>A structured data room that covers every document, metric, and disclosure category investors expect — across all four investor tiers.</p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 10 }}>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5" style={{ gap: 10 }}>
               {DATA_ROOM_SECTIONS.map(s => (
                 <div key={s.name} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: 16 }}>
                   <div style={{ fontSize: 20, marginBottom: 8 }}>{s.icon}</div>
@@ -131,7 +131,7 @@ export default function CapitalPage() {
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Beyond the data room</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 12 }}>Matching and discovery. Find your capital.</h2>
             <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 520, marginBottom: 36, lineHeight: 1.65 }}>Ascent does not stop at the data room. It connects you to the right investors, service providers, grants, and strategic partners.</p>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 14 }}>
               {MATCHING.map(m => (
                 <HoverDiv key={m.name}
                   hoverBorderColor={`${m.border}4D`}

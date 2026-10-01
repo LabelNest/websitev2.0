@@ -85,7 +85,7 @@ export default function CareersClient() {
 
         {/* BELIEFS */}
         <section style={{ padding: '56px 48px', borderBottom: '1px solid var(--border)' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14 }}>
+          <div className="grid grid-cols-1 sm:grid-cols-3" style={{ maxWidth: 1200, margin: '0 auto', gap: 14 }}>
             {[
               { icon: '🧠', title: 'Potential over pedigree', desc: 'We do not filter by institution or communication style. We care about what you can do with hard problems.' },
               { icon: '🏗️', title: 'Real problems, not simulated ones', desc: 'Everyone here works on the actual systems that power LabelNest products — not practice exercises.' },
@@ -156,7 +156,7 @@ export default function CareersClient() {
 
         {/* APPLICATION FORM */}
         <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)', background: 'var(--bg2)' }} id="apply">
-          <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'start' }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16" style={{ maxWidth: 1200, margin: '0 auto', alignItems: 'start' }}>
             <div>
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Apply</div>
               <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(24px,3vw,38px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 14 }}>Tell us what you can do</h2>
@@ -180,7 +180,7 @@ export default function CareersClient() {
               {!sent ? (
                 <form onSubmit={handleSubmit}>
                   <h3 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 18, color: 'var(--text)', marginBottom: 20 }}>Send your application</h3>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 12, marginBottom: 12 }}>
                     <div>
                       <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>Your name</label>
                       <input type="text" required value={aName} onChange={e => setAName(e.target.value)} placeholder="Full name"
@@ -192,7 +192,7 @@ export default function CareersClient() {
                         style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none' }} />
                     </div>
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 12, marginBottom: 12 }}>
                     <div>
                       <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>Track</label>
                       <select required value={aTrack} onChange={e => setATrack(e.target.value)}
@@ -238,7 +238,7 @@ export default function CareersClient() {
         {/* FELLOWSHIP COHORT III */}
         <section style={{ padding: '64px 48px' }} id="fellowship">
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'start' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16" style={{ alignItems: 'start' }}>
               <div>
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Nestling Fellowship · Cohort III</div>
                 <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(24px,3vw,38px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 14 }}>
@@ -288,7 +288,7 @@ export default function CareersClient() {
                   })
                   form.innerHTML = '<div style="text-align:center;padding:32px 0"><div style="font-size:38px;margin-bottom:14px">🎓</div><div style="font-family:Bricolage Grotesque,sans-serif;font-weight:800;font-size:18px;color:var(--text);margin-bottom:8px">Application received</div><div style="font-size:13.5px;color:var(--text2);line-height:1.65">We will review your application and reach out if it is a fit. Cohort III applications are reviewed on a rolling basis.</div></div>'
                 }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 12, marginBottom: 12 }}>
                     <div>
                       <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>Your name</label>
                       <input name="name" type="text" required placeholder="Full name"

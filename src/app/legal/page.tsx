@@ -70,7 +70,7 @@ export default async function LegalPage() {
           {GROUPS.map(group => (
             <div key={group.label} style={{ marginBottom: 32 }}>
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>{group.label}</div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {group.slugs.map(slug => {
                   const db = docMap.get(slug)
                   const meta = SLUG_META[slug] ?? { tag: slug, title: slug }

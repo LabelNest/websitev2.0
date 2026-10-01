@@ -64,7 +64,7 @@ export default function SentinelPage() {
         <section style={{ padding: '64px 48px' }}>
           <div style={{ maxWidth: 1000, margin: '0 auto' }}>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 8, textAlign: 'center' }}>Two products, one waitlist</div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 20, marginTop: 32 }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 20, marginTop: 32 }}>
 
               <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderTop: '3px solid #2563EB', borderRadius: 18, padding: 28 }}>
                 <div style={{ fontSize: 28, marginBottom: 14 }}>📊</div>
