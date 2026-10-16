@@ -10,7 +10,7 @@ import { pageMetadata, breadcrumbSchema } from '@/lib/seo'
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/nestlens/orbit', {
     title: 'Incubation Operating System for Accelerators and Incubators | NestLens Orbit',
-    description: 'Orbit PM screens thousands of applications and runs evaluation rounds. Orbit OS takes over from selection — startup tracking, mentors, voice-drafted MOMs, grant disbursement, and compliance, all the way to alumni impact.',
+    description: 'Orbit screens thousands of applications and runs evaluation rounds, then carries on after selection — startup tracking, mentors, voice-drafted MOMs, grant disbursement, and compliance, all the way to alumni impact.',
   })
 }
 
@@ -41,7 +41,7 @@ const MODULE_SCHEMA = {
   name: 'NestLens Orbit',
   applicationCategory: 'BusinessApplication',
   applicationSubCategory: 'Incubation Operating System',
-  description: 'Orbit PM: application intake, screening, evaluation rounds, and cohort onboarding. Orbit OS: startup tracking, mentors, voice-drafted MOMs, grant disbursement, compliance, and alumni impact — the full incubation lifecycle after selection.',
+  description: 'Orbit: application intake, screening, evaluation rounds, cohort onboarding, startup tracking, mentors, voice-drafted MOMs, grant disbursement, compliance, and alumni impact — the full incubation lifecycle in one product.',
   url: 'https://labelnest.in/nestlens/orbit',
   isPartOf: { '@id': 'https://labelnest.in/nestlens#software' },
   featureList: [...CAPABILITIES, ...OS_CAPABILITIES].map(c => `${c.name}: ${c.desc}`),
@@ -70,7 +70,7 @@ export default function OrbitPage() {
               <span style={{ background: 'linear-gradient(100deg,#7C3AED,#2563EB)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>operating system.</span>
             </h1>
             <p style={{ fontSize: 'clamp(15px,1.8vw,18px)', lineHeight: 1.72, color: 'var(--text2)', maxWidth: 620, marginBottom: 28 }}>
-              <strong style={{ color: 'var(--text)', fontWeight: 600 }}>Orbit PM</strong> screens thousands of applications and runs evaluation rounds at scale. <strong style={{ color: 'var(--text)', fontWeight: 600 }}>Orbit OS</strong> takes over the moment a startup is selected — tracking, mentors, voice-drafted MOMs, grant disbursement, and compliance, all the way to alumni impact.
+              <strong style={{ color: 'var(--text)', fontWeight: 600 }}>Orbit</strong> screens thousands of applications and runs evaluation rounds at scale, then carries on the moment a startup is selected — tracking, mentors, voice-drafted MOMs, grant disbursement, and compliance, all the way to alumni impact.
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               <a href="https://orbit.labelnest.in" target="_blank" rel="noopener noreferrer"
@@ -103,16 +103,16 @@ export default function OrbitPage() {
           </div>
         </section>
 
-        {/* ORBIT OS CAPABILITIES */}
+        {/* ORBIT AFTER-SELECTION CAPABILITIES */}
         <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)' }}>Orbit OS</div>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)' }}>After selection</div>
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '2px 8px', borderRadius: 4, background: 'rgba(29,78,216,.12)', color: '#1D4ED8' }}>Upgrade tier</div>
             </div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 14 }}>Selection isn&apos;t the finish line.</h2>
             <p style={{ fontSize: 14.5, color: 'var(--text2)', lineHeight: 1.7, maxWidth: 680, marginBottom: 32 }}>
-              A recognized incubation centre is responsible for real government grant money, real milestone reporting, and real compliance deadlines long after a cohort is selected. Orbit OS is the full incubation ERP for everything that happens next — no separate onboarding, an Orbit PM institution sees it as a live, read-only preview until they upgrade.
+              A recognized incubation centre is responsible for real government grant money, real milestone reporting, and real compliance deadlines long after a cohort is selected. Orbit covers everything that happens next in the same product — no separate onboarding and no second tier to upgrade to.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 12 }}>
               {OS_CAPABILITIES.map(c => (
@@ -180,7 +180,7 @@ export default function OrbitPage() {
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14, textAlign: 'center' }}>Ready to run your programme on Orbit?</div>
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', maxWidth: 520, margin: '0 auto 12px' }}>From thousands of applications to a graduated cohort.</h2>
-            <p style={{ fontSize: 15.5, color: 'var(--text2)', maxWidth: 460, margin: '0 auto 32px', lineHeight: 1.7 }}>Orbit PM for selection, Orbit OS for everything after — built for institutions running programmes at scale, live today.</p>
+            <p style={{ fontSize: 15.5, color: 'var(--text2)', maxWidth: 460, margin: '0 auto 32px', lineHeight: 1.7 }}>One product from selection to alumni — built for institutions running programmes at scale, live today.</p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="https://orbit.labelnest.in" target="_blank" rel="noopener noreferrer"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#7C3AED', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Orbit ↗</a>
