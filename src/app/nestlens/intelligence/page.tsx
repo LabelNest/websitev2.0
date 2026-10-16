@@ -173,14 +173,15 @@ export default function IntelligencePage() {
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: 36 }}>
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Pricing</div>
-              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>Firm-unlock bundles, priced by volume.</h2>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>Four tiers, billed annually.</h2>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(180px,1fr))', gap: 16 }}>
               {[
-                { name: 'Essentials', price: '₹1,50,000', unit: '/yr', sub: '250 firm unlocks/yr · 500 credits/yr · Exchange included' },
-                { name: 'Starter', price: '₹2,75,000', unit: '/yr', sub: '500 firm unlocks/yr · 1,000 credits/yr · Exchange included' },
-                { name: 'Growth', price: '₹10,00,000', unit: '/yr', sub: '2,000 firm unlocks/yr · 4,000 credits/yr · Exchange included', popular: true },
-                { name: 'Enterprise', price: 'Custom', unit: '', sub: 'Custom seats, credits & SLA' },
+                { name: 'Basic', price: '$150', unit: '/mo', sub: '1 seat · 1,000 exported rows/month · 5 alerts & watchlists · standard refresh' },
+                { name: 'Starter', price: '$600', unit: '/mo', sub: '3 seats · 10,000 exported rows/month · 50 alerts · 5% less per unlock' },
+                { name: 'Growth', price: '$1,200', unit: '/mo', sub: '8 seats · 1,00,000 exported rows/month · 500 alerts · 72-hour refresh · 10% less per unlock · API included', popular: true },
+                { name: 'Scale', price: '$2,400', unit: '/mo', sub: '15 seats · unlimited exports · 1,000 alerts · on-demand refresh · 15% less per unlock · API included' },
+                { name: 'Enterprise', price: 'Custom', unit: '', sub: 'Custom seats, rows and alerts · 20% less per unlock · SLA' },
               ].map(t => (
                 <div key={t.name} style={{ background: 'var(--surface)', border: `1px solid ${t.popular ? '#2563EB' : 'var(--border)'}`, borderRadius: 14, padding: 20, position: 'relative' }}>
                   {t.popular && <div style={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)', background: '#2563EB', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 10px', borderRadius: 99, whiteSpace: 'nowrap' }}>MOST POPULAR</div>}

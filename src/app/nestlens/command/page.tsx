@@ -210,19 +210,27 @@ export default function CommandPage() {
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: 36 }}>
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Pricing</div>
-              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>One fund data room included per fund.</h2>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>One package per fund, billed monthly.</h2>
               <p style={{ fontSize: 13.5, lineHeight: 1.7, color: 'var(--text2)', maxWidth: 480, margin: '12px auto 0' }}>
                 Priced like software, not like institutional fund infrastructure. No per-LP seat fees, no multi-year contract just to see whether it fits how your fund actually works.
               </p>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16, maxWidth: 500, margin: '0 auto' }}>
               <div style={{ background: 'var(--surface)', border: '1px solid #F97316', borderRadius: 14, padding: 20, position: 'relative' }}>
-                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>Fund</div>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>India-domiciled fund</div>
                 <div style={{ marginBottom: 8 }}>
-                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: '#F97316' }}>$45</span>
-                  <span style={{ fontSize: 11, color: 'var(--text3)' }}>/mo</span>
+                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: '#F97316' }}>₹5,00,000</span>
+                  <span style={{ fontSize: 11, color: 'var(--text3)' }}>/fund/month</span>
                 </div>
-                <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>1 fund data room included · extra rooms $300/yr or $25/mo</div>
+                <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>Every feature · 3 seats · 1 vehicle · 50 portfolio companies · 100 LPs tracked · 20 IC-memo AI credits/month · 2,000 Atlas credits/year · 5 Ascent seats</div>
+              </div>
+              <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 20 }}>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>Non-India fund</div>
+                <div style={{ marginBottom: 8 }}>
+                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: 'var(--text)' }}>$799</span>
+                  <span style={{ fontSize: 11, color: 'var(--text3)' }}>/fund/month</span>
+                </div>
+                <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>The same package for funds domiciled outside India, billed in USD</div>
               </div>
               <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 20 }}>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>Enterprise</div>

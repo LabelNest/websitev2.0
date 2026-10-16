@@ -187,8 +187,9 @@ export default function CapitalPage() {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16 }}>
               {[
-                { name: 'Founder — India', price: '₹999', unit: '/mo', sub: '1 data room · full legal checklist · investor fit scoring · templates included', popular: true },
-                { name: 'Founder — Global', price: '$30', unit: '/mo', sub: '1 data room · full legal checklist · investor fit scoring · templates included' },
+                { name: '12 months', price: '₹14,999', unit: ' (was ₹24,999)', sub: '5 GB · 5 team members · 5 AI briefings/month · room stays live after the programme', popular: true },
+                { name: '3 months', price: '₹3,999', unit: ' (was ₹6,999)', sub: '2 GB · 3 team members · 3 AI briefings/month · full founder-track features' },
+                { name: 'Monthly', price: '₹1,999', unit: '/mo', sub: '5 GB · 5 team members · 5 AI briefings/month · no discount' },
                 { name: 'Cohort / Group', price: '₹4,999', unit: '', sub: 'Cohort of 25 founders, run by an accelerator or incubator' },
                 { name: 'Enterprise', price: 'Custom', unit: '', sub: 'Cohort access for accelerators and incubator programmes' },
               ].map(t => (
