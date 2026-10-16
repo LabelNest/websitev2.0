@@ -140,20 +140,20 @@ export default function OrbitPage() {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16, maxWidth: 780, margin: '0 auto' }}>
               <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 20 }}>
-                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>Orbit PM</div>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>Orbit Launch</div>
                 <div style={{ marginBottom: 8 }}>
-                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: 'var(--text)' }}>₹2,499</span>
-                  <span style={{ fontSize: 11, color: 'var(--text3)' }}>/mo</span>
+                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: 'var(--text)' }}>₹75,000</span>
+                  <span style={{ fontSize: 11, color: 'var(--text3)' }}>/yr</span>
                 </div>
-                <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>Starts at — scales with cohort size and application intake</div>
+                <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>Every Orbit feature · 25,000 applications/year · 75,000 emails/year · 2 data rooms · 5 admin seats. Starter ₹99,000 and Growth ₹1,25,000 add capacity.</div>
               </div>
               <div style={{ background: 'var(--surface)', border: '1px solid #7C3AED', borderRadius: 14, padding: 20, position: 'relative' }}>
-                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>Orbit OS</div>
+                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>Orbit Scale</div>
                 <div style={{ marginBottom: 8 }}>
-                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: '#7C3AED' }}>₹29,999</span>
-                  <span style={{ fontSize: 11, color: 'var(--text3)' }}>/mo</span>
+                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: '#7C3AED' }}>₹2,50,000</span>
+                  <span style={{ fontSize: 11, color: 'var(--text3)' }}>/yr</span>
                 </div>
-                <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>₹2,99,999/yr · full programme ERP — cohort management, mentor matching, application review, batch reporting</div>
+                <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>1,00,000 applications · 2,50,000 emails · 25 data rooms · 40 admin seats · 15 programmes · API access · white-label included</div>
               </div>
               <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 20 }}>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>Enterprise</div>

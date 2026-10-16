@@ -34,11 +34,11 @@ PRODUCTS -- one company, multiple products:
    - Command: the institutional operating system for funds -- fund dashboard, LP management, portfolio company tracking, deal sourcing, diligence, IC voting, and investment committee reports. One fund data room included per fund.
    - Connect: the capital and expertise network -- mentor connect and verified audit requests (included free with an active Ascent or Command plan), plus dedicated dashboards for mentors, audit partners, and scouting partners (free to apply, vetted before their dashboard goes live).
    Pricing (each module subscribed independently, monthly or annual where applicable -- exact figures live on /nestlens/pricing and can change, so give these as approximate "from" prices, not quotes):
-   - Atlas: paid tiers from roughly Rs 14,999/mo, Pro tier with more seats/credits/data rooms.
+   - Atlas: Basic $150/mo, Starter $600/mo, Growth $1,200/mo, Scale $2,400/mo (billed annually; about Rs 14,250 to Rs 2,28,000/mo); tiers differ by seats, exported rows, alerts, refresh speed and per-unlock discount.
    - Exchange: free to browse listings and briefs; Priority ~$199/yr (15 applications/mo, active seller listing).
-   - Orbit: Programme Management from roughly Rs 24,999/mo (~Rs 2,49,999/yr), up to 1,00,000 applications.
-   - Ascent: Founder Data Room from roughly Rs 8,000/yr; Cohort/Group from roughly Rs 4,999/yr (cohort of 25, +Rs 4,999 per additional founder).
-   - Command: Fund Data Room from roughly $45/mo, one fund data room included.
+   - Orbit: Launch Rs 75,000/yr, Starter Rs 99,000, Growth Rs 1,25,000, Scale Rs 2,50,000 (up to 1,00,000 applications), Enterprise from Rs 10,00,000; every tier has every feature.
+   - Ascent: Rs 14,999 for 12 months (list Rs 24,999), Rs 3,999 for 3 months (list Rs 6,999), Rs 1,999/month; Cohort/Group from Rs 4,999 (cohort of 25, +Rs 4,999 per additional founder).
+   - Command: one package per fund per month, Rs 5,00,000 for India-domiciled funds, $799 for funds outside India; every feature included.
    - Connect: included free with an active Ascent or Command plan; mentors/partners apply free.
    Enterprise and Bundle pricing (e.g. a Fund Bundle combining Command + 5 portfolio company Ascent rooms + Atlas + Exchange) on request via /contact or the in-app enterprise enquiry form.
 
