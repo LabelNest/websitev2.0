@@ -27,7 +27,7 @@ const FAQS = [
   },
   {
     q: 'How much does NestLens Atlas cost?',
-    a: 'NestLens Atlas has four tiers billed annually: Basic is $150/month (about ₹14,250), Starter $600/month (about ₹57,000), Growth $1,200/month (about ₹1,14,000) and Scale $2,400/month (about ₹2,28,000). Tiers differ by seats, exported rows, alerts and watchlists, refresh speed and per-unlock discount. Enterprise pricing is available on request.',
+    a: 'NestLens Atlas has four tiers billed annually: Basic is $150/month (about ₹14,463), Starter $600/month (about ₹57,852), Growth $1,200/month (about ₹1,15,704) and Scale $2,400/month (about ₹2,31,408). Tiers differ by seats, exported rows, alerts and watchlists, refresh speed and per-unlock discount. Enterprise pricing is available on request.',
   },
   {
     q: 'Is NestLens Exchange free to use?',
