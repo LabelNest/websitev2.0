@@ -1,10 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
-
-// Stored in website_newsletter_subscribers with source 'report-series', so report
-// readers stay separate from footer / signal-page subscribers in the admin list.
-const REPORT_SOURCE = 'report-series'
+import { submitSignup } from '@/lib/signupContext'
 
 export default function ReportsClient() {
   const [email, setEmail] = useState('')
@@ -14,12 +11,9 @@ export default function ReportsClient() {
     if (!email || !email.includes('@')) return
     setState('sending')
     try {
-      const res = await fetch('/api/newsletter', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source: REPORT_SOURCE }),
-      })
-      setState(res.ok ? 'done' : 'error')
+      // list 'report-series' keeps report readers apart from other subscribers; the page's
+      // utm tags (set on the report links) record which volume sent them.
+      setState((await submitSignup(email, 'reports_page', 'report-series')) ? 'done' : 'error')
     } catch {
       setState('error')
     }

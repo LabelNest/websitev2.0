@@ -333,6 +333,32 @@ async function migrate() {
   await sql`ALTER TABLE website_briefings ADD COLUMN IF NOT EXISTS hero_image_zoom NUMERIC NOT NULL DEFAULT 1`.catch(()=>{})
   console.log('✓ image_position/image_zoom columns added')
 
+  // Newsletter signup tracking: one row per form submission (never merged), so a person
+  // who signs up from several places keeps every origin. `lists` on the subscriber row is
+  // the segregation key (report-series, general, signal-waitlist).
+  await sql`ALTER TABLE website_newsletter_subscribers ADD COLUMN IF NOT EXISTS lists TEXT[] NOT NULL DEFAULT '{}'`
+  await sql`
+    CREATE TABLE IF NOT EXISTS website_newsletter_signups (
+      id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      subscriber_id UUID REFERENCES website_newsletter_subscribers(id) ON DELETE SET NULL,
+      email         TEXT NOT NULL,
+      list_key      TEXT NOT NULL,
+      form_id       TEXT NOT NULL,
+      page_path     TEXT,
+      referrer      TEXT,
+      utm_source    TEXT,
+      utm_medium    TEXT,
+      utm_campaign  TEXT,
+      utm_term      TEXT,
+      utm_content   TEXT,
+      user_agent    TEXT,
+      is_new        BOOLEAN NOT NULL DEFAULT false,
+      created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )`
+  await sql`CREATE INDEX IF NOT EXISTS idx_website_newsletter_signups_email ON website_newsletter_signups (email)`
+  await sql`CREATE INDEX IF NOT EXISTS idx_website_newsletter_signups_list ON website_newsletter_signups (list_key, created_at DESC)`
+  console.log('✓ newsletter signup tracking')
+
   console.log('✓ All website_* tables created (or already existed)')
   console.log('')
   console.log('Next: seed an admin user by running:')
