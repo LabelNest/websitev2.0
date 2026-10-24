@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { submitSignup } from '@/lib/signupContext'
 
 export default function SignalClient() {
   const [email, setEmail] = useState('')
@@ -10,11 +11,7 @@ export default function SignalClient() {
   async function handleSignal() {
     if (!email || !email.includes('@')) return
     try {
-      await fetch('/api/newsletter', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source: 'signal-page' }),
-      })
+      await submitSignup(email, 'signal_page', 'signal-waitlist')
     } catch {
       // best-effort
     }

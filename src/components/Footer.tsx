@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { submitSignup } from "@/lib/signupContext";
 
 // ─── TOKENS (accent colours are the same in both themes) ──────────────────────
 const C = {
@@ -182,12 +183,7 @@ function NewsletterSubscribe() {
     }
     setState("loading");
     try {
-      const res = await fetch("/api/newsletter/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, source: "website_footer" }),
-      });
-      if (!res.ok) throw new Error("server");
+      if (!(await submitSignup(email, "website_footer", "general"))) throw new Error("server");
       setState("success");
       setMessage("You're in. Watch your inbox for the next issue.");
       setEmail("");
