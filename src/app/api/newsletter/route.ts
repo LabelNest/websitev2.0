@@ -3,7 +3,8 @@ import { sql } from '@/lib/db'
 
 // Forms and lists a signup may claim. Anything else is rejected, so the admin view can
 // trust these values.
-const FORMS = ['website_footer', 'signal_page', 'reports_page'] as const
+// observatory_* are sent server-to-server by NestLens when a reader unlocks or joins the waitlist of a report on atlas.labelnest.in.
+const FORMS = ['website_footer', 'signal_page', 'reports_page', 'observatory_unlock', 'observatory_waitlist'] as const
 const LISTS = ['general', 'signal-waitlist', 'report-series'] as const
 
 const clip = (v: unknown, n: number): string | null =>
@@ -42,7 +43,7 @@ export async function POST(req: NextRequest) {
       VALUES (${sub.id}, ${email}, ${listKey}, ${formId}, ${clip(body.page_path, 300)}, ${clip(body.referrer, 500)},
               ${clip(body.utm_source, 200)}, ${clip(body.utm_medium, 200)}, ${clip(body.utm_campaign, 200)},
               ${clip(body.utm_term, 200)}, ${clip(body.utm_content, 200)},
-              ${clip(req.headers.get('user-agent'), 300)}, ${sub.is_new})`
+              ${clip(body.user_agent, 300) ?? clip(req.headers.get('user-agent'), 300)}, ${sub.is_new})`
     return NextResponse.json({ ok: true })
   } catch (e) {
     console.error(e)
