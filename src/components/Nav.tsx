@@ -19,6 +19,7 @@ const links = [
   { href: '/sentinel',  label: 'Sentinel',  group: 'products'                    },
   { href: '/nesthr',    label: 'NestHR',    group: 'products', groupEnd: true    },
   { href: '/briefings', label: 'Blogs & Newsletters' },
+  { href: '/reports',   label: 'Research Reports'    },
   { href: '/team',      label: 'Team'                },
   { href: '/careers',   label: 'Careers'             },
 ]
