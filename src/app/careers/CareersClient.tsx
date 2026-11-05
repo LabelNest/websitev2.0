@@ -16,6 +16,12 @@ interface Job {
 
 const TRACKS = ['Data Research', 'HR', 'Marketing', 'Sales', 'Engineering & AI', 'Others'] as const
 
+// Roles that are open right now and applied for through NestHR. Empty this list when nothing is open and the
+// heading below goes back to "No open vacancies".
+const OPEN_ROLES = [
+  { title: 'VP – Growth / Growth Partner', meta: 'NestLens · Growth · Global · Part-time or full-time', apply_url: 'https://nesthr.labelnest.in/apply/job-hpi7eyp89b' },
+]
+
 export default function CareersClient() {
   const [jobs, setJobs] = useState<Job[]>([])
   const [role, setRole] = useState('')
@@ -78,7 +84,6 @@ export default function CareersClient() {
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               <a href="#apply" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#E91E8C', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Apply now</a>
-              <a href="#fellowship" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>Apply for Fellowship Cohort III</a>
             </div>
           </div>
         </section>
@@ -104,7 +109,7 @@ export default function CareersClient() {
         <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)', background: 'var(--bg2)' }} id="roles">
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Hiring</div>
-            <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(26px,3.5vw,44px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 8 }}>No open vacancies. Always open to the right person.</h2>
+            <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(26px,3.5vw,44px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 8 }}>{OPEN_ROLES.length > 0 ? 'Now hiring. Always open to the right person.' : 'No open vacancies. Always open to the right person.'}</h2>
             <p style={{ fontSize: 15, color: 'var(--text2)', marginBottom: 36, maxWidth: 560, lineHeight: 1.65 }}>We do not wait for headcount approval to talk to someone exceptional. If you are willing to learn hard things and work on real problems, there is a place for you here.</p>
 
             {/* Always looking banner */}
@@ -116,6 +121,18 @@ export default function CareersClient() {
               <button onClick={() => applyFor('Open Application')}
                 style={{ background: '#E91E8C', color: '#fff', fontSize: 13.5, fontWeight: 600, padding: '10px 22px', borderRadius: 10, border: 'none', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>Apply now</button>
             </div>
+
+            {/* Roles open now (applied for through NestHR) */}
+            {OPEN_ROLES.map(r => (
+              <div key={r.title}
+                style={{ display: 'flex', alignItems: 'center', gap: 20, background: 'var(--surface)', border: '2px solid #E91E8C', borderRadius: 12, padding: '16px 20px', marginBottom: 8 }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 4 }}>{r.meta}</div>
+                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)' }}>{r.title}</div>
+                </div>
+                <a href={r.apply_url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, fontWeight: 600, color: '#E91E8C' }}>Apply →</a>
+              </div>
+            ))}
 
             {/* Active DB jobs if any */}
             {activeJobs.map(job => (
@@ -165,7 +182,7 @@ export default function CareersClient() {
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: '14px 16px' }}>
                   <span style={{ fontSize: 16, flexShrink: 0 }}>✉️</span>
                   <div style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.55 }}>
-                    Applications also go to <a href="mailto:contact@labelnest.in" style={{ color: '#2563EB' }}>contact@labelnest.in</a> if you prefer email.
+                    Applications also go to <a href="mailto:hr@labelnest.in" style={{ color: '#2563EB' }}>hr@labelnest.in</a> if you prefer email.
                   </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: '14px 16px' }}>
@@ -231,100 +248,6 @@ export default function CareersClient() {
                   <div style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.65 }}>We have your application and will review it properly. If it is a fit, you will hear from us within 3 to 5 business days.</div>
                 </div>
               )}
-            </div>
-          </div>
-        </section>
-
-        {/* FELLOWSHIP COHORT III */}
-        <section style={{ padding: '64px 48px' }} id="fellowship">
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16" style={{ alignItems: 'start' }}>
-              <div>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Nestling Fellowship · Cohort III</div>
-                <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(24px,3vw,38px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 14 }}>
-                  Learn by doing real work.<br />
-                  <span style={{ background: 'linear-gradient(100deg,#7C3AED,#2563EB)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Not simulated projects.</span>
-                </h2>
-                <p style={{ fontSize: 15, color: 'var(--text2)', lineHeight: 1.72, marginBottom: 20 }}>
-                  The Nestling Fellowship is a structured learning track for people early in their career who want to work on live data systems, real infrastructure, and problems that do not have textbook answers.
-                </p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
-                  {[
-                    { icon: '📅', label: 'Duration', val: '3 months · full-time' },
-                    { icon: '📍', label: 'Location', val: 'Bengaluru, India — in-person' },
-                    { icon: '🏷️', label: 'Tracks', val: 'NestLabs (data) · NestTech (engineering)' },
-                    { icon: '🎓', label: 'Who it is for', val: 'Students and early-career builders — any background' },
-                  ].map(item => (
-                    <div key={item.label} style={{ display: 'flex', gap: 12, alignItems: 'flex-start', fontSize: 13.5, color: 'var(--text2)' }}>
-                      <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>{item.icon}</span>
-                      <span><strong style={{ color: 'var(--text)', fontWeight: 600 }}>{item.label}:</strong> {item.val}</span>
-                    </div>
-                  ))}
-                </div>
-                <div style={{ padding: '14px 18px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, fontSize: 13, color: 'var(--text2)', lineHeight: 1.6 }}>
-                  38 Nestling fellows have come through Cohorts I and II. Most are still building in the ecosystem.
-                </div>
-              </div>
-
-              <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 18, padding: 32, position: 'relative', overflow: 'hidden' }}>
-                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg,#7C3AED,#2563EB)' }} />
-                <h3 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 18, color: 'var(--text)', marginBottom: 6 }}>Apply for Cohort III</h3>
-                <p style={{ fontSize: 13, color: 'var(--text2)', marginBottom: 20, lineHeight: 1.6 }}>Tell us your track, what you are working on, and why you want to be a Nestling. No formal requirements.</p>
-                <form onSubmit={async e => {
-                  e.preventDefault()
-                  const form = e.currentTarget
-                  const data = new FormData(form)
-                  await fetch('/api/apply', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                      name: data.get('name'),
-                      email: data.get('email'),
-                      track: data.get('track'),
-                      message: data.get('message'),
-                      source: 'fellowship',
-                      metadata: { cohort: 'III', institution: data.get('institution') },
-                    }),
-                  })
-                  form.innerHTML = '<div style="text-align:center;padding:32px 0"><div style="font-size:38px;margin-bottom:14px">🎓</div><div style="font-family:Bricolage Grotesque,sans-serif;font-weight:800;font-size:18px;color:var(--text);margin-bottom:8px">Application received</div><div style="font-size:13.5px;color:var(--text2);line-height:1.65">We will review your application and reach out if it is a fit. Cohort III applications are reviewed on a rolling basis.</div></div>'
-                }}>
-                  <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 12, marginBottom: 12 }}>
-                    <div>
-                      <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>Your name</label>
-                      <input name="name" type="text" required placeholder="Full name"
-                        style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none' }} />
-                    </div>
-                    <div>
-                      <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>Email</label>
-                      <input name="email" type="email" required placeholder="you@email.com"
-                        style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none' }} />
-                    </div>
-                  </div>
-                  <div style={{ marginBottom: 12 }}>
-                    <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>Track</label>
-                    <select name="track" required
-                      style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none' }}>
-                      <option value="">Select a track</option>
-                      {TRACKS.map(t => <option key={t} value={t}>{t}</option>)}
-                    </select>
-                  </div>
-                  <div style={{ marginBottom: 12 }}>
-                    <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>College or institution (optional)</label>
-                    <input name="institution" type="text" placeholder="e.g. RVCE, BITS, self-taught"
-                      style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none' }} />
-                  </div>
-                  <div style={{ marginBottom: 16 }}>
-                    <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>What do you work on and why LabelNest?</label>
-                    <textarea name="message" required rows={4} placeholder="Projects, side work, what you are learning — anything that shows how you think."
-                      style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none', resize: 'vertical', fontFamily: 'Inter, sans-serif' }} />
-                  </div>
-                  <button type="submit"
-                    style={{ width: '100%', background: '#7C3AED', color: '#fff', border: 'none', borderRadius: 10, padding: 13, fontSize: 14.5, fontWeight: 600, cursor: 'pointer', fontFamily: 'Inter, sans-serif' }}>
-                    Apply for Fellowship Cohort III
-                  </button>
-                  <div style={{ fontSize: 11.5, color: 'var(--text3)', textAlign: 'center', marginTop: 10 }}>Goes to hr@labelnest.in · Rolling review</div>
-                </form>
-              </div>
             </div>
           </div>
         </section>
