@@ -19,7 +19,7 @@ const TRACKS = ['Data Research', 'HR', 'Marketing', 'Sales', 'Engineering & AI',
 // Roles that are open right now and applied for through NestHR. Empty this list when nothing is open and the
 // heading below goes back to "No open vacancies".
 const OPEN_ROLES = [
-  { title: 'VP – Growth / Growth Partner', meta: 'NestLens · Growth · Global · Part-time or full-time', apply_url: 'https://nesthr.labelnest.in/apply/job-hpi7eyp89b' },
+  { title: 'VP – Growth, NestLens', meta: 'NestLens · Growth · Global · Part-time or full-time', apply_url: 'https://nesthr.labelnest.in/apply/job-hpi7eyp89b' },
 ]
 
 export default function CareersClient() {
