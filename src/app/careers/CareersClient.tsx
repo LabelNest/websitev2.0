@@ -17,7 +17,8 @@ interface Job {
 const TRACKS = ['Data Research', 'HR', 'Marketing', 'Sales', 'Engineering & AI', 'Others'] as const
 
 // Roles that are open right now and applied for through NestHR. Empty this list when nothing is open and the
-// heading below goes back to "No open vacancies".
+// heading below goes back to "No open vacancies". A role added in Admin -> Job Openings with the same apply link replaces its
+// line here, so this list can be emptied once the role is in the admin.
 const OPEN_ROLES = [
   { title: 'VP – Growth, NestLens', meta: 'NestLens · Growth · Global · Part-time or full-time', apply_url: 'https://nesthr.labelnest.in/apply/job-hpi7eyp89b' },
 ]
@@ -123,7 +124,7 @@ export default function CareersClient() {
             </div>
 
             {/* Roles open now (applied for through NestHR) */}
-            {OPEN_ROLES.map(r => (
+            {OPEN_ROLES.filter(r => !jobs.some(j => j.apply_url === r.apply_url)).map(r => (
               <div key={r.title}
                 style={{ display: 'flex', alignItems: 'center', gap: 20, background: 'var(--surface)', border: '2px solid #7A5217', borderRadius: 12, padding: '16px 20px', marginBottom: 8 }}>
                 <div style={{ flex: 1 }}>
