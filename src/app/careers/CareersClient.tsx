@@ -1,30 +1,13 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import type { OpenRole } from '@/lib/openRoles'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
 
-interface Job {
-  id: string
-  title: string
-  department: string
-  type: string
-  location: string
-  complexity: string
-  apply_url: string
-}
-
 const TRACKS = ['Data Research', 'HR', 'Marketing', 'Sales', 'Engineering & AI', 'Others'] as const
 
-// Roles that are open right now and applied for through NestHR. Empty this list when nothing is open and the
-// heading below goes back to "No open vacancies". A role added in Admin -> Job Openings with the same apply link replaces its
-// line here, so this list can be emptied once the role is in the admin.
-const OPEN_ROLES = [
-  { title: 'VP – Growth, NestLens', meta: 'NestLens · Growth · Global · Part-time or full-time', apply_url: 'https://nesthr.labelnest.in/apply/job-hpi7eyp89b' },
-]
-
-export default function CareersClient() {
-  const [jobs, setJobs] = useState<Job[]>([])
+export default function CareersClient({ roles }: { roles: OpenRole[] }) {
   const [role, setRole] = useState('')
   const [aName, setAName] = useState('')
   const [aEmail, setAEmail] = useState('')
@@ -33,10 +16,6 @@ export default function CareersClient() {
   const [aMsg, setAMsg] = useState('')
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    fetch('/api/jobs').then(r => r.json()).then(d => setJobs(d.jobs || [])).catch(() => {})
-  }, [])
 
   function applyFor(title: string) {
     setRole(title)
@@ -61,8 +40,6 @@ export default function CareersClient() {
     setSent(true)
     setLoading(false)
   }
-
-  const activeJobs = jobs.filter(j => j)
 
   return (
     <>
@@ -110,8 +87,20 @@ export default function CareersClient() {
         <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)', background: 'var(--bg2)' }} id="roles">
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Hiring</div>
-            <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(26px,3.5vw,44px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 8 }}>{OPEN_ROLES.length > 0 ? 'Now hiring. Always open to the right person.' : 'No open vacancies. Always open to the right person.'}</h2>
+            <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(26px,3.5vw,44px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 8 }}>{roles.length > 0 ? 'Now hiring. Always open to the right person.' : 'No open vacancies. Always open to the right person.'}</h2>
             <p style={{ fontSize: 15, color: 'var(--text2)', marginBottom: 36, maxWidth: 560, lineHeight: 1.65 }}>We do not wait for headcount approval to talk to someone exceptional. If you are willing to learn hard things and work on real problems, there is a place for you here.</p>
+
+            {/* Roles open now: the admin's active jobs, plus any built-in role */}
+            {roles.map(r => (
+              <div key={r.key}
+                style={{ display: 'flex', alignItems: 'center', gap: 20, background: 'var(--surface)', border: '2px solid #7A5217', borderRadius: 12, padding: '16px 20px', marginBottom: 8 }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 4 }}>{r.meta}</div>
+                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)' }}>{r.title}</div>
+                </div>
+                <a href={r.apply_url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, fontWeight: 600, color: '#7A5217' }}>Apply →</a>
+              </div>
+            ))}
 
             {/* Always looking banner */}
             <div style={{ background: 'var(--surface)', border: '1px solid rgba(122,82,23,.25)', borderLeft: '3px solid #7A5217', borderRadius: 14, padding: '20px 24px', marginBottom: 28, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap' }}>
@@ -122,30 +111,6 @@ export default function CareersClient() {
               <button onClick={() => applyFor('Open Application')}
                 style={{ background: '#7A5217', color: '#fff', fontSize: 13.5, fontWeight: 600, padding: '10px 22px', borderRadius: 10, border: 'none', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>Apply now</button>
             </div>
-
-            {/* Roles open now (applied for through NestHR) */}
-            {OPEN_ROLES.filter(r => !jobs.some(j => j.apply_url === r.apply_url)).map(r => (
-              <div key={r.title}
-                style={{ display: 'flex', alignItems: 'center', gap: 20, background: 'var(--surface)', border: '2px solid #7A5217', borderRadius: 12, padding: '16px 20px', marginBottom: 8 }}>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 4 }}>{r.meta}</div>
-                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)' }}>{r.title}</div>
-                </div>
-                <a href={r.apply_url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, fontWeight: 600, color: '#7A5217' }}>Apply →</a>
-              </div>
-            ))}
-
-            {/* Active DB jobs if any */}
-            {activeJobs.map(job => (
-              <div key={job.id}
-                style={{ display: 'flex', alignItems: 'center', gap: 20, background: 'var(--surface)', border: '2px solid #7A5217', borderRadius: 12, padding: '16px 20px', marginBottom: 8 }}>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 4 }}>{job.department} · {job.location}</div>
-                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)' }}>{job.title}</div>
-                </div>
-                <a href={job.apply_url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, fontWeight: 600, color: '#7A5217' }}>Apply →</a>
-              </div>
-            ))}
 
           </div>
         </section>

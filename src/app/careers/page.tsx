@@ -1,6 +1,9 @@
 import { Metadata } from 'next'
 import { pageMetadata } from '@/lib/seo'
 import CareersClient from './CareersClient'
+import { getOpenRoles } from '@/lib/openRoles'
+
+export const revalidate = 60
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/careers', {
@@ -9,6 +12,6 @@ export async function generateMetadata(): Promise<Metadata> {
   })
 }
 
-export default function CareersPage() {
-  return <CareersClient />
+export default async function CareersPage() {
+  return <CareersClient roles={await getOpenRoles()} />
 }

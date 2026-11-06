@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import HiringStrip from '@/components/HiringStrip'
 import ProductShowcase from '@/components/ProductShowcase'
 import AudienceSwitcher, { type Audience } from '@/components/AudienceSwitcher'
 import Image from 'next/image'
@@ -100,6 +101,8 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
+
+        <HiringStrip />
 
         {/* ABOUT STATEMENT */}
         <section className="ln-rule ln-sec" style={{ padding: '96px 0' }}>
