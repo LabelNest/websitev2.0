@@ -2,11 +2,9 @@ import { getActiveJobs } from '@/lib/db'
 
 export interface OpenRole { key: string; title: string; meta: string; apply_url: string }
 
-// Built-in roles that are applied for through NestHR. A job added in Admin -> Job Openings with the same apply link replaces its
-// line here, so this list can be emptied once the role is in the admin.
-const BUILT_IN: OpenRole[] = [
-  { key: 'vp-growth', title: 'VP – Growth, NestLens', meta: 'NestLens · Growth · Global · Part-time or full-time', apply_url: 'https://nesthr.labelnest.in/apply/job-hpi7eyp89b' },
-]
+// Roles are managed in Admin -> Job Openings. List a role here only as a fallback; one added in Admin with the same
+// apply link replaces it.
+const BUILT_IN: OpenRole[] = []
 
 // Everything open right now: active jobs from the admin first, then any built-in role not already there.
 export async function getOpenRoles(): Promise<OpenRole[]> {
