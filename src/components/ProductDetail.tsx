@@ -85,6 +85,7 @@ export default async function ProductDetail({ id, name, path, schemaType, primar
                 {secondary && <Link className="ln-btn line" href={secondary.href}>{secondary.label}</Link>}
               </div>
               <p className="ln-small" style={{ margin: '16px 0 0' }}>{text(c, k('note'))}</p>
+              {primary.external && <p className="ln-small" style={{ margin: '6px 0 0' }}>Live at <a className="ln-tlink" href={primary.href} target="_blank" rel="noopener noreferrer">{primary.href.replace(/^https?:\/\//, '')}</a></p>}
             </div>
           </div>
         </section>

@@ -14,10 +14,10 @@ const feature: ItemField[] = [{ key: 'title', label: 'Title' }, { key: 'body', l
 const whoHow: ItemField[] = [{ key: 'who', label: 'Who' }, { key: 'how', label: 'How they use it', long: true }]
 const qa: ItemField[] = [{ key: 'q', label: 'Question' }, { key: 'a', label: 'Answer', long: true }]
 
-export const PRODUCT_IDS = ['atlas', 'nesthr', 'sentinel'] as const
+export const PRODUCT_IDS = ['atlas', 'exchange', 'command', 'ascent', 'orbit', 'connect', 'nesthr', 'sentinel'] as const
 export type ProductId = (typeof PRODUCT_IDS)[number]
 
-const block = (id: ProductId, name: string, d: {
+export const block = (id: ProductId, name: string, d: {
   eyebrow: string; title: string; lead: string; note: string
   dataTitle: string; dataLead: string; data: Item[]
   featTitle: string; features: Item[]
@@ -116,58 +116,59 @@ export const PD_FIELDS: ContentField[] = [
   }),
 
   ...block('nesthr', 'NestHR', {
-    eyebrow: 'NestHR · HR and placement',
-    title: 'People operations for startups, and placements for colleges.',
-    lead: 'NestHR runs the whole cycle in one place: employee records, hiring, reviews, expenses and learning for a growing team, and campus recruitment from job description to offer letter for an institution. Flat annual price. Every module included.',
-    note: 'Priced in rupees. A free trial with every module from day one.',
-    dataTitle: 'Seven modules, one record of your people.',
+    eyebrow: 'NestHR · HR, hiring and placements',
+    title: 'The HR platform your placement team actually asked for.',
+    lead: 'NestHR runs attendance, leave and payroll for your people, and campus and corporate hiring in one funnel. Nine modules, one login, built for how Indian teams hire and operate. Start with hiring and add the rest when you are ready.',
+    note: 'Priced in rupees. Placement OS on its own, or the full suite at a flat annual fee by team size.',
+    dataTitle: 'Nine modules, one workspace.',
     dataLead: 'Each module reads the same employee record, so nobody re-enters a name, a role or a date.',
     data: [
-      { title: 'People OS', body: 'Employee profiles, org chart, roles, departments, onboarding workflows and documents.' },
-      { title: 'Talent OS and PlacementOS', body: 'Job descriptions, candidate pipelines, interview scheduling, structured feedback, offers, and season-level placement analytics. It learns from every selection and rejection to sharpen the next shortlist.' },
-      { title: 'Performance OS', body: 'Review cycles, goals, continuous feedback and ratings, without the spreadsheet.' },
-      { title: 'Expense OS', body: 'Claims, manager approvals, reimbursement tracking and monthly reporting, without email chains.' },
-      { title: 'Learning OS', body: 'Internal courses, assignments, completion tracking and progress dashboards for onboarding and growth.' },
-      { title: 'Analytics', body: 'Headcount trends, attrition signals, placement rates, expense summaries and learning completion across modules.' },
-      { title: 'Admin', body: 'Organisation set-up, roles, permissions and module configuration.' },
+      { title: 'People', body: 'Attendance, leave and the employee directory.' },
+      { title: 'Placements', body: 'Campus and corporate hiring in one funnel: requisitions, candidate pipelines, evaluation panels, offers and reporting.' },
+      { title: 'Performance', body: 'Work log, goals and appraisal cycles.' },
+      { title: 'Expenses', body: 'Claims, approvals and assets.' },
+      { title: 'Learning', body: 'Self-paced learning paths and cohorts.' },
+      { title: 'Analytics', body: 'Workforce and hiring insight across modules.' },
+      { title: 'Lifecycle', body: 'Onboarding to offboarding, with the steps tracked.' },
+      { title: 'Documents', body: 'Letters, payslips and policies.' },
+      { title: 'NestForum', body: 'Company-wide discussions.' },
     ],
     featTitle: 'The features that matter most.',
     features: [
-      { title: 'A hiring pipeline that learns', body: 'Publish a job description, move candidates across a pipeline from application to offer, and log every decision. PlacementOS treats each selection and rejection as a signal and uses it to improve the next shortlist.', shot: '', alt: '' },
-      { title: 'Campus placement, end to end', body: 'Job descriptions, company participation, student pipelines, interviews, offers and a season dashboard of placement rate, average package and time to hire. A company-side portal is on the way.', shot: '', alt: '' },
-      { title: 'Reviews and goals people actually finish', body: 'Structured cycles, goal setting and continuous feedback, with ratings that roll up into analytics.', shot: '', alt: '' },
-      { title: 'Expenses without chasing', body: 'Submit, approve, reimburse and report in one flow, with a monthly summary for finance.', shot: '', alt: '' },
+      { title: 'Everything in one workspace', body: 'People, hiring, performance, expenses, learning, analytics, lifecycle, documents and discussion under one login. No second tool to buy, connect or reconcile.', shot: '/shots/nesthr-modules.jpg', alt: 'NestHR workspace showing nine modules: People, Placements, Performance, Expenses, Learning, Analytics, Lifecycle, Documents and NestForum' },
+      { title: 'Campus and corporate hiring in the same funnel', body: 'Run a campus drive and a corporate requisition side by side, with the same evaluation panels, the same offer pipeline and the same reporting. See applied, shortlisted and offered counts at a glance.', shot: '/shots/nesthr-hiring-funnel.jpg', alt: 'NestHR placements funnel showing applied, shortlisted and offer counts for a campus and corporate hiring drive' },
+      { title: 'Attendance, leave and payroll', body: 'Record attendance, approve leave and run payroll from the same record as the directory, with payslips kept in Documents.', shot: '', alt: '' },
+      { title: 'Reviews, goals and learning', body: 'Keep a work log, set goals and run appraisals, then assign learning paths and cohorts from what the review finds.', shot: '', alt: '' },
     ],
     moatTitle: 'Why teams stay on it.',
     moats: [
-      { title: 'Placement is built in, not bolted on', body: 'Most people software treats hiring as an applicant list. NestHR treats a placement season as a cycle with a memory.' },
-      { title: 'One flat price', body: 'Every module in every plan. No per-employee metering and no module upsells.' },
-      { title: 'Priced in rupees', body: 'No currency conversion on the invoice and no forex surprise.' },
-      { title: 'Part of the same family', body: 'Built by LabelNest and run on the same approach: one record, many tools, every change logged.' },
+      { title: 'Placements are built in, not bolted on', body: 'Most HR systems treat hiring as an applicant list. NestHR runs a drive as a funnel with panels, offers and reporting.' },
+      { title: 'One login, nine modules', body: 'No separate tools for hiring, expenses or learning.' },
+      { title: 'A flat price', body: 'The full suite is a flat annual fee by team size, not a meter on every employee.' },
+      { title: 'Priced in rupees', body: 'No currency conversion on the invoice.' },
     ],
     diffTitle: 'How NestHR is different.',
     diff: [
       { title: 'From an enterprise HR suite', body: 'No implementation project and no specialist to run it. A founder or an operations lead can set it up.' },
-      { title: 'From a standalone applicant tracker', body: 'Hiring sits beside people, performance and expenses in one record, and it learns across cycles.' },
+      { title: 'From a standalone applicant tracker', body: 'Hiring sits beside people, performance and expenses in one record.' },
       { title: 'From a spreadsheet', body: 'Roles, permissions, approvals and history are built in, and nothing depends on one person’s file.' },
     ],
     whoTitle: 'Who uses NestHR, and how.',
     who: [
-      { who: 'Startups with 5 to 200 people', how: 'Run onboarding, reviews, expenses and hiring without a dedicated HR team.' },
-      { who: 'Colleges and institutions', how: 'Run the full placement season from job description to offer letter, and report the season to the management.' },
-      { who: 'Founders and operations leads', how: 'See headcount, attrition and spend across the company in one dashboard.' },
+      { who: 'Startups and growth-stage teams', how: 'Run attendance, leave, payroll, hiring and reviews without a dedicated HR team.' },
+      { who: 'Colleges and institutions', how: 'Run a placement season from requisition to offer, and report it to the management.' },
+      { who: 'Founders and operations leads', how: 'See headcount, hiring and spend across the company in one place.' },
       { who: 'Placement officers', how: 'Track every student and every company across every round.' },
     ],
     faq: [
-      { q: 'What is NestHR?', a: 'NestHR is an HR and workforce operations system with seven modules: People OS, Talent OS with PlacementOS, Performance OS, Expense OS, Learning OS, Analytics and Admin. It is built for startups and colleges.' },
-      { q: 'What is PlacementOS?', a: 'PlacementOS is the NestHR module for campus recruitment and talent pipelines. It learns from every selection and rejection, so shortlisting improves each cycle.' },
-      { q: 'How much does NestHR cost?', a: 'A flat annual fee by team size, with every module included: Starter at ₹40,000 a year for up to 20 people, Growth at ₹60,000 for up to 50, Scale at ₹1,00,000 for up to 100. Enterprise, for larger teams and colleges, is custom.' },
-      { q: 'Are all modules included in every plan?', a: 'Yes. Every plan includes all seven modules, PlacementOS included.' },
-      { q: 'Is there a free trial?', a: 'Yes, with every module available from the first day.' },
-      { q: 'Is NestHR the same as NestLens?', a: 'No. NestHR is the HR and placement product. NestLens is the private markets platform, with its own products and prices.' },
+      { q: 'What is NestHR?', a: 'NestHR is an HR platform with nine modules in one workspace: People, Placements, Performance, Expenses, Learning, Analytics, Lifecycle, Documents and NestForum. It covers attendance, leave and payroll, and campus and corporate hiring in one funnel.' },
+      { q: 'What is Placement OS?', a: 'Placement OS is the hiring-only plan: campus and corporate hiring in one funnel with offer letters, at ₹80,000 a year.' },
+      { q: 'How much does the full suite cost?', a: 'A flat annual fee by team size: Starter at ₹40,000 a year for up to 20 people, Growth at ₹60,000 for up to 50, Scale at ₹1,00,000 for up to 100. Enterprise, for larger teams, is custom.' },
+      { q: 'Is NestHR priced in rupees?', a: 'Yes. All plans are priced in Indian rupees.' },
+      { q: 'Is NestHR the same as NestLens?', a: 'No. NestHR is the HR and hiring product. NestLens is the private markets platform, with its own products and prices.' },
     ],
-    ctaTitle: 'Run your next hiring cycle on it.',
-    topics: 'HR software for startups India, campus placement software, placement management system, applicant tracking system India, employee management software, performance review software, expense management for startups, learning management for employees, HRMS India, college placement portal',
+    ctaTitle: 'Bring hiring and HR into one place.',
+    topics: 'HR software for startups India, campus placement software, placement management system, applicant tracking system India, HRMS India, attendance and leave management, payroll software India, performance review software, expense management for startups, employee onboarding software',
   }),
 
   ...block('sentinel', 'Sentinel', {

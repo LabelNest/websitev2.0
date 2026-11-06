@@ -40,6 +40,42 @@ const PAGES = {
     title: 'NestLens pricing — Atlas, Exchange, Command, Ascent, Orbit, Connect',
     description: 'Pricing for every NestLens product in rupees and dollars, read live from the NestLens plan catalog. Enterprise, bundle and group quotes on request.',
   },
+  '/about': {
+    title: 'About LabelNest — a private markets data company in Bengaluru',
+    description: 'LabelNest makes reviewed private markets data, sourced from registers and primary documents and dated field by field, and the software that fund managers, founders and programmes run on it. Founded 2025, Bengaluru.',
+  },
+  '/nestlens/intelligence': {
+    title: 'Atlas — private markets data on funds, managers, companies and people',
+    description: 'Atlas holds reviewed data on {{entities}} private market entities: fund managers, AIF and PMS registers, capital providers, companies and people. Every field has a source and a review date.',
+  },
+  '/nestlens/exchange': {
+    title: 'Exchange — data marketplace for datasets, research and alternative data',
+    description: 'Buy and sell structured datasets, research reports, alternative data and AI training data. Verified sellers, escrowed payment and a quality score on every listing.',
+  },
+  '/nestlens/command': {
+    title: 'Command — fund management workspace for pipeline, portfolio and LP reporting',
+    description: 'Run a fund in one record: deal pipeline, diligence, investment committee, portfolio, cap tables, valuation, LP capital accounts and reports.',
+  },
+  '/nestlens/capital': {
+    title: 'Ascent — startup data room with readiness score, controlled sharing and deal flow',
+    description: 'One structured data room per company with a readiness score, document reading, email-gated and watermarked sharing, and deal flow for programme admins. 30 days free.',
+  },
+  '/nestlens/orbit': {
+    title: 'Orbit — incubator and accelerator management software with data rooms included',
+    description: 'Applications, screening, evaluation rounds, cohorts, mentors, grants and compliance in one place, with grant reports in NIDHI-SSS, DST-TBI, BIRAC and RKVY-RAFTAR formats.',
+  },
+  '/nestlens/connect': {
+    title: 'Connect — fund theses, mentors and audit partners, with founder consent first',
+    description: 'Funds publish a thesis, founders request mentors and audits from inside their data room, and contact details stay hidden until the founder agrees.',
+  },
+  '/nesthr': {
+    title: 'NestHR — HR software for startups and campus placement software for colleges',
+    description: 'Nine modules in one workspace: people, placements, performance, expenses, learning, analytics, lifecycle, documents and discussion. Attendance, leave and payroll, and campus and corporate hiring in one funnel. Priced in rupees.',
+  },
+  '/sentinel': {
+    title: 'Sentinel — risk monitoring for private markets portfolios and AI systems',
+    description: 'Sentinel Risk watches a private markets portfolio for concentration, valuation, exit and liquidity risk. Sentinel AI scores deployed AI systems. Early access.',
+  },
   '/who-we-serve/incubator': {
     title: 'For incubators and accelerators — Orbit with Ascent deal flow',
     description: 'Run the programme in Orbit, give every selected startup an Ascent data room, and turn ready rooms into consented introductions. Data rooms are included in every Orbit plan.',

@@ -8,11 +8,12 @@ export const revalidate = 300
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/nesthr', {
     title: 'NestHR — HR software for startups and campus placement software for colleges',
-    description: 'Seven modules for people, hiring, campus placement, performance, expenses, learning and analytics. PlacementOS learns from every selection. Flat annual price in rupees, every module included.',
+    description: 'Nine modules in one workspace: people, placements, performance, expenses, learning, analytics, lifecycle, documents and discussion. Campus and corporate hiring in one funnel. Priced in rupees.',
   })
 }
 
 const PLANS = [
+  { name: 'Placement OS', price: '₹80,000', note: 'Hiring only: campus and corporate, one funnel' },
   { name: 'Starter', price: '₹40,000', note: 'Up to 20 people' },
   { name: 'Growth', price: '₹60,000', note: 'Up to 50 people' },
   { name: 'Scale', price: '₹1,00,000', note: 'Up to 100 people' },
@@ -23,13 +24,13 @@ export default function NestHRPage() {
   return (
     <ProductDetail
       id="nesthr" name="NestHR" path="/nesthr" schemaType="SoftwareApplication"
-      primary={{ label: 'Start the free trial', href: '/contact' }}
+      primary={{ label: 'Open NestHR', href: 'https://nesthr.labelnest.in', external: true }}
       secondary={{ label: 'See pricing', href: '#pricing' }}
     >
       <section id="pricing" className="ln-sec">
         <div className="ln-wrap">
           <p className="ln-eyebrow">Pricing</p>
-          <h2 className="ln-h2" style={{ maxWidth: '15em' }}>One flat annual price. Every module included.</h2>
+          <h2 className="ln-h2" style={{ maxWidth: '15em' }}>One flat annual price. Every module included in the suite.</h2>
           <div className="ln-scroll" style={{ marginTop: 36 }}>
             <table className="ln-tbl"><thead><tr><th>Plan</th><th>Price per year</th><th>For</th></tr></thead><tbody>
               {PLANS.map((p) => <tr key={p.name}><td className="nm">{p.name}</td><td className="p">{p.price}</td><td>{p.note}</td></tr>)}
