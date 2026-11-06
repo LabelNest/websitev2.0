@@ -75,6 +75,8 @@ export const PD_MORE: ContentField[] = [
     featTitle: 'The features that do the work.',
     features: [
       { title: 'Portfolio data that updates itself', body: 'When a portfolio company keeps its Ascent data room current, the fund numbers follow. Nobody chases a founder for a quarterly update.', shot: '/shots/command-live-automations.jpg', alt: 'Command diagram showing Atlas market data, Ascent startup metrics and valuation feeding the fund workspace for deal sourcing, cap table, NAV, TVPI, DPI, IRR and LP reports' },
+      { title: 'The fund at a glance', body: 'Target size, called capital, NAV computed live from valuations, TVPI and DPI, and the deals in the pipeline, on one screen. Tasks that need you today sit beneath, with the fund room readiness next to them.', shot: '/shots/command-fund-overview.jpg', alt: 'Command fund overview with target fund size, called capital, NAV computed live from valuations, TVPI and DPI, and active deals in the pipeline', },
+      { title: 'Deal flow, committee and LP reporting in one menu', body: 'Pipeline, applications, diligence and term sheet trackers, investment committee voting, decision archive and IC-ready report on one side. LP directory, capital accounts, fundraising pipeline, LP reports, shareable views and briefings on the other.', shot: '/shots/command-workspace-menus.jpg', alt: 'Command menus listing deal flow, diligence tracker, term sheet tracker, IC voting and decision archive, and LP directory, capital accounts, fundraising pipeline, LP report and shareable views', },
       { title: 'AI memos your team approves', body: 'AI drafts investment memos from the record. A person reviews and approves each one, and the approval is logged.', ...none },
       { title: 'LP reporting from the same numbers', body: 'Capital accounts, NAV and LP reports come from the same records as the portfolio, so they agree.', ...none },
       { title: 'Deal sourcing from Atlas', body: 'Search the reviewed record for companies and co-investors without leaving the fund workspace.', ...none },
@@ -177,6 +179,7 @@ export const PD_MORE: ContentField[] = [
     features: [
       { title: 'Your rubric, your rounds', body: 'Score applications on your own criteria across as many rounds as you run.', ...none },
       { title: 'Select, and the data room starts', body: 'Choosing a startup switches on its Ascent data room, so the application becomes the first version of the room.', shot: '/shots/orbit-selection-flow.jpg', alt: 'Orbit programme flow from application intake and automated screening through multi-round evaluation and selection to the Ascent data room going live' },
+      { title: 'One workspace for the whole programme', body: 'Dashboard, programmes, startups, mentors, capital connect, finance and reports from one place, with the cohort data room a click away.', shot: '/shots/orbit-workspace.jpg', alt: 'Orbit workspace tiles for dashboard, programmes, startups, mentors, capital connect, finance, reports and the cohort data room in Ascent', },
       { title: 'Deal flow to funds', body: 'Read every room in a cohort and turn ready ones into introductions the founder has agreed to, through Connect.', ...none },
       { title: 'Grant reports without rework', body: 'Produce reports in the formats funders expect from the data you already hold.', ...none },
     ],
@@ -223,6 +226,7 @@ export const PD_MORE: ContentField[] = [
     featTitle: 'How it works.',
     features: [
       { title: 'Read the thesis, then apply', body: 'A live thesis shows what a fund backs and how to apply. The LN partner network backs early-stage startups in any sector, based in India, and evaluates founders through their data room.', shot: '/shots/connect-home.jpg', alt: 'Connect home page with verified mentors, legal counsel, deal scouting and a B2B data exchange, with buttons to find an expert or browse open theses' },
+      { title: 'Ask Kai to find your mentor', body: 'Describe the problem, for example negotiating a seed term sheet, and Kai suggests the verified mentors who have done it. No account is needed to look around or to book.', shot: '/shots/connect-mentors.jpg', alt: 'Connect mentors page with an Ask Kai box that finds a verified mentor from a plain description of the problem', },
       { title: 'Ask from inside the room', body: 'A founder requests a mentor or an audit without leaving the data room, and the request carries the right context.', ...none },
       { title: 'Consent first', body: 'Contact details stay hidden until the founder agrees to the introduction.', ...none },
     ],
