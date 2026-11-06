@@ -28,7 +28,7 @@ export const PERSONAS: Persona[] = [
     stackHref: '/nestlens/command',
     blurb: 'Discover opportunities, run your investment workflow, and work with portfolio companies.',
     cta: 'Explore Command',
-    color: '#F97316',
+    color: '#9A4B1F',
   },
   {
     key: 'lp',
@@ -38,7 +38,7 @@ export const PERSONAS: Persona[] = [
     stackHref: '/nestlens/intelligence',
     blurb: 'Research funds, GPs, and market activity before you commit capital. Command has a real Family Offices role for running your own direct portfolio, and an External Advisors role when a GP invites you into their room.',
     cta: 'Explore Atlas',
-    color: '#2563EB',
+    color: '#1F3A5F',
   },
   {
     key: 'founder',
@@ -48,7 +48,7 @@ export const PERSONAS: Persona[] = [
     stackHref: '/nestlens/capital',
     blurb: 'Build, prepare, raise, and scale with the infrastructure needed for the next stage.',
     cta: 'Explore Ascent',
-    color: '#10B981',
+    color: '#2C6B4B',
   },
   {
     key: 'incubator',
@@ -58,7 +58,7 @@ export const PERSONAS: Persona[] = [
     stackHref: '/nestlens/orbit',
     blurb: 'Run cohorts, manage founders, and help companies become capital-ready.',
     cta: 'Explore Orbit',
-    color: '#7C3AED',
+    color: '#5B3A6B',
   },
   {
     key: 'partner',
@@ -68,7 +68,7 @@ export const PERSONAS: Persona[] = [
     stackHref: '/nestlens/intelligence',
     blurb: 'Law firms, auditors, and consultants — get found through Atlas, or join Connect as a vetted mentor or audit partner.',
     cta: 'Explore Atlas',
-    color: '#2563EB',
+    color: '#1F3A5F',
   },
   {
     key: 'researcher',
@@ -78,7 +78,7 @@ export const PERSONAS: Persona[] = [
     stackHref: '/nestlens/intelligence',
     blurb: 'Research companies, founders, investors, sectors, and the relationships shaping private markets.',
     cta: 'Explore Atlas',
-    color: '#2563EB',
+    color: '#1F3A5F',
   },
   {
     key: 'exchange',
@@ -88,7 +88,7 @@ export const PERSONAS: Persona[] = [
     stackHref: '/nestlens/exchange',
     blurb: 'Buy or sell structured private-market datasets, with KYC-verified counterparties and escrow-protected transactions.',
     cta: 'Explore Exchange',
-    color: '#E91E8C',
+    color: '#7A5217',
   },
 ]
 

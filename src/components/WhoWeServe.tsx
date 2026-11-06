@@ -78,8 +78,8 @@ export function WhoWeServeCards() {
 export function WhoWeServeAtlasNote() {
   return (
     <div style={{
-      background: 'linear-gradient(135deg,rgba(37,99,235,.06),rgba(233,30,140,.03))',
-      border: '1px solid rgba(37,99,235,.16)', borderLeft: '3px solid #2563EB',
+      background: 'linear-gradient(135deg,rgba(31,58,95,.06),rgba(122,82,23,.03))',
+      border: '1px solid rgba(31,58,95,.16)', borderLeft: '3px solid #1F3A5F',
       borderRadius: '0 12px 12px 0', padding: '20px 24px', marginBottom: 32,
     }}>
       <div className="font-display font-extrabold" style={{ fontSize: 15, color: 'var(--text)', marginBottom: 6 }}>🔭 {ATLAS_NOTE.title}</div>

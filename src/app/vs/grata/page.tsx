@@ -52,7 +52,7 @@ const DATA: VsPageData = {
     body: "Grata's assumption: deal teams need to find and reach SMB acquisition targets with signal-based timing, priced for that origination workflow. LabelNest's assumption: emerging managers and analysts need depth on the fund, LP, and GP side of private markets in India, SE Asia, and the Gulf — plus a marketplace and data rooms Grata doesn't build — without a six-figure annual commitment.",
   },
   finalTag: 'See LabelNest for yourself',
-  finalHeading: '40,000+ entities. Credit-based. Free tier available.',
+  finalHeading: '{{entities}} entities. Credit-based. Free tier available.',
   finalBody: 'Open NestLens, browse the data, and decide for yourself. No credit card, no sales call required.',
   finalPrimaryCta: { href: 'https://nestlens.labelnest.in', label: 'Try NestLens Free ↗', external: true },
   finalSecondaryCta: { href: '/vs/sourcescrub', label: 'Also see: vs SourceScrub →' },

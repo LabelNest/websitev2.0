@@ -36,7 +36,7 @@ const DATA: VsPageData = {
   tableRows: [
     { feature: 'Pricing model', competitor: { text: 'Custom-quoted, seats bundled and limited; typically $50K-$85K/year, up to $265K+ for full enterprise deployments', verdict: 'no' }, labelnest: { text: 'Credit-based, no seat penalties, pay for what you use', verdict: 'win' } },
     { feature: 'Free access', competitor: { text: '10-day free trial only, full access requires a sales call', verdict: 'mid' }, labelnest: { text: 'Self-serve free tier, no credit card, no sales call', verdict: 'win' } },
-    { feature: 'Coverage focus', competitor: { text: 'Global company/investor signals, funding data, valuations — broad, enterprise-oriented', verdict: 'win' }, labelnest: { text: '40,000+ entities, India, SE Asia, and Gulf focus', verdict: 'mid' } },
+    { feature: 'Coverage focus', competitor: { text: 'Global company/investor signals, funding data, valuations — broad, enterprise-oriented', verdict: 'win' }, labelnest: { text: '{{entities}} entities, India, SE Asia, and Gulf focus', verdict: 'mid' } },
     { feature: 'India private markets depth', competitor: { text: 'Present as part of global coverage, not a specialization', verdict: 'no' }, labelnest: { text: 'Deep — companies, funds, deals, LPs, service providers', verdict: 'win' } },
     { feature: 'AI research tools', competitor: { text: 'ChatCBI, Personal Briefing agent, Commercial Due Diligence Accelerator, Acquisition Hunter', verdict: 'win' }, labelnest: { text: 'AI-assisted extraction and entity resolution behind the data, not a standalone research agent yet', verdict: 'mid' } },
     { feature: 'Data marketplace', competitor: { text: 'Not offered', verdict: 'no' }, labelnest: { text: 'NestLens Exchange — buy and sell data with KYC and escrow', verdict: 'win' } },
@@ -54,7 +54,7 @@ const DATA: VsPageData = {
     body: "CB Insights' assumption: corporate strategy, M&A, and enterprise VC teams with dedicated budget for AI-assisted research at global scale, priced accordingly. LabelNest's assumption: emerging managers, boutique funds, and analysts who need real depth on companies, funds, deals, and LPs in India, SE Asia, and the Gulf — without a $50K+ annual commitment. If a CB Insights quote is out of reach or its coverage doesn't match where you actually operate, LabelNest was built for you.",
   },
   finalTag: 'See LabelNest for yourself',
-  finalHeading: '40,000+ entities. Credit-based. Free tier available.',
+  finalHeading: '{{entities}} entities. Credit-based. Free tier available.',
   finalBody: 'Open NestLens, browse the data, and decide for yourself. No credit card, no sales call required.',
   finalPrimaryCta: { href: 'https://nestlens.labelnest.in', label: 'Try NestLens Free ↗', external: true },
   finalSecondaryCta: { href: '/vs/preqin', label: 'Also see: vs Preqin →' },

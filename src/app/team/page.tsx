@@ -18,13 +18,13 @@ export async function generateMetadata(): Promise<Metadata> {
 export const revalidate = 3600
 
 export const DEPT_COLORS: Record<string, string> = {
-  'NestIntel': '#2563EB',
-  'DataNest': '#2563EB',
-  'NestHR': '#2563EB',
-  'NestLens': '#10B981',
-  'Ops': '#F97316',
-  'HR': '#7C3AED',
-  'Founder': '#E91E8C',
+  'NestIntel': '#1F3A5F',
+  'DataNest': '#1F3A5F',
+  'NestHR': '#1F3A5F',
+  'NestLens': '#2C6B4B',
+  'Ops': '#9A4B1F',
+  'HR': '#5B3A6B',
+  'Founder': '#7A5217',
 }
 
 function FellowChip({ f, accent, background }: { f: { id: string; name: string; role: string; slug: string | null; status?: string; image_url?: string | null; image_position?: string; image_zoom?: number }; accent: string; background: string }) {
@@ -74,9 +74,9 @@ export default async function TeamPage() {
     'NestTech · Cohort 1': 'NestTech · Cohort 1 · Engineering',
   }
   const cohortAccent = (cohort: string) =>
-    cohort.includes('NestTech') ? { accent: '#2563EB', background: 'rgba(37,99,235,.1)' }
-    : cohort.includes('NestLabs') ? { accent: '#E91E8C', background: 'rgba(233,30,140,.1)' }
-    : { accent: '#7C3AED', background: 'rgba(124,58,237,.1)' }
+    cohort.includes('NestTech') ? { accent: '#1F3A5F', background: 'rgba(31,58,95,.1)' }
+    : cohort.includes('NestLabs') ? { accent: '#7A5217', background: 'rgba(122,82,23,.1)' }
+    : { accent: '#5B3A6B', background: 'rgba(91,58,107,.1)' }
 
   return (
     <>
@@ -85,7 +85,7 @@ export default async function TeamPage() {
 
         {/* HERO */}
         <section className="relative overflow-hidden border-b" style={{ padding: '72px 48px 56px', borderColor: 'var(--border)' }}>
-          <div className="absolute pointer-events-none" style={{ top: -100, right: -80, width: 480, height: 480, borderRadius: '50%', background: 'rgba(124,58,237,.07)', filter: 'blur(90px)' }} />
+          <div className="absolute pointer-events-none" style={{ top: -100, right: -80, width: 480, height: 480, borderRadius: '50%', background: 'rgba(91,58,107,.07)', filter: 'blur(90px)' }} />
           <div className="relative z-10" style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div className="flex items-end justify-between flex-wrap" style={{ gap: 32, marginBottom: 36 }}>
               <div>
@@ -100,9 +100,9 @@ export default async function TeamPage() {
               </div>
               <div className="flex" style={{ gap: 32 }}>
                 {[
-                  { num: team.length || 13, label: 'Current team', color: '#2563EB' },
-                  { num: alumni.length || 39, label: 'Alumni', color: '#10B981' },
-                  { num: fellows.length || 15, label: 'Nestling fellows', color: '#7C3AED' },
+                  { num: team.length || 13, label: 'Current team', color: '#1F3A5F' },
+                  { num: alumni.length || 39, label: 'Alumni', color: '#2C6B4B' },
+                  { num: fellows.length || 15, label: 'Nestling fellows', color: '#5B3A6B' },
                 ].map(s => (
                   <div key={s.label} className="text-center">
                     <div className="font-display font-extrabold" style={{ fontSize: 32, letterSpacing: '-.05em', lineHeight: 1, marginBottom: 4, color: s.color }}>{s.num}</div>
@@ -119,21 +119,21 @@ export default async function TeamPage() {
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div className="flex items-center justify-between" style={{ marginBottom: 32 }}>
               <div>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: '#2563EB', marginBottom: 8 }}>Current team</div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: '#1F3A5F', marginBottom: 8 }}>Current team</div>
                 <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(20px,3vw,32px)', letterSpacing: '-.025em', color: 'var(--text)' }}>The people building LabelNest right now</h2>
               </div>
-              <Link href="/careers" style={{ fontSize: 13.5, color: '#E91E8C', fontWeight: 600 }}>We are hiring →</Link>
+              <Link href="/careers" style={{ fontSize: 13.5, color: '#7A5217', fontWeight: 600 }}>We are hiring →</Link>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4" style={{ gap: 16 }}>
               {team.map(m => {
                 const deptColor = DEPT_COLORS[m.department] || '#8985A6'
                 const photoAndName = (
                   <>
-                    <div className="relative" style={{ aspectRatio: '1', background: 'linear-gradient(135deg,rgba(233,30,140,.08),rgba(37,99,235,.06))' }}>
+                    <div className="relative" style={{ aspectRatio: '1', background: 'linear-gradient(135deg,rgba(122,82,23,.08),rgba(31,58,95,.06))' }}>
                       {m.image_url ? (
                         <Image src={m.image_url} alt={m.name} fill sizes="300px" style={imgFrameStyle(m.image_position || '50% 0%', m.image_zoom || 1)} />
                       ) : (
-                        <div className="absolute inset-0 flex items-center justify-center font-display font-extrabold" style={{ fontSize: 36, color: 'rgba(255,255,255,.12)' }}>
+                        <div className="absolute inset-0 flex items-center justify-center font-display font-extrabold" style={{ fontSize: 36, color: 'rgba(14,27,46,.12)' }}>
                           {m.name[0]}
                         </div>
                       )}
@@ -155,7 +155,7 @@ export default async function TeamPage() {
                     {m.linkedin_url ? (
                       <div style={{ padding: '10px 16px 16px' }}>
                         <a href={normalizeExternalUrl(m.linkedin_url)} target="_blank" rel="noopener noreferrer"
-                          className="inline-flex items-center" style={{ gap: 5, fontSize: 11.5, color: '#2563EB' }}>
+                          className="inline-flex items-center" style={{ gap: 5, fontSize: 11.5, color: '#1F3A5F' }}>
                           LinkedIn →
                         </a>
                       </div>
@@ -171,7 +171,7 @@ export default async function TeamPage() {
         {fellows.length > 0 && (
           <section className="border-b" style={{ padding: '64px 48px', borderColor: 'var(--border)' }}>
             <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: '#7C3AED', marginBottom: 8 }}>Nestling Fellows</div>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: '#5B3A6B', marginBottom: 8 }}>Nestling Fellows</div>
               <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(20px,3vw,32px)', letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 8 }}>
                 The Nestling Program{cohortHeading && ` — ${cohortHeading}`}
               </h2>
@@ -198,7 +198,7 @@ export default async function TeamPage() {
                 </div>
                 <Link href="/careers"
                   className="font-semibold text-white flex-shrink-0"
-                  style={{ fontSize: 13.5, padding: '12px 24px', borderRadius: 10, background: '#7C3AED', whiteSpace: 'nowrap' }}>
+                  style={{ fontSize: 13.5, padding: '12px 24px', borderRadius: 10, background: '#5B3A6B', whiteSpace: 'nowrap' }}>
                   Join the next cohort →
                 </Link>
               </div>
@@ -212,7 +212,7 @@ export default async function TeamPage() {
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div className="flex items-center justify-between" style={{ marginBottom: 12 }}>
               <div>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: '#10B981', marginBottom: 8 }}>Alumni</div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: '#2C6B4B', marginBottom: 8 }}>Alumni</div>
                 <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(20px,3vw,32px)', letterSpacing: '-.025em', color: 'var(--text)' }}>
                   {alumni.length || 39} people. All permanent. All on this page.
                 </h2>
@@ -230,12 +230,12 @@ export default async function TeamPage() {
         {interns.length > 0 && (
           <section className="border-t" style={{ padding: '56px 48px', borderColor: 'var(--border)' }}>
             <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: '#F97316', marginBottom: 8 }}>Interns</div>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: '#9A4B1F', marginBottom: 8 }}>Interns</div>
               <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(20px,3vw,32px)', letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 24 }}>
                 Building alongside the team
               </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6" style={{ gap: 10 }}>
-                {interns.map(i => <FellowChip key={i.id} f={i} accent="#F97316" background="rgba(249,115,22,.1)" />)}
+                {interns.map(i => <FellowChip key={i.id} f={i} accent="#9A4B1F" background="rgba(154,75,31,.1)" />)}
               </div>
             </div>
           </section>

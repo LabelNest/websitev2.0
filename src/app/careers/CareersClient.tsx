@@ -70,20 +70,20 @@ export default function CareersClient() {
 
         {/* HERO */}
         <section style={{ padding: '80px 48px 72px', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', top: -100, left: -80, width: 480, height: 480, borderRadius: '50%', background: 'rgba(233,30,140,.07)', filter: 'blur(90px)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', top: -100, left: -80, width: 480, height: 480, borderRadius: '50%', background: 'rgba(122,82,23,.07)', filter: 'blur(90px)', pointerEvents: 'none' }} />
           <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 2 }}>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Careers · LabelNest · Bangalore</div>
             <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(42px,6.5vw,76px)', fontWeight: 800, letterSpacing: '-.04em', lineHeight: 1.02, color: 'var(--text)', marginBottom: 20 }}>
               <span style={{ fontWeight: 300, color: 'var(--text2)' }}>Build systems</span><br />
               others cannot{' '}
-              <span style={{ background: 'linear-gradient(100deg,#E91E8C,#8B5CF6,#2563EB)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>imagine.</span>
+              <span style={{ background: 'linear-gradient(100deg,#7A5217,#5B3A6B,#1F3A5F)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>imagine.</span>
             </h1>
             <p style={{ fontSize: 'clamp(15px,1.8vw,18.5px)', lineHeight: 1.74, color: 'var(--text2)', maxWidth: 560, marginBottom: 36 }}>
               We work on hard data problems at the intersection of private markets, automation, and human judgment.{' '}
               <strong style={{ color: 'var(--text)', fontWeight: 600 }}>We hire for potential, not pedigree.</strong> The right degree is not a requirement. The right thinking is.
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-              <a href="#apply" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#E91E8C', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Apply now</a>
+              <a href="#apply" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#7A5217', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Apply now</a>
             </div>
           </div>
         </section>
@@ -113,36 +113,36 @@ export default function CareersClient() {
             <p style={{ fontSize: 15, color: 'var(--text2)', marginBottom: 36, maxWidth: 560, lineHeight: 1.65 }}>We do not wait for headcount approval to talk to someone exceptional. If you are willing to learn hard things and work on real problems, there is a place for you here.</p>
 
             {/* Always looking banner */}
-            <div style={{ background: 'var(--surface)', border: '1px solid rgba(233,30,140,.25)', borderLeft: '3px solid #E91E8C', borderRadius: 14, padding: '20px 24px', marginBottom: 28, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap' }}>
+            <div style={{ background: 'var(--surface)', border: '1px solid rgba(122,82,23,.25)', borderLeft: '3px solid #7A5217', borderRadius: 14, padding: '20px 24px', marginBottom: 28, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap' }}>
               <div>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)', marginBottom: 4 }}>Rolling applications — always on</div>
                 <div style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.6 }}>Tell us what you work on and what you want to build. We read every application personally.</div>
               </div>
               <button onClick={() => applyFor('Open Application')}
-                style={{ background: '#E91E8C', color: '#fff', fontSize: 13.5, fontWeight: 600, padding: '10px 22px', borderRadius: 10, border: 'none', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>Apply now</button>
+                style={{ background: '#7A5217', color: '#fff', fontSize: 13.5, fontWeight: 600, padding: '10px 22px', borderRadius: 10, border: 'none', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>Apply now</button>
             </div>
 
             {/* Roles open now (applied for through NestHR) */}
             {OPEN_ROLES.map(r => (
               <div key={r.title}
-                style={{ display: 'flex', alignItems: 'center', gap: 20, background: 'var(--surface)', border: '2px solid #E91E8C', borderRadius: 12, padding: '16px 20px', marginBottom: 8 }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 20, background: 'var(--surface)', border: '2px solid #7A5217', borderRadius: 12, padding: '16px 20px', marginBottom: 8 }}>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 4 }}>{r.meta}</div>
                   <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)' }}>{r.title}</div>
                 </div>
-                <a href={r.apply_url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, fontWeight: 600, color: '#E91E8C' }}>Apply →</a>
+                <a href={r.apply_url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, fontWeight: 600, color: '#7A5217' }}>Apply →</a>
               </div>
             ))}
 
             {/* Active DB jobs if any */}
             {activeJobs.map(job => (
               <div key={job.id}
-                style={{ display: 'flex', alignItems: 'center', gap: 20, background: 'var(--surface)', border: '2px solid #E91E8C', borderRadius: 12, padding: '16px 20px', marginBottom: 8 }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 20, background: 'var(--surface)', border: '2px solid #7A5217', borderRadius: 12, padding: '16px 20px', marginBottom: 8 }}>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 4 }}>{job.department} · {job.location}</div>
                   <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)' }}>{job.title}</div>
                 </div>
-                <a href={job.apply_url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, fontWeight: 600, color: '#E91E8C' }}>Apply →</a>
+                <a href={job.apply_url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, fontWeight: 600, color: '#7A5217' }}>Apply →</a>
               </div>
             ))}
 
@@ -153,10 +153,10 @@ export default function CareersClient() {
         <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 20, padding: 52, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
-              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg,#E91E8C,#7C3AED,#2563EB)' }} />
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg,#7A5217,#5B3A6B,#1F3A5F)' }} />
               <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(28px,4vw,48px)', fontWeight: 800, letterSpacing: '-.035em', color: 'var(--text)', marginBottom: 16 }}>
                 Built by people with the{' '}
-                <span style={{ background: 'linear-gradient(100deg,#E91E8C,#7C3AED)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>right potential.</span>
+                <span style={{ background: 'linear-gradient(100deg,#7A5217,#5B3A6B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>right potential.</span>
                 <br />Not the right degree.
               </h2>
               <p style={{ fontSize: 16, color: 'var(--text2)', maxWidth: 560, margin: '0 auto 32px', lineHeight: 1.72 }}>
@@ -164,8 +164,8 @@ export default function CareersClient() {
                 <strong style={{ color: 'var(--text)', fontWeight: 600 }}>None of them were hired because of where they studied.</strong> That is still how we hire.
               </p>
               <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-                <a href="#apply" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#E91E8C', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Apply now</a>
-                <Link href="/team" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>Meet the team</Link>
+                <a href="#apply" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#7A5217', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Apply now</a>
+                <Link href="/team" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(14,27,46,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(14,27,46,.1)' }}>Meet the team</Link>
               </div>
             </div>
           </div>
@@ -182,7 +182,7 @@ export default function CareersClient() {
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: '14px 16px' }}>
                   <span style={{ fontSize: 16, flexShrink: 0 }}>✉️</span>
                   <div style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.55 }}>
-                    Applications also go to <a href="mailto:hr@labelnest.in" style={{ color: '#2563EB' }}>hr@labelnest.in</a> if you prefer email.
+                    Applications also go to <a href="mailto:hr@labelnest.in" style={{ color: '#1F3A5F' }}>hr@labelnest.in</a> if you prefer email.
                   </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: '14px 16px' }}>
@@ -193,7 +193,7 @@ export default function CareersClient() {
             </div>
 
             <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 18, padding: 32, position: 'relative', overflow: 'hidden' }}>
-              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg,#E91E8C,#2563EB)' }} />
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg,#7A5217,#1F3A5F)' }} />
               {!sent ? (
                 <form onSubmit={handleSubmit}>
                   <h3 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 18, color: 'var(--text)', marginBottom: 20 }}>Send your application</h3>
@@ -236,7 +236,7 @@ export default function CareersClient() {
                       style={{ width: '100%', background: 'var(--bg2)', border: '1px solid var(--bord2)', borderRadius: 9, padding: '11px 14px', fontSize: 14, color: 'var(--text)', outline: 'none', resize: 'vertical', fontFamily: 'Inter, sans-serif' }} />
                   </div>
                   <button type="submit" disabled={loading}
-                    style={{ width: '100%', background: '#E91E8C', color: '#fff', border: 'none', borderRadius: 10, padding: 13, fontSize: 14.5, fontWeight: 600, cursor: loading ? 'default' : 'pointer', opacity: loading ? 0.7 : 1, fontFamily: 'Inter, sans-serif' }}>
+                    style={{ width: '100%', background: '#7A5217', color: '#fff', border: 'none', borderRadius: 10, padding: 13, fontSize: 14.5, fontWeight: 600, cursor: loading ? 'default' : 'pointer', opacity: loading ? 0.7 : 1, fontFamily: 'Inter, sans-serif' }}>
                     {loading ? 'Sending...' : 'Send application'}
                   </button>
                   <div style={{ fontSize: 11.5, color: 'var(--text3)', textAlign: 'center', marginTop: 10 }}>Goes directly to our hiring pipeline · We read every one</div>

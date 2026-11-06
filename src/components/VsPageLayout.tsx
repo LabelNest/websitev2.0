@@ -2,6 +2,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { WhoWeServeBanner } from '@/components/WhoWeServe'
+import { getAtlasStats, deepFill } from '@/lib/plans'
 
 type Verdict = 'win' | 'mid' | 'no'
 type VsCategory = 'intelligence' | 'capital-readiness' | 'fund-data-room' | 'exchange' | 'nesthr'
@@ -98,21 +99,22 @@ export const ALL_VS_PAGES: { slug: string; label: string; category: VsCategory }
 ]
 
 const VERDICT_MARK: Record<Verdict, { symbol: string; color: string }> = {
-  win: { symbol: '✓', color: '#10B981' },
-  mid: { symbol: '~', color: '#F97316' },
-  no: { symbol: '×', color: '#EF4444' },
+  win: { symbol: '✓', color: '#2C6B4B' },
+  mid: { symbol: '~', color: '#9A4B1F' },
+  no: { symbol: '×', color: '#9B2C2C' },
 }
 
 function CtaButton({ cta, primary }: { cta: Cta; primary?: boolean }) {
   const style = primary
-    ? { display: 'inline-flex', alignItems: 'center', gap: 8, background: '#E91E8C', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11, textDecoration: 'none' }
-    : { display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)', textDecoration: 'none' }
+    ? { display: 'inline-flex', alignItems: 'center', gap: 8, background: '#7A5217', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11, textDecoration: 'none' }
+    : { display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(14,27,46,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(14,27,46,.1)', textDecoration: 'none' }
   return cta.external
     ? <a href={cta.href} target="_blank" rel="noopener noreferrer" style={style}>{cta.label}</a>
     : <Link href={cta.href} style={style}>{cta.label}</Link>
 }
 
-export default function VsPageLayout(d: VsPageData) {
+export default async function VsPageLayout(raw: VsPageData) {
+  const d = deepFill(raw, await getAtlasStats())
   return (
     <>
       <Nav />
@@ -143,21 +145,21 @@ export default function VsPageLayout(d: VsPageData) {
             <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,32px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 20 }}>{d.tldrHeading}</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 14 }}>
               <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 22 }}>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.1em', textTransform: 'uppercase', color: '#2563EB', marginBottom: 10 }}>{d.tldrLeftLabel}</div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.1em', textTransform: 'uppercase', color: '#1F3A5F', marginBottom: 10 }}>{d.tldrLeftLabel}</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {d.tldrLeftPoints.map((p, i) => (
                     <div key={i} style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.6, display: 'flex', gap: 8 }}>
-                      <span style={{ color: '#2563EB', flexShrink: 0 }}>✓</span>{p}
+                      <span style={{ color: '#1F3A5F', flexShrink: 0 }}>✓</span>{p}
                     </div>
                   ))}
                 </div>
               </div>
-              <div style={{ background: 'var(--surface)', border: '2px solid rgba(233,30,140,.3)', borderRadius: 14, padding: 22 }}>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.1em', textTransform: 'uppercase', color: '#E91E8C', marginBottom: 10 }}>{d.tldrRightLabel}</div>
+              <div style={{ background: 'var(--surface)', border: '2px solid rgba(122,82,23,.3)', borderRadius: 14, padding: 22 }}>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '.1em', textTransform: 'uppercase', color: '#7A5217', marginBottom: 10 }}>{d.tldrRightLabel}</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {d.tldrRightPoints.map((p, i) => (
                     <div key={i} style={{ fontSize: 13.5, color: 'var(--text)', lineHeight: 1.6, display: 'flex', gap: 8 }}>
-                      <span style={{ color: '#E91E8C', flexShrink: 0 }}>✓</span>{p}
+                      <span style={{ color: '#7A5217', flexShrink: 0 }}>✓</span>{p}
                     </div>
                   ))}
                 </div>
@@ -178,7 +180,7 @@ export default function VsPageLayout(d: VsPageData) {
                   <tr>
                     <th style={{ padding: '16px 20px', fontFamily: "'JetBrains Mono', monospace", fontWeight: 500, fontSize: 10.5, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--text3)', textAlign: 'left', background: 'var(--bg2)', borderBottom: '1px solid var(--border)' }}>Feature</th>
                     <th style={{ padding: '16px 20px', fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 14.5, color: 'var(--text)', textAlign: 'left', background: 'var(--bg2)', borderBottom: '1px solid var(--border)' }}>{d.competitorName}</th>
-                    <th style={{ padding: '16px 20px', fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 14.5, color: '#E91E8C', textAlign: 'left', background: 'var(--bg2)', borderBottom: '1px solid var(--border)' }}>{d.ourName}</th>
+                    <th style={{ padding: '16px 20px', fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 14.5, color: '#7A5217', textAlign: 'left', background: 'var(--bg2)', borderBottom: '1px solid var(--border)' }}>{d.ourName}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -197,7 +199,7 @@ export default function VsPageLayout(d: VsPageData) {
               </table>
             </div>
 
-            <div style={{ background: 'linear-gradient(135deg,rgba(233,30,140,.06),rgba(124,58,237,.04))', border: '1px solid rgba(233,30,140,.14)', borderLeft: '3px solid #E91E8C', borderRadius: '0 12px 12px 0', padding: '20px 24px', margin: '24px 0 0' }}>
+            <div style={{ background: 'linear-gradient(135deg,rgba(122,82,23,.06),rgba(91,58,107,.04))', border: '1px solid rgba(122,82,23,.14)', borderLeft: '3px solid #7A5217', borderRadius: '0 12px 12px 0', padding: '20px 24px', margin: '24px 0 0' }}>
               <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 15, color: 'var(--text)', marginBottom: 8 }}>{d.calloutTitle}</div>
               <div style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.65 }}>{d.calloutBody}</div>
             </div>

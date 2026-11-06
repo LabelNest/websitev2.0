@@ -35,7 +35,7 @@ const DATA: VsPageData = {
   ],
   tableRows: [
     { feature: 'Pricing model', competitor: { text: '$49/user/month (Starter) to $99/user/month (Pro), Enterprise quoted, billed annually', verdict: 'mid' }, labelnest: { text: 'Credit-based, no per-seat penalty, pay for what you use', verdict: 'win' } },
-    { feature: 'Company coverage', competitor: { text: '4M+ companies globally', verdict: 'win' }, labelnest: { text: '40,000+ entities, India, SE Asia, and Gulf focus', verdict: 'mid' } },
+    { feature: 'Company coverage', competitor: { text: '4M+ companies globally', verdict: 'win' }, labelnest: { text: '{{entities}} entities, India, SE Asia, and Gulf focus', verdict: 'mid' } },
     { feature: 'India private markets depth', competitor: { text: 'Present as part of global coverage, thinner on early-stage India deals', verdict: 'mid' }, labelnest: { text: 'Deep — companies, funds, deals, LPs, service providers', verdict: 'win' } },
     { feature: 'Fund and LP data', competitor: { text: 'Limited — Crunchbase is company/founder/funding-round centric', verdict: 'no' }, labelnest: { text: 'Funds, LPs, GPs, and service providers as first-class entities', verdict: 'win' } },
     { feature: 'API access', competitor: { text: 'Enterprise-only, priced by call volume', verdict: 'mid' }, labelnest: { text: 'API available, expanding', verdict: 'mid' } },
@@ -54,7 +54,7 @@ const DATA: VsPageData = {
     body: "Crunchbase's assumption: broad, self-serve coverage of companies and funding rounds globally, priced per seat, useful the moment you sign up. LabelNest's assumption: investors and analysts who need the fund, LP, and GP side of the market — not just company data — with real depth in India, SE Asia, and the Gulf, plus a marketplace and data rooms Crunchbase doesn't build. If you've hit Crunchbase's ceiling on fund-side data, LabelNest was built for the next step.",
   },
   finalTag: 'See LabelNest for yourself',
-  finalHeading: '40,000+ entities. Credit-based. Free tier available.',
+  finalHeading: '{{entities}} entities. Credit-based. Free tier available.',
   finalBody: 'Open NestLens, browse the data, and decide for yourself. No credit card, no sales call required.',
   finalPrimaryCta: { href: 'https://nestlens.labelnest.in', label: 'Try NestLens Free ↗', external: true },
   finalSecondaryCta: { href: '/vs/pitchbook', label: 'Also see: vs PitchBook →' },

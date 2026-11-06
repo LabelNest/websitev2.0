@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 type ChatMsg = { role: 'user' | 'assistant'; content: string }
 
@@ -77,6 +78,7 @@ const SUGGESTIONS = [
 ]
 
 export default function KaiWidget() {
+  const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState<ChatMsg[]>([])
   const [input, setInput] = useState('')
@@ -166,6 +168,8 @@ export default function KaiWidget() {
     }
   }
 
+  if (pathname?.startsWith('/admin')) return null
+
   return (
     <>
       <style>{`
@@ -181,10 +185,10 @@ export default function KaiWidget() {
           ref={panelRef}
           className="kai-panel"
           style={{
-            position: 'fixed', zIndex: 350, left: 20, bottom: 92,
+            position: 'fixed', zIndex: 350, right: 20, bottom: 84,
             width: 360, maxWidth: 'calc(100vw - 32px)', height: 480,
-            background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 20,
-            boxShadow: '0 20px 48px rgba(0,0,0,.28)', display: 'flex', flexDirection: 'column', overflow: 'hidden',
+            background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 4,
+            boxShadow: '0 20px 48px rgba(14,27,46,.28)', display: 'flex', flexDirection: 'column', overflow: 'hidden',
             transform: `translate(${dragOffset.x}px, ${dragOffset.y}px)`,
           }}
         >
@@ -254,7 +258,7 @@ export default function KaiWidget() {
                 <div style={{ padding: '9px 13px', borderRadius: 14, background: 'var(--bg2)', fontSize: 13, color: 'var(--text3)' }}>…</div>
               </div>
             )}
-            {error && <p style={{ fontSize: 11.5, color: '#F97316' }}>{error}</p>}
+            {error && <p style={{ fontSize: 11.5, color: '#9A4B1F' }}>{error}</p>}
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 14px', borderTop: '1px solid var(--border)', flexShrink: 0 }}>
@@ -281,7 +285,7 @@ export default function KaiWidget() {
 
       <div
         ref={launcherRef}
-        style={{ position: 'fixed', zIndex: 350, left: 20, bottom: 20, transform: `translate(${dragOffset.x}px, ${dragOffset.y}px)` }}
+        style={{ position: 'fixed', zIndex: 350, right: 20, bottom: 20, transform: `translate(${dragOffset.x}px, ${dragOffset.y}px)` }}
       >
         <button
           className="kai-launcher"
@@ -291,13 +295,13 @@ export default function KaiWidget() {
           onPointerUp={onDragPointerUp}
           aria-label={open ? 'Close Kai chat' : 'Open Kai chat'}
           style={{
-            width: 64, height: 64, borderRadius: '50%', border: '1px solid var(--border)',
-            background: 'var(--surface)', boxShadow: '0 8px 24px rgba(0,0,0,.24)',
+            width: 52, height: 52, borderRadius: '50%', border: '1px solid var(--bord2)',
+            background: 'var(--surface)', boxShadow: '0 6px 18px rgba(14,27,46,.18)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             cursor: 'grab', transition: 'transform .15s', touchAction: 'none',
           }}
         >
-          {open ? <span style={{ fontSize: 20, color: 'var(--text2)' }}>✕</span> : <KaiAvatar size={52} />}
+          {open ? <span style={{ fontSize: 20, color: 'var(--text2)' }}>✕</span> : <KaiAvatar size={40} />}
         </button>
       </div>
     </>

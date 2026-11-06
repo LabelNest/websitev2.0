@@ -40,7 +40,7 @@ const DATA: VsPageData = {
     { feature: 'LP-GP matching', competitor: { text: 'Not offered as a structured product feature', verdict: 'no' }, labelnest: { text: 'Live matching engine', verdict: 'win' } },
     { feature: 'Portfolio management', competitor: { text: 'NAV-weighted modeling, stress testing, cash flow, multi-asset performance attribution', verdict: 'win' }, labelnest: { text: 'Not offered', verdict: 'no' } },
     { feature: 'Investor reporting / K-1s', competitor: { text: 'Automated distribution, electronic consent workflows', verdict: 'win' }, labelnest: { text: 'Not offered — pre-raise focused', verdict: 'no' } },
-    { feature: 'Platform scale', competitor: { text: '1,000+ clients, $10T+ AUM managed on platform', verdict: 'win' }, labelnest: { text: '40,000+ entities tracked, India/SE Asia/Gulf focus', verdict: 'mid' } },
+    { feature: 'Platform scale', competitor: { text: '1,000+ clients, $10T+ AUM managed on platform', verdict: 'win' }, labelnest: { text: '{{entities}} entities tracked, India/SE Asia/Gulf focus', verdict: 'mid' } },
     { feature: 'Pricing', competitor: { text: 'Quote-based, modular, no published tiers', verdict: 'no' }, labelnest: { text: 'Credit-based, INR-friendly', verdict: 'win' } },
     { feature: 'India-specific structures', competitor: { text: 'Not a specialization', verdict: 'no' }, labelnest: { text: 'Native Indian founder context', verdict: 'win' } },
   ],

@@ -35,8 +35,8 @@ export default function NestLensModuleNav() {
             fontSize: 13, fontWeight: 500, padding: '7px 18px', borderRadius: 9,
             transition: 'all .15s', textDecoration: 'none', whiteSpace: 'nowrap',
             color: isActive ? 'var(--text)' : 'var(--text2)',
-            background: isActive ? 'rgba(255,255,255,.07)' : 'transparent',
-            border: isActive ? '1px solid rgba(255,255,255,.1)' : '1px solid transparent',
+            background: isActive ? 'var(--bg3)' : 'transparent',
+            border: isActive ? '1px solid var(--bord2)' : '1px solid transparent',
           }}>
             {tab.icon && <img src={tab.icon} alt="" width={16} height={16} style={{ objectFit: 'contain' }} />}
             {tab.label}

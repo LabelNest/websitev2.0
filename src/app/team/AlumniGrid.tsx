@@ -46,7 +46,7 @@ export default function AlumniGrid({ initial }: { initial: Alumni[] }) {
   }
 
   const inp: React.CSSProperties = {
-    width: '100%', background: 'var(--bg)', border: '1px solid rgba(255,255,255,.1)',
+    width: '100%', background: 'var(--bg)', border: '1px solid rgba(14,27,46,.1)',
     borderRadius: 6, padding: '6px 9px', fontSize: 11.5, color: 'var(--text)', outline: 'none',
   }
 
@@ -56,11 +56,11 @@ export default function AlumniGrid({ initial }: { initial: Alumni[] }) {
         <div key={a.id}
           className="transition-all duration-200 hover:-translate-y-1"
           style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: 14 }}>
-          <div className="overflow-hidden relative flex-shrink-0" style={{ width: 40, height: 40, borderRadius: '50%', marginBottom: 10, background: 'linear-gradient(135deg,rgba(16,185,129,.12),rgba(37,99,235,.08))' }}>
+          <div className="overflow-hidden relative flex-shrink-0" style={{ width: 40, height: 40, borderRadius: '50%', marginBottom: 10, background: 'linear-gradient(135deg,rgba(44,107,75,.12),rgba(31,58,95,.08))' }}>
             {a.image_url ? (
               <Image src={a.image_url} alt={a.name} fill sizes="40px" style={imgFrameStyle(a.image_position || '50% 0%', a.image_zoom || 1)} />
             ) : (
-              <div className="absolute inset-0 flex items-center justify-center font-display font-bold" style={{ fontSize: 14, color: '#10B981' }}>
+              <div className="absolute inset-0 flex items-center justify-center font-display font-bold" style={{ fontSize: 14, color: '#2C6B4B' }}>
                 {a.name[0]}
               </div>
             )}
@@ -69,10 +69,10 @@ export default function AlumniGrid({ initial }: { initial: Alumni[] }) {
           <div style={{ fontSize: 11, color: 'var(--text2)', marginBottom: 6, lineHeight: 1.4 }}>{a.role}</div>
 
           {a.now_at_company ? (
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.06em', textTransform: 'uppercase', color: '#10B981', lineHeight: 1.4 }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.06em', textTransform: 'uppercase', color: '#2C6B4B', lineHeight: 1.4 }}>
               {nowAtLabel(a.now_at_type)}{' '}
               {a.now_at_url
-                ? <a href={a.now_at_url} target="_blank" rel="noopener noreferrer" style={{ color: '#10B981', textDecoration: 'none' }}>{a.now_at_company}</a>
+                ? <a href={a.now_at_url} target="_blank" rel="noopener noreferrer" style={{ color: '#2C6B4B', textDecoration: 'none' }}>{a.now_at_company}</a>
                 : a.now_at_company}
             </div>
           ) : editing === a.id ? (
@@ -84,14 +84,14 @@ export default function AlumniGrid({ initial }: { initial: Alumni[] }) {
               <input style={{ ...inp, marginBottom: 4 }} placeholder={nowType === 'studying' ? 'Institution' : 'Company'} value={company} onChange={e => setCompany(e.target.value)} />
               <input style={{ ...inp, marginBottom: 4 }} placeholder="Your role / course" value={role} onChange={e => setRole(e.target.value)} />
               <input style={{ ...inp, marginBottom: 6 }} placeholder="URL (optional)" value={url} onChange={e => setUrl(e.target.value)} />
-              {error && <div style={{ fontSize: 10, color: '#EF4444', marginBottom: 4 }}>{error}</div>}
+              {error && <div style={{ fontSize: 10, color: '#9B2C2C', marginBottom: 4 }}>{error}</div>}
               <div style={{ display: 'flex', gap: 4 }}>
                 <button onClick={() => submit(a.id)} disabled={saving}
-                  style={{ flex: 1, background: '#10B981', color: '#fff', border: 'none', borderRadius: 5, padding: '5px 0', fontSize: 10, fontWeight: 600, cursor: 'pointer', opacity: saving ? .6 : 1 }}>
+                  style={{ flex: 1, background: '#2C6B4B', color: '#fff', border: 'none', borderRadius: 5, padding: '5px 0', fontSize: 10, fontWeight: 600, cursor: 'pointer', opacity: saving ? .6 : 1 }}>
                   {saving ? '...' : 'Save'}
                 </button>
                 <button onClick={() => { setEditing(null); setError('') }}
-                  style={{ background: 'none', border: '1px solid rgba(255,255,255,.1)', borderRadius: 5, padding: '5px 8px', fontSize: 10, color: 'var(--text3)', cursor: 'pointer' }}>
+                  style={{ background: 'none', border: '1px solid rgba(14,27,46,.1)', borderRadius: 5, padding: '5px 8px', fontSize: 10, color: 'var(--text3)', cursor: 'pointer' }}>
                   ✕
                 </button>
               </div>

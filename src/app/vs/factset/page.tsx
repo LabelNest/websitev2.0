@@ -52,7 +52,7 @@ const DATA: VsPageData = {
     body: "FactSet's assumption: financial teams need a scalable, modular terminal spanning public and private data, priced by which modules you license. LabelNest's assumption: if private markets — companies, funds, deals, LPs in India, SE Asia, and the Gulf — is actually your job, you shouldn't need to license a public-markets terminal module by module to get it.",
   },
   finalTag: 'See LabelNest for yourself',
-  finalHeading: '40,000+ entities. Credit-based. Free tier available.',
+  finalHeading: '{{entities}} entities. Credit-based. Free tier available.',
   finalBody: 'Open NestLens, browse the data, and decide for yourself. No credit card, no sales call required.',
   finalPrimaryCta: { href: 'https://nestlens.labelnest.in', label: 'Try NestLens Free ↗', external: true },
   finalSecondaryCta: { href: '/vs/capital-iq', label: 'Also see: vs S&P Capital IQ →' },

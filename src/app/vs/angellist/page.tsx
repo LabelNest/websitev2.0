@@ -39,7 +39,7 @@ const DATA: VsPageData = {
     { feature: 'Investor tier scoring', competitor: { text: 'Not offered', verdict: 'no' }, labelnest: { text: 'Angel, Accelerator, Seed VC, Institutional', verdict: 'win' } },
     { feature: 'LP-GP matching', competitor: { text: 'Investor network exists, but matching is not a structured product feature', verdict: 'mid' }, labelnest: { text: 'Live matching engine', verdict: 'win' } },
     { feature: 'Fund/SPV formation and admin', competitor: { text: 'Tax services, filings, valuation support, dedicated manager', verdict: 'win' }, labelnest: { text: 'Not offered — assumes the vehicle already exists', verdict: 'no' } },
-    { feature: 'Platform scale', competitor: { text: '$171B+ assets on platform, 25,000+ funds/syndicates, 72,000+ active investors', verdict: 'win' }, labelnest: { text: '40,000+ entities tracked, India/SE Asia/Gulf focus', verdict: 'mid' } },
+    { feature: 'Platform scale', competitor: { text: '$171B+ assets on platform, 25,000+ funds/syndicates, 72,000+ active investors', verdict: 'win' }, labelnest: { text: '{{entities}} entities tracked, India/SE Asia/Gulf focus', verdict: 'mid' } },
     { feature: 'Cost structure', competitor: { text: '~$8,000 SPV setup plus regulatory costs and platform carry', verdict: 'no' }, labelnest: { text: 'Credit-based, INR-friendly', verdict: 'win' } },
     { feature: 'India-specific structures', competitor: { text: 'Not a specialization', verdict: 'no' }, labelnest: { text: 'Native Indian founder context', verdict: 'win' } },
     { feature: 'Grant and competition discovery', competitor: { text: 'Not offered', verdict: 'no' }, labelnest: { text: 'Included', verdict: 'win' } },

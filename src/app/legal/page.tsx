@@ -57,8 +57,8 @@ export default async function LegalPage() {
   return (
     <>
       <style>{`
-        .doc-card { background: var(--surface); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; padding: 20px; transition: transform .2s, border-color .2s; display: block; }
-        .doc-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.15) !important; }
+        .doc-card { background: var(--surface); border: 1px solid rgba(14,27,46,.07); border-radius: 14px; padding: 20px; transition: transform .2s, border-color .2s; display: block; }
+        .doc-card:hover { transform: translateY(-3px); border-color: rgba(14,27,46,.15) !important; }
       `}</style>
       <Nav />
       <main style={{ paddingTop: 64 }}>
@@ -79,7 +79,7 @@ export default async function LegalPage() {
                       <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 8 }}>{meta.tag}</div>
                       <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)', marginBottom: 4 }}>{db?.title ?? meta.title}</div>
                       <div style={{ fontSize: 12, color: 'var(--text3)', marginBottom: 10 }}>{db?.version ?? 'v1.0'} · Effective {db?.effective_date ?? 'May 2026'}</div>
-                      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: '#2563EB' }}>Read policy →</div>
+                      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: '#1F3A5F' }}>Read policy →</div>
                     </Link>
                   )
                 })}
@@ -88,7 +88,7 @@ export default async function LegalPage() {
           ))}
 
           {/* Entity info */}
-          <div style={{ background: 'var(--surface)', border: '1px solid rgba(255,255,255,.07)', borderRadius: 14, padding: 24 }}>
+          <div style={{ background: 'var(--surface)', border: '1px solid rgba(14,27,46,.07)', borderRadius: 14, padding: 24 }}>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 10 }}>Legal entity</div>
             <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 16, color: 'var(--text)', marginBottom: 6 }}>LabelNest India Private Limited</div>
             <div style={{ fontSize: 13.5, color: 'var(--text2)', lineHeight: 1.65, marginBottom: 16 }}>
@@ -97,8 +97,8 @@ export default async function LegalPage() {
               Bengaluru, Karnataka, India 560032
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, fontSize: 13, color: 'var(--text2)' }}>
-              <span>General: <a href="mailto:contact@labelnest.in" style={{ color: '#2563EB' }}>contact@labelnest.in</a></span>
-              <span>Privacy: <a href="mailto:privacy@labelnest.in" style={{ color: '#2563EB' }}>privacy@labelnest.in</a></span>
+              <span>General: <a href="mailto:contact@labelnest.in" style={{ color: '#1F3A5F' }}>contact@labelnest.in</a></span>
+              <span>Privacy: <a href="mailto:privacy@labelnest.in" style={{ color: '#1F3A5F' }}>privacy@labelnest.in</a></span>
               <span>Governing law: Laws of Karnataka, India</span>
             </div>
           </div>

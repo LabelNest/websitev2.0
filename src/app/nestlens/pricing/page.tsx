@@ -1,352 +1,143 @@
+import { Metadata } from 'next'
+import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import NestLensModuleNav from '@/components/NestLensModuleNav'
-import Link from 'next/link'
-import { Metadata } from 'next'
 import { pageMetadata, breadcrumbSchema } from '@/lib/seo'
+import { getContent, text, items } from '@/lib/siteContent'
+import { getPlans, inr, usd, num, unlimited, type ApiPlan } from '@/lib/plans'
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/nestlens/pricing', {
-    title: 'NestLens Pricing — Atlas, Exchange, Orbit, Ascent, Command, Connect',
-    description: 'Full pricing for all six NestLens modules — Atlas, Exchange, Orbit, Ascent, Command, and Connect — plus Enterprise and Bundle options.',
+    title: 'NestLens pricing — Atlas, Exchange, Command, Ascent, Orbit, Connect',
+    description: 'Pricing for every NestLens product in rupees and dollars, read live from the NestLens plan catalog. Enterprise, bundle and group quotes on request.',
   })
 }
 
-const BREADCRUMB_SCHEMA = breadcrumbSchema([
-  { name: 'NestLens', path: '/nestlens' },
-  { name: 'Pricing', path: '/nestlens/pricing' },
-])
+export const revalidate = 300
 
-// Fetched server-side from NestLens's own public, no-auth plans API — the
-// same endpoint the in-app checkout modal uses (server/routes/public.ts).
-// This page used to keep its own hand-typed copy of every tier's name and
-// price, which is exactly how it drifted: "Individual"/"Core" were stale
-// names from before a 2026-08-09 correction in the live catalog, and a
-// 2026-08-20 pricing-model change (firm-count tiers, real discounts) would
-// otherwise have needed a second manual edit here too. A Server Component
-// fetch avoids CORS entirely (server-to-server, not a browser request) and
-// revalidates hourly so a plan change in the admin panel reaches this page
-// without a redeploy.
-interface ApiPlan {
-  name: string; priceINR?: number; priceUSD?: number | string;
-  monthlyPriceINR?: number; monthlyPriceUSD?: number;
-  originalPriceINR?: number | string | null; originalPriceUSD?: number | string | null;
-  seats?: number; creditsPerMonth?: number; firmUnlocksPerYear?: number;
-  observatoryArticlesIncluded?: number | null;
-  description?: string; popular?: boolean; billing?: string;
-}
-interface ApiPlans { intelligence: Record<string, ApiPlan>; exchange: Record<string, ApiPlan>; cr: Record<string, ApiPlan> }
+const BREADCRUMB_SCHEMA = breadcrumbSchema([{ name: 'NestLens', path: '/nestlens' }, { name: 'Pricing', path: '/nestlens/pricing' }])
 
-interface Tier {
-  key: string; name: string; priceMo: string; priceYr: string; sub: string; popular?: boolean;
+const CSS = `
+.pp-sec{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:56px;padding:72px 0;border-top:1px solid var(--border)}
+.pp-note{font-size:14.5px;color:var(--text3);margin:14px 0 0;max-width:46em}
+.pp-jump{display:flex;flex-wrap:wrap;gap:10px 28px;font-size:15px;font-weight:600;margin-top:40px}
+`
+
+const Alt = ({ p }: { p: ApiPlan }) => {
+  const u = Number(p.priceUSD)
+  return p.priceINR && u > 0 ? <small>{usd(u)}</small> : null
 }
 
-function fmtInr(n: number): string {
-  return `₹${n.toLocaleString('en-IN')}`
-}
-function fmtUsd(n: number): string {
-  return `$${n.toLocaleString('en-US')}`
-}
-
-// perMonth: the plan is billed per month (Command, per fund) so its single price is monthly, never yearly.
-function tierFrom(key: string, p: ApiPlan | undefined, opts: { annualOnly?: boolean; perMonth?: boolean } = {}): Tier | null {
-  if (!p) return null
-  const useUsd = !p.priceINR && !!p.priceUSD
-  const annual = useUsd ? Number(p.priceUSD) || 0 : Number(p.priceINR) || 0
-  const monthly = useUsd ? Number(p.monthlyPriceUSD) || annual : Number(p.monthlyPriceINR) || annual
-  const fmt = useUsd ? fmtUsd : fmtInr
-  const original = useUsd
-    ? (p.originalPriceUSD ? Number(p.originalPriceUSD) : null)
-    : (p.originalPriceINR ? Number(p.originalPriceINR) : null)
-  const discountNote = original && original > annual ? ` (was ${fmt(original)})` : ''
-  return {
-    key, name: p.name,
-    priceMo: annual === 0 ? 'Free' : opts.annualOnly || opts.perMonth ? `${fmt(annual)}${discountNote}` : fmt(monthly),
-    priceYr: annual === 0 || opts.annualOnly || opts.perMonth ? '' : `${fmt(annual)}/yr${discountNote}`,
-    sub: (p.description ?? '').trim(),
-    popular: !!p.popular,
-  }
+function Section({ id, title, lead, children }: { id: string; title: string; lead?: string; children: React.ReactNode }) {
+  return (
+    <section id={id} className="pp-sec" style={{ scrollMarginTop: 120 }}>
+      <div><p className="ln-eyebrow" style={{ margin: '0 0 14px' }}>{id.charAt(0).toUpperCase() + id.slice(1)}</p><h2 className="ln-h2" style={{ fontSize: 'clamp(28px,3vw,40px)' }}>{title}</h2>{lead && <p style={{ margin: '16px 0 0' }}>{lead}</p>}</div>
+      <div className="ln-scroll">{children}</div>
+    </section>
+  )
 }
 
-async function getPlans(): Promise<ApiPlans | null> {
-  try {
-    const res = await fetch('https://nestlens.labelnest.in/api/public/plans', { next: { revalidate: 3600 } })
-    if (!res.ok) return null
-    return await res.json()
-  } catch {
-    return null
-  }
-}
+export default async function PricingPage() {
+  const [c, { plans, live }] = await Promise.all([getContent(), getPlans()])
+  const intel = ['atlas_basic', 'atlas_starter', 'atlas_growth', 'atlas_scale'].map((k) => [k, plans.intelligence[k]] as const).filter(([, p]) => p)
+  const buyer = plans.exchange.buyer
+  const seller = plans.exchange.priority
+  const founder = plans.cr.founder_paid_solo
+  const cmdIn = plans.cr.fund_bundle
+  const cmdGl = plans.cr.fund_bundle_global
+  const orbit = ['orbit_launch', 'orbit_starter', 'orbit_growth', 'orbit_scale', 'orbit_enterprise'].map((k) => [k, plans.cr[k]] as const).filter(([, p]) => p)
+  const orbitExtra = items(c, 'pricing.orbit.features')
+  const extraFor = (name: string) => orbitExtra.filter((x) => x.plan === name).map((x) => x.text).join(' ')
+  const hasExtra = orbit.some(([, p]) => extraFor(p.name))
 
-export default async function NestLensPricingPage() {
-  const plans = await getPlans()
-
-  const intelTiers = plans
-    ? (['atlas_basic', 'atlas_starter', 'atlas_growth', 'atlas_scale'] as const)
-        .map(k => tierFrom(k, plans.intelligence[k]))
-        .filter((t): t is Tier => !!t)
-    : []
-  const exchangeBuyer = plans ? tierFrom('buyer', plans.exchange['buyer']) : null
-  const exchangePriority = plans ? tierFrom('priority', plans.exchange['priority'], { annualOnly: true }) : null
-  const crFounder = plans ? tierFrom('founder_paid_solo', plans.cr['founder_paid_solo'], { annualOnly: true }) : null
-  const crCommandIndia = plans ? tierFrom('fund_bundle', plans.cr['fund_bundle'], { perMonth: true }) : null
-  const crCommandGlobal = plans ? tierFrom('fund_bundle_global', plans.cr['fund_bundle_global'], { perMonth: true }) : null
-  const crCohort = plans ? tierFrom('founder_paid_cohort', plans.cr['founder_paid_cohort'], { annualOnly: true }) : null
-  const orbitTiers = plans
-    ? (['orbit_launch', 'orbit_starter', 'orbit_growth', 'orbit_scale', 'orbit_enterprise'] as const)
-        .map(k => tierFrom(k, plans.cr[k], { annualOnly: true }))
-        .filter((t): t is Tier => !!t)
-    : []
-
-  // Real published tiers only — Enterprise/Custom entries have no fixed price and are
-  // intentionally excluded from structured Offer data (schema.org Offer expects a price).
   const offers = [
-    ...intelTiers.map(t => ({ '@type': 'Offer', name: `Atlas — ${t.name}`, price: String(Math.round(Number((t.priceYr || t.priceMo).replace(/[^0-9.]/g, '')) || 0)), priceCurrency: 'INR', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Atlas' })),
-    exchangePriority ? { '@type': 'Offer', name: 'Exchange — Seller', price: String(plans?.exchange['priority']?.priceUSD ?? ''), priceCurrency: 'USD', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Exchange' } : null,
-    crFounder ? { '@type': 'Offer', name: 'Ascent — Founder Data Room', price: String(plans?.cr['founder_paid_solo']?.priceINR ?? ''), priceCurrency: 'INR', priceValidUntil: '2027-08-20', url: 'https://labelnest.in/nestlens/pricing', category: 'Ascent' } : null,
-    crCommandIndia ? { '@type': 'Offer', name: 'Command — India-domiciled fund (per fund, per month)', price: String(plans?.cr['fund_bundle']?.priceINR ?? ''), priceCurrency: 'INR', priceValidUntil: '2027-10-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Command' } : null,
-    crCommandGlobal ? { '@type': 'Offer', name: 'Command — Non-India fund (per fund, per month)', price: String(plans?.cr['fund_bundle_global']?.priceUSD ?? ''), priceCurrency: 'USD', priceValidUntil: '2027-10-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Command' } : null,
-    ...orbitTiers.map(t => ({ '@type': 'Offer', name: `Orbit — ${t.name}`, price: String(Math.round(Number(t.priceMo.replace(/[^0-9.]/g, '')) || 0)), priceCurrency: 'INR', priceValidUntil: '2027-10-16', url: 'https://labelnest.in/nestlens/pricing', category: 'Orbit' })),
+    ...intel.map(([, p]) => ({ '@type': 'Offer', name: `Atlas ${p.name}`, price: String(p.priceINR ?? 0), priceCurrency: 'INR', url: 'https://labelnest.in/nestlens/pricing', category: 'Atlas' })),
+    seller ? { '@type': 'Offer', name: 'Exchange Seller', price: String(seller.priceINR ?? 0), priceCurrency: 'INR', url: 'https://labelnest.in/nestlens/pricing', category: 'Exchange' } : null,
+    founder ? { '@type': 'Offer', name: 'Ascent Founder Data Room', price: String(founder.priceINR ?? 0), priceCurrency: 'INR', url: 'https://labelnest.in/nestlens/pricing', category: 'Ascent' } : null,
+    cmdIn ? { '@type': 'Offer', name: 'Command, India-domiciled fund, per month', price: String(cmdIn.priceINR ?? 0), priceCurrency: 'INR', url: 'https://labelnest.in/nestlens/pricing', category: 'Command' } : null,
+    ...orbit.map(([, p]) => ({ '@type': 'Offer', name: p.name, price: String(p.priceINR ?? 0), priceCurrency: 'INR', url: 'https://labelnest.in/nestlens/pricing', category: 'Orbit' })),
   ].filter(Boolean)
-
-  const PRICING_SCHEMA = {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    isPartOf: { '@id': 'https://labelnest.in/nestlens#software' },
-    name: 'NestLens',
-    offers,
-  }
+  const PRICING_SCHEMA = { '@context': 'https://schema.org', '@type': 'SoftwareApplication', isPartOf: { '@id': 'https://labelnest.in/nestlens#software' }, name: 'NestLens', offers }
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(PRICING_SCHEMA) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_SCHEMA) }} />
+      <style>{CSS}</style>
       <Nav />
-      <NestLensModuleNav />
-      <main style={{ paddingTop: 64 }}>
+      <main className="ln-page">
+        <NestLensModuleNav />
 
-        {/* HERO */}
-        <section style={{ padding: '64px 48px 48px', textAlign: 'center', borderBottom: '1px solid var(--border)' }}>
-          <div style={{ maxWidth: 900, margin: '0 auto' }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Pricing</div>
-            <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(32px,5vw,52px)', fontWeight: 800, letterSpacing: '-.03em', color: 'var(--text)', marginBottom: 16 }}>Six modules, priced independently.</h1>
-            <p style={{ fontSize: 15.5, color: 'var(--text2)', lineHeight: 1.7, maxWidth: 600, margin: '0 auto' }}>Subscribe only to what you need — Atlas, Exchange, Orbit, Ascent, Command, or Connect. Every plan is available monthly or annually where applicable. Enterprise and Bundle pricing on request.</p>
+        <section style={{ padding: '88px 0 56px' }}>
+          <div className="ln-wrap" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,420px),1fr))', gap: 48, alignItems: 'end' }}>
+            <div><p className="ln-eyebrow ln-rise">Pricing</p><h1 className="ln-h1 ln-rise" style={{ ['--d' as string]: '.1s' }}>{text(c, 'pricing.hero.title')}</h1></div>
+            <p className="ln-lead ln-rise" style={{ ['--d' as string]: '.25s', maxWidth: '30em' }}>{text(c, 'pricing.hero.lead')}</p>
+          </div>
+          <div className="ln-wrap">
+            <div className="pp-jump">
+              {['atlas', 'exchange', 'command', 'ascent', 'orbit', 'connect'].map((s) => <a key={s} className="ln-tlink" href={`#${s}`}>{s.charAt(0).toUpperCase() + s.slice(1)}</a>)}
+            </div>
+            {!live && <p className="pp-note" style={{ marginTop: 24 }}>Live pricing is temporarily unavailable, so the figures below may be a few days old. For the latest, <Link className="ln-tlink" href="/contact">ask us</Link> or check NestLens.</p>}
           </div>
         </section>
 
-        {!plans && (
-          <section style={{ padding: '24px 48px', textAlign: 'center' }}>
-            <p style={{ fontSize: 13, color: 'var(--text3)' }}>Live pricing is temporarily unavailable — please check back shortly, or subscribe directly on NestLens.</p>
-          </section>
-        )}
+        <div className="ln-wrap">
 
-        {/* INTELLIGENCE */}
-        <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 28 }}>
-              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(20px,2.5vw,28px)', fontWeight: 800, color: 'var(--text)' }}>Atlas</h2>
-              <Link href="/nestlens/intelligence" style={{ fontSize: 12.5, color: '#2563EB' }}>What it does →</Link>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(180px,1fr))', gap: 16 }}>
-              {[
-                ...intelTiers.map(t => ({ name: t.name, priceMo: t.priceMo, priceYr: t.priceYr, sub: t.sub, popular: t.popular })),
-                { name: 'Enterprise', priceMo: 'Custom', priceYr: '', sub: 'Custom seats, exported rows, alerts and SLA · 20% less per unlock · API included', popular: false },
-              ].map(t => (
-                <div key={t.name} style={{ background: 'var(--surface)', border: `1px solid ${t.popular ? '#2563EB' : 'var(--border)'}`, borderRadius: 14, padding: 20, position: 'relative' }}>
-                  {t.popular && <div style={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)', background: '#2563EB', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 10px', borderRadius: 99, whiteSpace: 'nowrap' }}>MOST POPULAR</div>}
-                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14.5, color: 'var(--text)', marginBottom: 8 }}>{t.name}</div>
-                  <div style={{ marginBottom: 4 }}>
-                    <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 20, fontWeight: 800, color: t.popular ? '#2563EB' : 'var(--text)' }}>{t.priceMo}</span>
-                    {t.priceMo !== 'Custom' && t.priceMo !== 'Free' && <span style={{ fontSize: 11, color: 'var(--text3)' }}>/mo, billed annually</span>}
-                  </div>
-                  {t.priceYr && <div style={{ fontSize: 11, color: 'var(--text3)', marginBottom: 8 }}>{t.priceYr}</div>}
-                  <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>{t.sub}</div>
-                </div>
+          <Section id="atlas" title="Data on funds, companies and people." lead="Billed yearly. Credits unlock records beyond your plan.">
+            <table className="ln-tbl"><thead><tr><th>Plan</th><th>Price per year</th><th>Seats</th><th>Exported rows a month</th></tr></thead><tbody>
+              {intel.map(([k, p]) => (
+                <tr key={k} className={p.popular ? 'hl' : undefined}><td className="nm">{p.name.replace(/^Atlas\s*/, '')}</td><td className="p">{usd(p.priceUSD ?? 0)}<small>{inr(p.priceINR ?? 0)}</small></td><td>{p.seats}</td><td>{num(p.exportsPerMonth)}</td></tr>
               ))}
-            </div>
-          </div>
-        </section>
+            </tbody></table>
+            <p className="pp-note">{text(c, 'pricing.atlas.note')}</p>
+          </Section>
 
-        {/* EXCHANGE */}
-        <section style={{ padding: '64px 48px', background: 'var(--bg2)', borderBottom: '1px solid var(--border)' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 28 }}>
-              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(20px,2.5vw,28px)', fontWeight: 800, color: 'var(--text)' }}>Exchange</h2>
-              <Link href="/nestlens/exchange" style={{ fontSize: 12.5, color: '#E91E8C' }}>What it does →</Link>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 16 }}>
-              {[
-                { name: exchangeBuyer?.name ?? 'Free', price: exchangeBuyer?.priceMo ?? 'Free', unit: '', sub: exchangeBuyer?.sub || 'Free to browse & post 5 requirements/mo — requirements 5–100/mo cost 100 credits each, no subscription needed.' },
-                { name: exchangePriority?.name ?? 'Seller', price: exchangePriority?.priceMo ?? '₹19,999', unit: '/yr', sub: exchangePriority?.sub || 'Active seller listing · 15% platform fee on closed deals (vs. 25% free tier)', popular: true },
-                { name: 'Enterprise', price: 'Custom', unit: '', sub: 'High-volume buyer or seller, custom credit arrangements' },
-              ].map(t => (
-                <div key={t.name} style={{ background: 'var(--surface)', border: `1px solid ${t.popular ? '#E91E8C' : 'var(--border)'}`, borderRadius: 14, padding: 22, position: 'relative' }}>
-                  {t.popular && <div style={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)', background: '#E91E8C', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 10px', borderRadius: 99, whiteSpace: 'nowrap' }}>MOST POPULAR</div>}
-                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)', marginBottom: 8 }}>{t.name}</div>
-                  <div style={{ marginBottom: 10 }}>
-                    <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 24, fontWeight: 800, color: t.popular ? '#E91E8C' : 'var(--text)' }}>{t.price}</span>
-                    <span style={{ fontSize: 12, color: 'var(--text3)' }}>{t.unit}</span>
-                  </div>
-                  <div style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.55 }}>{t.sub}</div>
-                </div>
+          <Section id="exchange" title="Free to buy. Pay to sell.">
+            <table className="ln-tbl"><thead><tr><th>Plan</th><th>Price</th><th>Includes</th></tr></thead><tbody>
+              {buyer && <tr><td className="nm">Free</td><td className="p">₹0</td><td>{buyer.jobPostsIncluded} requirements and {buyer.applicationsPerMonth} applications a month, then credits. {text(c, 'pricing.exchange.freeNote')}</td></tr>}
+              {seller && <tr className="hl"><td className="nm">Seller</td><td className="p">{inr(seller.priceINR ?? 0)}<Alt p={seller} /><small>a year</small></td><td>{seller.jobPostsIncluded} requirements and {seller.applicationsPerMonth} applications a month. {text(c, 'pricing.exchange.sellerNote')}</td></tr>}
+            </tbody></table>
+          </Section>
+
+          <Section id="command" title="One package per fund." lead="Billed monthly. No per-LP fees and no multi-year contract.">
+            <table className="ln-tbl"><thead><tr><th>Fund domicile</th><th>Price per fund a month</th><th>Ascent data rooms</th></tr></thead><tbody>
+              {cmdIn && <tr><td className="nm">India</td><td className="p">{inr(cmdIn.priceINR ?? 0)}</td><td>{num(cmdIn.dataRoomsIncluded)}</td></tr>}
+              {cmdGl && <tr><td className="nm">Outside India</td><td className="p">{usd(cmdGl.priceUSD ?? 0)}</td><td>{num(cmdGl.dataRoomsIncluded)}</td></tr>}
+            </tbody></table>
+            <p className="pp-note">{text(c, 'pricing.command.note')}</p>
+          </Section>
+
+          <Section id="ascent" title="A data room for every founder." lead={text(c, 'pricing.ascent.note')}>
+            <table className="ln-tbl"><thead><tr><th>Plan</th><th>Price per year</th><th>Includes</th></tr></thead><tbody>
+              {founder && <tr className="hl"><td className="nm">{founder.name}</td><td className="p">{inr(founder.priceINR ?? 0)}<small>{usd(founder.priceUSD ?? 0)}{founder.monthlyPriceINR ? ` · or ${inr(founder.monthlyPriceINR)} a month` : ''}</small></td><td>{text(c, 'pricing.ascent.includes')}</td></tr>}
+              <tr><td className="nm">A group of startups</td><td className="p" style={{ fontSize: 20 }}>Let&apos;s discuss</td><td>{text(c, 'pricing.ascent.group')} <Link className="ln-tlink" href="/contact">Talk to us</Link></td></tr>
+            </tbody></table>
+          </Section>
+
+          <Section id="orbit" title="Programmes, with data rooms included." lead="Each plan includes Ascent data rooms for your startups. A room is used when a founder joins one of your cohorts.">
+            <table className="ln-tbl"><thead><tr><th>Plan</th><th>Price per year</th><th>Ascent rooms included</th>{hasExtra && <th>Also includes</th>}</tr></thead><tbody>
+              {orbit.map(([k, p]) => (
+                <tr key={k} className={p.popular ? 'hl' : undefined}><td className="nm">{p.name.replace(/^Orbit\s*/, '')}</td><td className="p">{inr(p.priceINR ?? 0)}</td><td>{unlimited(p.dataRoomsIncluded) ? 'Unlimited' : p.dataRoomsIncluded}</td>{hasExtra && <td>{extraFor(p.name)}</td>}</tr>
               ))}
-            </div>
+            </tbody></table>
+            <p className="pp-note">{text(c, 'pricing.orbit.note')}</p>
+          </Section>
+
+          <Section id="connect" title="Included.">
+            <table className="ln-tbl"><tbody>
+              <tr><td className="nm">Founders and funds</td><td>{text(c, 'pricing.connect.founders')}</td></tr>
+              <tr><td className="nm">Mentors and audit partners</td><td>{text(c, 'pricing.connect.partners')}</td></tr>
+            </tbody></table>
+          </Section>
+        </div>
+
+        <section className="ln-night ln-sec" style={{ padding: '96px 0' }}>
+          <div className="ln-wrap" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'end', gap: 40 }}>
+            <div style={{ maxWidth: '30em' }}><h2 className="ln-h2">{text(c, 'pricing.cta.title')}</h2><p className="ln-lead" style={{ margin: '18px 0 0' }}>{text(c, 'pricing.cta.lead')}</p></div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14 }}><Link className="ln-btn light" href="/contact">Talk to us</Link><a className="ln-btn lightline" href="https://nestlens.labelnest.in/pricing">Subscribe in NestLens</a></div>
           </div>
         </section>
-
-        {/* ORBIT */}
-        <section style={{ padding: '64px 48px', background: 'var(--bg2)', borderBottom: '1px solid var(--border)' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 28 }}>
-              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(20px,2.5vw,28px)', fontWeight: 800, color: 'var(--text)' }}>Orbit</h2>
-              <Link href="/nestlens/orbit" style={{ fontSize: 12.5, color: '#7C3AED' }}>What it does →</Link>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16 }}>
-              {[
-                ...orbitTiers.map(t => ({ name: t.name, price: t.priceMo, unit: '/yr', sub: t.sub, popular: t.key === 'orbit_growth' })),
-                ...(orbitTiers.length === 0 ? [
-                  { name: 'Orbit Launch', price: '₹75,000', unit: '/yr', sub: 'Every Orbit feature · 25,000 applications/year · 75,000 emails/year · 2 data rooms · 5 admin seats', popular: false },
-                  { name: 'Orbit Starter', price: '₹99,000', unit: '/yr', sub: '30,000 applications · 85,000 emails · 5 data rooms · 3 programmes', popular: false },
-                  { name: 'Orbit Growth', price: '₹1,25,000', unit: '/yr', sub: '50,000 applications · 1,25,000 emails · 10 data rooms · 15 admin seats · 6 programmes', popular: true },
-                  { name: 'Orbit Scale', price: '₹2,50,000', unit: '/yr', sub: '1,00,000 applications · 2,50,000 emails · 25 data rooms · 40 admin seats · API access · white-label included', popular: false },
-                  { name: 'Orbit Enterprise', price: '₹10,00,000', unit: '/yr', sub: 'Unlimited applications and emails · 100 data rooms · API + SSO · custom SLA', popular: false },
-                ] : []),
-              ].map(t => (
-                <div key={t.name} style={{ background: 'var(--surface)', border: `1px solid ${t.popular ? '#7C3AED' : 'var(--border)'}`, borderRadius: 14, padding: 20, position: 'relative' }}>
-                  {t.popular && <div style={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)', background: '#7C3AED', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 10px', borderRadius: 99, whiteSpace: 'nowrap' }}>MOST POPULAR</div>}
-                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>{t.name}</div>
-                  <div style={{ marginBottom: 8 }}>
-                    <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: t.popular ? '#7C3AED' : 'var(--text)' }}>{t.price}</span>
-                    <span style={{ fontSize: 11, color: 'var(--text3)' }}>{t.unit}</span>
-                  </div>
-                  <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>{t.sub}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ASCENT */}
-        <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 28 }}>
-              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(20px,2.5vw,28px)', fontWeight: 800, color: 'var(--text)' }}>Ascent</h2>
-              <Link href="/nestlens/capital" style={{ fontSize: 12.5, color: '#10B981' }}>What it does →</Link>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16 }}>
-              {[
-                { name: crFounder?.name ?? 'Founder Data Room', price: crFounder?.priceMo ?? '₹14,999 (was ₹24,999)', unit: '/ 12 months', sub: crFounder?.sub || 'Full founder-track access · ₹3,999 for 3 months · ₹1,999 per month · All templates included · free Exchange access', popular: true },
-                { name: crCohort?.name ?? 'Cohort / Group', price: crCohort?.priceMo ?? '₹4,999', unit: '', sub: crCohort?.sub || 'Cohort of 25 · +₹4,999 per additional founder beyond 25' },
-                { name: 'Enterprise', price: 'Custom', unit: '', sub: 'Cohort access for accelerators and incubator programmes' },
-              ].map(t => (
-                <div key={t.name} style={{ background: 'var(--surface)', border: `1px solid ${t.popular ? '#10B981' : 'var(--border)'}`, borderRadius: 14, padding: 20, position: 'relative' }}>
-                  {t.popular && <div style={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)', background: '#10B981', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 10px', borderRadius: 99, whiteSpace: 'nowrap' }}>MOST POPULAR</div>}
-                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>{t.name}</div>
-                  <div style={{ marginBottom: 8 }}>
-                    <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: t.popular ? '#10B981' : 'var(--text)' }}>{t.price}</span>
-                    <span style={{ fontSize: 11, color: 'var(--text3)' }}>{t.unit}</span>
-                  </div>
-                  <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>{t.sub}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* COMMAND */}
-        <section style={{ padding: '64px 48px', background: 'var(--bg2)', borderBottom: '1px solid var(--border)' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 28 }}>
-              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(20px,2.5vw,28px)', fontWeight: 800, color: 'var(--text)' }}>Command</h2>
-              <Link href="/nestlens/command" style={{ fontSize: 12.5, color: '#F97316' }}>What it does →</Link>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16 }}>
-              {[
-                // Command is one package billed per fund per month (2026-10-16 pricing sync): ₹ for India-domiciled
-                // funds, $ for funds domiciled elsewhere. The old Data Room / Full OS split is gone.
-                { name: crCommandIndia?.name ?? 'Command — India-domiciled fund', price: crCommandIndia?.priceMo ?? '₹5,00,000', unit: '/fund/month', sub: crCommandIndia?.sub || 'Full fund workflow · 3 seats · 1 vehicle · 50 portfolio companies · 100 LPs tracked · 20 IC-memo AI credits/month · 2,000 Atlas credits/year', popular: true },
-                { name: crCommandGlobal?.name ?? 'Command — Non-India fund', price: crCommandGlobal?.priceMo ?? '$799', unit: '/fund/month', sub: crCommandGlobal?.sub || 'Same package for funds domiciled outside India · billed in USD' },
-                { name: 'Enterprise', price: 'Custom', unit: '', sub: 'Multiple funds, custom LP/portfolio room counts, and SLA' },
-              ].map(t => (
-                <div key={t.name} style={{ background: 'var(--surface)', border: `1px solid ${t.popular ? '#F97316' : 'var(--border)'}`, borderRadius: 14, padding: 20, position: 'relative' }}>
-                  {t.popular && <div style={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)', background: '#F97316', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 10px', borderRadius: 99, whiteSpace: 'nowrap' }}>MOST POPULAR</div>}
-                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>{t.name}</div>
-                  <div style={{ marginBottom: 8 }}>
-                    <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: t.popular ? '#F97316' : 'var(--text)' }}>{t.price}</span>
-                    <span style={{ fontSize: 11, color: 'var(--text3)' }}>{t.unit}</span>
-                  </div>
-                  <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>{t.sub}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CONNECT */}
-        <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 28 }}>
-              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(20px,2.5vw,28px)', fontWeight: 800, color: 'var(--text)' }}>Connect</h2>
-              <Link href="/nestlens/connect" style={{ fontSize: 12.5, color: '#06B6D4' }}>What it does →</Link>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16 }}>
-              <div style={{ background: 'var(--surface)', border: '1px solid #06B6D4', borderRadius: 14, padding: 20, position: 'relative' }}>
-                <div style={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)', background: '#06B6D4', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 10px', borderRadius: 99, whiteSpace: 'nowrap' }}>MOST POPULAR</div>
-                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>Founders and funds</div>
-                <div style={{ marginBottom: 8 }}>
-                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: '#06B6D4' }}>Included</span>
-                </div>
-                <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>Mentor Connect and audit requests come with an active Ascent or Command plan</div>
-              </div>
-              <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 20 }}>
-                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>Mentors and partners</div>
-                <div style={{ marginBottom: 8 }}>
-                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: 'var(--text)' }}>Free</span>
-                </div>
-                <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>Apply to join — vetted before your dashboard goes live</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ENTERPRISE & BUNDLE */}
-        <section style={{ padding: '64px 48px', background: 'var(--bg2)' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ textAlign: 'center', marginBottom: 32 }}>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Enterprise & Bundle</div>
-              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,32px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>Institutional and cross-module needs</h2>
-            </div>
-            {/* "Fund Bundle" used to be a special negotiated-rate callout
-                here -- 2026-09-11: it's Command's real, fixed-price "Full
-                OS" tier now (Command section above), not a bespoke deal, so
-                the duplicate description describing it as "negotiated"
-                would have been actively wrong. Enterprise is still genuinely
-                custom/on-request, so it stays. */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 20, marginBottom: 32, maxWidth: 480, margin: '0 auto 32px' }}>
-              <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 24 }}>
-                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 16, color: 'var(--text)', marginBottom: 8 }}>Enterprise</div>
-                <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.65 }}>Custom seats, credit volumes, entity access, and SLA agreements — best for institutional funds, research firms, and accelerators with large cohorts.</p>
-              </div>
-            </div>
-            <div style={{ textAlign: 'center', display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-              <a href="https://nestlens.labelnest.in/enterprise-enquiry" target="_blank" rel="noopener noreferrer"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#2563EB', color: '#fff', fontSize: 14, fontWeight: 600, padding: '12px 26px', borderRadius: 10 }}>Enquire about Enterprise or Bundle ↗</a>
-              <Link href="/contact"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14, fontWeight: 500, padding: '12px 26px', borderRadius: 10, border: '1px solid rgba(255,255,255,.1)' }}>Talk to the team</Link>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section style={{ padding: '64px 48px', textAlign: 'center' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,36px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)', maxWidth: 520, margin: '0 auto 12px' }}>Ready to open NestLens?</h2>
-            <p style={{ fontSize: 15.5, color: 'var(--text2)', maxWidth: 460, margin: '0 auto 32px', lineHeight: 1.7 }}>Subscribe from inside the app — pick your plan and pay in INR or USD depending on the module.</p>
-            <a href="https://nestlens.labelnest.in/pricing" target="_blank" rel="noopener noreferrer"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#2563EB', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Subscribe on NestLens ↗</a>
-          </div>
-        </section>
-
       </main>
       <Footer />
     </>

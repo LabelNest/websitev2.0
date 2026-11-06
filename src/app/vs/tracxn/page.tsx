@@ -36,7 +36,7 @@ const DATA: VsPageData = {
   tableRows: [
     { feature: 'Pricing model', competitor: { text: 'Custom-quoted, no published pricing, no monthly plan; positioned at a premium for the India market', verdict: 'no' }, labelnest: { text: 'Credit-based, no seat penalties, pay for what you use', verdict: 'win' } },
     { feature: 'Free access', competitor: { text: 'No free trial offered', verdict: 'no' }, labelnest: { text: 'Self-serve free tier, no credit card, no sales call', verdict: 'win' } },
-    { feature: 'Entity coverage', competitor: { text: '1.4M+ entities globally across sectors', verdict: 'win' }, labelnest: { text: '40,000+ entities, India, SE Asia, and Gulf focus', verdict: 'mid' } },
+    { feature: 'Entity coverage', competitor: { text: '1.4M+ entities globally across sectors', verdict: 'win' }, labelnest: { text: '{{entities}} entities, India, SE Asia, and Gulf focus', verdict: 'mid' } },
     { feature: 'Fund, LP, and GP data', competitor: { text: 'Primarily startup/company-tracking focused', verdict: 'no' }, labelnest: { text: 'Funds, LPs, GPs, and service providers as first-class entities', verdict: 'win' } },
     { feature: 'CRM / dashboard tools', competitor: { text: 'Inbuilt CRM tool and personalized dashboard builder', verdict: 'win' }, labelnest: { text: 'Not a CRM workflow tool — data and marketplace focused', verdict: 'no' } },
     { feature: 'API access', competitor: { text: 'API support included', verdict: 'win' }, labelnest: { text: 'API available, expanding', verdict: 'mid' } },
@@ -53,7 +53,7 @@ const DATA: VsPageData = {
     body: "Tracxn's assumption: broad, global sector coverage with sourcing and CRM tools built for deal teams, priced at a premium with no self-serve option. LabelNest's assumption: if your job is the fund, LP, and GP side of India, SE Asia, and Gulf private markets — not just startup tracking — you need entities Tracxn doesn't treat as first-class, plus a marketplace and data rooms it doesn't build, without a sales-negotiated annual contract.",
   },
   finalTag: 'See LabelNest for yourself',
-  finalHeading: '40,000+ entities. Credit-based. Free tier available.',
+  finalHeading: '{{entities}} entities. Credit-based. Free tier available.',
   finalBody: 'Open NestLens, browse the data, and decide for yourself. No credit card, no sales call required.',
   finalPrimaryCta: { href: 'https://nestlens.labelnest.in', label: 'Try NestLens Free ↗', external: true },
   finalSecondaryCta: { href: '/vs/venture-intelligence', label: 'Also see: vs Venture Intelligence →' },

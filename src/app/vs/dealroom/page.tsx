@@ -35,7 +35,7 @@ const DATA: VsPageData = {
   ],
   tableRows: [
     { feature: 'Pricing model', competitor: { text: '€12,000/year (Starter, 3 seats) to €40,000/year (Corporate, 20 seats), annual only, no monthly option', verdict: 'no' }, labelnest: { text: 'Credit-based, no seat minimum, pay for what you use', verdict: 'win' } },
-    { feature: 'Geographic focus', competitor: { text: 'Strong in Europe, since 2013', verdict: 'win' }, labelnest: { text: 'India, SE Asia, and Gulf focus, 40,000+ entities', verdict: 'mid' } },
+    { feature: 'Geographic focus', competitor: { text: 'Strong in Europe, since 2013', verdict: 'win' }, labelnest: { text: 'India, SE Asia, and Gulf focus, {{entities}} entities', verdict: 'mid' } },
     { feature: 'India private markets depth', competitor: { text: 'Not a specialization', verdict: 'no' }, labelnest: { text: 'Deep — companies, funds, deals, LPs, service providers', verdict: 'win' } },
     { feature: 'Data exports', competitor: { text: 'Up to 10,000 exports per user on premium plans', verdict: 'win' }, labelnest: { text: 'Credit-based export, scales with plan', verdict: 'mid' } },
     { feature: 'Free trial / self-serve', competitor: { text: 'No self-serve trial, demo required', verdict: 'no' }, labelnest: { text: 'Self-serve free tier, no credit card, no demo required', verdict: 'win' } },
@@ -53,7 +53,7 @@ const DATA: VsPageData = {
     body: "Dealroom's assumption: institutional investors and large corporates researching the European VC market, with budget for a seat-minimum annual contract and dedicated analyst support. LabelNest's assumption: emerging managers, boutique funds, and analysts who need real depth in India, SE Asia, and the Gulf — plus a marketplace and data rooms Dealroom doesn't build. If your market isn't Europe, or the seat minimum doesn't fit your team size, LabelNest was built for you.",
   },
   finalTag: 'See LabelNest for yourself',
-  finalHeading: '40,000+ entities. Credit-based. Free tier available.',
+  finalHeading: '{{entities}} entities. Credit-based. Free tier available.',
   finalBody: 'Open NestLens, browse the data, and decide for yourself. No credit card, no sales call required.',
   finalPrimaryCta: { href: 'https://nestlens.labelnest.in', label: 'Try NestLens Free ↗', external: true },
   finalSecondaryCta: { href: '/vs/preqin', label: 'Also see: vs Preqin →' },

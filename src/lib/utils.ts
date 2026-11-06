@@ -83,12 +83,12 @@ export function mdToHtml(text: string): string {
 // Scope → accent color
 export function scopeColor(scope: string): string {
   const s = scope.toLowerCase()
-  if (s.includes('intelligence') || s.includes('private market')) return '#2563EB'
-  if (s.includes('manifesto') || s.includes('sovereignty')) return '#F97316'
-  if (s.includes('product') || s.includes('hr-tech')) return '#E91E8C'
-  if (s.includes('foundry')) return '#7C3AED'
+  if (s.includes('intelligence') || s.includes('private market')) return '#1F3A5F'
+  if (s.includes('manifesto') || s.includes('sovereignty')) return '#9A4B1F'
+  if (s.includes('product') || s.includes('hr-tech')) return '#7A5217'
+  if (s.includes('foundry')) return '#5B3A6B'
   if (s.includes('newsletter')) return '#6B7280'
-  if (s.includes('market intelligence')) return '#2563EB'
+  if (s.includes('market intelligence')) return '#1F3A5F'
   return '#8985A6'
 }
 
@@ -100,9 +100,9 @@ export function scopeLabel(scope: string): string {
 // Author initials → gradient
 export function authorGradient(name: string): string {
   const map: Record<string, string> = {
-    'Ankit Suman': 'linear-gradient(135deg,#E91E8C,#7C3AED)',
-    'Shubham Singh': 'linear-gradient(135deg,#2563EB,#7C3AED)',
-    'Sumedha Pandey': 'linear-gradient(135deg,#10B981,#2563EB)',
+    'Ankit Suman': 'linear-gradient(135deg,#7A5217,#5B3A6B)',
+    'Shubham Singh': 'linear-gradient(135deg,#1F3A5F,#5B3A6B)',
+    'Sumedha Pandey': 'linear-gradient(135deg,#2C6B4B,#1F3A5F)',
     'LabelNest': 'linear-gradient(135deg,#4C4868,#8985A6)',
   }
   return map[name] ?? 'linear-gradient(135deg,#4C4868,#8985A6)'

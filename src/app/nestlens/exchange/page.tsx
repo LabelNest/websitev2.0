@@ -1,6 +1,7 @@
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import DiyBanner from '@/components/DiyBanner'
+import PlanSection from '@/components/PlanSection'
 import NestLensModuleNav from '@/components/NestLensModuleNav'
 import HoverDiv from '@/components/HoverDiv'
 import Link from 'next/link'
@@ -54,7 +55,7 @@ export default function ExchangePage() {
 
         {/* HERO */}
         <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', top: -100, left: -80, width: 500, height: 500, borderRadius: '50%', background: 'rgba(233,30,140,.08)', filter: 'blur(90px)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', top: -100, left: -80, width: 500, height: 500, borderRadius: '50%', background: 'rgba(122,82,23,.08)', filter: 'blur(90px)', pointerEvents: 'none' }} />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16" style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 2, alignItems: 'center' }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
@@ -63,7 +64,7 @@ export default function ExchangePage() {
               </div>
               <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(38px,5.2vw,62px)', fontWeight: 800, letterSpacing: '-.04em', lineHeight: 1.04, color: 'var(--text)', marginBottom: 16 }}>
                 Buy. Sell. License.<br />
-                <span style={{ background: 'linear-gradient(100deg,#E91E8C,#C026D3)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Any structured data.</span>
+                <span style={{ background: 'linear-gradient(100deg,#7A5217,#5B3A6B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Any structured data.</span>
               </h1>
               <p style={{ fontSize: 'clamp(15px,1.8vw,17.5px)', lineHeight: 1.74, color: 'var(--text2)', marginBottom: 12 }}>
                 A <strong style={{ color: 'var(--text)', fontWeight: 600 }}>universal data marketplace</strong> — not limited to private markets. Datasets, AI training data, research reports, audio, video, financial data, geospatial. If it is structured and has value, it belongs here.
@@ -73,9 +74,9 @@ export default function ExchangePage() {
               </p>
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 24 }}>
                 {[
-                  { dot: '#10B981', bg: 'rgba(16,185,129,.08)', border: 'rgba(16,185,129,.15)', color: '#10B981', label: 'KYC Verified sellers' },
-                  { dot: '#2563EB', bg: 'rgba(37,99,235,.08)', border: 'rgba(37,99,235,.15)', color: '#2563EB', label: 'Escrow Protected' },
-                  { dot: '#F97316', bg: 'rgba(249,115,22,.08)', border: 'rgba(249,115,22,.15)', color: '#F97316', label: 'QC Scored' },
+                  { dot: '#2C6B4B', bg: 'rgba(44,107,75,.08)', border: 'rgba(44,107,75,.15)', color: '#2C6B4B', label: 'KYC Verified sellers' },
+                  { dot: '#1F3A5F', bg: 'rgba(31,58,95,.08)', border: 'rgba(31,58,95,.15)', color: '#1F3A5F', label: 'Escrow Protected' },
+                  { dot: '#9A4B1F', bg: 'rgba(154,75,31,.08)', border: 'rgba(154,75,31,.15)', color: '#9A4B1F', label: 'QC Scored' },
                 ].map(b => (
                   <span key={b.label} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 12.5, fontWeight: 500, padding: '6px 12px', borderRadius: 7, background: b.bg, border: `1px solid ${b.border}`, color: b.color }}>
                     <span style={{ width: 5, height: 5, borderRadius: '50%', background: b.dot, display: 'inline-block' }} />{b.label}
@@ -84,9 +85,9 @@ export default function ExchangePage() {
               </div>
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                 <a href="https://nestlens.labelnest.in" target="_blank" rel="noopener noreferrer"
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#E91E8C', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Browse Exchange ↗</a>
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#7A5217', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Browse Exchange ↗</a>
                 <a href="https://nestlens.labelnest.in" target="_blank" rel="noopener noreferrer"
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>List your data</a>
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(14,27,46,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(14,27,46,.1)' }}>List your data</a>
               </div>
             </div>
 
@@ -94,22 +95,22 @@ export default function ExchangePage() {
             <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, overflow: 'hidden' }}>
               <div style={{ padding: '14px 18px', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 13.5, color: 'var(--text)' }}>Exchange listings</span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: 5, fontFamily: "'JetBrains Mono', monospace", fontSize: 9, textTransform: 'uppercase', letterSpacing: '.08em', color: '#10B981' }}>
-                  <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#10B981', display: 'inline-block' }} />Live
+                <span style={{ display: 'flex', alignItems: 'center', gap: 5, fontFamily: "'JetBrains Mono', monospace", fontSize: 9, textTransform: 'uppercase', letterSpacing: '.08em', color: '#2C6B4B' }}>
+                  <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#2C6B4B', display: 'inline-block' }} />Live
                 </span>
               </div>
               <div style={{ padding: 12, display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {[
-                  { seller: 'LabelNest', sellerColor: '#E91E8C', title: 'India PCVC Deal Flow — Q4 2025', tag: 'Company Intelligence' },
-                  { seller: 'LabelNest', sellerColor: '#E91E8C', title: 'GP Intelligence Pack — Top 100 Indian PE', tag: 'Fund Intelligence' },
+                  { seller: 'LabelNest', sellerColor: '#7A5217', title: 'India PCVC Deal Flow — Q4 2025', tag: 'Company Intelligence' },
+                  { seller: 'LabelNest', sellerColor: '#7A5217', title: 'GP Intelligence Pack — Top 100 Indian PE', tag: 'Fund Intelligence' },
                   { seller: 'Verified Seller', sellerColor: 'var(--text3)', title: 'ESG Scores — Indian Listed Companies 2025', tag: 'Research' },
                 ].map(listing => (
-                  <div key={listing.title} style={{ background: 'var(--bg2)', border: '1px solid rgba(255,255,255,.06)', borderRadius: 10, padding: 14 }}>
+                  <div key={listing.title} style={{ background: 'var(--bg2)', border: '1px solid rgba(14,27,46,.06)', borderRadius: 10, padding: 14 }}>
                     <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', color: listing.sellerColor, marginBottom: 4 }}>{listing.seller}</div>
                     <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>{listing.title}</div>
                     <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
-                      <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 8.5, padding: '2px 7px', borderRadius: 4, background: 'rgba(255,255,255,.05)', color: 'var(--text2)' }}>{listing.tag}</span>
-                      <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 8.5, padding: '2px 7px', borderRadius: 4, background: 'rgba(16,185,129,.08)', color: '#10B981' }}>✓ KYC</span>
+                      <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 8.5, padding: '2px 7px', borderRadius: 4, background: 'rgba(14,27,46,.05)', color: 'var(--text2)' }}>{listing.tag}</span>
+                      <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 8.5, padding: '2px 7px', borderRadius: 4, background: 'rgba(44,107,75,.08)', color: '#2C6B4B' }}>✓ KYC</span>
                     </div>
                   </div>
                 ))}
@@ -127,7 +128,7 @@ export default function ExchangePage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {CATEGORIES.map(c => (
                 <HoverDiv key={c.name}
-                  hoverBorderColor="rgba(233,30,140,.3)"
+                  hoverBorderColor="rgba(122,82,23,.3)"
                   hoverTransform="translateY(-3px)"
                   style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 22, transition: 'border-color .2s,transform .2s' }}>
                   <div style={{ fontSize: 22, marginBottom: 10 }}>{c.icon}</div>
@@ -147,9 +148,9 @@ export default function ExchangePage() {
             <p style={{ fontSize: 15, color: 'var(--text2)', maxWidth: 520, marginBottom: 36, lineHeight: 1.65 }}>Three mechanisms that make Exchange safe for buyers and fair for sellers.</p>
             <div className="grid grid-cols-1 sm:grid-cols-3" style={{ gap: 16 }}>
               {[
-                { icon: '✅', name: 'KYC Verified Sellers', color: 'rgba(16,185,129,.3)', desc: 'Every seller has completed identity and business verification before any listing goes live. You know exactly who you are buying from.' },
-                { icon: '🔒', name: 'Escrow Protected', color: 'rgba(37,99,235,.3)', desc: 'Payment held in escrow until delivery is confirmed. No upfront risk for buyers. Guaranteed payment for sellers on delivery.' },
-                { icon: '⭐', name: 'QC Scored Datasets', color: 'rgba(249,115,22,.3)', desc: 'Every dataset carries a quality score based on completeness, recency, methodology transparency, and provenance documentation.' },
+                { icon: '✅', name: 'KYC Verified Sellers', color: 'rgba(44,107,75,.3)', desc: 'Every seller has completed identity and business verification before any listing goes live. You know exactly who you are buying from.' },
+                { icon: '🔒', name: 'Escrow Protected', color: 'rgba(31,58,95,.3)', desc: 'Payment held in escrow until delivery is confirmed. No upfront risk for buyers. Guaranteed payment for sellers on delivery.' },
+                { icon: '⭐', name: 'QC Scored Datasets', color: 'rgba(154,75,31,.3)', desc: 'Every dataset carries a quality score based on completeness, recency, methodology transparency, and provenance documentation.' },
               ].map(t => (
                 <HoverDiv key={t.name}
                   hoverBorderColor={t.color}
@@ -163,39 +164,13 @@ export default function ExchangePage() {
           </div>
         </section>
 
-        {/* PRICING */}
-        <section style={{ padding: '72px 48px', background: 'var(--bg2)', borderTop: '1px solid var(--border)' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ textAlign: 'center', marginBottom: 36 }}>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Pricing</div>
-              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>Free to buy. Pay to sell.</h2>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 16 }}>
-              {[
-                { name: 'Buyer', price: 'Free', unit: '', sub: 'Browse all seller profiles and project briefs free. Pay per project via credits — no subscription needed.' },
-                { name: 'Seller', price: '$199', unit: '/yr', sub: 'Active seller listing · 15 applications/mo included · quarterly rollover up to 45 credits', popular: true },
-                { name: 'Enterprise', price: 'Custom', unit: '', sub: 'High-volume buyer or seller, custom credit arrangements' },
-              ].map(t => (
-                <div key={t.name} style={{ background: 'var(--surface)', border: `1px solid ${t.popular ? '#E91E8C' : 'var(--border)'}`, borderRadius: 14, padding: 22, position: 'relative' }}>
-                  {t.popular && <div style={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)', background: '#E91E8C', color: '#fff', fontSize: 9, fontWeight: 700, padding: '3px 10px', borderRadius: 99, whiteSpace: 'nowrap' }}>MOST POPULAR</div>}
-                  <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 15, color: 'var(--text)', marginBottom: 8 }}>{t.name}</div>
-                  <div style={{ marginBottom: 10 }}>
-                    <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 24, fontWeight: 800, color: t.popular ? '#E91E8C' : 'var(--text)' }}>{t.price}</span>
-                    <span style={{ fontSize: 12, color: 'var(--text3)' }}>{t.unit}</span>
-                  </div>
-                  <div style={{ fontSize: 12, color: 'var(--text3)', lineHeight: 1.55 }}>{t.sub}</div>
-                </div>
-              ))}
-            </div>
-            <p style={{ textAlign: 'center', fontSize: 12.5, color: 'var(--text3)', marginTop: 24 }}>INR equivalent for sellers: contact us — see <a href="https://nestlens.labelnest.in/pricing" target="_blank" rel="noopener noreferrer" style={{ color: '#E91E8C' }}>full pricing ↗</a></p>
-          </div>
-        </section>
+        <PlanSection module="exchange" />
 
         {/* SEE ALSO */}
         <section style={{ padding: '40px 48px', borderTop: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', gap: 24, flexWrap: 'wrap', fontSize: 13.5, color: 'var(--text2)' }}>
             <span>See also:</span>
-            <Link href="/nestlens/intelligence" style={{ color: '#2563EB' }}>Our own private markets intelligence data is available on Exchange →</Link>
+            <Link href="/nestlens/intelligence" style={{ color: '#1F3A5F' }}>Our own private markets intelligence data is available on Exchange →</Link>
             <Link href="/services" style={{ color: 'var(--text2)', textDecoration: 'underline' }}>For custom data delivery, see Managed Services</Link>
           </div>
         </section>
@@ -208,9 +183,9 @@ export default function ExchangePage() {
             <p style={{ fontSize: 15.5, color: 'var(--text2)', maxWidth: 460, margin: '0 auto 32px', lineHeight: 1.7 }}>Open to buyers and sellers. KYC verification for all sellers. List your dataset in minutes.</p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="https://nestlens.labelnest.in" target="_blank" rel="noopener noreferrer"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#E91E8C', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Browse Exchange ↗</a>
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#7A5217', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Browse Exchange ↗</a>
               <Link href="/contact"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>Talk to the team</Link>
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(14,27,46,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(14,27,46,.1)' }}>Talk to the team</Link>
             </div>
           </div>
         </section>

@@ -58,7 +58,7 @@ function AlumniUpdateForm() {
   }
 
   const inp: React.CSSProperties = {
-    width: '100%', background: '#111113', border: '1px solid rgba(255,255,255,.1)',
+    width: '100%', background: '#111113', border: '1px solid rgba(14,27,46,.1)',
     borderRadius: 10, padding: '12px 16px', fontSize: 15, color: '#f4f4f5',
     outline: 'none', fontFamily: 'Inter, sans-serif', boxSizing: 'border-box',
   }
@@ -67,11 +67,11 @@ function AlumniUpdateForm() {
     <div style={{ minHeight: '100vh', background: '#09090b', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '32px 20px' }}>
       {/* Header */}
       <Link href="/" style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 22, color: '#f4f4f5', textDecoration: 'none', letterSpacing: '-.03em', marginBottom: 48 }}>
-        Label<span style={{ color: '#E91E8C' }}>Nest</span>
+        Label<span style={{ color: '#7A5217' }}>Nest</span>
       </Link>
 
-      <div style={{ width: '100%', maxWidth: 480, background: '#111113', border: '1px solid rgba(255,255,255,.08)', borderRadius: 20, padding: 36, position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg,#E91E8C,#2563EB)' }} />
+      <div style={{ width: '100%', maxWidth: 480, background: '#111113', border: '1px solid rgba(14,27,46,.08)', borderRadius: 20, padding: 36, position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg,#7A5217,#1F3A5F)' }} />
 
         {state === 'loading' && (
           <div style={{ textAlign: 'center', color: '#71717a', fontSize: 14, padding: '24px 0' }}>Loading…</div>
@@ -84,7 +84,7 @@ function AlumniUpdateForm() {
             <p style={{ fontSize: 14, color: '#a1a1aa', lineHeight: 1.65, marginBottom: 24 }}>
               This link may have expired or already been used. Reach out to the team and we'll send you a fresh one.
             </p>
-            <a href="mailto:hr@labelnest.in" style={{ display: 'inline-block', background: '#E91E8C', color: '#fff', borderRadius: 9, padding: '10px 22px', fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
+            <a href="mailto:hr@labelnest.in" style={{ display: 'inline-block', background: '#7A5217', color: '#fff', borderRadius: 9, padding: '10px 22px', fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
               hr@labelnest.in
             </a>
           </div>
@@ -92,7 +92,7 @@ function AlumniUpdateForm() {
 
         {state === 'form' && (
           <>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', color: '#E91E8C', marginBottom: 10 }}>Alumni — Update</div>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', color: '#7A5217', marginBottom: 10 }}>Alumni — Update</div>
             <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 26, color: '#f4f4f5', letterSpacing: '-.03em', marginBottom: 6 }}>
               Hey, {alumniName.split(' ')[0]} 👋
             </div>
@@ -128,10 +128,10 @@ function AlumniUpdateForm() {
                 <input style={inp} placeholder="https://..." value={photo} onChange={e => setPhoto(e.target.value)} />
               </div>
 
-              {error && <div style={{ fontSize: 12.5, color: '#EF4444', padding: '8px 12px', background: 'rgba(239,68,68,.08)', borderRadius: 7 }}>{error}</div>}
+              {error && <div style={{ fontSize: 12.5, color: '#9B2C2C', padding: '8px 12px', background: 'rgba(155,44,44,.08)', borderRadius: 7 }}>{error}</div>}
 
               <button onClick={submit} disabled={saving}
-                style={{ width: '100%', background: '#E91E8C', color: '#fff', border: 'none', borderRadius: 10, padding: '13px 0', fontSize: 14, fontWeight: 700, cursor: saving ? 'not-allowed' : 'pointer', opacity: saving ? .7 : 1, fontFamily: 'Inter, sans-serif', marginTop: 4 }}>
+                style={{ width: '100%', background: '#7A5217', color: '#fff', border: 'none', borderRadius: 10, padding: '13px 0', fontSize: 14, fontWeight: 700, cursor: saving ? 'not-allowed' : 'pointer', opacity: saving ? .7 : 1, fontFamily: 'Inter, sans-serif', marginTop: 4 }}>
                 {saving ? 'Saving…' : 'Update my card'}
               </button>
             </div>
@@ -140,12 +140,12 @@ function AlumniUpdateForm() {
 
         {state === 'success' && (
           <div style={{ textAlign: 'center' }}>
-            <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(16,185,129,.12)', border: '1px solid rgba(16,185,129,.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', fontSize: 26 }}>✓</div>
+            <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(44,107,75,.12)', border: '1px solid rgba(44,107,75,.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', fontSize: 26 }}>✓</div>
             <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 24, color: '#f4f4f5', marginBottom: 10 }}>Done, {alumniName.split(' ')[0]}!</div>
             <p style={{ fontSize: 14, color: '#a1a1aa', lineHeight: 1.65, marginBottom: 28 }}>
               Your card on the alumni wall has been updated. It&apos;ll show &quot;{NOW_AT_TYPES.find(t=>t.value===nowType)?.label} {company}&quot; to anyone who visits.
             </p>
-            <Link href="/team" style={{ display: 'inline-block', background: 'rgba(255,255,255,.06)', color: '#f4f4f5', border: '1px solid rgba(255,255,255,.1)', borderRadius: 9, padding: '10px 22px', fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
+            <Link href="/team" style={{ display: 'inline-block', background: 'rgba(14,27,46,.06)', color: '#f4f4f5', border: '1px solid rgba(14,27,46,.1)', borderRadius: 9, padding: '10px 22px', fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
               View the team wall →
             </Link>
           </div>
