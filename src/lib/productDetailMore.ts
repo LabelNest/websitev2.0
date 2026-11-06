@@ -110,9 +110,9 @@ export const PD_MORE: ContentField[] = [
   }),
 
   ...block('ascent', 'Ascent', {
-    eyebrow: 'Ascent · Data room for founders',
-    title: 'A data room investors can read.',
-    lead: 'Ascent gives each company one structured data room, a readiness score and a list of what is missing. Share it by link with an email gate, NDA, watermark and expiry, and see who opened it.',
+    eyebrow: 'Ascent · Readiness engine for founders',
+    title: 'The readiness engine with a data room inside.',
+    lead: 'Most data rooms store your files, and some score or read them. None of that helps you walk into an investor meeting the way you want to be seen. Ascent builds the room with you around the story of the company, the full picture and not a folder of files. It scores how ready you are, shows what to fix first, checks your pitch deck, and lets you present the company in the order and detail you choose.',
     note: 'Every new account gets 30 days free. Programme admins read rooms as deal flow.',
     dataTitle: 'What the room holds.',
     dataLead: 'Sections that investors ask for, in a fixed structure, so a room is comparable and quick to review.',
@@ -126,6 +126,7 @@ export const PD_MORE: ContentField[] = [
     ],
     featTitle: 'What founders get.',
     features: [
+      { title: 'Present yourself the way you want', body: 'The room is built as a story with the full picture behind it: who you are, what you built, how it is growing and why it works. You choose which sections an investor sees and in what order, with your story and headline numbers up front. The pitch deck analyzer then scores your deck and checks its claims against the room. Every link carries its own email gate, NDA, watermark and expiry, so the room you share is the version you meant to show.', shot: 'mock:ascent-investor', alt: 'Ascent investor view with readiness score, headline numbers, the founder story and the sections shared' },
       { title: 'A readiness score and a to-do list', body: 'See how complete the room is and exactly what is missing, scored across six dimensions, with unlimited readiness audits on the paid plan.', shot: 'mock:ascent-readiness', alt: 'Ascent readiness score page showing an investor-ready score out of 100, a completeness score and a six-dimension radar chart' },
       { title: 'Templates for every document type', body: 'Start from a good draft. The library holds at least two templates for each document type, from pitch decks and financial models to term sheets, cap tables and policies, filterable by stage.', shot: 'mock:ascent-templates', alt: 'Ascent template library with a search box and filters by document type and funding stage, including pitch decks, financial models, cap tables, term sheets, legal agreements and policies' },
       { title: 'A room built once, section by section', body: 'Company identity, team, product, market, traction, financials, legal and cap table, with extra sections for each sector. Every answer links to the document behind it, and every file sits in one vault.', shot: 'mock:ascent-room', alt: 'Ascent data room with section progress and a document vault where each file is linked to the answer it supports' },
@@ -150,6 +151,8 @@ export const PD_MORE: ContentField[] = [
     ],
     diffTitle: 'How Ascent is different.',
     diff: [
+      { title: 'From a virtual data room', body: 'A virtual data room holds files and logs who opened them. Ascent also tells you how ready you are, what is missing and what to fix first, before the investor finds the gap.' },
+      { title: 'From a room that reads your documents', body: 'Reading a document is a start. Ascent turns what it reads into a structured profile you confirm, and builds your story and numbers from it for the way you want to present.' },
       { title: 'From a folder link', body: 'A structured room with a score and a gap list, not a pile of files.' },
       { title: 'From a document-sharing tool', body: 'It knows the content: terms are extracted, readiness is scored and the room feeds funds and programmes.' },
     ],
@@ -161,7 +164,7 @@ export const PD_MORE: ContentField[] = [
       { who: 'Startup groups and networks', how: 'Commercial terms for a cohort, a network or a portfolio, on request.' },
     ],
     faq: [
-      { q: 'What is Ascent?', a: 'Ascent is the LabelNest data room for founders: a structured room with a readiness score, document reading, controlled sharing and access analytics.' },
+      { q: 'What is Ascent?', a: 'Ascent is the LabelNest readiness engine for founders. It holds your data room, scores how ready you are, shows what to fix first and lets you present the company the way you want, with controlled sharing and access analytics.' },
       { q: 'Is there a free trial?', a: 'Every new account gets 30 days of full access, then read-only unless you subscribe.' },
       { q: 'Who controls what investors see?', a: 'The founder. Sharing uses an email gate, NDA, watermark and expiry, and every approval is recorded.' },
       { q: 'What is deal flow in Ascent?', a: 'A feature for programme admins: read every room in a cohort and turn ready rooms into introductions the founder has agreed to.' },

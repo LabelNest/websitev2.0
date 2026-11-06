@@ -324,6 +324,12 @@ const Steps = ({ s, on }: { s: string[]; on: number }) => <div className="pm-ste
 const List = ({ rows }: { rows: [string, string, string?, string?][] }) => <div className="pm-card">{rows.map((r) => <div className="pm-li" key={r[0]}><p><b>{r[0]}</b><small>{r[1]}</small></p>{r[2] && <span className={'pm-pill ' + (r[3] || '')}>{r[2]}</span>}</div>)}</div>
 
 const MORE2: Record<string, () => ReactNode> = {
+  'ascent-investor': () => (
+    <Frame url="ascent.labelnest.in/cr/view/..." nav={['Overview', 'Our story', 'Traction', 'Financials', 'Team', 'Legal']} on={0} title="Sample Health" sub="Shared with you, confidential">
+      <div className="pm-row pm-c4" style={{ marginBottom: '1em' }}><Stat k="Readiness" v="82" s="Investor ready" /><Stat k="Revenue" v="$1.4M" s="+62% year on year" /><Stat k="Gross margin" v="58%" /><Stat k="Runway" v="14 mo" /></div>
+      <div className="pm-row pm-12"><div className="pm-card"><h4>Our story</h4><p style={{ margin: 0 }}>Digital health for tier-two cities. Repeat customers drive three quarters of revenue. Chosen by the founder, in the order the founder wants.</p></div><div className="pm-card"><h4>Shared with you</h4><Bars rows={[['Company', 100, 'Open'], ['Financials', 100, 'Open'], ['Cap table', 0, 'Not shared']]} /></div></div>
+    </Frame>
+  ),
   'atlas-lists': () => (
     <Frame url="atlas.labelnest.in/compare" nav={ATLAS} on={2} title="Compare" sub="Up to three side by side">
       <div className="pm-row pm-c3">{[['Northfield Capital', '$420M', 'Venture', '14 funds'], ['Meridian Partners', '$1.1B', 'Private equity', '9 funds'], ['Harbor Ridge', '$260M', 'Credit', '6 funds']].map((r) => <div className="pm-card" key={r[0]}><b>{r[0]}</b><div className="pm-v">{r[1]}</div><div className="pm-k">{r[2]}</div><div className="pm-k">{r[3]}</div><span className="pm-pill g">Reviewed</span></div>)}</div>
