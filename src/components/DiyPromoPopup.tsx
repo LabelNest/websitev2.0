@@ -68,7 +68,7 @@ export default function DiyPromoPopup() {
       >
         ✕
       </button>
-      <div style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', color: '#E91E8C', marginBottom: 6 }}>
+      <div style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', color: '#7A5217', marginBottom: 6 }}>
         No sales call needed
       </div>
       <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 6, lineHeight: 1.4 }}>

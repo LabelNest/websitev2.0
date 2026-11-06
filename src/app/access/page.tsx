@@ -18,12 +18,12 @@ const BREADCRUMB_SCHEMA = breadcrumbSchema([
 ])
 
 const MODULES = [
-  { name: 'Atlas', color: '#2563EB', selfServe: 'Individual and firm plans', enterprise: '1,000+ firms, custom seats & SLA — includes all Observatory reports' },
-  { name: 'Exchange', color: '#7C3AED', selfServe: 'Free to browse; Priority for active sellers', enterprise: 'High-volume buyer or seller, custom credit arrangements' },
-  { name: 'Orbit', color: '#7C3AED', selfServe: 'Programme Management, up to 1,00,000 applications', enterprise: 'Multiple simultaneous programmes, custom volume & SLA' },
-  { name: 'Ascent', color: '#10B981', selfServe: 'Founder Data Room, or Cohort/Group for accelerators', enterprise: 'Cohort access at accelerator/incubator scale' },
-  { name: 'Command', color: '#F97316', selfServe: 'Fund Data Room', enterprise: 'Multiple funds, custom LP/portfolio room counts & SLA' },
-  { name: 'Connect', color: '#06B6D4', selfServe: 'Included with an active Ascent or Command plan', enterprise: '—' },
+  { name: 'Atlas', color: '#1F3A5F', selfServe: 'Individual and firm plans', enterprise: '1,000+ firms, custom seats & SLA — includes all Observatory reports' },
+  { name: 'Exchange', color: '#5B3A6B', selfServe: 'Free to browse; Priority for active sellers', enterprise: 'High-volume buyer or seller, custom credit arrangements' },
+  { name: 'Orbit', color: '#5B3A6B', selfServe: 'Programme Management, up to 1,00,000 applications', enterprise: 'Multiple simultaneous programmes, custom volume & SLA' },
+  { name: 'Ascent', color: '#2C6B4B', selfServe: 'Founder Data Room, or Cohort/Group for accelerators', enterprise: 'Cohort access at accelerator/incubator scale' },
+  { name: 'Command', color: '#9A4B1F', selfServe: 'Fund Data Room', enterprise: 'Multiple funds, custom LP/portfolio room counts & SLA' },
+  { name: 'Connect', color: '#1F6F7A', selfServe: 'Included with an active Ascent or Command plan', enterprise: '—' },
 ]
 
 const ROLES = [
@@ -54,13 +54,13 @@ export default function AccessPage() {
         <section style={{ padding: '56px 48px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 1000, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,1fr))', gap: 24 }}>
 
-            <div style={{ background: 'var(--surface)', border: '1px solid #2563EB', borderRadius: 16, padding: 32 }}>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.1em', textTransform: 'uppercase', color: '#2563EB', marginBottom: 10 }}>Instant</div>
+            <div style={{ background: 'var(--surface)', border: '1px solid #1F3A5F', borderRadius: 16, padding: 32 }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.1em', textTransform: 'uppercase', color: '#1F3A5F', marginBottom: 10 }}>Instant</div>
               <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: 'var(--text)', marginBottom: 12 }}>Buy a plan yourself</h2>
               <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.7, marginBottom: 16 }}>
                 Every module has at least one self-serve tier — pick it, pay through Razorpay, and your access opens the moment payment clears. No form, no waiting on anyone.
               </p>
-              <Link href="/nestlens/pricing" style={{ fontSize: 13.5, fontWeight: 600, color: '#2563EB' }}>See what&apos;s self-serve on each module →</Link>
+              <Link href="/nestlens/pricing" style={{ fontSize: 13.5, fontWeight: 600, color: '#1F3A5F' }}>See what&apos;s self-serve on each module →</Link>
             </div>
 
             <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: 32 }}>

@@ -35,7 +35,7 @@ const DATA: VsPageData = {
   ],
   tableRows: [
     { feature: 'Pricing', competitor: { text: 'Annual seat contracts, $25K-$50K+', verdict: 'no' }, labelnest: { text: 'Credit-based, no seat penalties', verdict: 'win' } },
-    { feature: 'Deal database size', competitor: { text: '3M+ transactions globally', verdict: 'win' }, labelnest: { text: '40,000+ entities (India, SE Asia, Gulf focus)', verdict: 'mid' } },
+    { feature: 'Deal database size', competitor: { text: '3M+ transactions globally', verdict: 'win' }, labelnest: { text: '{{entities}} entities (India, SE Asia, Gulf focus)', verdict: 'mid' } },
     { feature: 'US and Europe deal coverage', competitor: { text: 'Deep and comprehensive', verdict: 'win' }, labelnest: { text: 'Partial, expanding', verdict: 'mid' } },
     { feature: 'India deal coverage', competitor: { text: 'Uneven, weak on early-stage', verdict: 'mid' }, labelnest: { text: 'Comprehensive, deep on emerging manager activity', verdict: 'win' } },
     { feature: 'Excel plug-in', competitor: { text: 'Robust, deeply integrated', verdict: 'win' }, labelnest: { text: 'CSV exports, API access, plug-in on roadmap', verdict: 'mid' } },
@@ -50,7 +50,7 @@ const DATA: VsPageData = {
   calloutTitle: 'What PitchBook does better than us — honestly.',
   calloutBody: 'PitchBook has millions of transactions, Morningstar-linked comparable multiples, and a mature Excel plug-in workflow. If your team runs on Excel and needs global exit data, PitchBook is the right choice. That is not who LabelNest is built for yet.',
   finalTag: 'Try before deciding',
-  finalHeading: '40,000+ entities. Free tier available.',
+  finalHeading: '{{entities}} entities. Free tier available.',
   finalBody: 'Open NestLens and see for yourself. No credit card, no sales call.',
   finalPrimaryCta: { href: 'https://nestlens.labelnest.in', label: 'Try NestLens Free ↗', external: true },
   finalSecondaryCta: { href: '/vs/preqin', label: 'Also see: vs Preqin →' },

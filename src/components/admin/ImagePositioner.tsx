@@ -46,14 +46,14 @@ export function ImagePositioner({
         title="Drag to set focal point"
         style={{
           width: '100%', aspectRatio: String(aspect), borderRadius: 8, overflow: 'hidden',
-          border: '1px solid rgba(255,255,255,.14)', position: 'relative', cursor: 'crosshair',
-          touchAction: 'none', background: 'rgba(255,255,255,.03)',
+          border: '1px solid rgba(14,27,46,.14)', position: 'relative', cursor: 'crosshair',
+          touchAction: 'none', background: 'rgba(14,27,46,.03)',
         }}
       >
         <img src={src} alt="" draggable={false} style={imgFrameStyle(position, zoom)} />
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 8 }}>
-        <span style={{ fontSize: 11, color: 'rgba(255,255,255,.5)', flexShrink: 0 }}>Zoom</span>
+        <span style={{ fontSize: 11, color: 'rgba(14,27,46,.5)', flexShrink: 0 }}>Zoom</span>
         <input
           type="range" min={1} max={2.5} step={0.05} value={zoom}
           onChange={e => onChange(position, Number(e.target.value))}
@@ -62,7 +62,7 @@ export function ImagePositioner({
         <button
           type="button"
           onClick={() => onChange(defaultPosition, defaultZoom)}
-          style={{ fontSize: 11, color: 'rgba(255,255,255,.6)', background: 'none', border: 'none', cursor: 'pointer', flexShrink: 0, textDecoration: 'underline' }}
+          style={{ fontSize: 11, color: 'rgba(14,27,46,.6)', background: 'none', border: 'none', cursor: 'pointer', flexShrink: 0, textDecoration: 'underline' }}
         >
           Reset
         </button>

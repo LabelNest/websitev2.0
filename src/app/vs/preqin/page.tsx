@@ -35,7 +35,7 @@ const DATA: VsPageData = {
   ],
   tableRows: [
     { feature: 'Pricing model', competitor: { text: 'Annual seat contracts, $50K+ typical entry', verdict: 'no' }, labelnest: { text: 'Credit-based, no seat penalties, pay for what you use', verdict: 'win' } },
-    { feature: 'Total entities tracked', competitor: { text: '300,000+ globally', verdict: 'win' }, labelnest: { text: '40,000+ (India, SE Asia, Gulf focus)', verdict: 'mid' } },
+    { feature: 'Total entities tracked', competitor: { text: '300,000+ globally', verdict: 'win' }, labelnest: { text: '{{entities}} (India, SE Asia, Gulf focus)', verdict: 'mid' } },
     { feature: 'Historical data depth', competitor: { text: '20+ years of fund performance', verdict: 'win' }, labelnest: { text: 'Building from 2024 forward', verdict: 'no' } },
     { feature: 'India private markets coverage', competitor: { text: 'Partial, weak on early-stage', verdict: 'mid' }, labelnest: { text: 'Deep — companies, funds, deals, LPs, service providers', verdict: 'win' } },
     { feature: 'Verified contacts', competitor: { text: 'Yes, but health scores unclear', verdict: 'mid' }, labelnest: { text: '12,000+ verified with visible health scores and tenure', verdict: 'win' } },
@@ -57,7 +57,7 @@ const DATA: VsPageData = {
     body: "Preqin's assumption: institutional buyers with dedicated research teams and six-figure data budgets, wide coverage, trust the brand and pay for the breadth. LabelNest's assumption: emerging managers, boutique funds, and analysts who need the intelligence but cannot justify institutional pricing — go deep where they operate, add tools they cannot get elsewhere. Both approaches are valid. If you are in the room when a Preqin quote is unaffordable — LabelNest was built for you.",
   },
   finalTag: 'See LabelNest for yourself',
-  finalHeading: '40,000+ entities. Credit-based. Free tier available.',
+  finalHeading: '{{entities}} entities. Credit-based. Free tier available.',
   finalBody: 'Open NestLens, browse the data, and decide for yourself. No credit card, no sales call required.',
   finalPrimaryCta: { href: 'https://nestlens.labelnest.in', label: 'Try NestLens Free ↗', external: true },
   finalSecondaryCta: { href: '/vs/pitchbook', label: 'Also see: vs PitchBook →' },

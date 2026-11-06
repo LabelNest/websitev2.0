@@ -1,4 +1,5 @@
-# LabelNest
+// Template for /llms.txt. {{entities}} is filled from the live Atlas count.
+export const LLMS_TEMPLATE = `# LabelNest
 
 > LabelNest is a data systems and intelligence company based in Bengaluru, India. It builds
 > and operates two products: NestLens, a private markets operating system for emerging fund
@@ -9,7 +10,7 @@
 
 - [NestLens](https://labelnest.in/nestlens): Private markets OS with six modules, each also a
   live satellite subdomain — [Atlas](https://labelnest.in/nestlens/intelligence)
-  (atlas.labelnest.in — structured intelligence on 40,000+ private market entities: companies,
+  (atlas.labelnest.in — structured intelligence on {{entities}} private market entities: companies,
   funds, GPs, LPs, deals, contacts), [Exchange](https://labelnest.in/nestlens/exchange)
   (exchange.labelnest.in — marketplace for buying/selling structured datasets, AI training data,
   and research, KYC-verified sellers, escrow protection), [Ascent](https://labelnest.in/nestlens/capital)
@@ -40,3 +41,4 @@
 - [Briefings](https://labelnest.in/briefings): blog and newsletter content.
 - [Careers](https://labelnest.in/careers)
 - [Contact](https://labelnest.in/contact)
+`

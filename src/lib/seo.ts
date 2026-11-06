@@ -1,3 +1,4 @@
+import { getAtlasStats, fillStats } from '@/lib/plans'
 import { Metadata } from 'next'
 import { getPageSEO } from './db'
 
@@ -12,8 +13,10 @@ export async function pageMetadata(
   fallback: { title: string; description: string },
 ): Promise<Metadata> {
   const seo = await getPageSEO(path).catch(() => null)
-  const title = seo?.title?.trim() || fallback.title
-  const description = seo?.description?.trim() || fallback.description
+  // {{entities}}, {{funds}}, {{companies}} and {{people}} in any title or description become the live NestLens figures.
+  const stats = await getAtlasStats()
+  const title = fillStats(seo?.title?.trim() || fallback.title, stats)
+  const description = fillStats(seo?.description?.trim() || fallback.description, stats)
   const keywords = seo?.keywords?.trim()
     ? seo.keywords.split(',').map(k => k.trim()).filter(Boolean)
     : undefined

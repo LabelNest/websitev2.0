@@ -69,36 +69,36 @@ export default function LegalDocView({ doc }: { doc: LegalDocument }) {
         /* ── Body typography ── */
         .legal-body { font-family: Inter, sans-serif; }
         .legal-body h1 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 26px; color: var(--text); margin: 40px 0 12px; letter-spacing: -.025em; }
-        .legal-body h2 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 18px; color: var(--text); margin: 40px 0 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.07); letter-spacing: -.01em; position: relative; }
-        .legal-body h2::before { content: ''; position: absolute; left: 0; top: -1px; width: 32px; height: 2px; background: linear-gradient(90deg,#E91E8C,#7C3AED); border-radius: 2px; }
+        .legal-body h2 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 18px; color: var(--text); margin: 40px 0 12px; padding-top: 12px; border-top: 1px solid rgba(14,27,46,.07); letter-spacing: -.01em; position: relative; }
+        .legal-body h2::before { content: ''; position: absolute; left: 0; top: -1px; width: 32px; height: 2px; background: linear-gradient(90deg,#7A5217,#5B3A6B); border-radius: 2px; }
         .legal-body h2:first-child { margin-top: 0; border-top: none; padding-top: 0; }
         .legal-body h2:first-child::before { display: none; }
         .legal-body h3 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 14px; color: var(--text); margin: 22px 0 7px; text-transform: uppercase; letter-spacing: .05em; }
         .legal-body p { font-size: 14.5px; color: var(--text2); line-height: 1.78; margin-bottom: 12px; }
         .legal-body p strong { color: var(--text); font-weight: 600; }
         .legal-body p em { color: var(--text); font-style: italic; }
-        .legal-body code { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; background: rgba(255,255,255,.06); padding: 2px 6px; border-radius: 4px; color: #E91E8C; }
+        .legal-body code { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; background: rgba(14,27,46,.06); padding: 2px 6px; border-radius: 4px; color: #7A5217; }
         /* ── Lists ── */
         .legal-body ul, .legal-body ol { padding: 0; margin: 10px 0 18px; display: flex; flex-direction: column; gap: 6px; list-style: none; }
-        .legal-body li { position: relative; padding: 10px 14px 10px 38px; background: var(--surface); border: 1px solid rgba(255,255,255,.05); border-radius: 8px; font-size: 14px; color: var(--text2); line-height: 1.6; }
-        .legal-body ul li::before { content: ''; position: absolute; left: 14px; top: 19px; width: 6px; height: 6px; border-radius: 50%; background: #E91E8C; }
+        .legal-body li { position: relative; padding: 10px 14px 10px 38px; background: var(--surface); border: 1px solid rgba(14,27,46,.05); border-radius: 8px; font-size: 14px; color: var(--text2); line-height: 1.6; }
+        .legal-body ul li::before { content: ''; position: absolute; left: 14px; top: 19px; width: 6px; height: 6px; border-radius: 50%; background: #7A5217; }
         .legal-body ol { counter-reset: li; }
         .legal-body ol li { counter-increment: li; }
-        .legal-body ol li::before { content: counter(li); position: absolute; left: 10px; top: 9px; width: 20px; height: 20px; background: rgba(233,30,140,.15); color: #E91E8C; border-radius: 50%; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 20px; }
+        .legal-body ol li::before { content: counter(li); position: absolute; left: 10px; top: 9px; width: 20px; height: 20px; background: rgba(122,82,23,.15); color: #7A5217; border-radius: 50%; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 20px; }
         .legal-body li strong { color: var(--text); font-weight: 600; }
-        .legal-body a { color: #2563EB; text-decoration: none; }
+        .legal-body a { color: #1F3A5F; text-decoration: none; }
         .legal-body a:hover { text-decoration: underline; }
-        .legal-body hr { border: none; border-top: 1px solid rgba(255,255,255,.07); margin: 32px 0; }
+        .legal-body hr { border: none; border-top: 1px solid rgba(14,27,46,.07); margin: 32px 0; }
         /* ── TOC ── */
         .toc-link { font-size: 12px; color: var(--text2); padding: 6px 10px; border-radius: 6px; border-left: 2px solid transparent; transition: all .15s; line-height: 1.4; display: block; text-decoration: none; }
-        .toc-link:hover { color: var(--text); border-left-color: #E91E8C; background: var(--surface); }
-        .toc-link.active { color: var(--text); border-left-color: #E91E8C; background: var(--surface); font-weight: 600; }
+        .toc-link:hover { color: var(--text); border-left-color: #7A5217; background: var(--surface); }
+        .toc-link.active { color: var(--text); border-left-color: #7A5217; background: var(--surface); font-weight: 600; }
       `}</style>
       <Nav />
       <main style={{ paddingTop: 64 }}>
 
         {/* Page header */}
-        <div style={{ borderBottom: '1px solid rgba(255,255,255,.06)', background: 'var(--bg)', padding: '32px 48px' }}>
+        <div style={{ borderBottom: '1px solid rgba(14,27,46,.06)', background: 'var(--bg)', padding: '32px 48px' }}>
           <div style={{ maxWidth: 1000, margin: '0 auto' }}>
             <Link href="/legal" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12.5, color: 'var(--text2)', marginBottom: 14, textDecoration: 'none' }}>← All legal docs</Link>
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap' }}>
@@ -140,20 +140,20 @@ export default function LegalDocView({ doc }: { doc: LegalDocument }) {
           {/* BODY */}
           <div>
             {doc.intro && (
-              <div style={{ fontSize: 15, lineHeight: 1.8, color: 'var(--text2)', padding: '18px 22px', borderLeft: '3px solid #E91E8C', background: 'rgba(233,30,140,.05)', borderRadius: '0 12px 12px 0', marginBottom: 36 }}>
+              <div style={{ fontSize: 15, lineHeight: 1.8, color: 'var(--text2)', padding: '18px 22px', borderLeft: '3px solid #7A5217', background: 'rgba(122,82,23,.05)', borderRadius: '0 12px 12px 0', marginBottom: 36 }}>
                 {doc.intro}
               </div>
             )}
             <div className="legal-body" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
 
             {/* Footer notice */}
-            <div style={{ marginTop: 48, padding: '18px 22px', background: 'var(--surface)', border: '1px solid rgba(255,255,255,.06)', borderRadius: 12, display: 'flex', gap: 16, alignItems: 'flex-start' }}>
+            <div style={{ marginTop: 48, padding: '18px 22px', background: 'var(--surface)', border: '1px solid rgba(14,27,46,.06)', borderRadius: 12, display: 'flex', gap: 16, alignItems: 'flex-start' }}>
               <span style={{ fontSize: 20, flexShrink: 0 }}>⚖️</span>
               <div>
                 <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 13.5, color: 'var(--text)', marginBottom: 4 }}>LabelNest India Private Limited</div>
                 <div style={{ fontSize: 12.5, color: 'var(--text2)', lineHeight: 1.65 }}>
                   No. 33, 4th Floor, 1st Main, CBI Main Rd, HMT Layout, Ganganagar, Bengaluru 560032 · Governing law: Karnataka, India<br />
-                  Questions? <a href="mailto:contact@labelnest.in" style={{ color: '#2563EB' }}>contact@labelnest.in</a> · <a href="mailto:privacy@labelnest.in" style={{ color: '#2563EB' }}>privacy@labelnest.in</a>
+                  Questions? <a href="mailto:contact@labelnest.in" style={{ color: '#1F3A5F' }}>contact@labelnest.in</a> · <a href="mailto:privacy@labelnest.in" style={{ color: '#1F3A5F' }}>privacy@labelnest.in</a>
                 </div>
               </div>
             </div>

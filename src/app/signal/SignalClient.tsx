@@ -25,15 +25,15 @@ export default function SignalClient() {
         @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
         .lock-anim{animation:pulse 3s ease-in-out infinite}
         .blink-dot{animation:blink 2s ease-in-out infinite}
-        .signal-input{background:var(--surface);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:13px 18px;font-size:15px;color:var(--text);outline:none;font-family:'Inter',sans-serif;transition:border-color .15s;width:100%}
-        .signal-input:focus{border-color:#7C3AED}
+        .signal-input{background:var(--surface);border:1px solid rgba(14,27,46,.1);border-radius:11px;padding:13px 18px;font-size:15px;color:var(--text);outline:none;font-family:'Inter',sans-serif;transition:border-color .15s;width:100%}
+        .signal-input:focus{border-color:#5B3A6B}
         .signal-input::placeholder{color:var(--text3)}
-        .signal-btn{background:#7C3AED;color:#fff;border:none;border-radius:11px;padding:13px 22px;font-size:14.5px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;flex-shrink:0}
+        .signal-btn{background:#5B3A6B;color:#fff;border:none;border-radius:11px;padding:13px 22px;font-size:14.5px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;flex-shrink:0}
         .signal-btn:hover{opacity:.88}
       `}</style>
 
       {/* Minimal nav */}
-      <nav style={{ height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', borderBottom: '1px solid rgba(255,255,255,.06)' }}>
+      <nav style={{ height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 48px', borderBottom: '1px solid rgba(14,27,46,.06)' }}>
         <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <Image src="/logo.jpg" alt="LabelNest" width={36} height={36} style={{ borderRadius: 6, objectFit: 'contain' }}
             onError={() => {}} />
@@ -48,7 +48,7 @@ export default function SignalClient() {
             <div className="lock-anim" style={{ fontSize: 64, marginBottom: 28 }}>🔒</div>
 
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
-              <span className="blink-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: '#7C3AED', display: 'inline-block' }} />
+              <span className="blink-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: '#5B3A6B', display: 'inline-block' }} />
               Something is being built · LabelNest · Aug 2026
             </div>
 
@@ -88,7 +88,7 @@ export default function SignalClient() {
       </main>
 
       {/* Footer */}
-      <footer style={{ padding: '20px 48px', borderTop: '1px solid rgba(255,255,255,.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <footer style={{ padding: '20px 48px', borderTop: '1px solid rgba(14,27,46,.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <span style={{ fontSize: 12, color: 'var(--text3)' }}>© 2026 LabelNest India Private Limited</span>
         <span style={{ fontSize: 12, color: 'var(--text3)' }}>Data Done, Right.</span>
       </footer>

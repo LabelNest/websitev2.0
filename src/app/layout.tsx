@@ -1,39 +1,32 @@
 import type { Metadata } from 'next'
-import { Bricolage_Grotesque, Inter, JetBrains_Mono } from 'next/font/google'
+import { Newsreader, Hanken_Grotesk } from 'next/font/google'
 import ScrollToTop from '@/components/ScrollToTop'
-import DiyPromoPopup from '@/components/DiyPromoPopup'
 import KaiWidget from '@/components/KaiWidget'
-import IntroLoader from '@/components/IntroLoader'
 import './globals.css'
+import './ln.css'
 
-const bricolage = Bricolage_Grotesque({
+const newsreader = Newsreader({
   subsets: ['latin'],
-  variable: '--font-bricolage',
-  weight: ['300', '400', '500', '700', '800'],
-  display: 'swap',
-})
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  weight: ['300', '400', '500', '600'],
-  display: 'swap',
-})
-
-const jetbrains = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-jetbrains',
+  variable: '--font-serif',
   weight: ['400', '500'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+})
+
+const hanken = Hanken_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  weight: ['400', '500', '600'],
   display: 'swap',
 })
 
 export const metadata: Metadata = {
   title: {
-    default: 'LabelNest — Data Intelligence & Systems Company',
+    default: 'LabelNest — Private market data you can trace to its source',
     template: '%s — LabelNest',
   },
   description:
-    'LabelNest builds data systems and intelligence platforms combining expert human reasoning with deterministic automation.',
+    'LabelNest is a private markets data company in Bengaluru. We make reviewed data, and the software to use it, for the managers, founders and institutions that global platforms treat as an afterthought.',
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://labelnest.in'),
   openGraph: {
     type: 'website',
@@ -61,7 +54,7 @@ const ORGANIZATION_SCHEMA = {
   alternateName: 'LabelNest',
   url: 'https://labelnest.in',
   logo: 'https://labelnest.in/og-default.png',
-  description: 'LabelNest builds data systems and intelligence platforms. NestLens is its private markets OS (Intelligence, Exchange, Capital Readiness); NestHR is its HR and campus-placement OS. Built in India.',
+  description: 'LabelNest is a private markets data company in Bengaluru. NestLens is its platform: Atlas, Exchange, Command, Ascent, Orbit and Connect. NestHR is its HR and campus-placement OS. Built in India.',
   founders: [{ '@type': 'Person', name: 'Ankit Suman', jobTitle: 'Founder and Director', url: 'https://labelnest.in/about/ankit' }],
   address: {
     '@type': 'PostalAddress',
@@ -81,7 +74,7 @@ const ORGANIZATION_SCHEMA = {
         name: 'NestLens',
         url: 'https://nestlens.labelnest.in',
         applicationCategory: 'BusinessApplication',
-        description: 'Private markets OS — Intelligence, Exchange, and Capital Readiness modules.',
+        description: 'Private markets platform: Atlas, Exchange, Command, Ascent, Orbit and Connect.',
       },
     },
     {
@@ -112,18 +105,16 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-theme="dark"
-      className={`${bricolage.variable} ${inter.variable} ${jetbrains.variable}`}
+      data-theme="light"
+      className={`${newsreader.variable} ${hanken.variable}`}
       suppressHydrationWarning
     >
       <head>
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              try {
-                const t = localStorage.getItem('ln-theme') || 'dark';
-                document.documentElement.setAttribute('data-theme', t);
-              } catch(e) {}
+              /* The site is light. An older saved "dark" choice is ignored. */
+              document.documentElement.setAttribute('data-theme', 'light');
             `,
           }}
         />
@@ -136,7 +127,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_SCHEMA) }}
         />
       </head>
-      <body><IntroLoader /><ScrollToTop />{children}<DiyPromoPopup /><KaiWidget /></body>
+      <body><ScrollToTop />{children}<KaiWidget /></body>
     </html>
   )
 }

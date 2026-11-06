@@ -15,10 +15,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const CAPABILITIES = [
-  { icon: '🤝', badge: 'Mentors', badgeColor: '#06B6D4', hoverColor: 'rgba(6,182,212,.4)', name: 'Mentor Connect', desc: 'Founders request mentorship directly from Ascent or Command; mentors run their own dashboard to accept requests and track engagements.' },
-  { icon: '✅', badge: 'Audit', badgeColor: '#7C3AED', hoverColor: 'rgba(124,58,237,.4)', name: 'Verified Audit Requests', desc: 'Request a verified audit on your data room from a vetted audit partner — built into the founder and fund workflow, not a separate tool.' },
-  { icon: '📋', badge: 'Partners', badgeColor: '#F97316', hoverColor: 'rgba(249,115,22,.4)', name: 'Audit Partner Dashboard', desc: 'Audit partners get their own account and dashboard — never the founder-facing navigation, just their real request queue.' },
-  { icon: '🔭', badge: 'Sourcing', badgeColor: '#10B981', hoverColor: 'rgba(16,185,129,.4)', name: 'Scouting Partner Dashboard', desc: 'Scouting partners get a dedicated workspace to track the founders and funds they refer into the ecosystem.' },
+  { icon: '🤝', badge: 'Mentors', badgeColor: '#1F6F7A', hoverColor: 'rgba(31,111,122,.4)', name: 'Mentor Connect', desc: 'Founders request mentorship directly from Ascent or Command; mentors run their own dashboard to accept requests and track engagements.' },
+  { icon: '✅', badge: 'Audit', badgeColor: '#5B3A6B', hoverColor: 'rgba(91,58,107,.4)', name: 'Verified Audit Requests', desc: 'Request a verified audit on your data room from a vetted audit partner — built into the founder and fund workflow, not a separate tool.' },
+  { icon: '📋', badge: 'Partners', badgeColor: '#9A4B1F', hoverColor: 'rgba(154,75,31,.4)', name: 'Audit Partner Dashboard', desc: 'Audit partners get their own account and dashboard — never the founder-facing navigation, just their real request queue.' },
+  { icon: '🔭', badge: 'Sourcing', badgeColor: '#2C6B4B', hoverColor: 'rgba(44,107,75,.4)', name: 'Scouting Partner Dashboard', desc: 'Scouting partners get a dedicated workspace to track the founders and funds they refer into the ecosystem.' },
 ]
 
 const BREADCRUMB_SCHEMA = breadcrumbSchema([
@@ -50,7 +50,7 @@ export default function ConnectPage() {
 
         {/* HERO */}
         <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', top: -100, left: -80, width: 500, height: 500, borderRadius: '50%', background: 'rgba(6,182,212,.08)', filter: 'blur(90px)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', top: -100, left: -80, width: 500, height: 500, borderRadius: '50%', background: 'rgba(31,111,122,.08)', filter: 'blur(90px)', pointerEvents: 'none' }} />
           <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 2 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
               <img src="/logos/connect-v2-32.png" alt="" width={20} height={20} style={{ objectFit: 'contain' }} />
@@ -58,7 +58,7 @@ export default function ConnectPage() {
             </div>
             <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(40px,6vw,68px)', fontWeight: 800, letterSpacing: '-.045em', lineHeight: 1.03, color: 'var(--text)', marginBottom: 18, maxWidth: 700 }}>
               The capital and expertise<br />
-              <span style={{ background: 'linear-gradient(100deg,#06B6D4,#7C3AED)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>network.</span>
+              <span style={{ background: 'linear-gradient(100deg,#1F6F7A,#5B3A6B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>network.</span>
             </h1>
             <p style={{ fontSize: 'clamp(15px,1.8vw,18px)', lineHeight: 1.72, color: 'var(--text2)', maxWidth: 600, marginBottom: 16 }}>
               Mentors, audit partners, and scouting partners — <strong style={{ color: 'var(--text)', fontWeight: 600 }}>connected directly into the same rooms founders and funds already work in</strong>, not a separate directory to search.
@@ -68,9 +68,9 @@ export default function ConnectPage() {
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               <a href="https://connect.labelnest.in" target="_blank" rel="noopener noreferrer"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#06B6D4', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Connect ↗</a>
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#1F6F7A', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Connect ↗</a>
               <a href="https://nestlens.labelnest.in/mentors/apply" target="_blank" rel="noopener noreferrer"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>Become a mentor</a>
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(14,27,46,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(14,27,46,.1)' }}>Become a mentor</a>
             </div>
           </div>
         </section>
@@ -122,8 +122,8 @@ export default function ConnectPage() {
         <section style={{ padding: '40px 48px', borderTop: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', gap: 24, flexWrap: 'wrap', fontSize: 13.5, color: 'var(--text2)' }}>
             <span>See also:</span>
-            <Link href="/nestlens/capital" style={{ color: '#10B981' }}>Founders raising capital, see Ascent →</Link>
-            <Link href="/nestlens/command" style={{ color: '#F97316' }}>Funds running operations, see Command →</Link>
+            <Link href="/nestlens/capital" style={{ color: '#2C6B4B' }}>Founders raising capital, see Ascent →</Link>
+            <Link href="/nestlens/command" style={{ color: '#9A4B1F' }}>Funds running operations, see Command →</Link>
           </div>
         </section>
 
@@ -135,9 +135,9 @@ export default function ConnectPage() {
             <p style={{ fontSize: 15.5, color: 'var(--text2)', maxWidth: 460, margin: '0 auto 32px', lineHeight: 1.7 }}>Get connected directly into the rooms where founders and funds are already working.</p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="https://nestlens.labelnest.in/mentors/apply" target="_blank" rel="noopener noreferrer"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#06B6D4', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Become a mentor ↗</a>
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#1F6F7A', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Become a mentor ↗</a>
               <Link href="/contact"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>Talk to the team</Link>
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(14,27,46,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(14,27,46,.1)' }}>Talk to the team</Link>
             </div>
           </div>
         </section>

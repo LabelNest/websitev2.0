@@ -35,7 +35,7 @@ const DATA: VsPageData = {
   ],
   tableRows: [
     { feature: 'India PE-VC deal history depth', competitor: { text: '25,000+ PE/VC transactions, 15,000+ M&A deals, back to 1999', verdict: 'win' }, labelnest: { text: 'Live entity and event tracking from 2024 forward', verdict: 'mid' } },
-    { feature: 'Company financials coverage', competitor: { text: 'Financials on 800,000+ Indian companies', verdict: 'win' }, labelnest: { text: '40,000+ entities with deep profile data, not broad financial-statement coverage', verdict: 'mid' } },
+    { feature: 'Company financials coverage', competitor: { text: 'Financials on 800,000+ Indian companies', verdict: 'win' }, labelnest: { text: '{{entities}} entities with deep profile data, not broad financial-statement coverage', verdict: 'mid' } },
     { feature: 'League tables', competitor: { text: 'Funds, bankers, and law firms ranked by activity', verdict: 'win' }, labelnest: { text: 'Not offered as a standalone feature', verdict: 'no' } },
     { feature: 'Fund, LP, GP as connected entities', competitor: { text: 'Deal-record centric, not entity-relationship centric', verdict: 'no' }, labelnest: { text: 'Funds, LPs, GPs, and service providers as first-class, linked entities', verdict: 'win' } },
     { feature: 'Access model', competitor: { text: 'Subscription database access, pricing not published', verdict: 'mid' }, labelnest: { text: 'Credit-based, self-serve free tier, no credit card', verdict: 'win' } },
@@ -52,7 +52,7 @@ const DATA: VsPageData = {
     body: "Venture Intelligence's assumption: the value is in the archive — 25 years of India PE-VC and M&A transaction records, valuations, and league tables. LabelNest's assumption: emerging managers and analysts need live, connected entities — funds, LPs, GPs, service providers — plus a marketplace and data rooms to act on today, not just historical deal lookup. If you need to do something with the data, not just research it, LabelNest was built for that.",
   },
   finalTag: 'See LabelNest for yourself',
-  finalHeading: '40,000+ entities. Credit-based. Free tier available.',
+  finalHeading: '{{entities}} entities. Credit-based. Free tier available.',
   finalBody: 'Open NestLens, browse the data, and decide for yourself. No credit card, no sales call required.',
   finalPrimaryCta: { href: 'https://nestlens.labelnest.in', label: 'Try NestLens Free ↗', external: true },
   finalSecondaryCta: { href: '/vs/tracxn', label: 'Also see: vs Tracxn →' },

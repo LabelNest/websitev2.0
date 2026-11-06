@@ -26,7 +26,7 @@ export default function WhoWeServePage() {
 
         {/* HERO */}
         <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', top: -120, left: '50%', transform: 'translateX(-50%)', width: 600, height: 600, borderRadius: '50%', background: 'rgba(37,99,235,.06)', filter: 'blur(90px)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', top: -120, left: '50%', transform: 'translateX(-50%)', width: 600, height: 600, borderRadius: '50%', background: 'rgba(31,58,95,.06)', filter: 'blur(90px)', pointerEvents: 'none' }} />
           <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 2 }}>
             <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>LabelNest</div>
             <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(36px,5.5vw,60px)', fontWeight: 800, letterSpacing: '-.04em', lineHeight: 1.05, color: 'var(--text)', marginBottom: 16 }}>

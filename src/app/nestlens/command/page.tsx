@@ -1,6 +1,7 @@
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import DiyBanner from '@/components/DiyBanner'
+import PlanSection from '@/components/PlanSection'
 import NestLensModuleNav from '@/components/NestLensModuleNav'
 import HoverDiv from '@/components/HoverDiv'
 import Link from 'next/link'
@@ -15,16 +16,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const CONNECTIONS = [
-  { from: 'Atlas', to: 'Deal Sourcing & Startup Search', desc: 'Same structured data layer Atlas tracks — no separate tool for finding your next deal.', c: '#0891B2' },
-  { from: 'Ascent', to: 'Command Portfolio', desc: "A portfolio company's own metrics sync in once they accept your invite — headcount, revenue, burn, runway, valuation.", c: '#7C3AED' },
-  { from: 'Valuation', to: 'NAV · TVPI · DPI · IRR', desc: 'Save a fair value on a portfolio company and the fund\'s returns recompute immediately — not on the next report cycle.', c: '#10B981' },
+  { from: 'Atlas', to: 'Deal Sourcing & Startup Search', desc: 'Same structured data layer Atlas tracks — no separate tool for finding your next deal.', c: '#1F6F7A' },
+  { from: 'Ascent', to: 'Command Portfolio', desc: "A portfolio company's own metrics sync in once they accept your invite — headcount, revenue, burn, runway, valuation.", c: '#5B3A6B' },
+  { from: 'Valuation', to: 'NAV · TVPI · DPI · IRR', desc: 'Save a fair value on a portfolio company and the fund\'s returns recompute immediately — not on the next report cycle.', c: '#2C6B4B' },
 ]
 
 const STATS = [
-  { v: '119', l: 'Vault fields', c: '#7C3AED' },
-  { v: '10', l: 'Data room sections', c: '#2563EB' },
-  { v: '8', l: 'Fund-ops capabilities', c: '#10B981' },
-  { v: '3', l: 'Live automations', c: '#F97316' },
+  { v: '119', l: 'Vault fields', c: '#5B3A6B' },
+  { v: '10', l: 'Data room sections', c: '#1F3A5F' },
+  { v: '8', l: 'Fund-ops capabilities', c: '#2C6B4B' },
+  { v: '3', l: 'Live automations', c: '#9A4B1F' },
 ]
 
 // Fills use var(--surface)/var(--text)/var(--text2) instead of hardcoded
@@ -42,7 +43,7 @@ const CONNECTION_DIAGRAM_SVG = `<svg width="100%" viewBox="0 0 680 360" role="im
   <style>
     .cdt { font: 600 13px/1 'Bricolage Grotesque',sans-serif; }
     .cds { font: 400 11px/1 system-ui,sans-serif; }
-    .cring { fill:none; stroke:#7C3AED; stroke-width:1; opacity:0.18; }
+    .cring { fill:none; stroke:#5B3A6B; stroke-width:1; opacity:0.18; }
     @keyframes cSpinA { to { transform: rotate(360deg); } }
     @keyframes cSpinB { to { transform: rotate(-360deg); } }
     @keyframes cDash  { to { stroke-dashoffset: -24; } }
@@ -58,40 +59,40 @@ const CONNECTION_DIAGRAM_SVG = `<svg width="100%" viewBox="0 0 680 360" role="im
 </defs>
 <circle class="cring cr1" cx="340" cy="175" r="120"/>
 <circle class="cring cr2" cx="340" cy="175" r="95" stroke-dasharray="3 10"/>
-<line x1="102" y1="90"  x2="294" y2="155" stroke="#0891B2" stroke-width="1.5" fill="none" class="cf1" marker-end="url(#cmdArr)"/>
-<line x1="102" y1="175" x2="294" y2="175" stroke="#7C3AED" stroke-width="1.5" fill="none" class="cf2" marker-end="url(#cmdArr)"/>
-<line x1="102" y1="260" x2="294" y2="195" stroke="#10B981" stroke-width="1.5" fill="none" class="cf3" marker-end="url(#cmdArr)"/>
-<circle r="3.5" fill="#0891B2"><animateMotion dur="1.4s" repeatCount="indefinite"><mpath href="#cp1"/></animateMotion></circle>
+<line x1="102" y1="90"  x2="294" y2="155" stroke="#1F6F7A" stroke-width="1.5" fill="none" class="cf1" marker-end="url(#cmdArr)"/>
+<line x1="102" y1="175" x2="294" y2="175" stroke="#5B3A6B" stroke-width="1.5" fill="none" class="cf2" marker-end="url(#cmdArr)"/>
+<line x1="102" y1="260" x2="294" y2="195" stroke="#2C6B4B" stroke-width="1.5" fill="none" class="cf3" marker-end="url(#cmdArr)"/>
+<circle r="3.5" fill="#1F6F7A"><animateMotion dur="1.4s" repeatCount="indefinite"><mpath href="#cp1"/></animateMotion></circle>
 <path id="cp1" d="M102,90 L294,155" fill="none" stroke="none"/>
-<circle r="3.5" fill="#7C3AED"><animateMotion dur="1.8s" repeatCount="indefinite"><mpath href="#cp2"/></animateMotion></circle>
+<circle r="3.5" fill="#5B3A6B"><animateMotion dur="1.8s" repeatCount="indefinite"><mpath href="#cp2"/></animateMotion></circle>
 <path id="cp2" d="M102,175 L294,175" fill="none" stroke="none"/>
-<circle r="3.5" fill="#10B981"><animateMotion dur="2.0s" repeatCount="indefinite"><mpath href="#cp3"/></animateMotion></circle>
+<circle r="3.5" fill="#2C6B4B"><animateMotion dur="2.0s" repeatCount="indefinite"><mpath href="#cp3"/></animateMotion></circle>
 <path id="cp3" d="M102,260 L294,195" fill="none" stroke="none"/>
-<circle cx="340" cy="175" r="50" fill="var(--surface)" stroke="#7C3AED" stroke-width="1.5" class="cgw"/>
-<circle cx="340" cy="175" r="38" fill="#7C3AED1A" stroke="#7C3AED" stroke-width="0.5"/>
-<text x="340" y="170" class="cdt" text-anchor="middle" fill="#7C3AED" font-size="17">⌘</text>
-<text x="340" y="187" class="cdt" text-anchor="middle" fill="#7C3AED">Command</text>
-<rect x="22" y="66" width="80" height="48" rx="7" fill="var(--surface)" stroke="#0891B2" stroke-width="1"/>
+<circle cx="340" cy="175" r="50" fill="var(--surface)" stroke="#5B3A6B" stroke-width="1.5" class="cgw"/>
+<circle cx="340" cy="175" r="38" fill="#5B3A6B1A" stroke="#5B3A6B" stroke-width="0.5"/>
+<text x="340" y="170" class="cdt" text-anchor="middle" fill="#5B3A6B" font-size="17">⌘</text>
+<text x="340" y="187" class="cdt" text-anchor="middle" fill="#5B3A6B">Command</text>
+<rect x="22" y="66" width="80" height="48" rx="7" fill="var(--surface)" stroke="#1F6F7A" stroke-width="1"/>
 <text x="62" y="87" class="cdt" text-anchor="middle" fill="var(--text)">Atlas</text>
 <text x="62" y="104" class="cds" text-anchor="middle" fill="var(--text2)">Market data</text>
-<rect x="22" y="151" width="80" height="48" rx="7" fill="var(--surface)" stroke="#7C3AED" stroke-width="1"/>
+<rect x="22" y="151" width="80" height="48" rx="7" fill="var(--surface)" stroke="#5B3A6B" stroke-width="1"/>
 <text x="62" y="172" class="cdt" text-anchor="middle" fill="var(--text)">Ascent</text>
 <text x="62" y="189" class="cds" text-anchor="middle" fill="var(--text2)">Startup metrics</text>
-<rect x="22" y="236" width="80" height="48" rx="7" fill="var(--surface)" stroke="#10B981" stroke-width="1"/>
+<rect x="22" y="236" width="80" height="48" rx="7" fill="var(--surface)" stroke="#2C6B4B" stroke-width="1"/>
 <text x="62" y="257" class="cdt" text-anchor="middle" fill="var(--text)">Valuation</text>
 <text x="62" y="274" class="cds" text-anchor="middle" fill="var(--text2)">NAV · TVPI</text>
 <text x="340" y="332" class="cds" text-anchor="middle" fill="var(--text3)">Deal sourcing · Cap table · NAV · TVPI/DPI/IRR · LP reports</text>
 </svg>`
 
 const CAPABILITIES = [
-  { icon: '📊', badge: 'Overview', badgeColor: '#F97316', hoverColor: 'rgba(249,115,22,.4)', name: 'Fund Dashboard', desc: 'A live view of your fund — portfolio health, LP commitments, pipeline stage, and deal flow, in one place. No pulling four spreadsheets together before you can answer "how are we doing."' },
-  { icon: '🗄️', badge: 'Data room', badgeColor: '#2563EB', hoverColor: 'rgba(37,99,235,.4)', name: 'Fund Data Room', desc: 'Your fund\'s own investor-facing data room — one included per fund, extra rooms available for co-investors or portfolio companies. The version an LP opens is always current, not a PDF you exported six weeks ago.' },
-  { icon: '🏦', badge: 'LPs', badgeColor: '#10B981', hoverColor: 'rgba(16,185,129,.4)', name: 'LP Management', desc: 'Track commitments, capital calls, and reporting cadence across your limited partners — and discover new LP-side opportunities. Stop chasing capital call status across email threads.' },
-  { icon: '🚀', badge: 'Portfolio', badgeColor: '#7C3AED', hoverColor: 'rgba(124,58,237,.4)', name: 'Portfolio Company Tracking', desc: 'Every portfolio company\'s own data room, health, and metrics rolled up into one fund-level view — instead of a folder per company on someone\'s laptop.' },
-  { icon: '🔍', badge: 'Sourcing', badgeColor: '#E91E8C', hoverColor: 'rgba(233,30,140,.4)', name: 'Deal Sourcing and Startup Search', desc: 'Search and pipeline new deals directly from the same structured data layer Atlas tracks — no separate tool needed, no re-keying a company\'s details once you decide to track it.' },
-  { icon: '📝', badge: 'Diligence', badgeColor: '#F97316', hoverColor: 'rgba(249,115,22,.4)', name: 'Diligence and Term Sheets', desc: 'Run diligence checklists and manage term sheets for deals in your pipeline, start to close — one record per deal instead of a folder of email attachments.' },
-  { icon: '✅', badge: 'IC', badgeColor: '#2563EB', hoverColor: 'rgba(37,99,235,.4)', name: 'IC Voting and Reports', desc: 'Investment committee voting on live deals, with structured IC reports generated from the same pipeline data — a decision trail your LPs and auditors can actually follow, not a call made over Slack.' },
-  { icon: '📈', badge: 'Analysis', badgeColor: '#10B981', hoverColor: 'rgba(16,185,129,.4)', name: 'Comparable Deals and Reports', desc: 'Portfolio and LP reports plus comparable-deal analysis, without leaving the fund workspace or re-exporting into a deck the night before it\'s due.' },
+  { icon: '📊', badge: 'Overview', badgeColor: '#9A4B1F', hoverColor: 'rgba(154,75,31,.4)', name: 'Fund Dashboard', desc: 'A live view of your fund — portfolio health, LP commitments, pipeline stage, and deal flow, in one place. No pulling four spreadsheets together before you can answer "how are we doing."' },
+  { icon: '🗄️', badge: 'Data room', badgeColor: '#1F3A5F', hoverColor: 'rgba(31,58,95,.4)', name: 'Fund Data Room', desc: 'Your fund\'s own investor-facing data room — one included per fund, extra rooms available for co-investors or portfolio companies. The version an LP opens is always current, not a PDF you exported six weeks ago.' },
+  { icon: '🏦', badge: 'LPs', badgeColor: '#2C6B4B', hoverColor: 'rgba(44,107,75,.4)', name: 'LP Management', desc: 'Track commitments, capital calls, and reporting cadence across your limited partners — and discover new LP-side opportunities. Stop chasing capital call status across email threads.' },
+  { icon: '🚀', badge: 'Portfolio', badgeColor: '#5B3A6B', hoverColor: 'rgba(91,58,107,.4)', name: 'Portfolio Company Tracking', desc: 'Every portfolio company\'s own data room, health, and metrics rolled up into one fund-level view — instead of a folder per company on someone\'s laptop.' },
+  { icon: '🔍', badge: 'Sourcing', badgeColor: '#7A5217', hoverColor: 'rgba(122,82,23,.4)', name: 'Deal Sourcing and Startup Search', desc: 'Search and pipeline new deals directly from the same structured data layer Atlas tracks — no separate tool needed, no re-keying a company\'s details once you decide to track it.' },
+  { icon: '📝', badge: 'Diligence', badgeColor: '#9A4B1F', hoverColor: 'rgba(154,75,31,.4)', name: 'Diligence and Term Sheets', desc: 'Run diligence checklists and manage term sheets for deals in your pipeline, start to close — one record per deal instead of a folder of email attachments.' },
+  { icon: '✅', badge: 'IC', badgeColor: '#1F3A5F', hoverColor: 'rgba(31,58,95,.4)', name: 'IC Voting and Reports', desc: 'Investment committee voting on live deals, with structured IC reports generated from the same pipeline data — a decision trail your LPs and auditors can actually follow, not a call made over Slack.' },
+  { icon: '📈', badge: 'Analysis', badgeColor: '#2C6B4B', hoverColor: 'rgba(44,107,75,.4)', name: 'Comparable Deals and Reports', desc: 'Portfolio and LP reports plus comparable-deal analysis, without leaving the fund workspace or re-exporting into a deck the night before it\'s due.' },
 ]
 
 const BREADCRUMB_SCHEMA = breadcrumbSchema([
@@ -123,7 +124,7 @@ export default function CommandPage() {
 
         {/* HERO */}
         <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', top: -100, right: -80, width: 500, height: 500, borderRadius: '50%', background: 'rgba(124,58,237,.10)', filter: 'blur(90px)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', top: -100, right: -80, width: 500, height: 500, borderRadius: '50%', background: 'rgba(91,58,107,.10)', filter: 'blur(90px)', pointerEvents: 'none' }} />
           <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 2 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
               <img src="/logos/command-32.png" alt="" width={20} height={20} style={{ objectFit: 'contain' }} />
@@ -131,7 +132,7 @@ export default function CommandPage() {
             </div>
             <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(40px,6vw,68px)', fontWeight: 800, letterSpacing: '-.045em', lineHeight: 1.03, color: 'var(--text)', marginBottom: 18, maxWidth: 720 }}>
               The operating system<br />
-              your fund <span style={{ background: 'linear-gradient(100deg,#7C3AED,#E91E8C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>runs on.</span>
+              your fund <span style={{ background: 'linear-gradient(100deg,#5B3A6B,#7A5217)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>runs on.</span>
             </h1>
             <p style={{ fontSize: 'clamp(15px,1.8vw,18px)', lineHeight: 1.72, color: 'var(--text2)', maxWidth: 620, marginBottom: 18 }}>
               <strong style={{ color: 'var(--text)', fontWeight: 600 }}>Fund dashboard, LP management, portfolio tracking, deal sourcing, and IC voting</strong> — one workspace for a VC or PE fund, built on the same structured data layer Atlas tracks.
@@ -141,9 +142,9 @@ export default function CommandPage() {
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               <a href="https://command.labelnest.in" target="_blank" rel="noopener noreferrer"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#7C3AED', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Command ↗</a>
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#5B3A6B', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Command ↗</a>
               <Link href="/contact"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>Talk to the team</Link>
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(14,27,46,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(14,27,46,.1)' }}>Talk to the team</Link>
             </div>
           </div>
         </section>
@@ -205,52 +206,15 @@ export default function CommandPage() {
           </div>
         </section>
 
-        {/* PRICING */}
-        <section style={{ padding: '72px 48px', borderTop: '1px solid var(--border)' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ textAlign: 'center', marginBottom: 36 }}>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text3)', marginBottom: 14 }}>Pricing</div>
-              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(22px,3vw,34px)', fontWeight: 800, letterSpacing: '-.025em', color: 'var(--text)' }}>One package per fund, billed monthly.</h2>
-              <p style={{ fontSize: 13.5, lineHeight: 1.7, color: 'var(--text2)', maxWidth: 480, margin: '12px auto 0' }}>
-                Priced like software, not like institutional fund infrastructure. No per-LP seat fees, no multi-year contract just to see whether it fits how your fund actually works.
-              </p>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 16, maxWidth: 500, margin: '0 auto' }}>
-              <div style={{ background: 'var(--surface)', border: '1px solid #F97316', borderRadius: 14, padding: 20, position: 'relative' }}>
-                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>India-domiciled fund</div>
-                <div style={{ marginBottom: 8 }}>
-                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: '#F97316' }}>₹5,00,000</span>
-                  <span style={{ fontSize: 11, color: 'var(--text3)' }}>/fund/month</span>
-                </div>
-                <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>Every feature · 3 seats · 1 vehicle · 50 portfolio companies · 100 LPs tracked · 20 IC-memo AI credits/month · 2,000 Atlas credits/year · 5 Ascent seats</div>
-              </div>
-              <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 20 }}>
-                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>Non-India fund</div>
-                <div style={{ marginBottom: 8 }}>
-                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: 'var(--text)' }}>$799</span>
-                  <span style={{ fontSize: 11, color: 'var(--text3)' }}>/fund/month</span>
-                </div>
-                <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>The same package for funds domiciled outside India, billed in USD</div>
-              </div>
-              <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: 20 }}>
-                <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 700, fontSize: 14, color: 'var(--text)', marginBottom: 8 }}>Enterprise</div>
-                <div style={{ marginBottom: 8 }}>
-                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 22, fontWeight: 800, color: 'var(--text)' }}>Custom</span>
-                </div>
-                <div style={{ fontSize: 11, color: 'var(--text3)', lineHeight: 1.5 }}>Multiple funds, custom LP/portfolio room counts, and SLA</div>
-              </div>
-            </div>
-            <p style={{ textAlign: 'center', fontSize: 12.5, color: 'var(--text3)', marginTop: 24 }}>See <Link href="/nestlens/pricing" style={{ color: '#F97316' }}>full pricing ↗</Link></p>
-          </div>
-        </section>
+        <PlanSection module="command" />
 
         {/* SEE ALSO */}
         <section style={{ padding: '40px 48px', borderTop: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', gap: 24, flexWrap: 'wrap', fontSize: 13.5, color: 'var(--text2)' }}>
             <span>See also:</span>
-            <Link href="/nestlens/intelligence" style={{ color: '#2563EB' }}>Source new deals with Atlas →</Link>
-            <Link href="/nestlens/capital" style={{ color: '#10B981' }}>Portfolio companies raise on Ascent →</Link>
-            <Link href="/nestlens/connect" style={{ color: '#06B6D4' }}>Need diligence help? See Connect's audit partners →</Link>
+            <Link href="/nestlens/intelligence" style={{ color: '#1F3A5F' }}>Source new deals with Atlas →</Link>
+            <Link href="/nestlens/capital" style={{ color: '#2C6B4B' }}>Portfolio companies raise on Ascent →</Link>
+            <Link href="/nestlens/connect" style={{ color: '#1F6F7A' }}>Need diligence help? See Connect's audit partners →</Link>
           </div>
         </section>
 
@@ -262,9 +226,9 @@ export default function CommandPage() {
             <p style={{ fontSize: 15.5, color: 'var(--text2)', maxWidth: 480, margin: '0 auto 32px', lineHeight: 1.7 }}>Fund dashboard, LP management, and portfolio tracking — live today, not on a roadmap.</p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="https://command.labelnest.in" target="_blank" rel="noopener noreferrer"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#7C3AED', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Command ↗</a>
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#5B3A6B', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Open Command ↗</a>
               <Link href="/contact"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>Talk to the team</Link>
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(14,27,46,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(14,27,46,.1)' }}>Talk to the team</Link>
             </div>
           </div>
         </section>

@@ -15,9 +15,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const FEATURES = [
-  { icon: '📰', badge: 'Browse free', badgeColor: '#2563EB', hoverColor: 'rgba(37,99,235,.4)', name: 'Open research library', desc: 'Every published report is browsable without a plan — headlines, summaries, and firm context are open to anyone.' },
-  { icon: '🔓', badge: 'Per-report', badgeColor: '#F97316', hoverColor: 'rgba(249,115,22,.4)', name: 'Unlock individually', desc: 'Full reports unlock one at a time, on demand — no module subscription required to read the research you actually need.' },
-  { icon: '📈', badge: 'Trends', badgeColor: '#10B981', hoverColor: 'rgba(16,185,129,.4)', name: 'Insights & trend layers', desc: 'Sector momentum, fund manager deep-dives, and market movement — the analytical layer sitting on top of Atlas\'s structured data.' },
+  { icon: '📰', badge: 'Browse free', badgeColor: '#1F3A5F', hoverColor: 'rgba(31,58,95,.4)', name: 'Open research library', desc: 'Every published report is browsable without a plan — headlines, summaries, and firm context are open to anyone.' },
+  { icon: '🔓', badge: 'Per-report', badgeColor: '#9A4B1F', hoverColor: 'rgba(154,75,31,.4)', name: 'Unlock individually', desc: 'Full reports unlock one at a time, on demand — no module subscription required to read the research you actually need.' },
+  { icon: '📈', badge: 'Trends', badgeColor: '#2C6B4B', hoverColor: 'rgba(44,107,75,.4)', name: 'Insights & trend layers', desc: 'Sector momentum, fund manager deep-dives, and market movement — the analytical layer sitting on top of Atlas\'s structured data.' },
 ]
 
 const BREADCRUMB_SCHEMA = breadcrumbSchema([
@@ -50,7 +50,7 @@ export default function ObservatoryPage() {
 
         {/* HERO */}
         <section style={{ padding: '64px 48px', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', top: -100, left: -80, width: 500, height: 500, borderRadius: '50%', background: 'rgba(124,58,237,.08)', filter: 'blur(90px)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', top: -100, left: -80, width: 500, height: 500, borderRadius: '50%', background: 'rgba(91,58,107,.08)', filter: 'blur(90px)', pointerEvents: 'none' }} />
           <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 2 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18, fontSize: 13, color: 'var(--text3)' }}>
               <Link href="/nestlens/intelligence" style={{ color: 'var(--text3)', textDecoration: 'none' }}>Atlas</Link>
@@ -63,16 +63,16 @@ export default function ObservatoryPage() {
             </div>
             <h1 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: 'clamp(38px,5.2vw,62px)', fontWeight: 800, letterSpacing: '-.04em', lineHeight: 1.04, color: 'var(--text)', marginBottom: 16, maxWidth: 760 }}>
               The insights & trends layer<br />
-              <span style={{ background: 'linear-gradient(100deg,#2563EB,#7C3AED)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>for private markets.</span>
+              <span style={{ background: 'linear-gradient(100deg,#1F3A5F,#5B3A6B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>for private markets.</span>
             </h1>
             <p style={{ fontSize: 'clamp(15px,1.8vw,17.5px)', lineHeight: 1.74, color: 'var(--text2)', marginBottom: 28, maxWidth: 620 }}>
               Published research on real firms — <strong style={{ color: 'var(--text)', fontWeight: 600 }}>browse free, unlock full reports individually</strong>. No Atlas module plan required to start reading.
             </p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               <a href="https://atlas.labelnest.in/observatory" target="_blank" rel="noopener noreferrer"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#7C3AED', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Browse the Observatory ↗</a>
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#5B3A6B', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Browse the Observatory ↗</a>
               <Link href="/nestlens/intelligence"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>See all of Atlas</Link>
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(14,27,46,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(14,27,46,.1)' }}>See all of Atlas</Link>
             </div>
           </div>
         </section>
@@ -103,8 +103,8 @@ export default function ObservatoryPage() {
         <section style={{ padding: '40px 48px', borderTop: '1px solid var(--border)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', gap: 24, flexWrap: 'wrap', fontSize: 13.5, color: 'var(--text2)' }}>
             <span>See also:</span>
-            <Link href="/nestlens/intelligence" style={{ color: '#2563EB' }}>The full Atlas platform →</Link>
-            <Link href="/nestlens/exchange" style={{ color: '#E91E8C' }}>Buy specific datasets on the Exchange marketplace →</Link>
+            <Link href="/nestlens/intelligence" style={{ color: '#1F3A5F' }}>The full Atlas platform →</Link>
+            <Link href="/nestlens/exchange" style={{ color: '#7A5217' }}>Buy specific datasets on the Exchange marketplace →</Link>
           </div>
         </section>
 
@@ -116,9 +116,9 @@ export default function ObservatoryPage() {
             <p style={{ fontSize: 15.5, color: 'var(--text2)', maxWidth: 460, margin: '0 auto 32px', lineHeight: 1.7 }}>No sign-up required to start browsing the Observatory&apos;s research library.</p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="https://atlas.labelnest.in/observatory" target="_blank" rel="noopener noreferrer"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#7C3AED', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Browse the Observatory ↗</a>
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#5B3A6B', color: '#fff', fontSize: 14.5, fontWeight: 600, padding: '13px 26px', borderRadius: 11 }}>Browse the Observatory ↗</a>
               <Link href="/contact"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)' }}>Talk to the team</Link>
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(14,27,46,.06)', color: 'var(--text)', fontSize: 14.5, fontWeight: 500, padding: '13px 26px', borderRadius: 11, border: '1px solid rgba(14,27,46,.1)' }}>Talk to the team</Link>
             </div>
           </div>
         </section>

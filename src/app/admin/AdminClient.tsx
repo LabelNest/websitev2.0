@@ -4,9 +4,11 @@ import { useRouter } from 'next/navigation'
 import { ImagePositioner } from '@/components/admin/ImagePositioner'
 import { imgFrameStyle } from '@/lib/image'
 import { formatDateTimeIST, formatDateIST } from '@/lib/utils'
+import ContentEditor from './ContentEditor'
+import PricingPreview from './PricingPreview'
 
 // ── Types ──────────────────────────────────────────────────────────────────
-type Section = 'overview'|'briefings'|'team'|'legal'|'jobs'|'departments'|'upload'|'newsletter'|'submissions'|'seo'|'settings'
+type Section = 'overview'|'content'|'pricing'|'briefings'|'team'|'legal'|'jobs'|'departments'|'upload'|'newsletter'|'submissions'|'seo'|'settings'
 
 interface Briefing { id:string; slug:string; title:string; author_name:string; scope:string; date:string; read_time:string; is_featured:boolean; cover_image:string|null; hero_image:string|null; cover_image_position:string; cover_image_zoom:number; hero_image_position:string; hero_image_zoom:number }
 interface TeamMember { id:string; name:string; role:string; department:string; bio:string|null; linkedin_url:string|null; image_url:string|null; image_position:string; image_zoom:number; sort_order:number; is_active:boolean; slug:string|null; email:string|null; expertise:string[]|null; quote:string|null }
@@ -23,17 +25,17 @@ interface SeoRow { id:string; page_path:string; title:string|null; description:s
 
 // ── Design tokens ──────────────────────────────────────────────────────────
 const S = {
-  bg: '#09090F', bg2: '#0E0E1A', bg3: '#111119', surface: '#1B1B2A',
-  border: 'rgba(255,255,255,.07)', bord2: 'rgba(255,255,255,.13)',
-  text: '#EBE8F6', text2: '#8985A6', text3: '#4C4868',
-  pink: '#E91E8C', blue: '#2563EB', orange: '#F97316', green: '#10B981', purple: '#7C3AED',
+  bg: '#F6F3EC', bg2: '#FBF9F4', bg3: '#EEE9DD', surface: '#FFFFFF',
+  border: 'rgba(14,27,46,.10)', bord2: 'rgba(14,27,46,.18)',
+  text: '#0E1B2E', text2: '#2F3B4D', text3: '#5C6676',
+  pink: '#7A5217', blue: '#1F3A5F', orange: '#9A4B1F', green: '#2C6B4B', purple: '#5B3A6B',
 }
 
 // ── Shared sub-components ──────────────────────────────────────────────────
 
 function Btn({ label, color=S.pink, onClick, small=false, outline=false }: { label:string; color?:string; onClick?:()=>void; small?:boolean; outline?:boolean }) {
   return (
-    <button onClick={onClick} style={{ background:outline?'transparent':color, color:outline?color:'#fff', border:outline?`1px solid ${color}`:'none', borderRadius:8, padding:small?'5px 11px':'9px 18px', fontSize:small?11.5:13, fontWeight:600, cursor:'pointer', fontFamily:'Inter,sans-serif', transition:'opacity .15s', whiteSpace:'nowrap' }}
+    <button onClick={onClick} style={{ background:outline?'transparent':color, color:outline?color:'#fff', border:outline?`1px solid ${color}`:'none', borderRadius:8, padding:small?'5px 11px':'9px 18px', fontSize:small?11.5:13, fontWeight:600, cursor:'pointer', fontFamily:'inherit', transition:'opacity .15s', whiteSpace:'nowrap' }}
       onMouseEnter={e=>(e.currentTarget.style.opacity='.8')}
       onMouseLeave={e=>(e.currentTarget.style.opacity='1')}>
       {label}
@@ -46,7 +48,7 @@ function Badge({ label, color }: { label:string; color:string }) {
 }
 
 function Input({ label, value, onChange, type='text', placeholder='', required=false, rows=0, hint='' }: { label:string; value:string; onChange:(v:string)=>void; type?:string; placeholder?:string; required?:boolean; rows?:number; hint?:string }) {
-  const base = { width:'100%', background:S.bg2, border:`1px solid ${S.bord2}`, borderRadius:8, padding:'9px 12px', fontSize:13, color:S.text, outline:'none', fontFamily:'Inter,sans-serif', boxSizing:'border-box' as const }
+  const base = { width:'100%', background:S.bg2, border:`1px solid ${S.bord2}`, borderRadius:8, padding:'9px 12px', fontSize:13, color:S.text, outline:'none', fontFamily:'inherit', boxSizing:'border-box' as const }
   return (
     <div style={{ display:'flex', flexDirection:'column', gap:4 }}>
       <label style={{ fontSize:11.5, fontWeight:600, color:S.text2 }}>{label}{required && ' *'}</label>
@@ -62,7 +64,7 @@ function SelectField({ label, value, onChange, options }: { label:string; value:
   return (
     <div style={{ display:'flex', flexDirection:'column', gap:4 }}>
       <label style={{ fontSize:11.5, fontWeight:600, color:S.text2 }}>{label}</label>
-      <select value={value} onChange={e=>onChange(e.target.value)} style={{ background:S.bg2, border:`1px solid ${S.bord2}`, borderRadius:8, padding:'9px 12px', fontSize:13, color:S.text, outline:'none', fontFamily:'Inter,sans-serif', width:'100%' }}>
+      <select value={value} onChange={e=>onChange(e.target.value)} style={{ background:S.bg2, border:`1px solid ${S.bord2}`, borderRadius:8, padding:'9px 12px', fontSize:13, color:S.text, outline:'none', fontFamily:'inherit', width:'100%' }}>
         {options.map(o=><option key={o} value={o} style={{ background:S.bg3 }}>{o}</option>)}
       </select>
     </div>
@@ -85,8 +87,8 @@ function Modal({ title, onClose, onSave, saving, children, wide=false }: { title
   return (
     <div onClick={e=>{ if(e.target===e.currentTarget) onClose() }} style={{ position:'fixed', inset:0, background:'rgba(0,0,0,.72)', backdropFilter:'blur(6px)', zIndex:500, display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
       <div style={{ background:S.surface, border:`1px solid ${S.bord2}`, borderRadius:18, padding:32, width:'100%', maxWidth:wide?860:560, position:'relative', maxHeight:'88vh', overflowY:'auto' }}>
-        <div style={{ position:'absolute', top:0, left:0, right:0, height:3, background:`linear-gradient(90deg,${S.pink},${S.blue})`, borderRadius:'18px 18px 0 0' }} />
-        <button onClick={onClose} style={{ position:'absolute', top:14, right:14, width:28, height:28, borderRadius:7, border:`1px solid ${S.border}`, background:'rgba(255,255,255,.05)', color:S.text2, cursor:'pointer', fontSize:16, display:'flex', alignItems:'center', justifyContent:'center' }}>×</button>
+        <div style={{ position:'absolute', top:0, left:0, right:0, height:3, background:S.pink, borderRadius:'18px 18px 0 0' }} />
+        <button onClick={onClose} style={{ position:'absolute', top:14, right:14, width:28, height:28, borderRadius:7, border:`1px solid ${S.border}`, background:'rgba(14,27,46,.05)', color:S.text2, cursor:'pointer', fontSize:16, display:'flex', alignItems:'center', justifyContent:'center' }}>×</button>
         <div style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:800, fontSize:18, color:S.text, marginBottom:20 }}>{title}</div>
         <div style={{ display:'flex', flexDirection:'column', gap:12 }}>{children}</div>
         <div style={{ display:'flex', gap:10, justifyContent:'flex-end', marginTop:20 }}>
@@ -117,14 +119,14 @@ function Table({ cols, rows, onEdit, onDelete }: { cols:string[]; rows:TableRow[
   const gridCols = `repeat(${cols.length},1fr) 100px`
   return (
     <div style={{ background:S.bg3, border:`1px solid ${S.border}`, borderRadius:12, overflow:'hidden' }}>
-      <div style={{ display:'grid', gridTemplateColumns:gridCols, padding:'10px 16px', borderBottom:`1px solid ${S.border}`, background:'rgba(255,255,255,.02)' }}>
+      <div style={{ display:'grid', gridTemplateColumns:gridCols, padding:'10px 16px', borderBottom:`1px solid ${S.border}`, background:'rgba(14,27,46,.02)' }}>
         {cols.map(c=><div key={c} style={{ fontFamily:'JetBrains Mono,monospace', fontSize:9.5, letterSpacing:'.1em', textTransform:'uppercase', color:S.text3 }}>{c}</div>)}
         <div />
       </div>
       {rows.length===0 && <div style={{ padding:'32px 16px', textAlign:'center', color:S.text3, fontSize:13 }}>No records yet.</div>}
       {rows.map((row,i)=>(
         <div key={i} style={{ display:'grid', gridTemplateColumns:gridCols, padding:'12px 16px', borderBottom:`1px solid ${S.border}`, alignItems:'center' }}
-          onMouseEnter={e=>(e.currentTarget.style.background='rgba(255,255,255,.02)')}
+          onMouseEnter={e=>(e.currentTarget.style.background='rgba(14,27,46,.02)')}
           onMouseLeave={e=>(e.currentTarget.style.background='transparent')}>
           {cols.map(c=>(
             <div key={c} style={{ fontSize:13, color:S.text, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', paddingRight:12 }}>
@@ -133,7 +135,7 @@ function Table({ cols, rows, onEdit, onDelete }: { cols:string[]; rows:TableRow[
           ))}
           <div style={{ display:'flex', gap:5 }}>
             <Btn label="Edit" small color={S.blue} onClick={()=>onEdit(row.__raw)} />
-            <Btn label="Del" small color='#EF4444' outline onClick={()=>{ if(confirm('Delete?')) onDelete(row.__raw) }} />
+            <Btn label="Del" small color='#9B2C2C' outline onClick={()=>{ if(confirm('Delete?')) onDelete(row.__raw) }} />
           </div>
         </div>
       ))}
@@ -559,7 +561,7 @@ contact@labelnest.in`
           <div onClick={e=>{ if(e.target===e.currentTarget) setEmailModal(null) }} style={{ position:'fixed', inset:0, background:'rgba(0,0,0,.72)', backdropFilter:'blur(6px)', zIndex:500, display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
             <div style={{ background:S.surface, border:`1px solid ${S.bord2}`, borderRadius:18, padding:32, width:'100%', maxWidth:580, position:'relative', maxHeight:'88vh', overflowY:'auto' }}>
               <div style={{ position:'absolute', top:0, left:0, right:0, height:3, background:`linear-gradient(90deg,${S.blue},${S.pink})`, borderRadius:'18px 18px 0 0' }} />
-              <button onClick={()=>setEmailModal(null)} style={{ position:'absolute', top:14, right:14, width:28, height:28, borderRadius:7, border:`1px solid ${S.border}`, background:'rgba(255,255,255,.05)', color:S.text2, cursor:'pointer', fontSize:16, display:'flex', alignItems:'center', justifyContent:'center' }}>×</button>
+              <button onClick={()=>setEmailModal(null)} style={{ position:'absolute', top:14, right:14, width:28, height:28, borderRadius:7, border:`1px solid ${S.border}`, background:'rgba(14,27,46,.05)', color:S.text2, cursor:'pointer', fontSize:16, display:'flex', alignItems:'center', justifyContent:'center' }}>×</button>
               <div style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:800, fontSize:18, color:S.text, marginBottom:4 }}>Email draft — {emailModal.name}</div>
               <div style={{ fontSize:12, color:S.text3, marginBottom:20 }}>Email service will be wired later. Copy this and send manually for now.</div>
               <div style={{ display:'flex', flexDirection:'column', gap:8, marginBottom:16 }}>
@@ -572,7 +574,7 @@ contact@labelnest.in`
                   <span style={{ fontSize:13, color:S.text }}>{tpl.subject}</span>
                 </div>
               </div>
-              <pre style={{ background:S.bg2, border:`1px solid ${S.border}`, borderRadius:10, padding:16, fontSize:13, color:S.text2, whiteSpace:'pre-wrap', wordBreak:'break-word', lineHeight:1.7, margin:0, marginBottom:16, fontFamily:'Inter,sans-serif' }}>{tpl.body}</pre>
+              <pre style={{ background:S.bg2, border:`1px solid ${S.border}`, borderRadius:10, padding:16, fontSize:13, color:S.text2, whiteSpace:'pre-wrap', wordBreak:'break-word', lineHeight:1.7, margin:0, marginBottom:16, fontFamily:'inherit' }}>{tpl.body}</pre>
               <div style={{ display:'flex', gap:10, justifyContent:'flex-end' }}>
                 <button onClick={()=>{ navigator.clipboard.writeText(full); showToast('✓ Email copied') }}
                   style={{ padding:'9px 18px', borderRadius:8, border:`1px solid ${S.blue}50`, background:`${S.blue}10`, color:S.blue, fontSize:13, fontWeight:600, cursor:'pointer' }}>
@@ -783,7 +785,7 @@ function LegalSection({ showToast }: { showToast:(m:string)=>void }) {
 
       {tab==='Master Reference' && (
         <div style={{ background:S.surface, border:`1px solid ${S.border}`, borderRadius:14, padding:24 }}>
-          <div style={{ background:`rgba(249,115,22,.06)`, border:`1px solid rgba(249,115,22,.15)`, borderRadius:8, padding:'10px 14px', fontSize:12.5, color:S.text2, marginBottom:20 }}>
+          <div style={{ background:`rgba(154,75,31,.06)`, border:`1px solid rgba(154,75,31,.15)`, borderRadius:8, padding:'10px 14px', fontSize:12.5, color:S.text2, marginBottom:20 }}>
             These values are referenced by all legal documents via tokens like <code style={{color:S.orange}}>{'{{company_name}}'}</code>. Update once, applied everywhere.
           </div>
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
@@ -871,7 +873,7 @@ function DepartmentsSection({ showToast }: { showToast:(m:string)=>void }) {
         <div style={{ padding:'14px 18px', borderBottom:`1px solid ${S.border}` }}>
           <div style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:700, fontSize:14, color:S.text, marginBottom:10 }}>Add department</div>
           <div style={{ display:'flex', gap:8 }}>
-            <input value={newDept} onChange={e=>setNewDept(e.target.value)} onKeyDown={e=>e.key==='Enter'&&addDept()} placeholder="e.g. Research & Intelligence" style={{ flex:1, background:S.bg2, border:`1px solid ${S.bord2}`, borderRadius:8, padding:'9px 12px', fontSize:13, color:S.text, outline:'none', fontFamily:'Inter,sans-serif' }} />
+            <input value={newDept} onChange={e=>setNewDept(e.target.value)} onKeyDown={e=>e.key==='Enter'&&addDept()} placeholder="e.g. Research & Intelligence" style={{ flex:1, background:S.bg2, border:`1px solid ${S.bord2}`, borderRadius:8, padding:'9px 12px', fontSize:13, color:S.text, outline:'none', fontFamily:'inherit' }} />
             <Btn label="Add" onClick={addDept} />
           </div>
         </div>
@@ -881,7 +883,7 @@ function DepartmentsSection({ showToast }: { showToast:(m:string)=>void }) {
             <div style={{ display:'flex', gap:5 }}>
               <Btn label="↑" small outline color={S.text2} onClick={()=>moveUp(i)} />
               <Btn label="↓" small outline color={S.text2} onClick={()=>moveDown(i)} />
-              <Btn label="Delete" small outline color='#EF4444' onClick={()=>removeDept(i)} />
+              <Btn label="Delete" small outline color='#9B2C2C' onClick={()=>removeDept(i)} />
             </div>
           </div>
         ))}
@@ -915,9 +917,9 @@ function UploadSection({ showToast }: { showToast:(m:string)=>void }) {
     <>
       <SectionHeader title="Upload to R2" desc="Cloudflare R2 · labelnest-assets bucket · serves from assets.labelnest.in" />
       <div style={{ display:'grid', gridTemplateColumns:'1fr 220px', gap:16 }}>
-        <label style={{ display:'block', background:S.bg3, border:`2px dashed rgba(255,255,255,.1)`, borderRadius:14, padding:40, textAlign:'center', cursor:'pointer', transition:'border-color .2s' }}
+        <label style={{ display:'block', background:S.bg3, border:`2px dashed rgba(14,27,46,.1)`, borderRadius:14, padding:40, textAlign:'center', cursor:'pointer', transition:'border-color .2s' }}
           onMouseEnter={e=>((e.currentTarget as HTMLElement).style.borderColor=S.pink)}
-          onMouseLeave={e=>((e.currentTarget as HTMLElement).style.borderColor='rgba(255,255,255,.1)')}>
+          onMouseLeave={e=>((e.currentTarget as HTMLElement).style.borderColor='rgba(14,27,46,.1)')}>
           <div style={{ fontSize:36, marginBottom:12, opacity:.4 }}>⬆️</div>
           <div style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:700, fontSize:16, color:S.text, marginBottom:6 }}>Drop or click to upload</div>
           <div style={{ fontSize:13, color:S.text2, marginBottom:16 }}>JPG, PNG, WebP, SVG, MP4 · Max 50MB</div>
@@ -927,7 +929,7 @@ function UploadSection({ showToast }: { showToast:(m:string)=>void }) {
         <div style={{ background:S.bg3, border:`1px solid ${S.border}`, borderRadius:14, padding:18 }}>
           <div style={{ fontFamily:'JetBrains Mono,monospace', fontSize:9.5, letterSpacing:'.12em', textTransform:'uppercase', color:S.text3, marginBottom:12 }}>Upload folder</div>
           {['team','founders','briefings','products','videos','misc'].map(f=>(
-            <div key={f} onClick={()=>setFolder(f)} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'8px 10px', background:folder===f?'rgba(233,30,140,.08)':'rgba(255,255,255,.03)', border:`1px solid ${folder===f?'rgba(233,30,140,.3)':S.border}`, borderRadius:7, cursor:'pointer', marginBottom:5, transition:'all .15s' }}>
+            <div key={f} onClick={()=>setFolder(f)} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'8px 10px', background:folder===f?'rgba(122,82,23,.08)':'rgba(14,27,46,.03)', border:`1px solid ${folder===f?'rgba(122,82,23,.3)':S.border}`, borderRadius:7, cursor:'pointer', marginBottom:5, transition:'all .15s' }}>
               <span style={{ fontFamily:'JetBrains Mono,monospace', fontSize:12, color:S.text2 }}>📁 {f}/</span>
               {folder===f && <span style={{ fontSize:10, color:S.pink }}>Selected</span>}
             </div>
@@ -946,10 +948,10 @@ function UploadSection({ showToast }: { showToast:(m:string)=>void }) {
         </div>
       )}
       {lastUrl && (
-        <div style={{ marginTop:14, background:'rgba(16,185,129,.08)', border:'1px solid rgba(16,185,129,.2)', borderRadius:10, padding:14 }}>
+        <div style={{ marginTop:14, background:'rgba(44,107,75,.08)', border:'1px solid rgba(44,107,75,.2)', borderRadius:10, padding:14 }}>
           <div style={{ fontSize:11, color:S.green, marginBottom:6, fontFamily:'JetBrains Mono,monospace', letterSpacing:'.06em', textTransform:'uppercase' }}>Uploaded · URL auto-copied</div>
           <div style={{ fontFamily:'JetBrains Mono,monospace', fontSize:11.5, color:S.text2, wordBreak:'break-all' }}>{lastUrl}</div>
-          <button onClick={()=>{ navigator.clipboard.writeText(lastUrl); showToast('✓ URL copied') }} style={{ marginTop:10, background:S.green, color:'#fff', border:'none', borderRadius:6, padding:'6px 14px', fontSize:12, fontWeight:600, cursor:'pointer', fontFamily:'Inter,sans-serif' }}>Copy URL again</button>
+          <button onClick={()=>{ navigator.clipboard.writeText(lastUrl); showToast('✓ URL copied') }} style={{ marginTop:10, background:S.green, color:'#fff', border:'none', borderRadius:6, padding:'6px 14px', fontSize:12, fontWeight:600, cursor:'pointer', fontFamily:'inherit' }}>Copy URL again</button>
         </div>
       )}
     </>
@@ -1110,7 +1112,7 @@ function NewsletterSection({ showToast }: { showToast:(m:string)=>void }) {
                 <div style={{ fontFamily:'JetBrains Mono,monospace', fontSize:9.5, letterSpacing:'.1em', textTransform:'uppercase', color:S.text3 }}>Bulk import — CSV or one email per line</div>
                 <button onClick={()=>{ setShowImport(false); setImportText('') }} style={{ background:'none', border:'none', color:S.text3, cursor:'pointer', fontSize:16 }}>✕</button>
               </div>
-              <div style={{ fontSize:11.5, color:S.text3, marginBottom:8 }}>Columns: <code style={{ background:'rgba(255,255,255,.06)', padding:'1px 5px', borderRadius:4 }}>email, name, source</code> — only email is required. Or upload a .csv file.</div>
+              <div style={{ fontSize:11.5, color:S.text3, marginBottom:8 }}>Columns: <code style={{ background:'rgba(14,27,46,.06)', padding:'1px 5px', borderRadius:4 }}>email, name, source</code> — only email is required. Or upload a .csv file.</div>
               <div style={{ display:'flex', gap:8, marginBottom:8 }}>
                 <label style={{ background:S.bg2, border:`1px solid ${S.bord2}`, borderRadius:8, padding:'7px 12px', fontSize:12, color:S.text2, cursor:'pointer' }}>
                   Upload CSV <input type="file" accept=".csv,text/csv" onChange={onCSVFile} style={{ display:'none' }} />
@@ -1140,13 +1142,13 @@ function NewsletterSection({ showToast }: { showToast:(m:string)=>void }) {
                 </thead>
                 <tbody>
                   {subs.length > 0 ? subs.map((s,i)=>(
-                    <tr key={i} style={{ borderBottom:`1px solid rgba(255,255,255,.04)` }}>
+                    <tr key={i} style={{ borderBottom:`1px solid rgba(14,27,46,.04)` }}>
                       <td style={{ padding:'11px 14px', fontSize:13, color:S.blue }}><a href={`mailto:${s.email}`} style={{ color:S.blue }}>{s.email}</a></td>
                       <td style={{ padding:'11px 14px', fontSize:12.5, color:S.text2 }}>{s.name||'—'}</td>
                       <td style={{ padding:'11px 14px' }}><Badge label={s.source} color={S.text3} /></td>
                       <td style={{ padding:'11px 14px' }}><Badge label={s.status} color={S.green} /></td>
                       <td style={{ padding:'11px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text3 }}>{s.created_at?.slice(0,10)}</td>
-                      <td style={{ padding:'11px 14px' }}><Btn label="Remove" small outline color='#EF4444' onClick={()=>{ fetch('/api/admin/newsletter',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:s.id})}); load(); showToast('✓ Removed') }} /></td>
+                      <td style={{ padding:'11px 14px' }}><Btn label="Remove" small outline color='#9B2C2C' onClick={()=>{ fetch('/api/admin/newsletter',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:s.id})}); load(); showToast('✓ Removed') }} /></td>
                     </tr>
                   )) : (
                     <tr><td colSpan={6} style={{ padding:'32px 14px', textAlign:'center', color:S.text3, fontSize:13 }}>No subscribers yet — add one above or bulk import your Brevo list</td></tr>
@@ -1217,14 +1219,14 @@ function NewsletterSection({ showToast }: { showToast:(m:string)=>void }) {
                   const openRate = delivered ? Math.round((opened/delivered)*100) : 0
                   const ctr = delivered ? Math.round((clicked/delivered)*100) : 0
                   return (
-                  <tr key={r.id} onClick={()=>r.status==='sent' && openCtrDrilldown(r)} style={{ borderBottom:`1px solid rgba(255,255,255,.04)`, cursor:r.status==='sent'?'pointer':'default' }}>
+                  <tr key={r.id} onClick={()=>r.status==='sent' && openCtrDrilldown(r)} style={{ borderBottom:`1px solid rgba(14,27,46,.04)`, cursor:r.status==='sent'?'pointer':'default' }}>
                     <td style={{ padding:'12px 14px', fontSize:13, color:S.text, maxWidth:240, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
                       {r.subject}
                       {r.recipient_filter==='test' && <span style={{ marginLeft:8 }}><Badge label="Test" color={S.blue} /></span>}
                     </td>
                     <td style={{ padding:'12px 14px' }}><Badge label={r.template_name || '—'} color={S.text3} /></td>
                     <td style={{ padding:'12px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11.5, color:S.text2 }}>{r.recipient_count}</td>
-                    <td style={{ padding:'12px 14px' }}><Badge label={r.status} color={r.status==='sent'?S.green:r.status==='failed'?'#EF4444':S.text3} /></td>
+                    <td style={{ padding:'12px 14px' }}><Badge label={r.status} color={r.status==='sent'?S.green:r.status==='failed'?'#9B2C2C':S.text3} /></td>
                     <td style={{ padding:'12px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11.5, color:S.text2 }}>{r.status==='sent' ? `${opened} (${openRate}%)` : '—'}</td>
                     <td style={{ padding:'12px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11.5, color:S.text2 }}>{r.status==='sent' ? `${clicked} (${ctr}%)` : '—'}</td>
                     <td style={{ padding:'12px 14px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text3 }}>{r.sent_at ? r.sent_at.slice(0,10) : '—'}</td>
@@ -1240,8 +1242,8 @@ function NewsletterSection({ showToast }: { showToast:(m:string)=>void }) {
       {ctrCampaign && (
         <div onClick={e=>{ if(e.target===e.currentTarget) setCtrCampaign(null) }} style={{ position:'fixed', inset:0, background:'rgba(0,0,0,.72)', backdropFilter:'blur(6px)', zIndex:500, display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
           <div style={{ background:S.surface, border:`1px solid ${S.bord2}`, borderRadius:18, padding:32, width:'100%', maxWidth:760, position:'relative', maxHeight:'88vh', overflowY:'auto' }}>
-            <div style={{ position:'absolute', top:0, left:0, right:0, height:3, background:`linear-gradient(90deg,${S.pink},${S.blue})`, borderRadius:'18px 18px 0 0' }} />
-            <button onClick={()=>setCtrCampaign(null)} style={{ position:'absolute', top:14, right:14, width:28, height:28, borderRadius:7, border:`1px solid ${S.border}`, background:'rgba(255,255,255,.05)', color:S.text2, cursor:'pointer', fontSize:16, display:'flex', alignItems:'center', justifyContent:'center' }}>×</button>
+            <div style={{ position:'absolute', top:0, left:0, right:0, height:3, background:S.pink, borderRadius:'18px 18px 0 0' }} />
+            <button onClick={()=>setCtrCampaign(null)} style={{ position:'absolute', top:14, right:14, width:28, height:28, borderRadius:7, border:`1px solid ${S.border}`, background:'rgba(14,27,46,.05)', color:S.text2, cursor:'pointer', fontSize:16, display:'flex', alignItems:'center', justifyContent:'center' }}>×</button>
             <div style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:800, fontSize:18, color:S.text, marginBottom:4 }}>{ctrCampaign.subject}</div>
             <div style={{ fontSize:12, color:S.text3, marginBottom:20 }}>Who opened / clicked · {ctrRecipients.length} recipients</div>
             {ctrLoading ? (
@@ -1254,9 +1256,9 @@ function NewsletterSection({ showToast }: { showToast:(m:string)=>void }) {
                   </thead>
                   <tbody>
                     {ctrRecipients.map(rec=>(
-                      <tr key={rec.email} style={{ borderBottom:`1px solid rgba(255,255,255,.04)` }}>
+                      <tr key={rec.email} style={{ borderBottom:`1px solid rgba(14,27,46,.04)` }}>
                         <td style={{ padding:'10px 12px', fontSize:12.5, color:S.text }}>{rec.email}</td>
-                        <td style={{ padding:'10px 12px' }}><Badge label={rec.status} color={rec.status==='clicked'?S.blue:rec.status==='opened'?S.green:rec.status==='bounced'||rec.status==='blocked'||rec.status==='invalid'?'#EF4444':S.text3} /></td>
+                        <td style={{ padding:'10px 12px' }}><Badge label={rec.status} color={rec.status==='clicked'?S.blue:rec.status==='opened'?S.green:rec.status==='bounced'||rec.status==='blocked'||rec.status==='invalid'?'#9B2C2C':S.text3} /></td>
                         <td style={{ padding:'10px 12px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text2 }}>{rec.open_count}</td>
                         <td style={{ padding:'10px 12px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text3 }}>{rec.last_opened_at ? formatDateTimeIST(rec.last_opened_at) : '—'}</td>
                         <td style={{ padding:'10px 12px', fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text2 }}>{rec.click_count}</td>
@@ -1277,6 +1279,8 @@ function NewsletterSection({ showToast }: { showToast:(m:string)=>void }) {
 // ── NAV ────────────────────────────────────────────────────────────────────
 const NAV = [
   { id:'overview',     icon:'🏠', label:'Overview',     group:'Content'  },
+  { id:'content',      icon:'✏️', label:'Page content', group:'Site'     },
+  { id:'pricing',      icon:'💷', label:'Pricing and numbers', group:'Site' },
   { id:'briefings',    icon:'📝', label:'Briefings',    group:'Content'  },
   { id:'team',         icon:'👤', label:'Team',          group:'Content'  },
   { id:'legal',        icon:'⚖️', label:'Legal Hub',    group:'Content'  },
@@ -1348,8 +1352,8 @@ function SubmissionsSection({ showToast }: { showToast:(m:string)=>void }) {
               <span style={{ fontSize:12, color:S.text3 }}>{expanded===s.id?'▲':'▼'}</span>
             </div>
             {expanded===s.id && (
-              <div style={{ borderTop:`1px solid ${S.border}`, padding:'14px 16px', background:'rgba(255,255,255,.02)' }}>
-                {s.message && <pre style={{ fontFamily:'Inter,sans-serif', fontSize:13.5, color:S.text2, whiteSpace:'pre-wrap', wordBreak:'break-word', lineHeight:1.7, margin:0, marginBottom:14 }}>{s.message}</pre>}
+              <div style={{ borderTop:`1px solid ${S.border}`, padding:'14px 16px', background:'rgba(14,27,46,.02)' }}>
+                {s.message && <pre style={{ fontFamily:'inherit', fontSize:13.5, color:S.text2, whiteSpace:'pre-wrap', wordBreak:'break-word', lineHeight:1.7, margin:0, marginBottom:14 }}>{s.message}</pre>}
                 {s.metadata && Object.keys(s.metadata).length>0 && (
                   <div style={{ marginBottom:14 }}>
                     {Object.entries(s.metadata).map(([k,v])=>(
@@ -1364,7 +1368,7 @@ function SubmissionsSection({ showToast }: { showToast:(m:string)=>void }) {
                   <a href={`mailto:${s.email}`} style={{ padding:'5px 12px', borderRadius:7, border:`1px solid ${S.blue}40`, background:`${S.blue}10`, color:S.blue, fontSize:11.5, fontWeight:600, textDecoration:'none' }}>
                     Reply
                   </a>
-                  <button onClick={()=>del(s)} style={{ padding:'5px 12px', borderRadius:7, border:`1px solid rgba(239,68,68,.3)`, background:'rgba(239,68,68,.08)', color:'#EF4444', fontSize:11.5, fontWeight:600, cursor:'pointer', marginLeft:'auto' }}>
+                  <button onClick={()=>del(s)} style={{ padding:'5px 12px', borderRadius:7, border:`1px solid rgba(155,44,44,.3)`, background:'rgba(155,44,44,.08)', color:'#9B2C2C', fontSize:11.5, fontWeight:600, cursor:'pointer', marginLeft:'auto' }}>
                     Delete
                   </button>
                 </div>
@@ -1409,8 +1413,8 @@ function SeoSection({ showToast }: { showToast:(m:string)=>void }) {
   }
   const F=(k:keyof typeof form)=>(v:string)=>setForm(f=>({...f,[k]:v}))
 
-  const charBg = (len:number, max:number) => len===0?'transparent':len>max?'rgba(239,68,68,.12)':len>max*0.9?'rgba(249,115,22,.12)':'rgba(16,185,129,.08)'
-  const charCol = (len:number, max:number) => len===0?S.text3:len>max?'#EF4444':len>max*0.9?S.orange:S.green
+  const charBg = (len:number, max:number) => len===0?'transparent':len>max?'rgba(155,44,44,.12)':len>max*0.9?'rgba(154,75,31,.12)':'rgba(44,107,75,.08)'
+  const charCol = (len:number, max:number) => len===0?S.text3:len>max?'#9B2C2C':len>max*0.9?S.orange:S.green
 
   return (
     <>
@@ -1431,8 +1435,8 @@ function SeoSection({ showToast }: { showToast:(m:string)=>void }) {
               <div style={{ fontSize:11.5, color:S.text3, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', marginTop:1 }}>{r.description||'No description'}</div>
             </div>
             <div style={{ display:'flex', gap:4, flexShrink:0, alignItems:'center' }}>
-              {r.title && <span style={{ ...{ fontSize:10, padding:'2px 7px', borderRadius:4, background:'rgba(16,185,129,.1)', color:S.green, fontFamily:'JetBrains Mono,monospace' } }}>{r.title.length}t</span>}
-              {r.description && <span style={{ ...{ fontSize:10, padding:'2px 7px', borderRadius:4, background:'rgba(37,99,235,.1)', color:S.blue, fontFamily:'JetBrains Mono,monospace' } }}>{r.description.length}d</span>}
+              {r.title && <span style={{ ...{ fontSize:10, padding:'2px 7px', borderRadius:4, background:'rgba(44,107,75,.1)', color:S.green, fontFamily:'JetBrains Mono,monospace' } }}>{r.title.length}t</span>}
+              {r.description && <span style={{ ...{ fontSize:10, padding:'2px 7px', borderRadius:4, background:'rgba(31,58,95,.1)', color:S.blue, fontFamily:'JetBrains Mono,monospace' } }}>{r.description.length}d</span>}
               <Btn label="Edit" small onClick={()=>openEdit(r)} />
               <button onClick={()=>remove(r)} title="Delete" style={{ fontSize:12, color:S.text3, background:'none', border:'none', cursor:'pointer', padding:'4px 6px' }}>✕</button>
             </div>
@@ -1475,13 +1479,13 @@ export default function AdminClient() {
   const groups = [...new Set(NAV.map(n=>n.group))]
 
   return (
-    <div style={{ display:'flex', flexDirection:'column', height:'100vh', background:S.bg, color:S.text, fontFamily:'Inter,sans-serif' }}>
+    <div style={{ display:'flex', flexDirection:'column', height:'100vh', background:S.bg, color:S.text, fontFamily:'inherit' }}>
 
       {/* Topbar */}
       <div style={{ height:52, background:S.surface, borderBottom:`1px solid ${S.border}`, display:'flex', alignItems:'center', justifyContent:'space-between', padding:'0 20px', flexShrink:0, gap:16 }}>
         <div style={{ display:'flex', alignItems:'center', gap:8 }}>
-          <span style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:800, fontSize:15, letterSpacing:'-.02em' }}>Label<em style={{ fontStyle:'normal', color:S.pink }}>Nest</em></span>
-          <span style={{ fontFamily:'JetBrains Mono,monospace', fontSize:9, letterSpacing:'.1em', textTransform:'uppercase', padding:'2px 7px', borderRadius:4, background:'rgba(233,30,140,.12)', color:S.pink }}>Admin</span>
+          <span style={{ fontFamily:'var(--font-serif),Georgia,serif', fontSize:19, letterSpacing:'-.02em' }}>Label<em style={{ fontStyle:'normal', color:S.pink }}>Nest</em></span>
+          <span style={{ fontFamily:'JetBrains Mono,monospace', fontSize:9, letterSpacing:'.1em', textTransform:'uppercase', padding:'2px 7px', borderRadius:4, background:'rgba(122,82,23,.12)', color:S.pink }}>Admin</span>
         </div>
         <div style={{ display:'flex', alignItems:'center', gap:16 }}>
           <div style={{ display:'flex', alignItems:'center', gap:5, fontFamily:'JetBrains Mono,monospace', fontSize:9.5, letterSpacing:'.08em', textTransform:'uppercase', color:S.green }}>
@@ -1495,16 +1499,15 @@ export default function AdminClient() {
       <div style={{ display:'flex', flex:1, overflow:'hidden' }}>
 
         {/* Sidebar */}
-        <div style={{ width:192, background:'#111119', borderRight:`1px solid ${S.border}`, flexShrink:0, overflowY:'auto', padding:'10px 0' }}>
+        <div style={{ width:192, background:S.bg3, borderRight:`1px solid ${S.border}`, flexShrink:0, overflowY:'auto', padding:'10px 0' }}>
           {groups.map(g=>(
             <div key={g}>
               <div style={{ fontFamily:'JetBrains Mono,monospace', fontSize:8.5, letterSpacing:'.14em', textTransform:'uppercase', color:S.text3, padding:'10px 16px 4px' }}>{g}</div>
               {NAV.filter(n=>n.group===g).map(n=>(
                 <div key={n.id} onClick={()=>setSection(n.id as Section)}
-                  style={{ display:'flex', alignItems:'center', gap:8, padding:'8px 16px', fontSize:12.5, cursor:'pointer', color:section===n.id?S.text:S.text2, background:section===n.id?'rgba(255,255,255,.05)':'transparent', borderLeft:`2px solid ${section===n.id?S.pink:'transparent'}`, transition:'all .12s' }}
-                  onMouseEnter={e=>{ if(section!==n.id)(e.currentTarget as HTMLElement).style.background='rgba(255,255,255,.03)' }}
+                  style={{ display:'flex', alignItems:'center', gap:8, padding:'8px 16px', fontSize:12.5, cursor:'pointer', color:section===n.id?S.text:S.text2, background:section===n.id?'rgba(14,27,46,.05)':'transparent', borderLeft:`2px solid ${section===n.id?S.pink:'transparent'}`, transition:'all .12s' }}
+                  onMouseEnter={e=>{ if(section!==n.id)(e.currentTarget as HTMLElement).style.background='rgba(14,27,46,.03)' }}
                   onMouseLeave={e=>{ if(section!==n.id)(e.currentTarget as HTMLElement).style.background='transparent' }}>
-                  <span style={{ width:16, fontSize:14, flexShrink:0 }}>{n.icon}</span>
                   {n.label}
                 </div>
               ))}
@@ -1518,33 +1521,25 @@ export default function AdminClient() {
           {section==='overview' && (
             <div>
               <div style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:800, fontSize:20, color:S.text, marginBottom:4 }}>Overview</div>
-              <div style={{ fontSize:13, color:S.text2, marginBottom:20 }}>LabelNest website · Neon DB connected</div>
-              <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:10, marginBottom:16 }}>
-                {[['Briefings','14',S.pink],['Team members','13',S.blue],['Newsletter','104',S.green],['Alumni','39',S.orange]].map(([l,n,c])=>(
-                  <div key={l as string} style={{ background:S.bg3, border:`1px solid ${S.border}`, borderRadius:12, padding:'14px 16px' }}>
-                    <div style={{ fontFamily:'Bricolage Grotesque,sans-serif', fontWeight:800, fontSize:26, color:c as string, letterSpacing:'-.04em', lineHeight:1, marginBottom:4 }}>{n}</div>
-                    <div style={{ fontSize:11.5, color:S.text2 }}>{l}</div>
-                  </div>
-                ))}
-              </div>
+              <div style={{ fontSize:13, color:S.text2, marginBottom:20 }}>Edit the website from here. Pick "Page content" to change the words on a page.</div>
               <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
                 <div style={{ background:S.bg3, border:`1px solid ${S.border}`, borderRadius:12, padding:18 }}>
                   <div style={{ fontFamily:'JetBrains Mono,monospace', fontSize:9.5, letterSpacing:'.12em', textTransform:'uppercase', color:S.text3, marginBottom:14 }}>Quick actions</div>
                   <div style={{ display:'flex', flexDirection:'column', gap:7 }}>
-                    {[['📝','Add a new briefing','briefings'],['👤','Add or update team','team'],['📬','Manage newsletter','newsletter'],['⚖️','Manage legal docs','legal'],['⬆️','Upload to R2','upload']].map(([icon,label,sec])=>(
+                    {[['','Edit the words on a page','content'],['','Check pricing and numbers','pricing'],['','Add a new briefing','briefings'],['','Add or update team','team'],['','Manage newsletter','newsletter'],['','Upload a photo or file','upload']].map(([icon,label,sec])=>(
                       <button key={label as string} onClick={()=>setSection(sec as Section)}
-                        style={{ display:'flex', alignItems:'center', gap:10, padding:'9px 14px', background:'rgba(255,255,255,.04)', border:`1px solid ${S.border}`, borderRadius:8, fontSize:13, color:S.text2, cursor:'pointer', fontFamily:'Inter,sans-serif', textAlign:'left', width:'100%', transition:'color .15s' }}
+                        style={{ display:'flex', alignItems:'center', gap:10, padding:'9px 14px', background:'rgba(14,27,46,.04)', border:`1px solid ${S.border}`, borderRadius:8, fontSize:13, color:S.text2, cursor:'pointer', fontFamily:'inherit', textAlign:'left', width:'100%', transition:'color .15s' }}
                         onMouseEnter={e=>(e.currentTarget.style.color=S.text)}
                         onMouseLeave={e=>(e.currentTarget.style.color=S.text2)}>
-                        {icon}&nbsp; {label}
+                        {label}
                       </button>
                     ))}
                   </div>
                 </div>
                 <div style={{ background:S.bg3, border:`1px solid ${S.border}`, borderRadius:12, padding:18 }}>
                   <div style={{ fontFamily:'JetBrains Mono,monospace', fontSize:9.5, letterSpacing:'.12em', textTransform:'uppercase', color:S.text3, marginBottom:14 }}>DB tables</div>
-                  {['website_briefings','website_team_members','website_alumni','website_fellows','website_interns','website_legal_documents','website_job_openings','website_newsletter_subscribers','website_submissions','website_page_seo'].map(t=>(
-                    <div key={t} style={{ display:'flex', justifyContent:'space-between', padding:'5px 8px', borderRadius:5, marginBottom:4, background:'rgba(255,255,255,.02)' }}>
+                  {['website_briefings','website_team_members','website_alumni','website_fellows','website_interns','website_legal_documents','website_job_openings','website_newsletter_subscribers','website_submissions','website_page_seo','website_content'].map(t=>(
+                    <div key={t} style={{ display:'flex', justifyContent:'space-between', padding:'5px 8px', borderRadius:5, marginBottom:4, background:'rgba(14,27,46,.02)' }}>
                       <span style={{ fontFamily:'JetBrains Mono,monospace', fontSize:11, color:S.text2 }}>{t}</span>
                       <span style={{ color:S.green, fontSize:10 }}>✓</span>
                     </div>
@@ -1554,6 +1549,8 @@ export default function AdminClient() {
             </div>
           )}
 
+          {section==='content' && <ContentEditor showToast={showToast} />}
+          {section==='pricing' && <PricingPreview />}
           {section==='briefings' && <BriefingsSection showToast={showToast} />}
           {section==='team' && <TeamSection showToast={showToast} />}
           {section==='legal' && <LegalSection showToast={showToast} />}
@@ -1571,7 +1568,7 @@ export default function AdminClient() {
               <div style={{ fontSize:13, color:S.text2, marginBottom:20 }}>Environment config · set via Vercel dashboard</div>
               <div style={{ display:'flex', flexDirection:'column', gap:8, maxWidth:520 }}>
                 {[['NEON_DATABASE_URL','Neon connection string',S.green],['JWT_SECRET','32-char secret',S.green],['R2_ACCOUNT_ID','Cloudflare account ID',S.orange],['R2_ACCESS_KEY_ID','R2 API key',S.orange],['R2_SECRET_ACCESS_KEY','R2 secret key',S.orange],['R2_PUBLIC_URL','https://assets.labelnest.in',S.orange]].map(([k,v,c])=>(
-                  <div key={k as string} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px 14px', background:'rgba(255,255,255,.03)', border:`1px solid ${S.border}`, borderRadius:8 }}>
+                  <div key={k as string} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px 14px', background:'rgba(14,27,46,.03)', border:`1px solid ${S.border}`, borderRadius:8 }}>
                     <span style={{ fontFamily:'JetBrains Mono,monospace', fontSize:11.5, color:S.text2 }}>{k}</span>
                     <span style={{ fontFamily:'JetBrains Mono,monospace', fontSize:9, letterSpacing:'.06em', textTransform:'uppercase', padding:'3px 7px', borderRadius:4, background:`${c as string}18`, color:c as string }}>
                       {(k as string).includes('SECRET')||(k as string).includes('KEY')?'●●●●●●●●':v as string}

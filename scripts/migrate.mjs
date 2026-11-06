@@ -359,6 +359,26 @@ async function migrate() {
   await sql`CREATE INDEX IF NOT EXISTS idx_website_newsletter_signups_list ON website_newsletter_signups (list_key, created_at DESC)`
   console.log('✓ newsletter signup tracking')
 
+  // Editable copy for the redesigned pages. One row per saved field; a missing row means the default in src/lib/siteContent.ts.
+  await sql`
+    CREATE TABLE IF NOT EXISTS website_content (
+      key        TEXT PRIMARY KEY,
+      value      JSONB NOT NULL,
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      updated_by TEXT
+    )`
+  await sql`
+    CREATE TABLE IF NOT EXISTS website_content_history (
+      id         BIGSERIAL PRIMARY KEY,
+      key        TEXT NOT NULL,
+      old_value  JSONB,
+      new_value  JSONB,
+      changed_by TEXT,
+      changed_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )`
+  await sql`CREATE INDEX IF NOT EXISTS idx_website_content_history_key ON website_content_history (key, changed_at DESC)`
+  console.log('✓ editable site content')
+
   console.log('✓ All website_* tables created (or already existed)')
   console.log('')
   console.log('Next: seed an admin user by running:')

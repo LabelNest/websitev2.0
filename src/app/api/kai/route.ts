@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getPlans, getAtlasStats, describePricing } from '@/lib/plans'
 
 // Kai on the public website is a marketing/FAQ concierge only -- no DB
 // import, no private data, nothing from NestLens/NestHR/DataNest customer
 // accounts. Everything it can say is in the static brief below, sourced
 // from the actual marketing pages (about/services/nestlens/nesthr/ecosystem)
 // so it can't answer with anything that isn't already public on this site.
-const LABELNEST_BRIEF = `
+const makeBrief = (L: { entities: string; pricing: string }) => `
 COMPANY: LabelNest India Private Limited. Founded in Bengaluru, 2025. A private market intelligence and capital infrastructure company for emerging managers globally.
 
 FOUNDER: Ankit Suman (Founder & Director). Left BlackRock in November 2025 to build LabelNest full-time. Previously spent years at Preqin, BlackRock, Microsoft, and CIOReview -- roughly 1,000+ hours of domain knowledge absorbed before writing the first line of code.
@@ -27,19 +28,14 @@ FIVE FOUNDING PRINCIPLES:
 PRODUCTS -- one company, multiple products:
 
 1. NestLens (nestlens.labelnest.in) -- LIVE. The private markets OS. Six modules, each subscribed independently:
-   - Atlas: structured intelligence on 40,000+ private market entities -- companies, funds, deals, people, contacts. Human-verified, credit-based access. Observatory (published research and insights on real firms, individual reports unlocked separately) is part of Atlas.
+   - Atlas: structured intelligence on ${L.entities} private market entities -- companies, funds, deals, people, contacts. Human-verified, credit-based access. Observatory (published research and insights on real firms, individual reports unlocked separately) is part of Atlas.
    - Exchange: buy and sell structured datasets, AI training data, research reports, and alternative data. KYC-verified sellers, escrow-protected transactions, quality scores.
    - Orbit: the institutional operating system for high-stakes programmes -- application intake, screening, evaluation rounds, cohort onboarding, built for real application volume.
-   - Ascent: build an investor-ready data room in minutes (10 sections, 51 items). Investor tier scoring, LP-GP matching, grant and competition discovery. For pre-seed to Series A founders.
+   - Ascent: an investor-ready data room for founders: a structured room, a readiness score, document reading, templates, and sharing only with the founder's consent. Programme admins use its deal flow feature to turn ready rooms into introductions.
    - Command: the institutional operating system for funds -- fund dashboard, LP management, portfolio company tracking, deal sourcing, diligence, IC voting, and investment committee reports. One fund data room included per fund.
    - Connect: the capital and expertise network -- mentor connect and verified audit requests (included free with an active Ascent or Command plan), plus dedicated dashboards for mentors, audit partners, and scouting partners (free to apply, vetted before their dashboard goes live).
-   Pricing (each module subscribed independently, monthly or annual where applicable -- exact figures live on /nestlens/pricing and can change, so give these as approximate "from" prices, not quotes):
-   - Atlas: Basic $150/mo, Starter $600/mo, Growth $1,200/mo, Scale $2,400/mo (billed annually; about Rs 14,463 to Rs 2,31,408/mo); tiers differ by seats, exported rows, alerts, refresh speed and per-unlock discount.
-   - Exchange: free to browse listings and briefs; Priority ~$199/yr (15 applications/mo, active seller listing).
-   - Orbit: Launch Rs 75,000/yr, Starter Rs 99,000, Growth Rs 1,25,000, Scale Rs 2,50,000 (up to 1,00,000 applications), Enterprise from Rs 10,00,000; every tier has every feature.
-   - Ascent: Rs 14,999 for 12 months (list Rs 24,999), Rs 3,999 for 3 months (list Rs 6,999), Rs 1,999/month; Cohort/Group from Rs 4,999 (cohort of 25, +Rs 4,999 per additional founder).
-   - Command: one package per fund per month, Rs 5,00,000 for India-domiciled funds, $799 for funds outside India; every feature included.
-   - Connect: included free with an active Ascent or Command plan; mentors/partners apply free.
+   Pricing (read live from NestLens, so these match the website; give them as the current list prices, not binding quotes):
+${L.pricing}
    Enterprise and Bundle pricing (e.g. a Fund Bundle combining Command + 5 portfolio company Ascent rooms + Atlas + Exchange) on request via /contact or the in-app enterprise enquiry form.
 
 2. NestHR (nesthr.labelnest.in) -- LIVE. HR and workforce operations OS for startups and colleges. Seven modules: People OS, Talent OS / PlacementOS (flagship -- learns from every hiring selection/rejection signal to improve shortlisting each cycle), Performance OS, Expense OS, Learning OS, Analytics, Admin. Serves two audiences: startups (5-200 people, no dedicated HR team) and colleges/institutions (campus placement via PlacementOS).
@@ -47,15 +43,10 @@ PRODUCTS -- one company, multiple products:
 
 3. Managed Services -- LIVE. Expert human data operations: Data Sourcing & Enrichment, Data Quality & Annotation, Ongoing Data Operations, Document & PDF Intelligence, Custom Data Workflow Design. For data problems that need expert human judgment at the edge cases where automated models fail. Process: brief & scope -> pilot run -> full delivery -> standing ops. Contact ops@labelnest.in.
 
-COMING SOON:
-- NestResolve -- early access October 2026. A QA and governance platform for data-operations teams ("a Jira alternative built for data problems").
-- AnnoNest -- September 2026. The annotation platform, rebuilt and rebranded, multi-tenant, for structured annotation workflows at scale.
-- An unannounced private-markets product -- being built, expected around August 2026, no public name yet.
-
 INTERNAL INFRASTRUCTURE (not sold directly -- only mention if specifically asked): DataNest (central entity registry, powers NestLens Intelligence), NestIntel (AI research/extraction engine, powers DataNest and NestLens signals), NestAgent (autonomous research/enrichment agent with human QA feedback, powers DataNest enrichment).
 `.trim()
 
-const SYSTEM_PROMPT = `You are Kai, LabelNest's assistant on the public website (labelnest.in). You are warm, concise, and genuinely helpful -- a knowledgeable guide, not a salesperson.
+const systemPrompt = (brief: string) => `You are Kai, LabelNest's assistant on the public website (labelnest.in). You are warm, concise, and genuinely helpful -- a knowledgeable guide, not a salesperson.
 
 Rules:
 - Answer ONLY using the facts in the LABELNEST BRIEF below. Never invent pricing, features, dates, statistics, or anything not stated there.
@@ -66,7 +57,7 @@ Rules:
 - No markdown headers, no code blocks. Plain conversational text, occasional short bullet list if it truly helps.
 
 LABELNEST BRIEF:
-${LABELNEST_BRIEF}`
+${brief}`
 
 type ChatMsg = { role: 'user' | 'assistant'; content: string }
 
@@ -98,6 +89,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Kai is not available right now.' }, { status: 503 })
     }
 
+    const [{ plans }, stats] = await Promise.all([getPlans(), getAtlasStats()])
+
     const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
     if (isRateLimited(ip)) {
       return NextResponse.json({ error: 'Too many messages -- please wait a moment.' }, { status: 429 })
@@ -120,7 +113,7 @@ export async function POST(req: NextRequest) {
       .map(m => ({ role: m.role, content: m.content.slice(0, MAX_MESSAGE_LEN) }))
 
     const messages = [
-      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'system', content: systemPrompt(makeBrief({ entities: stats.entities, pricing: describePricing(plans) })) },
       ...trimmedHistory,
       { role: 'user', content: message },
     ]

@@ -73,11 +73,11 @@ export default async function ProfilePage({ params }: Props) {
             </div>
 
             <div className="flex items-start" style={{ gap: 28, marginBottom: 28 }}>
-              <div className="relative overflow-hidden flex-shrink-0" style={{ width: 96, height: 96, borderRadius: 20, background: 'linear-gradient(135deg,rgba(233,30,140,.08),rgba(37,99,235,.06))' }}>
+              <div className="relative overflow-hidden flex-shrink-0" style={{ width: 96, height: 96, borderRadius: 20, background: 'linear-gradient(135deg,rgba(122,82,23,.08),rgba(31,58,95,.06))' }}>
                 {imageUrl ? (
                   <Image src={imageUrl} alt={name} fill sizes="96px" style={imgFrameStyle(imagePosition, imageZoom)} />
                 ) : (
-                  <div className="absolute inset-0 flex items-center justify-center font-display font-extrabold" style={{ fontSize: 32, color: 'rgba(255,255,255,.15)' }}>
+                  <div className="absolute inset-0 flex items-center justify-center font-display font-extrabold" style={{ fontSize: 32, color: 'rgba(14,27,46,.15)' }}>
                     {name[0]}
                   </div>
                 )}
@@ -110,7 +110,7 @@ export default async function ProfilePage({ params }: Props) {
             )}
 
             {quote && (
-              <blockquote style={{ borderLeft: '3px solid #E91E8C', paddingLeft: 18, fontSize: 15.5, fontStyle: 'italic', color: 'var(--text)', lineHeight: 1.65, marginBottom: 28 }}>
+              <blockquote style={{ borderLeft: '3px solid #7A5217', paddingLeft: 18, fontSize: 15.5, fontStyle: 'italic', color: 'var(--text)', lineHeight: 1.65, marginBottom: 28 }}>
                 &ldquo;{quote}&rdquo;
               </blockquote>
             )}
@@ -119,7 +119,7 @@ export default async function ProfilePage({ params }: Props) {
               {email && (
                 <a href={`mailto:${email}`}
                   className="font-semibold"
-                  style={{ fontSize: 13.5, padding: '10px 20px', borderRadius: 10, background: '#E91E8C', color: '#fff' }}>
+                  style={{ fontSize: 13.5, padding: '10px 20px', borderRadius: 10, background: '#7A5217', color: '#fff' }}>
                   Contact {name.split(' ')[0]}
                 </a>
               )}

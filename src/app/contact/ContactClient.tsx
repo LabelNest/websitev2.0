@@ -91,7 +91,7 @@ export default function ContactClient() {
 
           {/* Right: Form */}
           <div className="rounded-[20px] p-9 relative overflow-hidden" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-            <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: 'linear-gradient(90deg,#E91E8C,#7C3AED,#2563EB)' }} />
+            <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: 'linear-gradient(90deg,#7A5217,#5B3A6B,#1F3A5F)' }} />
 
             {!sent ? (
               <form onSubmit={handleSubmit}>
@@ -101,7 +101,7 @@ export default function ContactClient() {
                     <button key={t.id} type="button" onClick={() => setType(t.id)}
                       className="text-left p-3.5 rounded-[10px] transition-all"
                       style={{
-                        background: type === t.id ? 'rgba(233,30,140,.08)' : 'var(--bg2)',
+                        background: type === t.id ? 'rgba(122,82,23,.08)' : 'var(--bg2)',
                         border: `1px solid ${type === t.id ? 'var(--pink)' : 'var(--border)'}`,
                       }}>
                       <div className="text-[18px] mb-1.5">{t.icon}</div>

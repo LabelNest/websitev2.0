@@ -53,7 +53,7 @@ const DATA: VsPageData = {
     body: "Capital IQ's assumption: large financial institutions need one terminal covering every asset class, priced for that breadth. LabelNest's assumption: if private markets — companies, funds, deals, LPs in India, SE Asia, and the Gulf — is actually your job, you shouldn't need to buy (or pay for) a public-markets terminal to get it. If Capital IQ's private-market module feels like an afterthought bolted onto a much bigger, much pricier product, LabelNest was built for you.",
   },
   finalTag: 'See LabelNest for yourself',
-  finalHeading: '40,000+ entities. Credit-based. Free tier available.',
+  finalHeading: '{{entities}} entities. Credit-based. Free tier available.',
   finalBody: 'Open NestLens, browse the data, and decide for yourself. No credit card, no sales call required.',
   finalPrimaryCta: { href: 'https://nestlens.labelnest.in', label: 'Try NestLens Free ↗', external: true },
   finalSecondaryCta: { href: '/vs/bloomberg', label: 'Also see: vs Bloomberg →' },

@@ -34,7 +34,7 @@ const DATA: VsPageData = {
     'You need a data marketplace and investor data rooms in the same tool',
   ],
   tableRows: [
-    { feature: 'Company coverage', competitor: { text: '16M+ companies via 220,000+ information sources', verdict: 'win' }, labelnest: { text: '40,000+ entities, India, SE Asia, and Gulf focus', verdict: 'mid' } },
+    { feature: 'Company coverage', competitor: { text: '16M+ companies via 220,000+ information sources', verdict: 'win' }, labelnest: { text: '{{entities}} entities, India, SE Asia, and Gulf focus', verdict: 'mid' } },
     { feature: 'India private markets depth', competitor: { text: 'Not a specialization — global deal-sourcing focus', verdict: 'no' }, labelnest: { text: 'Deep — companies, funds, deals, LPs, service providers', verdict: 'win' } },
     { feature: 'Deal sourcing / target discovery', competitor: { text: 'Purpose-built, expert-in-the-loop AI-powered sourcing', verdict: 'win' }, labelnest: { text: 'Not a sourcing-workflow tool — data and marketplace focused', verdict: 'no' } },
     { feature: 'CRM / workflow integration', competitor: { text: 'Integrates with common CRM and workflow tools', verdict: 'win' }, labelnest: { text: 'API available, expanding', verdict: 'mid' } },
@@ -52,7 +52,7 @@ const DATA: VsPageData = {
     body: "SourceScrub's assumption: investment and M&A teams need to search and qualify targets across the widest possible company universe, with sourcing workflow built in. LabelNest's assumption: emerging managers and analysts working India, SE Asia, and the Gulf need depth on funds, LPs, and GPs as connected entities — not sourcing tools — plus a marketplace and data rooms SourceScrub doesn't build.",
   },
   finalTag: 'See LabelNest for yourself',
-  finalHeading: '40,000+ entities. Credit-based. Free tier available.',
+  finalHeading: '{{entities}} entities. Credit-based. Free tier available.',
   finalBody: 'Open NestLens, browse the data, and decide for yourself. No credit card, no sales call required.',
   finalPrimaryCta: { href: 'https://nestlens.labelnest.in', label: 'Try NestLens Free ↗', external: true },
   finalSecondaryCta: { href: '/vs/grata', label: 'Also see: vs Grata →' },

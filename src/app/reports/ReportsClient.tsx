@@ -21,7 +21,7 @@ export default function ReportsClient() {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg)', color: 'var(--text)' }}>
-      <nav style={{ height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 24px', borderBottom: '1px solid rgba(255,255,255,.06)' }}>
+      <nav style={{ height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 24px', borderBottom: '1px solid rgba(14,27,46,.06)' }}>
         <Link href="/" style={{ fontWeight: 700, color: 'var(--text)' }}>LabelNest</Link>
         <Link href="/" style={{ fontSize: 13.5, color: 'var(--text3)' }}>← Back to LabelNest</Link>
       </nav>
@@ -44,11 +44,11 @@ export default function ReportsClient() {
           <div style={{ display: 'grid', gap: 10, marginBottom: 32 }}>
             <a
               href="https://atlas.labelnest.in/observatory/india-aif-universe-vol-1?utm_source=labelnest-website&utm_medium=reports-page&utm_campaign=vol1-read"
-              style={{ display: 'block', padding: '14px 18px', borderRadius: 11, background: '#7C3AED', color: '#fff', fontWeight: 600, fontSize: 15 }}
+              style={{ display: 'block', padding: '14px 18px', borderRadius: 11, background: '#5B3A6B', color: '#fff', fontWeight: 600, fontSize: 15 }}
             >
               Read Volume 1 on NestLens: India's AIF universe →
             </a>
-            <div style={{ padding: '14px 18px', borderRadius: 11, border: '1px solid rgba(255,255,255,.1)', color: 'var(--text2)', fontSize: 14.5 }}>
+            <div style={{ padding: '14px 18px', borderRadius: 11, border: '1px solid rgba(14,27,46,.1)', color: 'var(--text2)', fontSize: 14.5 }}>
               Volume 2, ecosystem builders in India, is due on 29 October 2026. Subscribe below and we will email you when it is live.
             </div>
           </div>
@@ -65,12 +65,12 @@ export default function ReportsClient() {
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   onKeyDown={e => { if (e.key === 'Enter') handleSubscribe() }}
-                  style={{ flex: '1 1 240px', minWidth: 0, background: 'var(--surface)', border: '1px solid rgba(255,255,255,.1)', borderRadius: 11, padding: '13px 18px', fontSize: 15, color: 'var(--text)', outline: 'none' }}
+                  style={{ flex: '1 1 240px', minWidth: 0, background: 'var(--surface)', border: '1px solid rgba(14,27,46,.1)', borderRadius: 11, padding: '13px 18px', fontSize: 15, color: 'var(--text)', outline: 'none' }}
                 />
                 <button
                   onClick={handleSubscribe}
                   disabled={state === 'sending'}
-                  style={{ background: '#7C3AED', color: '#fff', border: 'none', borderRadius: 11, padding: '13px 22px', fontSize: 14.5, fontWeight: 600, cursor: 'pointer' }}
+                  style={{ background: '#5B3A6B', color: '#fff', border: 'none', borderRadius: 11, padding: '13px 22px', fontSize: 14.5, fontWeight: 600, cursor: 'pointer' }}
                 >
                   {state === 'sending' ? 'Subscribing…' : 'Subscribe'}
                 </button>
@@ -85,7 +85,7 @@ export default function ReportsClient() {
         </div>
       </main>
 
-      <footer style={{ padding: '20px 24px', borderTop: '1px solid rgba(255,255,255,.06)', fontSize: 12, color: 'var(--text3)' }}>
+      <footer style={{ padding: '20px 24px', borderTop: '1px solid rgba(14,27,46,.06)', fontSize: 12, color: 'var(--text3)' }}>
         © 2026 LabelNest India Private Limited
       </footer>
     </div>
