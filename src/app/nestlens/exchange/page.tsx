@@ -16,7 +16,7 @@ export default function ExchangePage() {
   return (
     <ProductDetail
       id="exchange" name="Exchange" path="/nestlens/exchange" schemaType="SoftwareApplication"
-      primary={{ label: 'Open Exchange', href: 'https://nestlens.labelnest.in', external: true }}
+      primary={{ label: 'Open Exchange', href: 'https://exchange.labelnest.in', external: true }}
       secondary={{ label: 'See pricing', href: '/nestlens/pricing#exchange' }}
     >
       <PlanSection module="exchange" />

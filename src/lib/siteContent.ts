@@ -90,13 +90,16 @@ export const CONTENT_FIELDS: ContentField[] = [
     { name: 'Connect', text: 'Mentors, audit partners and fund scouting, reached from the room you already work in.', works: 'Reached from Ascent and Command', href: '/nestlens/connect' },
   ], 'Order is the order on the page.', 'Add a product'),
 
+  I(P_HOME, 'I am a (switcher)', 'home.switch.items', 'Audiences', [{ key: 'who', label: 'Tab name' }, { key: 'line', label: 'One line', long: true }, { key: 'points', label: 'Pointers (one per line)', long: true }, { key: 'products', label: 'Products used' }, { key: 'href', label: 'Link' }, { key: 'cta', label: 'Button' }], [
+    { who: 'Fund manager', line: 'Source, decide and report from one record.', points: 'Find companies and co-investors in Atlas without leaving the workspace.\nRun diligence and investment committee with every approval on file.\nPortfolio companies on Ascent update your numbers, so nobody chases a quarterly report.\nLP capital accounts, NAV and reports come from the same numbers.', products: 'Command, Atlas, Ascent', href: '/who-we-serve/gp', cta: 'For fund managers' },
+    { who: 'Founder', line: 'Be ready before the first meeting, and share on your terms.', points: 'Build one data room and see exactly what is missing.\nSee a readiness score before an investor does.\nShare by link with an email gate, NDA, watermark and expiry, and see who opened it.\nFree for 30 days, with templates for every document type.', products: 'Ascent, Connect', href: '/who-we-serve/founder', cta: 'For founders' },
+    { who: 'Incubator or accelerator', line: 'Run the programme, build the rooms, reach the funds.', points: 'Take applications and score them on your own rubric.\nSelect a cohort and every startup gets a data room, included in your plan.\nRead every room as deal flow and make introductions the founder has agreed to.\nReport to funders in NIDHI-SSS, DST-TBI, BIRAC and RKVY-RAFTAR formats.', products: 'Orbit, Ascent, Connect', href: '/who-we-serve/incubator', cta: 'For programmes' },
+    { who: 'Limited partner', line: 'Find and compare managers on evidence.', points: 'Search managers and funds by strategy, size and region.\nCompare up to three side by side.\nSee the source and review date behind every field.\nFollow the managers you back and get alerts when a record changes.', products: 'Atlas', href: '/who-we-serve/lp', cta: 'For limited partners' },
+    { who: 'Researcher', line: 'Cite a figure with its source and its date.', points: 'Size a market from registers, not estimates.\nSee how much of each register Atlas covers before you rely on it.\nExport what you filtered, within your plan.\nBuy specialist datasets on Exchange with the method shown.', products: 'Atlas, Exchange', href: '/who-we-serve/researcher', cta: 'For researchers' },
+  ], 'The first tab opens by default.', 'Add an audience'),
+
   T(P_HOME, 'Who it is for', 'home.audiences.eyebrow', 'Label', 'Start from what you do'),
   T(P_HOME, 'Who it is for', 'home.audiences.title', 'Heading', 'Start from what you do.'),
-  I(P_HOME, 'Who it is for', 'home.audiences.items', 'Three entries', [{ key: 'title', label: 'Title' }, { key: 'body', label: 'Text', long: true }, { key: 'link', label: 'Link label' }, { key: 'href', label: 'Link' }], [
-    { title: 'I run a fund.', body: 'Source deals. Run diligence and committee. Report to LPs. Your portfolio updates itself.', link: 'Command and Atlas', href: '/who-we-serve/gp' },
-    { title: 'I am raising.', body: 'Build one data room. See how ready it is. Share it only with investors you choose.', link: 'Ascent', href: '/who-we-serve/founder' },
-    { title: 'I run a programme.', body: 'Take applications. Select a cohort. Every startup gets a room that funds can read.', link: 'Orbit and Ascent', href: '/who-we-serve/incubator' },
-  ], 'Keep three.'),
 
   T(P_HOME, 'Numbers', 'home.numbers.eyebrow', 'Label', 'The record today'),
   T(P_HOME, 'Numbers', 'home.numbers.title', 'Heading', 'Counted, sourced and dated.'),

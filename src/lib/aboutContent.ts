@@ -44,6 +44,17 @@ export const ABOUT_FIELDS: ContentField[] = [
     { title: 'Built to last', body: 'Institutions that rely on our data need to know we will be here in ten years. That shapes every product decision, every partnership and every line of code.' },
   ], 'Add a principle'),
 
+  I('Journey', 'about.journey.items', 'Timeline (oldest first, last one shows as now)', [{ key: 'date', label: 'When' }, { key: 'title', label: 'Title' }, { key: 'body', label: 'Text', long: true }], [
+    { date: 'Apr 2025', title: 'Planning begins', body: 'The product architecture and the market approach take shape.' },
+    { date: 'Nov 2025', title: 'LabelNest goes full-time', body: 'The founder leaves a global data role to build LabelNest in Bengaluru.' },
+    { date: 'Dec 2025', title: 'NestHR goes live', body: 'People operations and campus placement for startups and colleges.' },
+    { date: 'Apr 2026', title: 'NestLens goes live', body: 'Atlas, the private markets data product, and Exchange, the data marketplace, open to users.' },
+    { date: 'Jun 2026', title: 'NestLens fully live', body: 'Ascent data rooms join Atlas and Exchange. Website v2 ships.' },
+    { date: 'Sep 2026', title: 'Atlas Observatory publishes', body: 'Data-led intelligence reports on firms and ecosystems, each built from the Atlas record.' },
+    { date: 'Oct 2026', title: 'Registers, funds and programmes', body: 'The SEBI AIF register is ingested into Atlas. Command gains AI-drafted memos. Exchange adds escrow credits. Connect opens fund theses to founders. Research on India’s AIF universe and on ecosystem builders is published.' },
+    { date: 'Nov 2026', title: 'A new Atlas, a new Command, a new site', body: 'Atlas Markets shows register coverage side by side. Command is redesigned. Sign-in moves to email codes. Ascent gets a library of more than a hundred templates. labelnest.in is rebuilt around live data.' },
+  ], 'Add a milestone'),
+
   T('Who we serve', 'about.serve.title', 'Heading', 'Who we build for.'),
   I('Who we serve', 'about.serve.items', 'Audiences', [{ key: 'title', label: 'Title' }, { key: 'body', label: 'Text', long: true }, { key: 'href', label: 'Link' }], [
     { title: 'Fund managers', body: 'Emerging and established venture, private equity and credit managers, from sourcing to LP reporting.', href: '/who-we-serve/gp' },

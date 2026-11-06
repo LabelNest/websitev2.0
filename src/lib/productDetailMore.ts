@@ -23,7 +23,7 @@ export const PD_MORE: ContentField[] = [
     ],
     featTitle: 'How a purchase works.',
     features: [
-      { title: 'Verified sellers', body: 'A seller passes identity and business checks before a listing goes live, so you know who stands behind the data.', ...none },
+      { title: 'Verified sellers', body: 'A seller passes identity and business checks before a listing goes live, so you know who stands behind the data.', shot: '/shots/exchange-marketplace.jpg', alt: 'Exchange marketplace home with a search box for datasets, categories and providers, buttons to browse listings, post a request or create a listing, and counts of datasets, research reports and services' },
       { title: 'Escrow on every order', body: 'Payment is held until delivery is confirmed. The buyer carries no upfront risk and the seller is guaranteed payment on delivery.', ...none },
       { title: 'A quality score you can check', body: 'Each dataset is scored on completeness, recency and provenance, and the listing shows its method, not only a sample.', ...none },
       { title: 'Post a requirement', body: 'Cannot find what you need? Publish a requirement and let sellers apply to it.', ...none },
@@ -74,7 +74,7 @@ export const PD_MORE: ContentField[] = [
     ],
     featTitle: 'The features that do the work.',
     features: [
-      { title: 'Portfolio data that updates itself', body: 'When a portfolio company keeps its Ascent data room current, the fund numbers follow. Nobody chases a founder for a quarterly update.', ...none },
+      { title: 'Portfolio data that updates itself', body: 'When a portfolio company keeps its Ascent data room current, the fund numbers follow. Nobody chases a founder for a quarterly update.', shot: '/shots/command-live-automations.jpg', alt: 'Command diagram showing Atlas market data, Ascent startup metrics and valuation feeding the fund workspace for deal sourcing, cap table, NAV, TVPI, DPI, IRR and LP reports' },
       { title: 'AI memos your team approves', body: 'AI drafts investment memos from the record. A person reviews and approves each one, and the approval is logged.', ...none },
       { title: 'LP reporting from the same numbers', body: 'Capital accounts, NAV and LP reports come from the same records as the portfolio, so they agree.', ...none },
       { title: 'Deal sourcing from Atlas', body: 'Search the reviewed record for companies and co-investors without leaving the fund workspace.', ...none },
@@ -123,7 +123,8 @@ export const PD_MORE: ContentField[] = [
     ],
     featTitle: 'What founders get.',
     features: [
-      { title: 'A readiness score and a to-do list', body: 'See how complete the room is and exactly what is missing, with unlimited readiness audits on the paid plan.', ...none },
+      { title: 'A readiness score and a to-do list', body: 'See how complete the room is and exactly what is missing, scored across six dimensions, with unlimited readiness audits on the paid plan.', shot: '/shots/ascent-readiness-score.jpg', alt: 'Ascent readiness score page showing an investor-ready score out of 100, a completeness score and a six-dimension radar chart' },
+      { title: 'Templates for every document type', body: 'Start from a good draft. The library holds at least two templates for each document type, from pitch decks and financial models to term sheets, cap tables and policies, filterable by stage.', shot: '/shots/ascent-template-library.jpg', alt: 'Ascent template library with a search box and filters by document type and funding stage, including pitch decks, financial models, cap tables, term sheets, legal agreements and policies' },
       { title: 'Documents that are read for you', body: 'Documents are read and key terms pulled out. You confirm each one before it counts.', ...none },
       { title: 'Share with control', body: 'Send by link with an email gate, NDA, watermark and expiry, and see who opened it and when.', ...none },
       { title: 'Deal flow for programme admins', body: 'An incubator or fund admin reads every room in a cohort, never writes back, and turns ready rooms into introductions the founder has agreed to.', ...none },
@@ -175,7 +176,7 @@ export const PD_MORE: ContentField[] = [
     featTitle: 'The features that save the time.',
     features: [
       { title: 'Your rubric, your rounds', body: 'Score applications on your own criteria across as many rounds as you run.', ...none },
-      { title: 'Select, and the data room starts', body: 'Choosing a startup switches on its Ascent data room, so the application becomes the first version of the room.', ...none },
+      { title: 'Select, and the data room starts', body: 'Choosing a startup switches on its Ascent data room, so the application becomes the first version of the room.', shot: '/shots/orbit-selection-flow.jpg', alt: 'Orbit programme flow from application intake and automated screening through multi-round evaluation and selection to the Ascent data room going live' },
       { title: 'Deal flow to funds', body: 'Read every room in a cohort and turn ready ones into introductions the founder has agreed to, through Connect.', ...none },
       { title: 'Grant reports without rework', body: 'Produce reports in the formats funders expect from the data you already hold.', ...none },
     ],
@@ -221,7 +222,7 @@ export const PD_MORE: ContentField[] = [
     ],
     featTitle: 'How it works.',
     features: [
-      { title: 'Read the thesis, then apply', body: 'A live thesis shows what a fund backs and how to apply. The LN partner network backs early-stage startups in any sector, based in India, and evaluates founders through their data room.', ...none },
+      { title: 'Read the thesis, then apply', body: 'A live thesis shows what a fund backs and how to apply. The LN partner network backs early-stage startups in any sector, based in India, and evaluates founders through their data room.', shot: '/shots/connect-home.jpg', alt: 'Connect home page with verified mentors, legal counsel, deal scouting and a B2B data exchange, with buttons to find an expert or browse open theses' },
       { title: 'Ask from inside the room', body: 'A founder requests a mentor or an audit without leaving the data room, and the request carries the right context.', ...none },
       { title: 'Consent first', body: 'Contact details stay hidden until the founder agrees to the introduction.', ...none },
     ],

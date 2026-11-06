@@ -70,7 +70,7 @@ const PAGES = {
   },
   '/nesthr': {
     title: 'NestHR — HR software for startups and campus placement software for colleges',
-    description: 'Seven modules for people, hiring, campus placement, performance, expenses, learning and analytics. Flat annual price in rupees, every module included.',
+    description: 'Nine modules in one workspace: people, placements, performance, expenses, learning, analytics, lifecycle, documents and discussion. Attendance, leave and payroll, and campus and corporate hiring in one funnel. Priced in rupees.',
   },
   '/sentinel': {
     title: 'Sentinel — risk monitoring for private markets portfolios and AI systems',

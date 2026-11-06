@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import AudienceSwitcher, { type Audience } from '@/components/AudienceSwitcher'
 import Image from 'next/image'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
@@ -189,22 +190,8 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* AUDIENCES */}
-        <section className="ln-night ln-sec">
-          <div className="ln-wrap">
-            <p className="ln-eyebrow">{text(c, 'home.audiences.eyebrow')}</p>
-            <h2 className="ln-h2" style={{ maxWidth: '14em' }}>{text(c, 'home.audiences.title')}</h2>
-            <div style={{ marginTop: 64, display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,300px),1fr))', borderTop: '1px solid #2a3b55' }}>
-              {items(c, 'home.audiences.items').map((a, i) => (
-                <Link key={i} href={a.href || '/who-we-serve'} style={{ padding: i === 0 ? '40px 36px 44px 0' : '40px 36px 44px 36px', borderBottom: '1px solid #2a3b55', borderLeft: i ? '1px solid #2a3b55' : 'none', textDecoration: 'none', color: 'inherit', display: 'block' }}>
-                  <p className="ln-serif" style={{ fontSize: 34, margin: 0, lineHeight: 1.15 }}>{a.title}</p>
-                  <p style={{ margin: '16px 0 0', maxWidth: '24em' }}>{a.body}</p>
-                  <p style={{ margin: '22px 0 0', fontWeight: 600, color: 'var(--onnight)' }}>{a.link} →</p>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* AUDIENCES: I am a ... */}
+        <AudienceSwitcher eyebrow={text(c, 'home.audiences.eyebrow')} title={text(c, 'home.audiences.title')} items={items(c, 'home.switch.items') as unknown as Audience[]} />
 
         {/* NUMBERS */}
         <section className="ln-sec">
