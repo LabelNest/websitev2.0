@@ -6,6 +6,7 @@ import { getContent, text, items } from '@/lib/siteContent'
 import { getAtlasStats, deepFill } from '@/lib/plans'
 import { breadcrumbSchema } from '@/lib/seo'
 import type { ProductId } from '@/lib/productDetail'
+import PortalMock from '@/components/PortalMock'
 
 // The long product page: what is inside, the features (with screenshots), why it holds, how it differs, who uses it, FAQ.
 // All copy comes from the admin-editable registry (lib/productDetail.ts). Nothing here names another company.
@@ -121,7 +122,7 @@ export default async function ProductDetail({ id, name, path, schemaType, primar
               return (
                 <div key={i} className="pd-feat" style={hasShot ? undefined : { gridTemplateColumns: 'minmax(0,40em)' }}>
                   <div style={{ order: hasShot && flip ? 2 : 0 }}><h3>{f.title}</h3><p>{f.body}</p></div>
-                  {hasShot && <div className="pd-shot" style={{ order: flip ? 1 : 0 }}><img src={f.shot} alt={f.alt || f.title} width={1280} height={551} loading="lazy" decoding="async" /></div>}
+                  {hasShot && <div className="pd-shot" style={{ order: flip ? 1 : 0 }}>{f.shot.startsWith('mock:') ? <PortalMock id={f.shot.slice(5)} alt={f.alt || f.title} /> : <img src={f.shot} alt={f.alt || f.title} width={1280} height={551} loading="lazy" decoding="async" />}</div>}
                 </div>
               )
             })}
