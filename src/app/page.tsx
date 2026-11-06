@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import ProductShowcase from '@/components/ProductShowcase'
 import AudienceSwitcher, { type Audience } from '@/components/AudienceSwitcher'
 import Image from 'next/image'
 import Nav from '@/components/Nav'
@@ -186,6 +187,11 @@ export default async function HomePage() {
                 </Link>
               ))}
             </div>
+            <ProductShowcase items={[
+              ...items(c, 'home.products.rows').map((r) => ({ name: r.name, text: r.text, href: r.href || '/nestlens' })),
+              { name: 'NestHR', text: 'People, hiring and placements in one workspace, priced in rupees.', href: '/nesthr' },
+              { name: 'Sentinel', text: 'See the risk before it reaches the portfolio, for funds and the AI they use.', href: '/sentinel' },
+            ]} />
             <p className="ln-small" style={{ margin: '28px 0 0' }}>Also from LabelNest: <Link className="ln-tlink" href="/nesthr">NestHR</Link> for people and placements, <Link className="ln-tlink" href="/sentinel">Sentinel</Link> for risk and AI oversight (early access), and <Link className="ln-tlink" href="/services">managed data services</Link>.</p>
           </div>
         </section>

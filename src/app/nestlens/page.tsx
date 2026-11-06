@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import PortalMock from '@/components/PortalMock'
 import NestLensModuleNav from '@/components/NestLensModuleNav'
 import { pageMetadata } from '@/lib/seo'
 import { getContent, text, items, type ContentMap } from '@/lib/siteContent'
@@ -25,6 +26,7 @@ const CSS = `
 .pr-ul li{padding-left:22px;position:relative}
 .pr-ul li::before{content:"";position:absolute;left:0;top:.72em;width:10px;border-top:2px solid var(--brass-line)}
 .pr-chip{display:inline-block;border:1px solid var(--bord2);padding:4px 12px;font-size:13.5px;color:var(--text);margin:0 8px 8px 0;background:var(--surface)}
+.pr-shot{border:1px solid var(--bord2);box-shadow:0 30px 60px -34px rgba(14,27,46,.3);line-height:0}
 .pr-mini{background:var(--surface);border:1px solid var(--bord2);box-shadow:0 30px 60px -34px rgba(14,27,46,.3);padding:22px}
 .pr-lab{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin:0 0 10px}
 .pr-bar{height:8px;background:var(--bg3);margin-top:6px}.pr-bar i{display:block;height:8px;background:var(--text)}
@@ -113,81 +115,32 @@ export default async function NestLensPage() {
 
           <Block id="atlas" n="01" name="Atlas" c={c}
             buttons={<>{tl('https://nestlens.labelnest.in', 'Open Atlas', true)}<Link className="ln-tlink" href="/nestlens/intelligence">Learn more</Link>{price}</>}
-            visual={
-              <div className="ln-panel" aria-label="A sample Atlas record">
-                <div className="bar"><b>Sample Growth Fund I</b><span>Investment fund</span></div>
-                {[['Fund size', '₹450 crore', 'Placement memorandum, 12 Mar 2026'], ['Registration', 'IN/AIF2/25-26/0000', 'SEBI AIF register'], ['Partner, joined', 'A. Sample, March 2025', 'Press release']].map(([k, v, s], i) => (
-                  <div className="ln-vrow" key={k} style={{ ['--d' as string]: `${i}s` }}><span className="k">{k}</span><span className="v">{v}</span><span className="src">{s}</span><span className="st"><span className="pend"><i />Unreviewed</span><span className="done"><i />Reviewed</span></span></div>
-                ))}
-              </div>}
+            visual={<div className="pr-shot"><PortalMock id="atlas-explore" alt="Sample atlas portal view" /></div>}
           />
 
           <Block id="exchange" n="02" name="Exchange" c={c} flip
             buttons={<>{tl('https://nestlens.labelnest.in', 'Browse Exchange', true)}<Link className="ln-tlink" href="/nestlens/exchange">Learn more</Link>{price}</>}
-            visual={
-              <div className="pr-mini">
-                <p className="pr-lab">Sample listing</p>
-                <p className="ln-serif" style={{ fontSize: 28, margin: 0, lineHeight: 1.2 }}>India private-company deal flow, one quarter</p>
-                <p className="ln-small" style={{ margin: '8px 0 18px' }}>Company intelligence · Seller identity verified</p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14 }}>
-                  {[['Completeness', 92], ['Recency', 80], ['Provenance', 88]].map(([l, w]) => <div key={l as string}><p className="pr-lab" style={{ margin: 0 }}>{l}</p><div className="pr-bar"><i style={{ width: `${w}%` }} /></div></div>)}
-                </div>
-                <p className="ln-small" style={{ margin: '20px 0 0', borderTop: '1px solid var(--border)', paddingTop: 14 }}>Payment is held in escrow until you confirm delivery.</p>
-              </div>}
+            visual={<div className="pr-shot"><PortalMock id="exchange-marketplace" alt="Sample exchange portal view" /></div>}
           />
 
           <Block id="command" n="03" name="Command" c={c}
             buttons={<>{tl('/contact', 'Book a walkthrough')}<Link className="ln-tlink" href="/nestlens/command">Learn more</Link>{price}</>}
-            visual={
-              <div className="pr-mini">
-                <p className="pr-lab">Sample pipeline</p>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, fontSize: 13.5 }}>
-                  {[['Sourced · 14', ['Sample Co A', 'Sample Co B']], ['Screening · 6', ['Sample Co C']], ['Diligence · 3', ['Sample Co D', 'Sample Co E']], ['Committee · 1', ['Sample Co F']]].map(([h, cs]) => (
-                    <div key={h as string}><p className="pr-lab" style={{ margin: '0 0 8px', color: 'var(--text)' }}>{h}</p>{(cs as string[]).map((x) => <div key={x} className="pr-chip" style={{ display: 'block', margin: '0 0 8px' }}>{x}</div>)}</div>
-                  ))}
-                </div>
-              </div>}
+            visual={<div className="pr-shot"><PortalMock id="command-fund" alt="Sample command portal view" /></div>}
           />
 
           <Block id="ascent" n="04" name="Ascent" c={c} flip
             buttons={<>{tl('https://nestlens.labelnest.in', 'Start your room', true)}<Link className="ln-tlink" href="/nestlens/capital">Learn more</Link>{price}</>}
-            visual={
-              <div className="pr-mini">
-                <p className="pr-lab">Sample data room</p>
-                <div style={{ display: 'flex', gap: 28, alignItems: 'center' }}>
-                  <svg width="116" height="116" viewBox="0 0 116 116" role="img" aria-label="Readiness 72 percent"><circle cx="58" cy="58" r="48" fill="none" stroke="var(--bg3)" strokeWidth="8" /><circle cx="58" cy="58" r="48" fill="none" stroke="var(--text)" strokeWidth="8" strokeDasharray="217 302" transform="rotate(-90 58 58)" /><text x="58" y="66" textAnchor="middle" fontFamily="var(--font-serif),serif" fontSize="30" fill="var(--text)">72%</text></svg>
-                  <div style={{ flex: 1, fontSize: 14 }}><p style={{ margin: 0 }}>Readiness</p><p className="ln-small" style={{ marginTop: 4 }}>3 items missing: cap table, founders&apos; agreement, last audited accounts.</p></div>
-                </div>
-                <div style={{ marginTop: 20, borderTop: '1px solid var(--border)', paddingTop: 14, fontSize: 14, display: 'grid', gap: 8 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}><span>Shared with</span><b style={{ color: 'var(--text)' }}>2 investors, approved by you</b></div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>Last opened</span><b style={{ color: 'var(--text)' }}>Yesterday</b></div>
-                </div>
-              </div>}
+            visual={<div className="pr-shot"><PortalMock id="ascent-readiness" alt="Sample ascent portal view" /></div>}
           />
 
           <Block id="orbit" n="05" name="Orbit" c={c}
             buttons={<>{tl('/who-we-serve/incubator', 'See Orbit for programmes')}<Link className="ln-tlink" href="/nestlens/orbit">Learn more</Link>{price}</>}
-            visual={
-              <div className="pr-mini">
-                <p className="pr-lab">Sample programme funnel</p>
-                <div style={{ display: 'grid', gap: 16 }}>
-                  {[['Applications', '1,240', 100], ['Shortlisted', '180', 15], ['Selected into cohort', '25', 2.5]].map(([l, n, w], i) => (
-                    <div key={l as string}><div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 15 }}><span>{l}</span><b style={{ color: 'var(--text)' }}>{n}</b></div><div className="pr-bar" style={{ height: 10 }}><i style={{ width: `${w}%`, height: 10, background: i === 2 ? 'var(--pink)' : undefined }} /></div></div>
-                  ))}
-                </div>
-              </div>}
+            visual={<div className="pr-shot"><PortalMock id="orbit-selection" alt="Sample orbit portal view" /></div>}
           />
 
           <Block id="connect" n="06" name="Connect" c={c} flip
             buttons={<>{tl('https://connect.labelnest.in', 'Explore Connect', true)}<Link className="ln-tlink" href="/nestlens/connect">Learn more</Link></>}
-            visual={
-              <div className="pr-mini">
-                <p className="pr-lab">Live thesis</p>
-                <p className="ln-serif" style={{ fontSize: 28, margin: 0, lineHeight: 1.2 }}>{text(c, 'products.connect.thesisName')}</p>
-                <p style={{ margin: '12px 0 16px', fontSize: 15.5 }}>{text(c, 'products.connect.thesisText')}</p>
-                <div>{tags.map((t) => <span className="pr-chip" key={t}>{t}</span>)}</div>
-                <a className="ln-btn" style={{ marginTop: 8 }} href={text(c, 'products.connect.thesisUrl')}>Check your fit</a>
-              </div>}
+            visual={<div className="pr-shot"><PortalMock id="connect-home" alt="Sample connect portal view" /></div>}
           />
         </div>
 
