@@ -1,5 +1,7 @@
 import { sql } from '@/lib/db'
 import { PD_FIELDS } from '@/lib/productDetail'
+import { PD_MORE } from '@/lib/productDetailMore'
+import { ABOUT_FIELDS } from '@/lib/aboutContent'
 
 // Every editable line of copy on the redesigned pages lives here, with its default.
 // The admin "Site content" screen is generated from this list, and saved changes are stored
@@ -56,7 +58,7 @@ export const CONTENT_FIELDS: ContentField[] = [
   T(P_HOME, 'Opening', 'home.hero.cta2', 'Second button', 'Talk to us'),
 
   T(P_HOME, 'About statement', 'home.about.eyebrow', 'Label', 'About LabelNest'),
-  L(P_HOME, 'About statement', 'home.about.statement', 'Statement', 'LabelNest is a private markets data company in Bengaluru. We make reviewed data, and the software to use it, for the managers, founders and institutions that global platforms treat as an afterthought. We started in 2025 and we are building for the next ten years, not for an exit.', 'This is the standard description of LabelNest. It is also used on the About page.'),
+  L(P_HOME, 'About statement', 'home.about.statement', 'Statement', 'LabelNest is a private markets data company in Bengaluru. We build the reviewed record of who manages, funds and raises capital across India and other emerging markets, sourced from registers and primary documents and dated field by field. On top of it we make the software that fund managers, founders and programmes run on. We started in 2025 and we are building for the next ten years, not for an exit.', 'This is the standard description of LabelNest. It is also used on the About page.'),
 
   T(P_HOME, 'Connected products', 'home.connected.eyebrow', 'Label', 'Built to work together'),
   T(P_HOME, 'Connected products', 'home.connected.title', 'Heading', 'Fill it in once. It shows up everywhere it should.'),
@@ -252,6 +254,8 @@ export const CONTENT_FIELDS: ContentField[] = [
   T(P_INC, 'Closing call to action', 'incubator.cta.title', 'Heading', 'See it on your own cohort.'),
 
   ...PD_FIELDS,
+  ...PD_MORE,
+  ...ABOUT_FIELDS,
 ]
 
 export const CONTENT_PAGES = Array.from(new Set(CONTENT_FIELDS.map((f) => f.page)))

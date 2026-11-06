@@ -14,10 +14,10 @@ const feature: ItemField[] = [{ key: 'title', label: 'Title' }, { key: 'body', l
 const whoHow: ItemField[] = [{ key: 'who', label: 'Who' }, { key: 'how', label: 'How they use it', long: true }]
 const qa: ItemField[] = [{ key: 'q', label: 'Question' }, { key: 'a', label: 'Answer', long: true }]
 
-export const PRODUCT_IDS = ['atlas', 'nesthr', 'sentinel'] as const
+export const PRODUCT_IDS = ['atlas', 'exchange', 'command', 'ascent', 'orbit', 'connect', 'nesthr', 'sentinel'] as const
 export type ProductId = (typeof PRODUCT_IDS)[number]
 
-const block = (id: ProductId, name: string, d: {
+export const block = (id: ProductId, name: string, d: {
   eyebrow: string; title: string; lead: string; note: string
   dataTitle: string; dataLead: string; data: Item[]
   featTitle: string; features: Item[]
