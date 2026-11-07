@@ -54,6 +54,8 @@ const CSS = `
 .nv-wrap{position:fixed;top:0;left:0;right:0;z-index:300;background:var(--nav-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
 .nv-bar{max-width:1240px;margin:0 auto;padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:20px}
 .nv-links{display:flex;align-items:center;gap:26px;list-style:none;margin:0;padding:0}
+.nv-brand{display:flex;align-items:center;gap:10px;height:56px;flex-shrink:0;text-decoration:none;color:var(--text)}
+.nv-brandname{font-family:var(--font-serif),Georgia,serif;font-size:24px;line-height:1;letter-spacing:-.01em;color:var(--text)}
 .nv-btn,.nv-link{background:none;border:0;padding:0;font:500 14.5px var(--font-sans),system-ui,sans-serif;color:var(--text);cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-decoration:none;white-space:nowrap}
 .nv-btn:hover,.nv-link:hover{text-decoration:underline;text-decoration-color:var(--brass-line);text-underline-offset:7px;text-decoration-thickness:2px}
 .nv-on{text-decoration:underline;text-decoration-color:var(--brass-line);text-underline-offset:7px;text-decoration-thickness:2px}
@@ -115,15 +117,16 @@ export default function Nav() {
       <style>{CSS}</style>
       <div className="nv-wrap" ref={wrapRef}>
         <div className="nv-bar">
-          <Link href="/" aria-label="LabelNest home" style={{ display: 'flex', alignItems: 'center', height: 40, flexShrink: 0 }}>
+          <Link href="/" aria-label="LabelNest home" className="nv-brand">
             <Image
-              src="https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brand/labelnest-logo.png"
-              alt="LabelNest"
-              width={110}
-              height={34}
-              style={{ objectFit: 'contain', display: 'block', width: 'auto', height: 34 }}
+              src="/ln-mark.png"
+              alt=""
+              width={109}
+              height={97}
+              style={{ objectFit: 'contain', display: 'block', width: 'auto', height: 40 }}
               priority
             />
+            <span className="nv-brandname">LabelNest</span>
           </Link>
 
           <ul className="nv-links" aria-label="Main">
