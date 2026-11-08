@@ -14,6 +14,7 @@ export type AnnouncementBlock =
   | { t: 'facts'; items: { label: string; value: string }[] }
   | { t: 'cards'; items: { title: string; text?: string; bullets?: string[] }[] }
   | { t: 'steps'; items: { label: string; title: string; bullets: string[] }[] }
+  | { t: 'compare'; left: { title: string; bullets: string[] }; right: { title: string; bullets: string[] } }
 
 export interface Announcement {
   slug: string
@@ -35,12 +36,14 @@ export const ANNOUNCEMENTS: Announcement[] = [
       'LabelNest is partnering with an emerging venture building across Education, Healthcare and Financial Services, with a longer-term ambition to expand into Investment Banking and Private Markets. LabelNest contributes product development, technology infrastructure, sales execution and channel distribution.',
     date: '2026-11-08',
     tag: 'Partnership',
-    readTime: '5 min read',
+    readTime: '7 min read',
     social: `LabelNest announces a Strategic Partnership with an Emerging Multi-Sector Venture
 
 LabelNest is entering a strategic partnership with an emerging venture building across Education, Healthcare and Financial Services, with a longer-term ambition to expand into Investment Banking and Private Markets.
 
 As its Strategic Technology, Product & Growth Partner, LabelNest will lead technology development, product engineering, platform infrastructure, sales enablement and channel distribution.
+
+Anyone can build an isolated ERP. What is hard to replicate is a connected ecosystem with deep logic underneath it: shared identity and access, data that carries its meaning across products, and workflows that hand off from one product to the next. That is what the venture builds on.
 
 The collaboration will also draw on LabelNest's technology ecosystem:
 
@@ -57,7 +60,7 @@ Building together. Growing together.
     body: [
       {
         t: 'lead',
-        text: 'LabelNest is partnering with an emerging venture to build technology-led businesses across Education, Healthcare and Financial Services, with a longer-term ambition to reach investment banking and private markets.',
+        text: 'LabelNest is partnering with an emerging venture to build technology-led businesses across Education, Healthcare and Financial Services, with a longer-term ambition to reach investment banking and private markets. Anyone can write an isolated ERP; the advantage here is the connected LabelNest ecosystem underneath it.',
       },
       {
         t: 'facts',
@@ -77,7 +80,71 @@ Building together. Growing together.
           'It enters the market first through SaaS products for schools, coaching centres, hospitals and institutional management.',
           'LabelNest provides the technology, product engineering, sales execution and channel distribution.',
           'Both teams share in the growth: this is a revenue-sharing partnership, not a conventional vendor arrangement.',
+          'The edge is the connected LabelNest ecosystem underneath: anyone can build an isolated ERP, few can replicate the deep logic that links products together.',
         ],
+      },
+
+      { t: 'h2', text: 'Why a connected ecosystem, not an isolated ERP' },
+      {
+        t: 'p',
+        text: 'Writing a school, coaching-centre or hospital ERP is the easy part. Many teams can build one, and an isolated product is just as easy for someone else to copy. What is hard to replicate is a connected ecosystem with deep logic running underneath: shared identity and access, data that means the same thing in every product, and workflows that hand off from one product to the next.',
+      },
+      {
+        t: 'p',
+        text: 'That is what LabelNest has spent its time building, and it is what the venture gets from day one.',
+      },
+      {
+        t: 'compare',
+        left: {
+          title: 'An isolated ERP',
+          bullets: [
+            'One product, one database, one use case',
+            'Every module is a silo; data is entered and rarely used again',
+            'Each new sector means starting from scratch',
+            'Access control, billing and reporting rebuilt for every product',
+            'Easy for a competitor to copy',
+          ],
+        },
+        right: {
+          title: 'A connected ecosystem',
+          bullets: [
+            'One shared foundation for identity, roles, tenant isolation, subscriptions and reporting',
+            'Data carries its meaning, source and permissions from product to product',
+            'A new vertical starts on working infrastructure, not a blank page',
+            'Sales, workforce, capital and intelligence tools plug into the same base',
+            'The value is in the connections, which are slow and costly to copy',
+          ],
+        },
+      },
+      { t: 'h3', text: 'How the pieces connect' },
+      {
+        t: 'cards',
+        items: [
+          {
+            title: 'Intelligence feeds decisions',
+            text: 'Atlas to Command',
+            bullets: ['Reviewed data on funds, companies and people feeds fund pipelines and diligence, with its source attached'],
+          },
+          {
+            title: 'Readiness meets capital',
+            text: 'Ascent to Command',
+            bullets: ['A founder’s data room, built once, can be shared with the fund evaluating them, only with the founder’s consent'],
+          },
+          {
+            title: 'People and partners',
+            text: 'Connect',
+            bullets: ['Mentors, audit partners and fund scouting are reached from the same workspace, not through a separate tool'],
+          },
+          {
+            title: 'One workforce layer',
+            text: 'NestHR',
+            bullets: ['Staff, city leads and sales associates are managed on the same base as the products they sell and support'],
+          },
+        ],
+      },
+      {
+        t: 'p',
+        text: 'For the venture, this means the school and hospital products are not stand-alone software. They sit on the same engineering, security and commercial base that powers LabelNest’s own platform, and they can grow into capital markets and fund operations without a rebuild.',
       },
 
       { t: 'h2', text: 'Where the venture starts' },
@@ -287,7 +354,7 @@ Building together. Growing together.
       { t: 'h2', text: 'The long-term vision' },
       {
         t: 'p',
-        text: 'The venture brings the business vision, sector relationships and market development. LabelNest brings the technology backbone, product engineering, commercial enablement and distribution. Together, the aim is scalable SaaS businesses, strong institutional relationships and, step by step, capability across financial services and private markets.',
+        text: 'The venture brings the business vision, sector relationships and market development. LabelNest brings the technology backbone, product engineering, commercial enablement and distribution. Together, the aim is scalable SaaS businesses, strong institutional relationships and, step by step, capability across financial services and private markets, all on a connected base that an isolated product cannot match.',
       },
       {
         t: 'p',
