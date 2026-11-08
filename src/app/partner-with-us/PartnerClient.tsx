@@ -53,7 +53,7 @@ export default function PartnerClient() {
       if (!res.ok) throw new Error('failed')
       setSent(true)
     } catch {
-      setError('Something went wrong. Please try again, or write to contact@labelnest.in.')
+      setError('Something went wrong. Please try again, or write to partnership@labelnest.in.')
     } finally {
       setLoading(false)
     }
@@ -138,7 +138,7 @@ export default function PartnerClient() {
                     {loading ? 'Sending...' : 'Send partnership enquiry →'}
                   </button>
                   <div className="text-[11.5px] text-center" style={{ color: 'var(--text3)' }}>
-                    Goes to contact@labelnest.in · Typically replied to within one business day
+                    Goes to partnership@labelnest.in · Typically replied to within one business day
                   </div>
                 </div>
               </form>

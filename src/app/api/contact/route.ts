@@ -10,7 +10,11 @@ import { sql } from '@/lib/db'
 // email-service microservice (AWS SES), which was never deployed
 // (EMAIL_SERVICE_URL unset) — migrated 2026-07-09 at the user's direction:
 // pause AWS everywhere, use Brevo instead.
-async function notifyContactSubmission(senderName: string, senderEmail: string, subject: string, message: string) {
+// Partnership enquiries go to their own mailbox.
+const PARTNERSHIP_TYPE = 'Partner with us'
+const PARTNERSHIP_INBOX = 'partnership@labelnest.in'
+
+async function notifyContactSubmission(senderName: string, senderEmail: string, subject: string, message: string, to = 'contact@labelnest.in') {
   const apiKey = process.env.BREVO_API_KEY
   if (!apiKey) {
     console.warn('[contact] BREVO_API_KEY not configured — notification not sent')
@@ -26,7 +30,7 @@ async function notifyContactSubmission(senderName: string, senderEmail: string, 
       headers: { 'api-key': apiKey, 'Content-Type': 'application/json', accept: 'application/json' },
       body: JSON.stringify({
         sender: { name: 'LabelNest Website', email: 'newsletter@labelnest.in' },
-        to: [{ email: 'contact@labelnest.in' }],
+        to: [{ email: to }],
         replyTo: { email: senderEmail, name: senderName },
         subject: `[Contact form] ${safeSubject || 'New submission'}`,
         htmlContent: `<p><strong>${safeName}</strong> (${safeEmail}) submitted the contact form.</p><p>${safeMessage}</p>`,
@@ -58,7 +62,7 @@ export async function POST(req: NextRequest) {
     `
     // Fire-and-forget — a notification failure shouldn't fail the submission
     // itself, which is already safely stored above.
-    void notifyContactSubmission(name, email, subject, message)
+    void notifyContactSubmission(name, email, subject, message, inquiry_type === PARTNERSHIP_TYPE ? PARTNERSHIP_INBOX : undefined)
     return NextResponse.json({ ok: true })
   } catch (e) {
     console.error(e)
