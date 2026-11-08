@@ -10,6 +10,10 @@ export type AnnouncementBlock =
   | { t: 'p'; text: string }
   | { t: 'ul'; items: string[] }
   | { t: 'note'; text: string }
+  | { t: 'lead'; text: string }
+  | { t: 'facts'; items: { label: string; value: string }[] }
+  | { t: 'cards'; items: { title: string; text?: string; bullets?: string[] }[] }
+  | { t: 'steps'; items: { label: string; title: string; bullets: string[] }[] }
 
 export interface Announcement {
   slug: string
@@ -31,7 +35,7 @@ export const ANNOUNCEMENTS: Announcement[] = [
       'LabelNest is partnering with an emerging venture building across Education, Healthcare and Financial Services, with a longer-term ambition to expand into Investment Banking and Private Markets. LabelNest contributes product development, technology infrastructure, sales execution and channel distribution.',
     date: '2026-11-08',
     tag: 'Partnership',
-    readTime: '6 min read',
+    readTime: '5 min read',
     social: `LabelNest announces a Strategic Partnership with an Emerging Multi-Sector Venture
 
 LabelNest is entering a strategic partnership with an emerging venture building across Education, Healthcare and Financial Services, with a longer-term ambition to expand into Investment Banking and Private Markets.
@@ -51,255 +55,243 @@ Building together. Growing together.
 
 #LabelNest #StrategicPartnership #SaaS #FinTech #InvestmentBanking #PrivateMarkets`,
     body: [
-      { t: 'h2', text: 'Partnership overview' },
       {
-        t: 'p',
-        text: 'LabelNest is entering a strategic partnership with an emerging venture that aims to build a diversified business across institutional technology, financial services and investment banking.',
+        t: 'lead',
+        text: 'LabelNest is partnering with an emerging venture to build technology-led businesses across Education, Healthcare and Financial Services, with a longer-term ambition to reach investment banking and private markets.',
       },
       {
-        t: 'p',
-        text: 'The venture will initially enter the market through SaaS products serving Education, Healthcare and institutional management. Over time, its ambition is to expand into financial services, investment banking, capital markets and private market activities.',
-      },
-      {
-        t: 'p',
-        text: 'LabelNest will serve as the venture’s Strategic Technology, Product & Growth Partner, contributing technology infrastructure, product development, commercial execution and distribution capabilities. The venture brings the business vision and leads its sector expansion.',
-      },
-      {
-        t: 'p',
-        text: 'The partnership will operate on a shared-growth and revenue-sharing model, aligning both parties around the development, commercialisation and expansion of the business.',
-      },
-
-      { t: 'h2', text: 'Target sectors and initial market entry' },
-      { t: 'p', text: 'The venture plans to establish its initial market presence through three SaaS verticals.' },
-      { t: 'h3', text: 'Education technology' },
-      {
-        t: 'ul',
+        t: 'facts',
         items: [
-          'School Management ERP.',
-          'Coaching Centre Management ERP.',
-          'Student, faculty, admissions, attendance and fee management.',
-          'Institutional administration and reporting.',
-        ],
-      },
-      { t: 'h3', text: 'Healthcare technology' },
-      {
-        t: 'ul',
-        items: [
-          'Hospital Management ERP.',
-          'Patient administration and registration.',
-          'Appointments, billing, pharmacy and inventory workflows.',
-          'Hospital administration and operational reporting.',
-        ],
-      },
-      { t: 'h3', text: 'Financial services' },
-      {
-        t: 'ul',
-        items: [
-          'Technology and operational infrastructure for financial institutions.',
-          'Investment and institutional workflow solutions.',
-          'Expansion into financial services and investment banking over time.',
-        ],
-      },
-      {
-        t: 'p',
-        text: 'The initial focus will be on smaller cities and underserved institutional markets, with affordable subscription models, regional language accessibility and a distributed sales network.',
-      },
-
-      { t: 'h2', text: 'What LabelNest contributes' },
-      { t: 'h3', text: 'Technology and product development' },
-      {
-        t: 'ul',
-        items: [
-          'Product architecture and technical strategy.',
-          'UI/UX design and engineering.',
-          'Web and mobile application development.',
-          'Backend infrastructure, databases and APIs.',
-          'Security, access management and tenant isolation.',
-          'Cloud infrastructure, deployment and maintenance.',
-          'Product upgrades, integrations and technical support.',
-        ],
-      },
-      { t: 'h3', text: 'Sales and commercial growth' },
-      {
-        t: 'ul',
-        items: [
-          'Go-to-market strategy and sales enablement.',
-          'Institutional customer acquisition.',
-          'Sales processes, CRM and pipeline management.',
-          'Pricing and subscription infrastructure.',
-          'Channel partnerships and strategic alliances.',
-          'Sales performance tracking and commercial reporting.',
-        ],
-      },
-      { t: 'h3', text: 'Distribution network development' },
-      {
-        t: 'ul',
-        items: [
-          'Recruitment of student sales associates.',
-          'City-level sales leadership and regional expansion.',
-          'Training, certification and sales enablement.',
-          'Lead management and customer attribution.',
-          'Commission tracking and channel performance.',
-          'A scalable, performance-led distribution network.',
-        ],
-      },
-      { t: 'h3', text: 'Technology ecosystem integration' },
-      {
-        t: 'p',
-        text: 'The venture will use selected products from LabelNest’s existing ecosystem to support its operations and future expansion.',
-      },
-
-      { t: 'h2', text: 'How the LabelNest ecosystem supports the venture' },
-      { t: 'h3', text: 'Command: fund and investment management infrastructure' },
-      {
-        t: 'p',
-        text: 'Command is intended to provide the operational technology foundation for the venture’s future fund and investment management activities.',
-      },
-      {
-        t: 'ul',
-        items: [
-          'Fund administration and operational workflows.',
-          'Investment pipeline and deal tracking.',
-          'Capital deployment and investment monitoring.',
-          'Portfolio company management.',
-          'Fund performance and portfolio reporting.',
-          'Investor and stakeholder management.',
-          'Centralised operational dashboards and reporting.',
-        ],
-      },
-      { t: 'h3', text: 'Ascent: capital readiness and deal infrastructure' },
-      {
-        t: 'p',
-        text: 'Ascent is intended to support startup engagement, fundraising readiness and transaction preparation.',
-      },
-      {
-        t: 'ul',
-        items: [
-          'Structured startup profiles and company intelligence.',
-          'Digital data rooms and document management.',
-          'Fundraising documentation and preparation.',
-          'Due diligence workflows and information organisation.',
-          'Investor discovery and investor-fit intelligence.',
-          'Capital readiness assessments.',
-          'Grant and funding opportunity discovery.',
-        ],
-      },
-      { t: 'h3', text: 'Atlas: private market intelligence infrastructure' },
-      {
-        t: 'p',
-        text: 'Atlas is intended to provide private market intelligence for research, institutional discovery and investment-related activities.',
-      },
-      {
-        t: 'ul',
-        items: [
-          'General Partner and fund intelligence.',
-          'Limited Partner and investor profiles.',
-          'Private company and portfolio company intelligence.',
-          'Deal and transaction research.',
-          'Investment firm and service provider discovery.',
-          'Market mapping and sector intelligence.',
-          'Investor discovery and opportunity identification.',
-          'Research workflows and institutional data access.',
-        ],
-      },
-      { t: 'h3', text: 'NestHR: workforce and HR management' },
-      {
-        t: 'p',
-        text: 'NestHR is intended to support the venture’s internal workforce and organisational operations.',
-      },
-      {
-        t: 'ul',
-        items: [
-          'Employee lifecycle management.',
-          'Recruitment and onboarding.',
-          'Attendance, leave and employee records.',
-          'HR administration and organisational reporting.',
-          'Workforce operations across locations and teams.',
+          { label: 'LabelNest’s role', value: 'Strategic Technology, Product & Growth Partner' },
+          { label: 'The venture', value: 'Business vision and sector expansion' },
+          { label: 'Starting with', value: 'SaaS for Education, Healthcare and institutions' },
+          { label: 'Commercial model', value: 'Shared growth, through revenue sharing' },
         ],
       },
 
-      { t: 'h2', text: 'The roadmap, in phases' },
-      { t: 'p', text: 'The partnership is envisioned as a phased collaboration.' },
-      { t: 'h3', text: 'Phase 1: establishment and SaaS market entry' },
+      { t: 'h2', text: 'The partnership at a glance' },
       {
         t: 'ul',
         items: [
-          'Develop the three initial ERP products.',
-          'Establish product identity, positioning and pricing.',
-          'Launch institutional pilots.',
-          'Build the initial customer acquisition process.',
-          'Establish the sales network and city-level distribution model.',
-          'Deploy NestHR for workforce operations.',
+          'The venture is building a diversified business across institutional technology, financial services and investment banking.',
+          'It enters the market first through SaaS products for schools, coaching centres, hospitals and institutional management.',
+          'LabelNest provides the technology, product engineering, sales execution and channel distribution.',
+          'Both teams share in the growth: this is a revenue-sharing partnership, not a conventional vendor arrangement.',
         ],
       },
-      { t: 'h3', text: 'Phase 2: commercialisation and distribution expansion' },
+
+      { t: 'h2', text: 'Where the venture starts' },
+      { t: 'p', text: 'Three SaaS verticals form the initial market entry.' },
       {
-        t: 'ul',
+        t: 'cards',
         items: [
-          'Expand across Tier 2 and Tier 3 markets.',
-          'Build regional sales teams and channel partnerships.',
-          'Improve customer onboarding and retention.',
-          'Scale subscription revenue.',
-          'Introduce additional institutional integrations and capabilities.',
+          {
+            title: 'Education technology',
+            bullets: [
+              'School Management ERP',
+              'Coaching Centre Management ERP',
+              'Admissions, attendance, fees, students and faculty',
+              'Institutional administration and reporting',
+            ],
+          },
+          {
+            title: 'Healthcare technology',
+            bullets: [
+              'Hospital Management ERP',
+              'Patient registration and administration',
+              'Appointments, billing, pharmacy and inventory',
+              'Operational reporting for hospital administrators',
+            ],
+          },
+          {
+            title: 'Financial services',
+            bullets: [
+              'Technology and operational infrastructure for financial institutions',
+              'Investment and institutional workflow solutions',
+              'Expansion into financial services and investment banking over time',
+            ],
+          },
         ],
       },
-      { t: 'h3', text: 'Phase 3: financial services infrastructure' },
       {
-        t: 'ul',
+        t: 'p',
+        text: 'The first focus is smaller cities and underserved institutional markets: affordable subscriptions, regional-language access and a distributed sales network.',
+      },
+
+      { t: 'h2', text: 'What LabelNest brings' },
+      {
+        t: 'cards',
         items: [
-          'Expand use of Ascent for data rooms, fundraising and due diligence.',
-          'Introduce Atlas for private market intelligence and investor discovery.',
-          'Integrate Command for fund operations and investment management.',
-          'Develop institutional relationships and transaction workflows.',
+          {
+            title: 'Technology and product',
+            bullets: [
+              'Product architecture and technical strategy',
+              'UI/UX design and engineering',
+              'Web and mobile applications',
+              'Backend, databases and APIs',
+              'Security, access management and tenant isolation',
+              'Cloud deployment, upgrades, integrations and support',
+            ],
+          },
+          {
+            title: 'Sales and commercial growth',
+            bullets: [
+              'Go-to-market strategy and sales enablement',
+              'Institutional customer acquisition',
+              'Sales process, CRM and pipeline management',
+              'Pricing and subscription infrastructure',
+              'Channel partnerships and strategic alliances',
+              'Performance tracking and commercial reporting',
+            ],
+          },
+          {
+            title: 'Distribution network',
+            bullets: [
+              'Student sales associates',
+              'City-level sales leadership and regional expansion',
+              'Training, certification and enablement',
+              'Lead management and customer attribution',
+              'Commission tracking and channel performance',
+            ],
+          },
+          {
+            title: 'Ecosystem integration',
+            text: 'Selected LabelNest products support the venture’s operations and future expansion: Command, Ascent, Atlas and NestHR.',
+          },
         ],
       },
-      { t: 'h3', text: 'Phase 4: investment banking and broader financial services' },
+
+      { t: 'h2', text: 'Powered by the LabelNest ecosystem' },
+      { t: 'p', text: 'These capabilities are planned for the venture as it grows. Each is intended to serve a specific part of the business.' },
       {
-        t: 'ul',
+        t: 'cards',
         items: [
-          'Develop the required business, operational and regulatory structures.',
-          'Explore investment banking and capital markets opportunities.',
-          'Build institutional deal sourcing and research capabilities.',
-          'Use Command, Atlas and Ascent across relevant business activities.',
-          'Expand strategic partnerships and financial institution relationships.',
+          {
+            title: 'Command',
+            text: 'Fund and investment management',
+            bullets: [
+              'Fund administration and operational workflows',
+              'Investment pipeline and deal tracking',
+              'Capital deployment and investment monitoring',
+              'Portfolio company management',
+              'Fund performance and portfolio reporting',
+              'Investor and stakeholder management',
+            ],
+          },
+          {
+            title: 'Ascent',
+            text: 'Capital readiness and deal infrastructure',
+            bullets: [
+              'Structured startup profiles and company intelligence',
+              'Digital data rooms and document management',
+              'Fundraising documentation and due diligence workflows',
+              'Investor discovery and investor-fit intelligence',
+              'Capital readiness assessments',
+              'Grant and funding opportunity discovery',
+            ],
+          },
+          {
+            title: 'Atlas',
+            text: 'Private market intelligence',
+            bullets: [
+              'General Partner and fund intelligence',
+              'Limited Partner and investor profiles',
+              'Private and portfolio company intelligence',
+              'Deal and transaction research',
+              'Investment firm and service provider discovery',
+              'Market mapping and sector intelligence',
+            ],
+          },
+          {
+            title: 'NestHR',
+            text: 'Workforce and HR management',
+            bullets: [
+              'Employee lifecycle management',
+              'Recruitment and onboarding',
+              'Attendance, leave and employee records',
+              'HR administration and reporting',
+              'Workforce operations across locations and teams',
+            ],
+          },
+        ],
+      },
+
+      { t: 'h2', text: 'The roadmap' },
+      { t: 'p', text: 'The partnership is envisioned in four phases, each starting only once the one before has proven itself.' },
+      {
+        t: 'steps',
+        items: [
+          {
+            label: 'Phase 1',
+            title: 'Establish and enter the market',
+            bullets: [
+              'Develop the three initial ERP products',
+              'Set product identity, positioning and pricing',
+              'Launch institutional pilots',
+              'Build the first customer acquisition process and city-level sales network',
+              'Deploy NestHR for workforce operations',
+            ],
+          },
+          {
+            label: 'Phase 2',
+            title: 'Commercialise and expand distribution',
+            bullets: [
+              'Expand across Tier 2 and Tier 3 markets',
+              'Build regional sales teams and channel partnerships',
+              'Improve onboarding and retention',
+              'Scale subscription revenue',
+            ],
+          },
+          {
+            label: 'Phase 3',
+            title: 'Build financial services infrastructure',
+            bullets: [
+              'Use Ascent for data rooms, fundraising and due diligence',
+              'Introduce Atlas for private market intelligence and investor discovery',
+              'Integrate Command for fund operations and investment management',
+              'Develop institutional relationships and transaction workflows',
+            ],
+          },
+          {
+            label: 'Phase 4',
+            title: 'Investment banking and broader financial services',
+            bullets: [
+              'Put the required business, operational and regulatory structures in place',
+              'Explore investment banking and capital markets opportunities',
+              'Build institutional deal sourcing and research capabilities',
+              'Use Command, Atlas and Ascent across relevant activities',
+            ],
+          },
         ],
       },
       {
         t: 'note',
-        text: 'All phases are subject to commercial validation, product readiness and applicable regulatory requirements. Investment banking and financial advisory activities may require specific regulatory permissions and structures. They are described here as future ambitions; neither party is stated to be authorised to provide regulated services.',
+        text: 'Every phase depends on commercial validation, product readiness and applicable regulatory requirements. Investment banking and financial advisory activities may need specific permissions and structures. They are future ambitions: neither party is stated to be authorised to provide regulated services.',
       },
 
-      { t: 'h2', text: 'Commercial partnership structure' },
-      {
-        t: 'p',
-        text: 'The collaboration follows a revenue-sharing model rather than a conventional technology-vendor arrangement. Both parties will align on:',
-      },
+      { t: 'h2', text: 'How we will work together' },
+      { t: 'p', text: 'The collaboration is built on shared growth. Both parties will agree, in definitive agreements:' },
       {
         t: 'ul',
         items: [
-          'Revenue participation across agreed products and services.',
-          'Development and operating cost responsibilities.',
-          'Customer acquisition and sales responsibilities.',
-          'Product ownership, intellectual property and licensing.',
-          'Customer onboarding, support and service responsibilities.',
-          'Commercial reporting and revenue reconciliation.',
-          'Future expansion and integration arrangements.',
+          'Revenue participation across agreed products and services',
+          'Development and operating cost responsibilities',
+          'Customer acquisition and sales responsibilities',
+          'Product ownership, intellectual property and licensing',
+          'Onboarding, support and service responsibilities',
+          'Commercial reporting and revenue reconciliation',
+          'Future expansion and integration arrangements',
         ],
       },
-      { t: 'p', text: 'The detailed commercial terms will be established through definitive agreements.' },
 
       { t: 'h2', text: 'The long-term vision' },
       {
         t: 'p',
-        text: 'The ambition is a multi-sector business supported by an integrated technology and distribution ecosystem. The venture brings the business vision, sector relationships and market development. LabelNest contributes the technology backbone, product engineering, commercial enablement and distribution infrastructure.',
+        text: 'The venture brings the business vision, sector relationships and market development. LabelNest brings the technology backbone, product engineering, commercial enablement and distribution. Together, the aim is scalable SaaS businesses, strong institutional relationships and, step by step, capability across financial services and private markets.',
       },
       {
         t: 'p',
-        text: 'Together, the objective is to create scalable SaaS businesses, develop institutional relationships and progressively build capabilities across financial services and private markets.',
-      },
-      {
-        t: 'p',
-        text: 'This partnership is a long-term commitment to building businesses together, rather than simply delivering software projects. Building together. Growing together.',
+        text: 'This is a long-term commitment to building businesses together, not a software project. Building together. Growing together.',
       },
     ],
   },
