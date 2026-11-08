@@ -124,6 +124,22 @@ export default async function AnnouncementPage({ params }: Props) {
                   </ol>
                 )
               }
+              if (b.t === 'compare') {
+                const col = (c: { title: string; bullets: string[] }, strong: boolean) => (
+                  <section style={{ background: 'var(--surface)', border: strong ? '1px solid var(--brass-line)' : '1px solid var(--border)', borderTop: strong ? '3px solid var(--brass-line)' : '3px solid var(--border)', borderRadius: 14, padding: '20px 22px' }}>
+                    <h3 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 17, color: 'var(--text)', margin: '0 0 10px' }}>{c.title}</h3>
+                    <ul style={{ margin: 0, paddingLeft: 18, display: 'grid', gap: 7, fontSize: 14, lineHeight: 1.55, color: strong ? 'var(--text)' : 'var(--text2)' }}>
+                      {c.bullets.map((x) => <li key={x}>{x}</li>)}
+                    </ul>
+                  </section>
+                )
+                return (
+                  <div key={i} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 14, margin: '8px 0 24px' }}>
+                    {col(b.left, false)}
+                    {col(b.right, true)}
+                  </div>
+                )
+              }
               if (b.t === 'note') {
                 return (
                   <aside key={i} style={{ margin: '24px 0', padding: '16px 20px', borderLeft: '3px solid var(--brass-line)', background: 'var(--surface)', borderRadius: '0 10px 10px 0', fontSize: 14.5, lineHeight: 1.7, color: 'var(--text2)' }}>
