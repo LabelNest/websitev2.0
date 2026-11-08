@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { submitSignup } from '@/lib/signupContext'
+import { HAS_CLIENTS } from '@/lib/clients'
 
 const LOGO_URL = 'https://pub-a36a86a8b72a466f95980705b327476f.r2.dev/brand/labelnest-logo.png'
 
@@ -26,6 +27,7 @@ const COLUMNS = [
       { label: 'How it connects', href: '/ecosystem' },
       { label: 'Pricing', href: '/nestlens/pricing' },
       { label: 'Who it is for', href: '/who-we-serve' },
+      { label: 'Announcements', href: '/announcements' },
       { label: 'Briefings', href: '/briefings' },
       { label: 'Research reports', href: '/reports' },
       { label: 'Resource hub', href: 'https://nestlens.labelnest.in/DIY' },
@@ -39,6 +41,8 @@ const COLUMNS = [
       { label: 'Founder', href: '/about/ankit' },
       { label: 'Careers', href: '/careers' },
       { label: 'Managed services', href: '/services' },
+      { label: 'Partner with us', href: '/partner-with-us' },
+      ...(HAS_CLIENTS ? [{ label: 'Trusted by', href: '/clients' }] : []),
       { label: 'Contact', href: '/contact' },
     ],
   },

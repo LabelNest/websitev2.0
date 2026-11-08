@@ -1,5 +1,7 @@
 import { MetadataRoute } from 'next'
 import { getBriefings, getLegalDocuments, getTeamMembers } from '@/lib/db'
+import { ANNOUNCEMENTS } from '@/lib/announcements'
+import { HAS_CLIENTS } from '@/lib/clients'
 
 const baseUrl = 'https://labelnest.in'
 
@@ -35,6 +37,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/services`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
     { url: `${baseUrl}/ecosystem`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/briefings`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.85 },
+    { url: `${baseUrl}/announcements`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+    ...ANNOUNCEMENTS.map((a) => ({ url: `${baseUrl}/announcements/${a.slug}`, lastModified: new Date(a.date), changeFrequency: 'monthly' as const, priority: 0.75 })),
+    { url: `${baseUrl}/partner-with-us`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    ...(HAS_CLIENTS ? [{ url: `${baseUrl}/clients`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.7 }] : []),
     { url: `${baseUrl}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/about/ankit`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/team`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },

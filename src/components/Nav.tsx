@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
+import { HAS_CLIENTS } from '@/lib/clients'
 
 // The menu bar. Two large dropdowns (Products, Who it is for) say what each product works with,
 // because how they connect is the point of NestLens. Fixed 64px high, so page content keeps its 64px top padding.
@@ -36,6 +37,7 @@ const WHO = [
 ]
 
 const RESEARCH = [
+  { name: 'Announcements', href: '/announcements' },
   { name: 'Briefings and newsletters', href: '/briefings' },
   { name: 'Research reports', href: '/reports' },
   { name: 'Observatory', href: '/nestlens/intelligence/observatory' },
@@ -47,6 +49,8 @@ const COMPANY = [
   { name: 'Founder', href: '/about/ankit' },
   { name: 'Careers', href: '/careers' },
   { name: 'Managed services', href: '/services' },
+  { name: 'Partner with us', href: '/partner-with-us' },
+  ...(HAS_CLIENTS ? [{ name: 'Trusted by', href: '/clients' }] : []),
   { name: 'Contact', href: '/contact' },
 ]
 
