@@ -28,6 +28,15 @@ const nextConfig = {
       },
     ],
   },
+  // Short shareable demo links: labelnest.in/orbit and labelnest.in/ascent serve
+  // the /demo/<slug> pages (the short URL stays in the address bar). Add a line
+  // here when a new demo in src/lib/demos.ts should get a short link.
+  async rewrites() {
+    return [
+      { source: '/orbit', destination: '/demo/orbit' },
+      { source: '/ascent', destination: '/demo/ascent' },
+    ]
+  },
   async redirects() {
     return [
       { source: '/products/nestlens', destination: '/nestlens', permanent: true },
