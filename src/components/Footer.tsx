@@ -42,7 +42,7 @@ const COLUMNS = [
       { label: 'Careers', href: '/careers' },
       { label: 'Managed services', href: '/services' },
       { label: 'Partner with us', href: '/partner-with-us' },
-      { label: 'Demo and Guides', href: '/demo/guide' },
+      { label: 'Demo and Guides', href: '/demo' },
       ...(HAS_CLIENTS ? [{ label: 'Trusted by', href: '/clients' }] : []),
       { label: 'Contact', href: '/contact' },
     ],
