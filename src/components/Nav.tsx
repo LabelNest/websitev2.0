@@ -50,6 +50,7 @@ const COMPANY = [
   { name: 'Careers', href: '/careers' },
   { name: 'Managed services', href: '/services' },
   { name: 'Partner with us', href: '/partner-with-us' },
+  { name: 'Demo and Guides', href: '/demo' },
   ...(HAS_CLIENTS ? [{ name: 'Trusted by', href: '/clients' }] : []),
   { name: 'Contact', href: '/contact' },
 ]
@@ -143,7 +144,7 @@ export default function Nav() {
               {open === 'research' && <div className="nv-drop" style={{ top: 34, left: -20 }}>{RESEARCH.map((r) => <Link key={r.href} href={r.href}>{r.name}</Link>)}</div>}
             </li>
             <li style={{ position: 'relative' }}>
-              <button className={`nv-btn ${open === 'company' || is('/about') || is('/team') || is('/careers') ? 'nv-on' : ''}`} onClick={() => toggle('company')} aria-expanded={open === 'company'}>Company {chev}</button>
+              <button className={`nv-btn ${open === 'company' || is('/about') || is('/team') || is('/careers') || is('/demo') ? 'nv-on' : ''}`} onClick={() => toggle('company')} aria-expanded={open === 'company'}>Company {chev}</button>
               {open === 'company' && <div className="nv-drop" style={{ top: 34, left: -20 }}>{COMPANY.map((r) => <Link key={r.href} href={r.href}>{r.name}</Link>)}</div>}
             </li>
           </ul>
@@ -211,6 +212,7 @@ export default function Nav() {
             <Link href="/briefings" className="row">Research</Link>
             <Link href="/about" className="row">Company</Link>
             <Link href="/careers" className="row">Careers</Link>
+            <Link href="/demo" className="row">Demo and Guides</Link>
             <div style={{ display: 'grid', gap: 12, marginTop: 28 }}>
               <Link href="/contact" className="nv-cta" style={{ justifyContent: 'center' }}>Talk to us</Link>
               <a href="https://nestlens.labelnest.in" className="nv-cta" style={{ justifyContent: 'center', background: 'transparent', color: 'var(--text)', border: '1px solid var(--text)' }}>Open NestLens</a>
