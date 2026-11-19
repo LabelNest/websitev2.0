@@ -34,6 +34,14 @@ export default function DemosPage() {
         </section>
         <section style={{ padding: '36px 28px 80px' }}>
           <div style={{ maxWidth: 900, margin: '0 auto', display: 'grid', gap: 18 }}>
+            <article style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 16, padding: "26px 28px" }}>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: ".1em", textTransform: "uppercase", color: "#9A4B1F" }}>Guides</span>
+              <h2 style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: "clamp(19px,2.4vw,24px)", letterSpacing: "-.02em", lineHeight: 1.25, margin: "10px 0" }}>
+                <Link href="/demo/guide" style={{ color: "var(--text)", textDecoration: "none" }}>NestLens in depth: a guide to every module</Link>
+              </h2>
+              <p style={{ fontSize: 14.5, color: "var(--text2)", lineHeight: 1.65, margin: "0 0 18px" }}>Orbit, Ascent, Command, Connect, Atlas and Sentinel, screen by screen, and how they connect.</p>
+              <Link href="/demo/guide" style={{ font: "600 13px var(--font-sans),system-ui,sans-serif", padding: "9px 14px", borderRadius: 8, background: "var(--text)", color: "var(--bg)", textDecoration: "none", display: "inline-block" }}>Read the guides</Link>
+            </article>
             {items.map((d) => (
               <article key={d.slug} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: '26px 28px' }}>
                 <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: '#9A4B1F' }}>{d.product}</span>
