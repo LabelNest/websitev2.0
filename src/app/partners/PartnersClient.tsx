@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import HowYouBringThem from './HowYouBringThem'
 import { COUNTRIES } from '@/lib/countries'
 import { INDIA_STATES, STATE_NAMES, OTHER_CITY } from '@/lib/india-geo'
 
@@ -66,9 +67,8 @@ const LEVELS = [
 ]
 const MAXES: Record<string, number> = { ascent: 50, atlas: 20, orbit: 20, command: 10 }
 
-function EarningsCalculator({ rates, prices }: { rates: Rates; prices: CalcPrices }) {
+function EarningsCalculator({ rates, prices, n, setN }: { rates: Rates; prices: CalcPrices; n: Record<string, number>; setN: (f: (p: Record<string, number>) => Record<string, number>) => void }) {
   const keys = ['ascent', 'atlas', 'orbit', 'command'] as const
-  const [n, setN] = useState<Record<string, number>>({ ascent: 10, atlas: 2, orbit: 1, command: 0 })
   const [own, setOwn] = useState(true)
   const per = (k: (typeof keys)[number]) => (n[k] || 0) * prices[k].yearly * ((rates[k] + (own ? rates.self_close_bonus : 0)) / 100)
   const total = keys.reduce((a, k) => a + per(k), 0)
@@ -160,6 +160,7 @@ export default function PartnersClient({ prices }: { prices: CalcPrices }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [rates, setRates] = useState<Rates | null>(null)
+  const [counts, setCounts] = useState<Record<string, number>>({ ascent: 10, atlas: 2, orbit: 1, command: 0 })
   useEffect(() => { fetch(RATES_URL).then((r) => (r.ok ? r.json() : null)).then((j) => { if (j && typeof j.ascent === 'number') setRates(j) }).catch(() => undefined) }, [])
   const set = (k: string, v: string) => setF((p) => ({ ...p, [k]: v }))
   const india = f.country === 'India'
@@ -211,7 +212,8 @@ export default function PartnersClient({ prices }: { prices: CalcPrices }) {
             </div>
           </section>
 
-          {rates && <EarningsCalculator rates={rates} prices={prices} />}
+          {rates && <EarningsCalculator rates={rates} prices={prices} n={counts} setN={setCounts} />}
+          {rates && <HowYouBringThem onAdd={(k) => setCounts((p) => ({ ...p, [k]: Math.min(MAXES[k], (p[k] || 0) + 1) }))} />}
 
           <section className="py-10" style={{ borderTop: '1px solid var(--border)' }}>
             <h2 className="font-display font-bold text-[26px] mb-5" style={{ color: 'var(--text)' }}>What you can introduce</h2>
