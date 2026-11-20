@@ -59,11 +59,11 @@ export default function ReportsClient({ vol3Live }: { vol3Live: boolean }) {
                 href="https://atlas.labelnest.in/observatory/capital-across-india-start-up-chain-vol-3?utm_source=labelnest-website&utm_medium=reports-page&utm_campaign=vol3-read"
                 style={{ display: 'block', padding: '14px 18px', borderRadius: 11, background: '#5B3A6B', color: '#fff', fontWeight: 600, fontSize: 15 }}
               >
-                Read Volume 3 on NestLens: capital across India's start-up chain →
+                Read Volume 3 on NestLens: capital across India&rsquo;s start-up chain →
               </a>
             ) : (
               <div style={{ padding: '14px 18px', borderRadius: 11, border: '1px solid rgba(14,27,46,.1)', color: 'var(--text2)', fontSize: 14.5 }}>
-                Volume 3, capital across India's start-up chain, state by state, is due on 6 December 2026. Subscribe below and we will email you when it is live.
+                Volume 3, capital across India&rsquo;s start-up chain, state by state, is due on 6 December 2026. Subscribe below and we will email you when it is live.
               </div>
             )}
           </div>
