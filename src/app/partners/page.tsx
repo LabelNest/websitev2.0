@@ -20,7 +20,7 @@ export default async function PartnersPage() {
     ascent: { label: 'Ascent', plan: plans.cr.founder_paid_solo?.name ?? 'Founder Data Room', yearly: yearly(plans.cr.founder_paid_solo) },
     atlas: { label: 'Atlas', plan: plans.intelligence.atlas_starter?.name ?? 'Atlas Starter', yearly: yearly(plans.intelligence.atlas_starter) },
     orbit: { label: 'Orbit', plan: plans.cr.orbit_starter?.name ?? 'Orbit Starter', yearly: yearly(plans.cr.orbit_starter) },
-    command: { label: 'Command', plan: 'Command (India-domiciled fund)', yearly: yearly(plans.cr.fund_bundle) },
+    command: { label: 'Command', plan: 'Command', yearly: yearly(plans.cr.fund_bundle), from: true },
   }
   return <PartnersClient prices={prices} />
 }

@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
@@ -42,6 +42,7 @@ const STEPS = [
 ]
 
 const RULES = [
+  'You cannot refer yourself. Your own company, your team and anyone you control do not count as referrals.',
   'You earn on every invoice the customer pays, for as long as they remain a customer. When they leave, rewards stop.',
   'Rewards are paid only after we have received the payment and the refund period has passed.',
   'The first valid registration of a customer owns it. We protect it for 90 days. If we already know the customer, no new reward is created.',
@@ -53,33 +54,101 @@ const inputStyle = { background: 'var(--bg2)', border: '1px solid var(--bord2)',
 const label = 'block text-[12px] font-semibold mb-1.5'
 
 export interface CalcPrices { ascent: PriceRow; atlas: PriceRow; orbit: PriceRow; command: PriceRow }
-interface PriceRow { label: string; plan: string; yearly: number }
+interface PriceRow { label: string; plan: string; yearly: number; from?: boolean }
 const inr = (n: number) => '₹' + Math.round(n).toLocaleString('en-IN')
 
 /** Illustrative only: customers x the first-year list price (excluding GST) x the partner's rate. Both come live from our own systems. */
+const LEVELS = [
+  { name: 'Getting started', from: 0 },
+  { name: 'Builder', from: 50000 },
+  { name: 'Rainmaker', from: 200000 },
+  { name: 'Champion', from: 1000000 },
+]
+const MAXES: Record<string, number> = { ascent: 50, atlas: 20, orbit: 20, command: 10 }
+
 function EarningsCalculator({ rates, prices }: { rates: Rates; prices: CalcPrices }) {
   const keys = ['ascent', 'atlas', 'orbit', 'command'] as const
   const [n, setN] = useState<Record<string, number>>({ ascent: 10, atlas: 2, orbit: 1, command: 0 })
   const [own, setOwn] = useState(true)
-  const total = keys.reduce((a, k) => a + (n[k] || 0) * prices[k].yearly * ((rates[k] + (own ? rates.self_close_bonus : 0)) / 100), 0)
+  const per = (k: (typeof keys)[number]) => (n[k] || 0) * prices[k].yearly * ((rates[k] + (own ? rates.self_close_bonus : 0)) / 100)
+  const total = keys.reduce((a, k) => a + per(k), 0)
+
+  // the number counts up to its new value; with reduced motion it simply lands
+  const [shown, setShown] = useState(total)
+  const from = useRef(total)
+  useEffect(() => {
+    const reduce = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    const start = performance.now()
+    const a = from.current
+    let raf = 0
+    const step = (t: number) => {
+      const p = reduce ? 1 : Math.min(1, (t - start) / 450)
+      const v = a + (total - a) * (1 - Math.pow(1 - p, 3))
+      from.current = v
+      setShown(v)
+      if (p < 1) raf = requestAnimationFrame(step)
+    }
+    raf = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(raf)
+  }, [total])
+
+  const li = LEVELS.reduce((a, l, i) => (total >= l.from ? i : a), 0)
+  const next = LEVELS[li + 1]
+  const pct = next ? Math.min(100, ((total - LEVELS[li].from) / (next.from - LEVELS[li].from)) * 100) : 100
+  const setCount = (k: string, v: number) => setN((p) => ({ ...p, [k]: Math.max(0, Math.min(MAXES[k], v)) }))
+
   return (
-    <div className="mt-8 max-w-[680px] rounded-[14px] p-6" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-      <h3 className="font-display font-bold text-[20px] mb-1" style={{ color: 'var(--text)' }}>Estimate your referral earnings</h3>
-      <p className="text-[13.5px] mb-4" style={{ color: 'var(--text3)' }}>Illustrative. It uses today&apos;s list prices for one year, excluding GST, and the rewards above. You keep earning on renewals.</p>
-      <div className="grid gap-3">
-        {keys.map((k) => (
-          <label key={k} className="grid grid-cols-[1fr_90px] items-center gap-3 text-[14.5px]" style={{ color: 'var(--text)' }}>
-            <span><b>{prices[k].label} customers</b><span className="block text-[12.5px]" style={{ color: 'var(--text3)' }}>{prices[k].plan}{prices[k].yearly ? ', ' + inr(prices[k].yearly) + ' a year' : ''}</span></span>
-            <input type="number" min={0} max={999} value={n[k]} onChange={(e) => setN({ ...n, [k]: Math.max(0, Math.min(999, Number(e.target.value) || 0)) })} className="rounded-[8px] px-3 py-2 text-[15px] w-full" style={{ border: '1px solid var(--border)', background: 'var(--bg)', color: 'var(--text)' }} aria-label={`${prices[k].label} customers`} />
-          </label>
-        ))}
+    <section className="pb-10" aria-labelledby="calc-h">
+      <div className="rounded-[18px] p-6 md:p-8" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
+        <div className="flex flex-wrap items-start justify-between gap-3 mb-1">
+          <h2 id="calc-h" className="font-display font-bold text-[24px]" style={{ color: 'var(--text)' }}>Estimate your referral earnings</h2>
+          <span className="text-[12px] font-semibold px-3 py-1 rounded-full" style={{ background: 'var(--bg2)', color: 'var(--text2)' }}>Level: {LEVELS[li].name}</span>
+        </div>
+        <p className="text-[13.5px] mb-6 max-w-[640px]" style={{ color: 'var(--text3)' }}>Slide to see what a year of referrals could look like. Illustrative: today&apos;s list prices for one year, excluding GST, with the rewards below. You keep earning on renewals.</p>
+
+        <div className="grid lg:grid-cols-[1.5fr_1fr] gap-8 items-start">
+          <div className="grid gap-5">
+            {keys.map((k) => (
+              <div key={k}>
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <div className="font-semibold text-[15.5px]" style={{ color: 'var(--text)' }}>{prices[k].label}</div>
+                    <div className="text-[12.5px]" style={{ color: 'var(--text3)' }}>{prices[k].plan}, {prices[k].from ? 'starting at ' : ''}{prices[k].yearly ? inr(prices[k].yearly) + ' a year' : ''}</div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button type="button" onClick={() => setCount(k, n[k] - 1)} aria-label={`One fewer ${prices[k].label} customer`} className="w-9 h-9 rounded-full text-[18px] leading-none" style={{ border: '1px solid var(--border)', background: 'var(--bg)', color: 'var(--text)' }}>−</button>
+                    <span className="w-9 text-center font-display font-bold text-[20px]" style={{ color: 'var(--text)' }} aria-live="polite">{n[k]}</span>
+                    <button type="button" onClick={() => setCount(k, n[k] + 1)} aria-label={`One more ${prices[k].label} customer`} className="w-9 h-9 rounded-full text-[18px] leading-none text-white" style={{ background: 'var(--pink)' }}>+</button>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 mt-2">
+                  <input type="range" min={0} max={MAXES[k]} value={n[k]} onChange={(e) => setCount(k, Number(e.target.value))} aria-label={`${prices[k].label} customers`} className="flex-1" style={{ accentColor: 'var(--pink)' }} />
+                  <span className="w-[92px] text-right text-[13px] font-semibold" style={{ color: n[k] ? 'var(--text)' : 'var(--text3)' }}>{inr(per(k))}</span>
+                </div>
+              </div>
+            ))}
+            <button type="button" role="switch" aria-checked={own} onClick={() => setOwn(!own)} className="flex items-center gap-3 text-left text-[14px] rounded-[12px] px-4 py-3" style={{ border: '1px solid ' + (own ? 'var(--pink)' : 'var(--border)'), background: own ? 'var(--bg2)' : 'transparent', color: 'var(--text)' }}>
+              <span aria-hidden className="relative inline-block w-10 h-6 rounded-full flex-none" style={{ background: own ? 'var(--pink)' : 'var(--border)' }}><span className="absolute top-[3px] w-[18px] h-[18px] rounded-full bg-white" style={{ left: own ? 19 : 3, transition: 'left .15s' }} /></span>
+              <span><b>Boost: they sign up through my own link</b><span className="block text-[12.5px]" style={{ color: 'var(--text3)' }}>+{rates.self_close_bonus} points on every product</span></span>
+            </button>
+          </div>
+
+          <div className="rounded-[14px] p-6 lg:sticky lg:top-24" style={{ background: 'var(--bg)', border: '1px solid var(--border)' }}>
+            <div className="text-[11.5px] font-semibold tracking-[.1em]" style={{ color: 'var(--text3)' }}>ESTIMATED PARTNER EARNINGS, FIRST YEAR</div>
+            <div className="font-display font-extrabold text-[42px] leading-[1.1] mt-1" style={{ color: 'var(--text)' }}>{inr(shown)}</div>
+            <div className="mt-4 h-[10px] rounded-full overflow-hidden" style={{ background: 'var(--border)' }} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(pct)} aria-label="Progress to the next level">
+              <div className="h-full rounded-full" style={{ width: pct + '%', background: 'var(--pink)', transition: 'width .4s ease' }} />
+            </div>
+            <div className="text-[13px] mt-2" style={{ color: 'var(--text2)' }}>{next ? `${inr(next.from - total)} more to reach ${next.name}` : 'Top level reached'}</div>
+            <div className="flex gap-2 flex-wrap mt-3">
+              {LEVELS.map((l, i) => (<span key={l.name} className="text-[11.5px] px-2.5 py-1 rounded-full" style={{ background: i <= li ? 'var(--pink)' : 'var(--bg2)', color: i <= li ? '#fff' : 'var(--text3)' }}>{l.name}</span>))}
+            </div>
+            <a href="#register" className="block text-center font-semibold text-[14.5px] px-6 py-3.5 rounded-[10px] text-white mt-5" style={{ background: 'var(--pink)' }}>Start earning: register</a>
+          </div>
+        </div>
+        <p className="text-[12.5px] mt-5" style={{ color: 'var(--text3)' }}>This is a planning estimate, not a promise. For full pricing, see the <Link href="/nestlens/pricing" className="underline">pricing page</Link>.</p>
       </div>
-      <label className="flex items-center gap-2 mt-4 text-[14px]" style={{ color: 'var(--text2)' }}><input type="checkbox" checked={own} onChange={(e) => setOwn(e.target.checked)} /> They sign up through my own referral link (+{rates.self_close_bonus} points)</label>
-      <div className="mt-5 pt-4" style={{ borderTop: '1px solid var(--border)' }}>
-        <div className="text-[12px] font-semibold tracking-wide" style={{ color: 'var(--text3)' }}>ESTIMATED PARTNER EARNINGS, FIRST YEAR</div>
-        <div className="font-display font-bold text-[34px]" style={{ color: 'var(--text)' }} aria-live="polite">{inr(total)}</div>
-      </div>
-    </div>
+    </section>
   )
 }
 
@@ -141,6 +210,8 @@ export default function PartnersClient({ prices }: { prices: CalcPrices }) {
               <span className="text-[13px]" style={{ color: 'var(--text3)' }}>Open to individuals and to institutions.</span>
             </div>
           </section>
+
+          {rates && <EarningsCalculator rates={rates} prices={prices} />}
 
           <section className="py-10" style={{ borderTop: '1px solid var(--border)' }}>
             <h2 className="font-display font-bold text-[26px] mb-5" style={{ color: 'var(--text)' }}>What you can introduce</h2>
@@ -226,7 +297,6 @@ export default function PartnersClient({ prices }: { prices: CalcPrices }) {
                 ))}
               </div>
             )}
-            {rates && <EarningsCalculator rates={rates} prices={prices} />}
             <p className="text-[13.5px] leading-[1.65] mt-3 max-w-[680px]" style={{ color: 'var(--text3)' }}>
               {rates ? `When a customer signs up through your own referral link you earn ${rates.self_close_bonus} percentage points more. ` : 'The percentage is set per product, and is higher when the customer signs up through your own referral link. '}Everything happens online: you register, read and accept the agreement, and sign in to your own dashboard. No call is needed, and you can book time with us if you would rather talk.
             </p>
