@@ -52,10 +52,20 @@ const GROUPS: Group[] = [
 export default function HowYouBringThem({ onAdd }: { onAdd: (k: ProductKey) => void }) {
   const [tab, setTab] = useState(0)
   const [added, setAdded] = useState<string | null>(null)
+  const [open, setOpen] = useState(false)
   const g = GROUPS[tab]
   return (
     <section className="pb-10" aria-labelledby="bring-h">
-      <h2 id="bring-h" className="font-display font-bold text-[26px] mb-2" style={{ color: 'var(--text)' }}>How you bring them</h2>
+      {/* closed by default: it is a helper, not something everyone needs to read */}
+      <details onToggle={(e) => setOpen(e.currentTarget.open)} className="rounded-[16px]" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
+      <summary className="flex items-center justify-between gap-4 cursor-pointer px-6 py-5" style={{ listStyle: 'none' }}>
+        <span>
+          <h2 id="bring-h" className="font-display font-bold text-[22px]" style={{ color: 'var(--text)' }}>How you bring them</h2>
+          <span className="block text-[14px] mt-1" style={{ color: 'var(--text3)' }}>The moments when founders, funds, incubators and advisers need LabelNest, and what to say.</span>
+        </span>
+        <span className="flex-none text-[14px] font-semibold" style={{ color: 'var(--pink)' }}>{open ? 'Hide' : 'Show'} <span aria-hidden>{open ? '▴' : '▾'}</span></span>
+      </summary>
+      <div className="px-6 pb-6">
       <p className="text-[15px] leading-[1.65] mb-5 max-w-[680px]" style={{ color: 'var(--text2)' }}>People do not buy software in the abstract. They buy at a moment. Pick who you know, see the moments to look for, and add the customer to your estimate.</p>
       <div role="tablist" aria-label="Who do you know" className="flex flex-wrap gap-2.5 mb-5">
         {GROUPS.map((x, i) => (
@@ -84,6 +94,8 @@ export default function HowYouBringThem({ onAdd }: { onAdd: (k: ProductKey) => v
         })}
       </div>
       <p className="text-[13px] leading-[1.65] mt-5 pt-4" style={{ color: 'var(--text3)', borderTop: '1px solid var(--border)' }}>Two things to keep in mind: you cannot refer yourself, and never promise funding or investor introductions. We sell software and data, nothing else.</p>
+      </div>
+      </details>
     </section>
   )
 }
