@@ -150,7 +150,8 @@ export default function Nav() {
           </ul>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-            <a className="nv-link nv-desk" href="https://nestlens.labelnest.in" style={{ fontSize: 14.5 }}>Open NestLens</a>
+            <a className="nv-link nv-desk" href="https://nestlens.labelnest.in" style={{ fontSize: 14.5 }}>NestLens</a>
+            <Link className="nv-link nv-desk" href="/partners#register" style={{ fontSize: 14.5 }}>Become a partner</Link>
             <Link className="nv-cta nv-desk" href="/contact">Talk to us</Link>
             <button className="nv-btn nv-m" onClick={() => setMobile((m) => !m)} aria-label={mobile ? 'Close menu' : 'Open menu'} aria-expanded={mobile} style={{ width: 44, height: 44, justifyContent: 'center', marginRight: -10 }}>
               {mobile
@@ -215,7 +216,8 @@ export default function Nav() {
             <Link href="/demo" className="row">Demo and Guides</Link>
             <div style={{ display: 'grid', gap: 12, marginTop: 28 }}>
               <Link href="/contact" className="nv-cta" style={{ justifyContent: 'center' }}>Talk to us</Link>
-              <a href="https://nestlens.labelnest.in" className="nv-cta" style={{ justifyContent: 'center', background: 'transparent', color: 'var(--text)', border: '1px solid var(--text)' }}>Open NestLens</a>
+              <a href="https://nestlens.labelnest.in" className="nv-cta" style={{ justifyContent: 'center', background: 'transparent', color: 'var(--text)', border: '1px solid var(--text)' }}>NestLens</a>
+              <Link href="/partners#register" className="nv-cta" style={{ justifyContent: 'center', background: 'transparent', color: 'var(--text)', border: '1px solid var(--text)' }}>Become a partner</Link>
             </div>
           </div>
         )}
