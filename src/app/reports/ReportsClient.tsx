@@ -48,9 +48,12 @@ export default function ReportsClient() {
             >
               Read Volume 1 on NestLens: India's AIF universe →
             </a>
-            <div style={{ padding: '14px 18px', borderRadius: 11, border: '1px solid rgba(14,27,46,.1)', color: 'var(--text2)', fontSize: 14.5 }}>
-              Volume 2, ecosystem builders in India, is due on 29 October 2026. Subscribe below and we will email you when it is live.
-            </div>
+            <a
+              href="https://atlas.labelnest.in/observatory/ecosystem-builders-india-vol-2?utm_source=labelnest-website&utm_medium=reports-page&utm_campaign=vol2-read"
+              style={{ display: 'block', padding: '14px 18px', borderRadius: 11, background: '#5B3A6B', color: '#fff', fontWeight: 600, fontSize: 15 }}
+            >
+              Read Volume 2 on NestLens: ecosystem builders in India →
+            </a>
           </div>
 
           {state === 'done' ? (
