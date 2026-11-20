@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
@@ -8,6 +8,9 @@ import { INDIA_STATES, STATE_NAMES, OTHER_CITY } from '@/lib/india-geo'
 
 // Where the registration goes: Growth OS (the partner appears there as "applied"). Override with NEXT_PUBLIC_PARTNER_APPLY_URL.
 const APPLY_URL = process.env.NEXT_PUBLIC_PARTNER_APPLY_URL || 'https://growth.labelnest.in/api/partner-network/apply'
+// The rewards are set in Growth OS and read from there, so this page always shows what the agreement says.
+const RATES_URL = APPLY_URL.replace(/apply$/, 'rates')
+interface Rates { ascent: number; atlas: number; orbit: number; command: number; self_close_bonus: number }
 
 // One link per product, no copy of our own: the product pages already explain them. All four are shown the same way.
 const PRODUCTS = [
@@ -56,6 +59,8 @@ export default function PartnersClient() {
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [rates, setRates] = useState<Rates | null>(null)
+  useEffect(() => { fetch(RATES_URL).then((r) => (r.ok ? r.json() : null)).then((j) => { if (j && typeof j.ascent === 'number') setRates(j) }).catch(() => undefined) }, [])
   const set = (k: string, v: string) => setF((p) => ({ ...p, [k]: v }))
   const india = f.country === 'India'
   const cityList = india && f.state ? INDIA_STATES[f.state] ?? [] : []
@@ -138,7 +143,7 @@ export default function PartnersClient() {
             <div className="rounded-[16px] p-6 mt-5 flex flex-col md:flex-row md:items-center gap-4 justify-between" style={card}>
               <div>
                 <div className="font-display font-bold text-[18px] mb-1" style={{ color: 'var(--text)' }}>Active angel investors: free</div>
-                <p className="text-[14px] leading-[1.6] max-w-[640px]" style={{ color: 'var(--text2)' }}>If you invest actively, join the network at no cost and source deals from us. There is nothing to pay.</p>
+                <p className="text-[14px] leading-[1.6] max-w-[640px]" style={{ color: 'var(--text2)' }}>If you invest actively, join the network at no cost and source deals from us. There is nothing to pay and nothing to sign.</p>
               </div>
               <button type="button" onClick={() => pick('angel')} className="font-semibold text-[14px] px-5 py-3 rounded-[10px] text-white shrink-0" style={{ background: 'var(--pink)' }}>Join as an angel investor</button>
             </div>
@@ -180,7 +185,18 @@ export default function PartnersClient() {
           <section className="py-10" style={{ borderTop: '1px solid var(--border)' }}>
             <h2 className="font-display font-bold text-[26px] mb-3" style={{ color: 'var(--text)' }}>What you earn</h2>
             <p className="text-[15.5px] leading-[1.7] max-w-[680px]" style={{ color: 'var(--text2)' }}>
-              You earn a percentage of every invoice the customer pays, for as long as they remain a customer. That includes renewals. The percentage is set per product and confirmed when you join. It is worked out on what we collect, excluding GST, after discounts and refunds.
+              You earn a percentage of every invoice the customer pays, for as long as they remain a customer. That includes renewals. It is worked out on what we collect, excluding GST, after discounts and refunds.
+            </p>
+            {rates && (
+              <div className="mt-5 max-w-[680px] rounded-[14px] overflow-hidden" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
+                <div className="grid grid-cols-3 text-[12px] font-semibold px-5 py-3" style={{ background: 'var(--bg2)', color: 'var(--text2)' }}><div>Product</div><div>When LabelNest closes the sale</div><div>When your own link brings the customer</div></div>
+                {([['Ascent', rates.ascent], ['Atlas', rates.atlas], ['Orbit', rates.orbit], ['Command', rates.command]] as const).map(([n, r]) => (
+                  <div key={n} className="grid grid-cols-3 px-5 py-3 text-[14.5px]" style={{ borderTop: '1px solid var(--border)', color: 'var(--text)' }}><div className="font-semibold">{n}</div><div>{r}%</div><div>{r + rates.self_close_bonus}%</div></div>
+                ))}
+              </div>
+            )}
+            <p className="text-[13.5px] leading-[1.65] mt-3 max-w-[680px]" style={{ color: 'var(--text3)' }}>
+              {rates ? `When a customer signs up through your own referral link you earn ${rates.self_close_bonus} percentage points more. ` : 'The percentage is set per product, and is higher when the customer signs up through your own referral link. '}Everything happens online: you register, read and accept the agreement, and sign in to your own dashboard. No call is needed, and you can book time with us if you would rather talk.
             </p>
           </section>
 
