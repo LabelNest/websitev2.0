@@ -15,10 +15,12 @@ interface Rates { ascent: number; atlas: number; orbit: number; command: number;
 
 // One link per product, no copy of our own: the product pages already explain them. All four are shown the same way.
 const PRODUCTS = [
-  { name: 'Ascent', href: '/nestlens/capital', who: 'Startup founders' },
-  { name: 'Atlas', href: '/nestlens/intelligence', who: 'Fundraising startups and institutions' },
-  { name: 'Orbit', href: '/nestlens/orbit', who: 'Incubators and institutions' },
+  { name: 'Ascent', href: '/nestlens/capital', who: 'startup founders' },
+  { name: 'Atlas', href: '/nestlens/intelligence', who: 'fundraising startups and institutions' },
+  { name: 'Orbit', href: '/nestlens/orbit', who: 'incubators and institutions' },
   { name: 'Command', href: '/nestlens/command', who: 'VC funds and fund managers' },
+  { name: 'Connect', href: '/nestlens/connect', who: 'mentors, audit partners and fund scouting (included with Ascent and Command)' },
+  { name: 'Exchange', href: '/nestlens/exchange', who: 'buyers of datasets and research' },
 ]
 
 const CATEGORIES = [
@@ -67,7 +69,7 @@ const LEVELS = [
 ]
 const MAXES: Record<string, number> = { ascent: 50, atlas: 20, orbit: 20, command: 10 }
 
-function EarningsCalculator({ rates, prices, n, setN }: { rates: Rates; prices: CalcPrices; n: Record<string, number>; setN: (f: (p: Record<string, number>) => Record<string, number>) => void }) {
+export function EarningsCalculator({ rates, prices, n, setN }: { rates: Rates; prices: CalcPrices; n: Record<string, number>; setN: (f: (p: Record<string, number>) => Record<string, number>) => void }) {
   const keys = ['ascent', 'atlas', 'orbit', 'command'] as const
   const [own, setOwn] = useState(true)
   const per = (k: (typeof keys)[number]) => (n[k] || 0) * prices[k].yearly * ((rates[k] + (own ? rates.self_close_bonus : 0)) / 100)
@@ -94,11 +96,13 @@ function EarningsCalculator({ rates, prices, n, setN }: { rates: Rates; prices: 
 
   const li = LEVELS.reduce((a, l, i) => (total >= l.from ? i : a), 0)
   const next = LEVELS[li + 1]
-  const pct = next ? Math.min(100, ((total - LEVELS[li].from) / (next.from - LEVELS[li].from)) * 100) : 100
+  // the bar shows the whole climb (all levels), so it agrees with the chips below it
+  const inLevel = next ? Math.min(1, (total - LEVELS[li].from) / (next.from - LEVELS[li].from)) : 1
+  const pct = next ? ((li + inLevel) / (LEVELS.length - 1)) * 100 : 100
   const setCount = (k: string, v: number) => setN((p) => ({ ...p, [k]: Math.max(0, Math.min(MAXES[k], v)) }))
 
   return (
-    <section className="pb-10" aria-labelledby="calc-h">
+    <section id="estimate" className="pb-10 scroll-mt-24" aria-labelledby="calc-h">
       <div className="rounded-[18px] p-6 md:p-8" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
         <div className="flex flex-wrap items-start justify-between gap-3 mb-1">
           <h2 id="calc-h" className="font-display font-bold text-[24px]" style={{ color: 'var(--text)' }}>Estimate your referral earnings</h2>
@@ -116,14 +120,14 @@ function EarningsCalculator({ rates, prices, n, setN }: { rates: Rates; prices: 
                     <div className="text-[12.5px]" style={{ color: 'var(--text3)' }}>{prices[k].plan}, {prices[k].from ? 'starting at ' : ''}{prices[k].yearly ? inr(prices[k].yearly) + ' a year' : ''}</div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <button type="button" onClick={() => setCount(k, n[k] - 1)} aria-label={`One fewer ${prices[k].label} customer`} className="w-9 h-9 rounded-full text-[18px] leading-none" style={{ border: '1px solid var(--border)', background: 'var(--bg)', color: 'var(--text)' }}>−</button>
+                    <button type="button" onClick={() => setCount(k, n[k] - 1)} aria-label={`One fewer ${prices[k].label} customer`} className="w-9 h-9 rounded-full text-[24px] font-semibold leading-none flex items-center justify-center pb-[3px]" style={{ border: '1px solid var(--border)', background: 'var(--bg)', color: 'var(--text)' }}>−</button>
                     <span className="w-9 text-center font-display font-bold text-[20px]" style={{ color: 'var(--text)' }} aria-live="polite">{n[k]}</span>
-                    <button type="button" onClick={() => setCount(k, n[k] + 1)} aria-label={`One more ${prices[k].label} customer`} className="w-9 h-9 rounded-full text-[18px] leading-none text-white" style={{ background: 'var(--pink)' }}>+</button>
+                    <button type="button" onClick={() => setCount(k, n[k] + 1)} aria-label={`One more ${prices[k].label} customer`} className="w-9 h-9 rounded-full text-[22px] font-semibold leading-none flex items-center justify-center pb-[2px] text-white" style={{ background: 'var(--pink)' }}>+</button>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 mt-2">
+                <div className="flex items-center gap-4 mt-3">
                   <input type="range" min={0} max={MAXES[k]} value={n[k]} onChange={(e) => setCount(k, Number(e.target.value))} aria-label={`${prices[k].label} customers`} className="flex-1" style={{ accentColor: 'var(--pink)' }} />
-                  <span className="w-[92px] text-right text-[13px] font-semibold" style={{ color: n[k] ? 'var(--text)' : 'var(--text3)' }}>{inr(per(k))}</span>
+                  <span className="min-w-[104px] text-right text-[14px] font-semibold" style={{ color: n[k] ? 'var(--text)' : 'var(--text3)' }}>{inr(per(k))}</span>
                 </div>
               </div>
             ))}
@@ -152,16 +156,16 @@ function EarningsCalculator({ rates, prices, n, setN }: { rates: Rates; prices: 
   )
 }
 
-export default function PartnersClient({ prices }: { prices: CalcPrices }) {
+export default function PartnersClient({ prices, initialRates }: { prices: CalcPrices; initialRates: Rates | null }) {
   const [f, setF] = useState({ name: '', organisation: '', email: '', mobile: '', category: '', mode: 'both', country: 'India', state: '', city: '', website: '', note: '', company_site: '' })
   const [products, setProducts] = useState<string[]>([])
   const [agree, setAgree] = useState(false)
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [rates, setRates] = useState<Rates | null>(null)
+  const [rates, setRates] = useState<Rates | null>(initialRates)
   const [counts, setCounts] = useState<Record<string, number>>({ ascent: 10, atlas: 2, orbit: 1, command: 0 })
-  useEffect(() => { fetch(RATES_URL).then((r) => (r.ok ? r.json() : null)).then((j) => { if (j && typeof j.ascent === 'number') setRates(j) }).catch(() => undefined) }, [])
+  useEffect(() => { if (initialRates) return; fetch(RATES_URL).then((r) => (r.ok ? r.json() : null)).then((j) => { if (j && typeof j.ascent === 'number') setRates(j) }).catch(() => undefined) }, [initialRates])
   const set = (k: string, v: string) => setF((p) => ({ ...p, [k]: v }))
   const india = f.country === 'India'
   const cityList = india && f.state ? INDIA_STATES[f.state] ?? [] : []
@@ -198,9 +202,10 @@ export default function PartnersClient({ prices }: { prices: CalcPrices }) {
       <main style={{ paddingTop: 64 }}>
         <div className="max-w-[1100px] mx-auto px-5 md:px-8 w-full">
 
-          <section className="pt-16 pb-12 max-w-[780px]">
+          <section className="pt-16 pb-12 grid lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] gap-10 items-center">
+            <div className="max-w-[780px]">
             <div className="font-mono text-[10.5px] tracking-[.14em] uppercase mb-5" style={{ color: 'var(--text3)' }}>LabelNest Partner Network</div>
-            <h1 className="font-display font-extrabold tracking-tight leading-[1.06] mb-5" style={{ fontSize: 'clamp(32px,5vw,52px)', color: 'var(--text)' }}>
+            <h1 className="font-display font-extrabold tracking-tight leading-[1.06] mb-5" style={{ fontSize: 'clamp(30px,3.9vw,46px)', color: 'var(--text)' }}>
               Bring founders, funds and institutions to LabelNest. <span style={{ fontWeight: 300, color: 'var(--text2)' }}>Earn on every payment they make.</span>
             </h1>
             <p className="text-[17px] leading-[1.7] mb-7 max-w-[640px]" style={{ color: 'var(--text2)' }}>
@@ -210,6 +215,21 @@ export default function PartnersClient({ prices }: { prices: CalcPrices }) {
               <a href="#register" className="font-semibold text-[14.5px] px-6 py-3.5 rounded-[10px] text-white" style={{ background: 'var(--pink)' }}>Register as a partner</a>
               <span className="text-[13px]" style={{ color: 'var(--text3)' }}>Open to individuals and to institutions.</span>
             </div>
+            </div>
+            {rates && (
+              <aside className="rounded-[16px] p-6" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }} aria-label="What you earn, at a glance">
+                <div className="font-mono text-[10.5px] tracking-[.14em] uppercase mb-3" style={{ color: 'var(--text3)' }}>What you earn</div>
+                <div className="grid gap-2.5">
+                  {(['ascent', 'atlas', 'orbit', 'command'] as const).map((k) => (
+                    <div key={k} className="flex items-baseline justify-between gap-3 text-[15px]" style={{ color: 'var(--text)' }}>
+                      <span className="font-semibold">{prices[k].label}</span>
+                      <span>{rates[k]}% <span style={{ color: 'var(--text3)' }}>&rarr;</span> <b>{rates[k] + rates.self_close_bonus}%</b> <span className="text-[12px]" style={{ color: 'var(--text3)' }}>with your own link</span></span>
+                    </div>
+                  ))}
+                </div>
+                <a href="#estimate" className="block text-center font-semibold text-[14.5px] px-5 py-3 rounded-[10px] mt-5" style={{ border: '1px solid var(--pink)', color: 'var(--pink)' }}>Estimate your earnings &darr;</a>
+              </aside>
+            )}
           </section>
 
           {rates && <EarningsCalculator rates={rates} prices={prices} n={counts} setN={setCounts} />}
@@ -217,11 +237,11 @@ export default function PartnersClient({ prices }: { prices: CalcPrices }) {
 
           <section className="py-10" style={{ borderTop: '1px solid var(--border)' }}>
             <h2 className="font-display font-bold text-[26px] mb-5" style={{ color: 'var(--text)' }}>What you can introduce</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {PRODUCTS.map((p) => (
                 <Link key={p.name} href={p.href} className="rounded-[14px] p-5 flex flex-col gap-1.5" style={card}>
                   <div className="font-display font-bold text-[18px]" style={{ color: 'var(--text)' }}>{p.name}</div>
-                  <div className="text-[13px]" style={{ color: 'var(--text3)' }}>For {p.who.toLowerCase()}</div>
+                  <div className="text-[13px]" style={{ color: 'var(--text3)' }}>For {p.who}</div>
                   <div className="text-[13px] font-semibold mt-2" style={{ color: 'var(--pink)' }}>See {p.name} →</div>
                 </Link>
               ))}
