@@ -157,7 +157,7 @@ export default async function AnnouncementPage({ params }: Props) {
             <div style={{ marginTop: 48, padding: '24px 26px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14 }}>
               <div style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontWeight: 800, fontSize: 18, color: 'var(--text)', marginBottom: 6 }}>Want to build with LabelNest?</div>
               <p style={{ ...p, margin: '0 0 14px' }}>We work with partners who bring a sector and a market. We bring the technology, product and growth.</p>
-              <Link href="/partner-with-us" style={{ font: '600 13.5px var(--font-sans),system-ui,sans-serif', padding: '10px 16px', borderRadius: 8, background: 'var(--text)', color: 'var(--bg)', textDecoration: 'none', display: 'inline-block' }}>
+              <Link href="/partners" style={{ font: '600 13.5px var(--font-sans),system-ui,sans-serif', padding: '10px 16px', borderRadius: 8, background: 'var(--text)', color: 'var(--bg)', textDecoration: 'none', display: 'inline-block' }}>
                 Partner with us
               </Link>
             </div>

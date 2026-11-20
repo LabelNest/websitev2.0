@@ -22,6 +22,7 @@ const CATEGORIES = [
   { key: 'university', label: 'University or innovation cell', group: 'Institution' },
   { key: 'community', label: 'Startup community or studio', group: 'Institution' },
   { key: 'institution_other', label: 'Other institution', group: 'Institution' },
+  { key: 'strategic', label: 'Venture, technology or data partner', group: 'Institution' },
   { key: 'angel', label: 'Active angel investor', group: 'Individual or firm' },
   { key: 'mentor', label: 'Startup mentor', group: 'Individual or firm' },
   { key: 'ca_cs', label: 'CA / CS firm', group: 'Individual or firm' },
@@ -140,6 +141,17 @@ export default function PartnersClient() {
                 <p className="text-[14px] leading-[1.6] max-w-[640px]" style={{ color: 'var(--text2)' }}>If you invest actively, join the network at no cost and source deals from us. There is nothing to pay.</p>
               </div>
               <button type="button" onClick={() => pick('angel')} className="font-semibold text-[14px] px-5 py-3 rounded-[10px] text-white shrink-0" style={{ background: 'var(--pink)' }}>Join as an angel investor</button>
+            </div>
+          </section>
+
+          <section className="py-10" style={{ borderTop: '1px solid var(--border)' }}>
+            <div className="rounded-[16px] p-6 md:p-7" style={card}>
+              <div className="font-mono text-[10.5px] tracking-[.12em] uppercase mb-3" style={{ color: 'var(--text3)' }}>Building something bigger?</div>
+              <h2 className="font-display font-bold text-[22px] mb-2" style={{ color: 'var(--text)' }}>You bring the market. We bring the build.</h2>
+              <p className="text-[14.5px] leading-[1.7] max-w-[720px] mb-4" style={{ color: 'var(--text2)' }}>
+                LabelNest also partners as the technology, product and growth partner for ventures that have a sector, a vision and relationships. We build and run the technology, and help you sell and distribute it: product engineering, sales and commercial growth, channel distribution, and the LabelNest products where they fit. Commercial terms are agreed case by case in a written agreement.
+              </p>
+              <button type="button" onClick={() => pick('strategic')} className="text-[13.5px] font-semibold" style={{ color: 'var(--pink)' }}>Tell us about your venture, technology or data partnership →</button>
             </div>
           </section>
 

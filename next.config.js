@@ -52,6 +52,8 @@ const nextConfig = {
       { source: '/blog', destination: '/briefings', permanent: true },
       { source: '/solutions', destination: '/services', permanent: true },
       { source: '/partnerships', destination: '/contact', permanent: true },
+      // One partner page: the old technology and venture page now lives inside /partners
+      { source: '/partner-with-us', destination: '/partners', permanent: true },
       { source: '/labelnest-platforms', destination: '/ecosystem', permanent: true },
       { source: '/data-research-intelligence', destination: '/nestlens/intelligence', permanent: true },
       { source: '/data-annotation', destination: '/nestlens/exchange', permanent: true },
