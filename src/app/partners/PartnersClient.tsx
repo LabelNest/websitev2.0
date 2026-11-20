@@ -52,7 +52,38 @@ const RULES = [
 const inputStyle = { background: 'var(--bg2)', border: '1px solid var(--bord2)', color: 'var(--text)' } as const
 const label = 'block text-[12px] font-semibold mb-1.5'
 
-export default function PartnersClient() {
+export interface CalcPrices { ascent: PriceRow; atlas: PriceRow; orbit: PriceRow; command: PriceRow }
+interface PriceRow { label: string; plan: string; yearly: number }
+const inr = (n: number) => '₹' + Math.round(n).toLocaleString('en-IN')
+
+/** Illustrative only: customers x the first-year list price (excluding GST) x the partner's rate. Both come live from our own systems. */
+function EarningsCalculator({ rates, prices }: { rates: Rates; prices: CalcPrices }) {
+  const keys = ['ascent', 'atlas', 'orbit', 'command'] as const
+  const [n, setN] = useState<Record<string, number>>({ ascent: 10, atlas: 2, orbit: 1, command: 0 })
+  const [own, setOwn] = useState(true)
+  const total = keys.reduce((a, k) => a + (n[k] || 0) * prices[k].yearly * ((rates[k] + (own ? rates.self_close_bonus : 0)) / 100), 0)
+  return (
+    <div className="mt-8 max-w-[680px] rounded-[14px] p-6" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
+      <h3 className="font-display font-bold text-[20px] mb-1" style={{ color: 'var(--text)' }}>Estimate your referral earnings</h3>
+      <p className="text-[13.5px] mb-4" style={{ color: 'var(--text3)' }}>Illustrative. It uses today&apos;s list prices for one year, excluding GST, and the rewards above. You keep earning on renewals.</p>
+      <div className="grid gap-3">
+        {keys.map((k) => (
+          <label key={k} className="grid grid-cols-[1fr_90px] items-center gap-3 text-[14.5px]" style={{ color: 'var(--text)' }}>
+            <span><b>{prices[k].label} customers</b><span className="block text-[12.5px]" style={{ color: 'var(--text3)' }}>{prices[k].plan}{prices[k].yearly ? ', ' + inr(prices[k].yearly) + ' a year' : ''}</span></span>
+            <input type="number" min={0} max={999} value={n[k]} onChange={(e) => setN({ ...n, [k]: Math.max(0, Math.min(999, Number(e.target.value) || 0)) })} className="rounded-[8px] px-3 py-2 text-[15px] w-full" style={{ border: '1px solid var(--border)', background: 'var(--bg)', color: 'var(--text)' }} aria-label={`${prices[k].label} customers`} />
+          </label>
+        ))}
+      </div>
+      <label className="flex items-center gap-2 mt-4 text-[14px]" style={{ color: 'var(--text2)' }}><input type="checkbox" checked={own} onChange={(e) => setOwn(e.target.checked)} /> They sign up through my own referral link (+{rates.self_close_bonus} points)</label>
+      <div className="mt-5 pt-4" style={{ borderTop: '1px solid var(--border)' }}>
+        <div className="text-[12px] font-semibold tracking-wide" style={{ color: 'var(--text3)' }}>ESTIMATED PARTNER EARNINGS, FIRST YEAR</div>
+        <div className="font-display font-bold text-[34px]" style={{ color: 'var(--text)' }} aria-live="polite">{inr(total)}</div>
+      </div>
+    </div>
+  )
+}
+
+export default function PartnersClient({ prices }: { prices: CalcPrices }) {
   const [f, setF] = useState({ name: '', organisation: '', email: '', mobile: '', category: '', mode: 'both', country: 'India', state: '', city: '', website: '', note: '', company_site: '' })
   const [products, setProducts] = useState<string[]>([])
   const [agree, setAgree] = useState(false)
@@ -195,6 +226,7 @@ export default function PartnersClient() {
                 ))}
               </div>
             )}
+            {rates && <EarningsCalculator rates={rates} prices={prices} />}
             <p className="text-[13.5px] leading-[1.65] mt-3 max-w-[680px]" style={{ color: 'var(--text3)' }}>
               {rates ? `When a customer signs up through your own referral link you earn ${rates.self_close_bonus} percentage points more. ` : 'The percentage is set per product, and is higher when the customer signs up through your own referral link. '}Everything happens online: you register, read and accept the agreement, and sign in to your own dashboard. No call is needed, and you can book time with us if you would rather talk.
             </p>
