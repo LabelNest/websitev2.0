@@ -50,6 +50,7 @@ const COMPANY = [
   { name: 'Careers', href: '/careers' },
   { name: 'Managed services', href: '/services' },
   { name: 'Partner with us', href: '/partner-with-us' },
+  { name: 'Partner network', href: '/partners' },
   { name: 'Demo and Guides', href: '/demo' },
   ...(HAS_CLIENTS ? [{ name: 'Trusted by', href: '/clients' }] : []),
   { name: 'Contact', href: '/contact' },
