@@ -29,6 +29,7 @@ const CATEGORIES = [
   { key: 'community', label: 'Startup community or studio', group: 'Institution' },
   { key: 'institution_other', label: 'Other institution', group: 'Institution' },
   { key: 'strategic', label: 'Venture, technology or data partner', group: 'Institution' },
+  { key: 'fund_services', label: 'Fund services partner (administrator, setup or fundraising advisor)', group: 'Individual or firm' },
   { key: 'angel', label: 'Active angel investor', group: 'Individual or firm' },
   { key: 'mentor', label: 'Startup mentor', group: 'Individual or firm' },
   { key: 'ca_cs', label: 'CA / CS firm', group: 'Individual or firm' },
@@ -79,6 +80,12 @@ interface PriceRow { label: string; plan: string; yearly: number; from?: boolean
 const inr = (n: number) => '₹' + Math.round(n).toLocaleString('en-IN')
 
 /** Illustrative only: customers x the first-year list price (excluding GST) x the partner's rate. Both come live from our own systems. */
+const LEVELS = [
+  { name: 'Getting started', from: 0 },
+  { name: 'Builder', from: 50000 },
+  { name: 'Rainmaker', from: 200000 },
+  { name: 'Champion', from: 1000000 },
+]
 const MAXES: Record<string, number> = { ascent: 50, atlas: 20, orbit: 20, command: 10 }
 
 export function EarningsCalculator({ rates, prices, n, setN }: { rates: Rates; prices: CalcPrices; n: Record<string, number>; setN: (f: (p: Record<string, number>) => Record<string, number>) => void }) {
@@ -106,6 +113,11 @@ export function EarningsCalculator({ rates, prices, n, setN }: { rates: Rates; p
     return () => cancelAnimationFrame(raf)
   }, [total])
 
+  const li = LEVELS.reduce((a, l, i) => (total >= l.from ? i : a), 0)
+  const next = LEVELS[li + 1]
+  // the bar shows the whole climb (all levels), so it agrees with the chips below it
+  const inLevel = next ? Math.min(1, (total - LEVELS[li].from) / (next.from - LEVELS[li].from)) : 1
+  const pct = next ? ((li + inLevel) / (LEVELS.length - 1)) * 100 : 100
   const setCount = (k: string, v: number) => setN((p) => ({ ...p, [k]: Math.max(0, Math.min(MAXES[k], v)) }))
 
   return (
@@ -113,6 +125,7 @@ export function EarningsCalculator({ rates, prices, n, setN }: { rates: Rates; p
       <div className="rounded-[18px] p-6 md:p-8" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
         <div className="flex flex-wrap items-start justify-between gap-3 mb-1">
           <h2 id="calc-h" className="font-display font-bold text-[24px]" style={{ color: 'var(--text)' }}>Estimate your referral earnings</h2>
+          <span className="text-[12px] font-semibold px-3 py-1 rounded-full" style={{ background: 'var(--bg2)', color: 'var(--text2)' }}>Level: {LEVELS[li].name}</span>
         </div>
         <p className="text-[13.5px] mb-6 max-w-[640px]" style={{ color: 'var(--text3)' }}>Slide to see what a year of referrals could look like. Example only: today&apos;s list prices for one year, excluding GST, with the rewards below. Each customer earns you a reward for 12 months from their first payment.</p>
 
@@ -146,6 +159,13 @@ export function EarningsCalculator({ rates, prices, n, setN }: { rates: Rates; p
           <div className="rounded-[14px] p-6 lg:sticky lg:top-24" style={{ background: 'var(--bg)', border: '1px solid var(--border)' }}>
             <div className="text-[11.5px] font-semibold tracking-[.1em]" style={{ color: 'var(--text3)' }}>EXAMPLE PARTNER EARNINGS, FIRST YEAR</div>
             <div className="font-display font-extrabold text-[42px] leading-[1.1] mt-1" style={{ color: 'var(--text)' }}>{inr(shown)}</div>
+            <div className="mt-4 h-[10px] rounded-full overflow-hidden" style={{ background: 'var(--border)' }} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(pct)} aria-label="Progress to the next level">
+              <div className="h-full rounded-full" style={{ width: pct + '%', background: 'var(--pink)', transition: 'width .4s ease' }} />
+            </div>
+            <div className="text-[13px] mt-2" style={{ color: 'var(--text2)' }}>{next ? `${inr(next.from - total)} more to reach ${next.name}` : 'Top level reached'}</div>
+            <div className="flex gap-2 flex-wrap mt-3">
+              {LEVELS.map((l, i) => (<span key={l.name} className="text-[11.5px] px-2.5 py-1 rounded-full" style={{ background: i <= li ? 'var(--pink)' : 'var(--bg2)', color: i <= li ? '#fff' : 'var(--text3)' }}>{l.name}</span>))}
+            </div>
             <p className="text-[12.5px] leading-[1.55] mt-3" style={{ color: 'var(--text3)' }}>Estimate only. Based on list prices, before discounts. Actual rewards are calculated on payments collected after discounts and refunds.</p>
             <a href="#register" className="block text-center font-semibold text-[14.5px] px-6 py-3.5 rounded-[10px] text-white mt-5" style={{ background: 'var(--pink)' }}>Start earning: register</a>
           </div>
@@ -161,6 +181,7 @@ export default function PartnersClient({ prices, initialRates }: { prices: CalcP
   const [products, setProducts] = useState<string[]>([])
   const [agree, setAgree] = useState(false)
   const [privacy, setPrivacy] = useState(false)
+  const [existing, setExisting] = useState(false)
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -190,6 +211,7 @@ export default function PartnersClient({ prices, initialRates }: { prices: CalcP
       const res = await fetch(APPLY_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...f, state: india ? f.state : '', products }) })
       const j = await res.json().catch(() => ({}))
       if (!res.ok) throw new Error(j.error || 'failed')
+      setExisting(j.existing === true)
       setSent(true)
     } catch (err) {
       setError(err instanceof Error && err.message !== 'failed' ? err.message : 'Something went wrong. Please try again, or write to partnership@labelnest.in.')
@@ -288,7 +310,7 @@ export default function PartnersClient({ prices, initialRates }: { prices: CalcP
                 <li className="flex gap-3"><span aria-hidden style={{ color: 'var(--pink)' }}>✓</span><span>Standard rates, with custom terms for larger partners.</span></li>
                 <li className="flex gap-3"><span aria-hidden style={{ color: 'var(--pink)' }}>✓</span><span>Clear ownership: your clients stay your clients.</span></li>
               </ul>
-              <button type="button" onClick={() => pick('consultant', 'Fund services partner (administrator, setup consultant, fundraising advisor or network).')} className="font-semibold text-[14px] px-5 py-3 rounded-[10px] text-white" style={{ background: 'var(--pink)' }}>Register as a fund services partner</button>
+              <button type="button" onClick={() => pick('fund_services')} className="font-semibold text-[14px] px-5 py-3 rounded-[10px] text-white" style={{ background: 'var(--pink)' }}>Register as a fund services partner</button>
             </div>
           </section>
 
@@ -377,7 +399,8 @@ export default function PartnersClient({ prices, initialRates }: { prices: CalcP
               <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: 'linear-gradient(90deg,#7A5217,#5B3A6B,#1F3A5F)' }} />
               {sent ? (
                 <div className="py-6">
-                  <div className="font-display font-extrabold text-[22px] mb-2" style={{ color: 'var(--text)' }}>Application received</div>
+                  <div className="font-display font-extrabold text-[22px] mb-2" style={{ color: 'var(--text)' }}>{existing ? 'We already have your application' : 'Application received'}</div>
+                  {existing && <p className="text-[14.5px] leading-[1.7] max-w-[520px] mb-3" style={{ color: 'var(--text2)' }}>An application from this email address is already with us, so we have not created a second one. Check your inbox, including spam, or write to partnership@labelnest.in.</p>}
                   <p className="text-[14.5px] leading-[1.7] max-w-[520px]" style={{ color: 'var(--text2)' }}>
                     Thank you. We will reply to <strong style={{ color: 'var(--text)' }}>{f.email}</strong> within two working days. When you are approved we email you your referral link and a private link to your dashboard, where you register leads and see your earnings. No password is needed. Keep the dashboard link to yourself.
                   </p>
