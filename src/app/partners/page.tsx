@@ -5,8 +5,8 @@ import { getPlans } from '@/lib/plans'
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/partners', {
-    title: 'LabelNest Partner Network — refer customers and earn on every payment',
-    description: 'Individuals and institutions who work with startups, funds and investors can partner with LabelNest. Share your link or register a lead, and earn on every invoice your customer pays.',
+    title: 'LabelNest Partner Network — refer customers and earn on their payments',
+    description: 'Individuals and institutions who work with startups, funds and investors can partner with LabelNest. Share your link or register a lead, and earn a share of what your customer pays for the first 12 months.',
   })
 }
 

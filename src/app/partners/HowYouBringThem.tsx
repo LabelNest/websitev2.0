@@ -13,7 +13,7 @@ const GROUPS: Group[] = [
     name: 'Founders',
     cards: [
       { product: 'Ascent', key: 'ascent', also: 'Connect included', title: 'Before they raise', why: 'A founder who looks organised and ready is easier for any investor to say yes to. Ascent keeps the data room, the readiness score and the documents in one place.', say: 'Before you talk to investors, get your data room in order. It takes an afternoon.' },
-      { product: 'Atlas', key: 'atlas', also: 'Atlas', title: 'While they raise', why: 'Founders lose months on the wrong funds. Atlas shows which funds and investors are active at their stage and sector, with a source on every field.', say: 'Know which funds really invest in your stage before you send a single email.' },
+      { product: 'Atlas', key: 'atlas', also: 'Source on every field', title: 'While they raise', why: 'Founders lose months on the wrong funds. Atlas shows which funds and investors are active at their stage and sector, with a source on every field.', say: 'Know which funds really invest in your stage before you send a single email.' },
       { product: 'Ascent', key: 'ascent', also: 'Connect included', title: 'After they raise', why: 'Investors expect regular updates. The same data room keeps numbers and documents current, so reporting is not a scramble.', say: 'Keep your investors updated from the room you already built.' },
       { product: 'Ascent', key: 'ascent', also: 'Shared with consent', title: 'Before a sale or due diligence', why: 'When someone asks for documents, a structured room turns weeks of searching into one link, shared only with the founder’s consent.', say: 'If anyone ever asks for diligence, you will not be digging through folders.' },
       { product: 'Ascent', key: 'ascent', also: 'Connect', title: 'When they need a mentor or an audit', why: 'Mentor and audit requests are made from inside the data room, and contact details stay hidden until the founder agrees.', say: 'You can request a mentor or a verified audit right from your room.' },
@@ -24,7 +24,7 @@ const GROUPS: Group[] = [
     cards: [
       { product: 'Command', key: 'command', also: 'Atlas', title: 'Launching or running a fund', why: 'Deal pipeline, diligence, committee, portfolio and investor accounts in one record, instead of sheets and email.', say: 'Run the whole fund from one record, from first look to portfolio.' },
       { product: 'Ascent', key: 'ascent', also: 'For the portfolio', title: 'Equipping portfolio companies', why: 'A fund can buy Ascent for its portfolio. Each company gets a structured data room and a readiness score, so the fund sees organised, current information without chasing.', say: 'Put your portfolio companies on Ascent so their numbers and documents reach you in one format.' },
-      { product: 'Atlas', key: 'atlas', also: 'Atlas', title: 'Raising from capital providers', why: 'Managers raising a fund need to know who allocates to their strategy. Atlas maps capital providers and fund managers.', say: 'See who allocates to strategies like yours, with sources.' },
+      { product: 'Atlas', key: 'atlas', also: 'Capital providers', title: 'Raising from capital providers', why: 'Managers raising a fund need to know who allocates to their strategy. Atlas maps capital providers and fund managers.', say: 'See who allocates to strategies like yours, with sources.' },
       { product: 'Command', key: 'command', also: 'Ascent rooms', title: 'Tracking portfolio companies', why: 'Founders on Ascent keep their numbers current, so a fund sees fresh data inside its own workspace.', say: 'Stop chasing portfolio updates. They arrive in the same place.' },
       { product: 'Atlas', key: 'atlas', also: 'Connect', title: 'Looking for deal flow', why: 'Funds can publish a thesis and find companies that fit, with the founder’s consent before any contact.', say: 'Put your thesis in front of founders who fit it.' },
     ],
@@ -43,7 +43,7 @@ const GROUPS: Group[] = [
     cards: [
       { product: 'Ascent', key: 'ascent', also: 'Connect', title: 'A client is preparing to raise', why: 'CA, CS, legal and fundraising advisers see this first. Ascent gives the client an organised room, and the adviser a clear checklist.', say: 'Let us get your records into one data room before you approach investors.' },
       { product: 'Atlas', key: 'atlas', also: 'Ascent', title: 'A client is exploring a deal or an exit', why: 'Atlas gives market context on the funds, buyers and companies around them. A data room makes diligence smooth.', say: 'Here is who is active in your space, and a room ready to share.' },
-      { product: 'Atlas', key: 'atlas', also: 'Atlas', title: 'Finding clients of your own', why: 'Atlas helps you research companies and the people behind them, so your outreach is informed.', say: 'I research my targets on Atlas before I reach out.' },
+      { product: 'Atlas', key: 'atlas', also: 'Company research', title: 'Finding clients of your own', why: 'Atlas helps you research companies and the people behind them, so your outreach is informed.', say: 'I research my targets on Atlas before I reach out.' },
       { product: 'Exchange', key: null, also: 'Exchange', title: 'A client needs data or research', why: 'Exchange is a marketplace for datasets, research and alternative data, with verified sellers, escrowed payment and a quality score on every listing.', say: 'You can buy the dataset you need on Exchange, with the seller verified and payment held until delivery.' },
     ],
   },
@@ -86,7 +86,7 @@ export default function HowYouBringThem({ onAdd }: { onAdd: (k: ProductKey) => v
               <p className="text-[13.5px] leading-[1.55] rounded-[10px] px-3 py-2.5" style={{ background: 'var(--bg2)', color: 'var(--text)' }}><b>You could say:</b> “{c.say}”</p>
               {c.key && (
                 <button type="button" onClick={() => { onAdd(c.key as ProductKey); setAdded(id); setTimeout(() => setAdded(null), 1400) }} className="mt-auto self-start text-[13.5px] font-semibold px-4 py-2 rounded-[10px]" style={{ border: '1px solid var(--pink)', color: added === id ? '#fff' : 'var(--pink)', background: added === id ? 'var(--pink)' : 'transparent' }}>
-                  {added === id ? 'Added to your estimate' : `+ Add a ${c.product} customer to my estimate`}
+                  {added === id ? 'Added to your estimate' : `+ Add ${/^[AEIOU]/i.test(c.product) ? 'an' : 'a'} ${c.product} customer to my estimate`}
                 </button>
               )}
             </div>
