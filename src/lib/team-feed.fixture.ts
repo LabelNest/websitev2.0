@@ -16,7 +16,11 @@ export const FIXTURE = {
    "skills": [],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": false
   },
   {
    "slug": "sample-cofounder",
@@ -32,7 +36,11 @@ export const FIXTURE = {
    "skills": [],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": false
   },
   {
    "slug": "sample-venture-lead",
@@ -51,7 +59,11 @@ export const FIXTURE = {
    ],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": true,
+   "is_department_head": true
   },
   {
    "slug": "sample-v2",
@@ -71,7 +83,11 @@ export const FIXTURE = {
    ],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": false
   },
   {
    "slug": "sample-v3",
@@ -89,7 +105,11 @@ export const FIXTURE = {
    ],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": true
   },
   {
    "slug": "sample-v4",
@@ -108,7 +128,11 @@ export const FIXTURE = {
    ],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": false
   },
   {
    "slug": "sample-pm-lead",
@@ -127,7 +151,11 @@ export const FIXTURE = {
    ],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": true,
+   "is_department_head": true
   },
   {
    "slug": "sample-pm-0",
@@ -146,7 +174,11 @@ export const FIXTURE = {
    ],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": false
   },
   {
    "slug": "sample-pm-1",
@@ -164,7 +196,11 @@ export const FIXTURE = {
    ],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": false
   },
   {
    "slug": "sample-pm-2",
@@ -183,7 +219,11 @@ export const FIXTURE = {
    ],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": false
   },
   {
    "slug": "sample-pm-3",
@@ -201,7 +241,11 @@ export const FIXTURE = {
    ],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": false
   },
   {
    "slug": "sample-pm-4",
@@ -217,7 +261,11 @@ export const FIXTURE = {
    "skills": [],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": false
   },
   {
    "slug": "sample-pm-5",
@@ -235,7 +283,11 @@ export const FIXTURE = {
    ],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": false
   },
   {
    "slug": "sample-eng-lead",
@@ -255,7 +307,11 @@ export const FIXTURE = {
    ],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": true
   },
   {
    "slug": "sample-eng-1",
@@ -274,7 +330,11 @@ export const FIXTURE = {
    ],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": false
   },
   {
    "slug": "sample-eng-2",
@@ -292,7 +352,11 @@ export const FIXTURE = {
    ],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": false
   },
   {
    "slug": "sample-ai",
@@ -311,7 +375,11 @@ export const FIXTURE = {
    ],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": false
   },
   {
    "slug": "sample-risk-lead",
@@ -329,7 +397,11 @@ export const FIXTURE = {
    ],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": true,
+   "is_department_head": true
   },
   {
    "slug": "sample-risk-1",
@@ -347,7 +419,11 @@ export const FIXTURE = {
    ],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": false
   },
   {
    "slug": "sample-ops-lead",
@@ -365,7 +441,11 @@ export const FIXTURE = {
    ],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": true,
+   "is_department_head": true
   },
   {
    "slug": "sample-ops-1",
@@ -381,7 +461,11 @@ export const FIXTURE = {
    "skills": [],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": false
   },
   {
    "slug": "sample-ops-2",
@@ -397,7 +481,11 @@ export const FIXTURE = {
    "skills": [],
    "status": "current",
    "joined_year": 2024,
-   "left_year": null
+   "left_year": null,
+   "status_label": "Converted to FTE (Yet to join)",
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": false
   },
   {
    "slug": "sample-alum-0",
@@ -413,7 +501,11 @@ export const FIXTURE = {
    "skills": [],
    "status": "alumni",
    "joined_year": 2022,
-   "left_year": 2024
+   "left_year": 2024,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": false
   },
   {
    "slug": "sample-alum-1",
@@ -429,7 +521,11 @@ export const FIXTURE = {
    "skills": [],
    "status": "alumni",
    "joined_year": 2022,
-   "left_year": 2025
+   "left_year": 2025,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": false
   },
   {
    "slug": "sample-alum-2",
@@ -445,7 +541,11 @@ export const FIXTURE = {
    "skills": [],
    "status": "alumni",
    "joined_year": 2022,
-   "left_year": 2024
+   "left_year": 2024,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": false
   },
   {
    "slug": "sample-alum-3",
@@ -461,7 +561,131 @@ export const FIXTURE = {
    "skills": [],
    "status": "alumni",
    "joined_year": 2022,
-   "left_year": 2025
+   "left_year": 2025,
+   "status_label": null,
+   "program_label": null,
+   "is_bu_head": false,
+   "is_department_head": false
+  },
+  {
+   "slug": "sample-fellow-1",
+   "name": "Sample Fellow 1",
+   "photo_url": null,
+   "job_title": "Data Research Trainee",
+   "business_unit": "",
+   "department": "",
+   "is_leader": false,
+   "sort": 101,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [],
+   "status": "alumni",
+   "joined_year": 2025,
+   "left_year": 2026,
+   "status_label": null,
+   "program_label": "The Nestling Program — Cohorts 1 & 2",
+   "is_bu_head": false,
+   "is_department_head": false
+  },
+  {
+   "slug": "sample-fellow-2",
+   "name": "Sample Fellow 2",
+   "photo_url": null,
+   "job_title": "Data Research Trainee",
+   "business_unit": "",
+   "department": "",
+   "is_leader": false,
+   "sort": 102,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [],
+   "status": "alumni",
+   "joined_year": 2025,
+   "left_year": 2026,
+   "status_label": null,
+   "program_label": "The Nestling Program — Cohorts 1 & 2",
+   "is_bu_head": false,
+   "is_department_head": false
+  },
+  {
+   "slug": "sample-fellow-3",
+   "name": "Sample Fellow 3",
+   "photo_url": null,
+   "job_title": "Data Research Trainee",
+   "business_unit": "",
+   "department": "",
+   "is_leader": false,
+   "sort": 103,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [],
+   "status": "alumni",
+   "joined_year": 2025,
+   "left_year": 2026,
+   "status_label": null,
+   "program_label": "The Nestling Program — Cohorts 1 & 2",
+   "is_bu_head": false,
+   "is_department_head": false
+  },
+  {
+   "slug": "sample-fellow-4",
+   "name": "Sample Fellow 4",
+   "photo_url": null,
+   "job_title": "Data Research Trainee",
+   "business_unit": "",
+   "department": "",
+   "is_leader": false,
+   "sort": 104,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [],
+   "status": "alumni",
+   "joined_year": 2025,
+   "left_year": 2026,
+   "status_label": null,
+   "program_label": "The Nestling Program — Cohorts 1 & 2",
+   "is_bu_head": false,
+   "is_department_head": false
+  },
+  {
+   "slug": "sample-fellow-5",
+   "name": "Sample Fellow 5",
+   "photo_url": null,
+   "job_title": "Data Research Trainee",
+   "business_unit": "",
+   "department": "",
+   "is_leader": false,
+   "sort": 105,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [],
+   "status": "alumni",
+   "joined_year": 2025,
+   "left_year": 2026,
+   "status_label": null,
+   "program_label": "The Nestling Program — Cohorts 1 & 2",
+   "is_bu_head": false,
+   "is_department_head": false
+  },
+  {
+   "slug": "sample-fellow-6",
+   "name": "Sample Fellow 6",
+   "photo_url": null,
+   "job_title": "Data Research Trainee",
+   "business_unit": "",
+   "department": "",
+   "is_leader": false,
+   "sort": 106,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [],
+   "status": "alumni",
+   "joined_year": 2025,
+   "left_year": 2026,
+   "status_label": null,
+   "program_label": "The Nestling Program — Cohorts 1 & 2",
+   "is_bu_head": false,
+   "is_department_head": false
   }
  ]
 }

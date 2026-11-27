@@ -35,6 +35,12 @@ function Chips({ skills, max = 3 }: { skills: string[]; max?: number }) {
   )
 }
 
+// A short note from HR on a person's card, for example "Converted to FTE (Yet to join)".
+function StatusBadge({ label, accent }: { label: string | null; accent: string }) {
+  if (!label) return null
+  return <span style={{ display: 'inline-block', marginTop: 8, fontFamily: MONO, fontSize: 9.5, letterSpacing: '.06em', textTransform: 'uppercase', color: tint(accent), border: `1px solid ${accent}66`, background: `${accent}14`, borderRadius: 999, padding: '3px 9px' }}>{label}</span>
+}
+
 function Eyebrow({ children, color }: { children: React.ReactNode; color: string }) {
   return <div style={{ fontFamily: MONO, fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color, marginBottom: 8 }}>{children}</div>
 }
@@ -49,6 +55,7 @@ function ManagementCard({ p }: { p: FeedPerson }) {
         <div style={{ minWidth: 0 }}>
           <Link href={profileHref(p)} className="font-display font-extrabold group-hover:underline" style={{ display: 'block', fontSize: 24, letterSpacing: '-.025em', lineHeight: 1.1, color: 'var(--text)' }}>{p.name}</Link>
           <div style={{ fontSize: 14, color: tint(accent), fontWeight: 600, margin: '6px 0 10px' }}>{p.job_title}</div>
+          <StatusBadge label={p.status_label} accent={accent} />
           {p.bio && <p style={{ fontSize: 13.5, lineHeight: 1.65, color: 'var(--text2)', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{p.bio}</p>}
           <div className="flex items-center" style={{ gap: 16, marginTop: 14, fontSize: 12.5, fontWeight: 600 }}>
             <Link href={profileHref(p)} style={{ color: 'var(--text)' }}>View profile →</Link>
@@ -65,9 +72,10 @@ function LeadCard({ p, accent }: { p: FeedPerson; accent: string }) {
     <Link href={profileHref(p)} className="group flex items-start transition-all duration-200 hover:-translate-y-1" style={{ gap: 16, padding: 18, borderRadius: 16, background: 'var(--surface)', border: '1px solid var(--border)', borderLeft: `3px solid ${accent}` }}>
       <PersonPhoto p={p} size={76} radius={16} accent={accent} />
       <div style={{ minWidth: 0 }}>
-        <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '.1em', textTransform: 'uppercase', color: tint(accent), marginBottom: 4 }}>Lead</div>
+        <div style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '.1em', textTransform: 'uppercase', color: tint(accent), marginBottom: 4 }}>{p.is_bu_head ? 'Business Unit Head' : p.is_department_head ? 'Department Head' : 'Lead'}</div>
         <div className="font-display font-bold group-hover:underline" style={{ fontSize: 16.5, letterSpacing: '-.015em', color: 'var(--text)', lineHeight: 1.2 }}>{p.name}</div>
         <div style={{ fontSize: 12.5, color: 'var(--text2)', marginTop: 3 }}>{p.job_title}</div>
+        <StatusBadge label={p.status_label} accent={accent} />
         <Chips skills={p.skills} max={3} />
       </div>
     </Link>
@@ -83,6 +91,7 @@ function MemberCard({ p, accent }: { p: FeedPerson; accent: string }) {
       <div style={{ padding: '12px 14px 14px' }}>
         <div className="font-display font-bold group-hover:underline" style={{ fontSize: 14, letterSpacing: '-.01em', color: 'var(--text)', lineHeight: 1.25 }}>{p.name}</div>
         <div style={{ fontSize: 12, color: 'var(--text2)', marginTop: 2, lineHeight: 1.35 }}>{p.job_title}</div>
+        <StatusBadge label={p.status_label} accent={accent} />
         <Chips skills={p.skills} max={2} />
       </div>
     </Link>
@@ -132,6 +141,7 @@ export function UnitSection({ unit, index }: { unit: BuGroup; index: number }) {
             </div>
             <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(24px,3.4vw,38px)', letterSpacing: '-.03em', lineHeight: 1.05, color: 'var(--text)', marginBottom: 10 }}>{unit.name}</h2>
             {unit.blurb && <p style={{ fontSize: 14.5, lineHeight: 1.65, color: 'var(--text2)' }}>{unit.blurb}</p>}
+            {unit.head && <p style={{ fontSize: 13, color: 'var(--text2)', marginTop: 10 }}>Business Unit Head: <Link href={profileHref(unit.head)} className="font-display font-bold hover:underline" style={{ color: 'var(--text)' }}>{unit.head.name}</Link></p>}
           </div>
           <div style={{ fontFamily: MONO, fontSize: 11, color: tint(unit.accent), border: `1px solid ${unit.accent}55`, borderRadius: 999, padding: '5px 12px' }}>
             {unit.count} {unit.count === 1 ? 'person' : 'people'}
@@ -144,6 +154,7 @@ export function UnitSection({ unit, index }: { unit: BuGroup; index: number }) {
               {d.department && (
                 <div className="flex items-center" style={{ gap: 14, marginBottom: 18 }}>
                   <h3 className="font-display font-bold" style={{ fontSize: 17, letterSpacing: '-.015em', color: 'var(--text)' }}>{d.department}</h3>
+                  {d.head && <span style={{ fontSize: 12.5, color: 'var(--text2)' }}>led by <Link href={profileHref(d.head)} className="font-semibold hover:underline" style={{ color: 'var(--text)' }}>{d.head.name}</Link></span>}
                   <span style={{ flex: 1, height: 1, background: 'var(--border)' }} />
                   <span style={{ fontFamily: MONO, fontSize: 10.5, color: 'var(--text3)' }}>{d.leads.length + d.members.length}</span>
                 </div>
@@ -166,8 +177,8 @@ export function UnitSection({ unit, index }: { unit: BuGroup; index: number }) {
   )
 }
 
-// Alumni from the feed: permanent, with the years they were here.
-export function FeedAlumni({ people }: { people: FeedPerson[] }) {
+// Alumni from the feed: permanent, with the years they were here. Alumni with a programme heading (for example "The Nestling Program — Cohorts 1 & 2") are grouped under it.
+function AlumniGrid({ people }: { people: FeedPerson[] }) {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6" style={{ gap: 12 }}>
       {people.map(p => (
@@ -180,6 +191,29 @@ export function FeedAlumni({ people }: { people: FeedPerson[] }) {
           )}
         </Link>
       ))}
+    </div>
+  )
+}
+
+export function FeedAlumni({ people }: { people: FeedPerson[] }) {
+  const programs = [...new Set(people.map(p => p.program_label).filter((x): x is string => !!x))].sort((a, b) => a.localeCompare(b))
+  const general = people.filter(p => !p.program_label)
+  return (
+    <div className="flex flex-col" style={{ gap: 36 }}>
+      {general.length > 0 && <AlumniGrid people={general} />}
+      {programs.map(prog => {
+        const group = people.filter(p => p.program_label === prog)
+        return (
+          <div key={prog}>
+            <div className="flex items-center" style={{ gap: 14, marginBottom: 16 }}>
+              <h3 className="font-display font-bold" style={{ fontSize: 18, letterSpacing: '-.015em', color: 'var(--text)' }}>{prog}</h3>
+              <span style={{ flex: 1, height: 1, background: 'var(--border)' }} />
+              <span style={{ fontFamily: MONO, fontSize: 10.5, color: 'var(--text3)' }}>{group.length}</span>
+            </div>
+            <AlumniGrid people={group} />
+          </div>
+        )
+      })}
     </div>
   )
 }

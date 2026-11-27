@@ -20,6 +20,13 @@ export interface FeedPerson {
   status: 'current' | 'alumni'
   joined_year: number | null
   left_year: number | null
+  /** Short badge on the card, for example "Converted to FTE (Yet to join)". Set by HR in NestHR. */
+  status_label: string | null
+  /** Programme heading an alumnus is grouped under, for example "The Nestling Program — Cohorts 1 & 2". */
+  program_label: string | null
+  /** Heads of the Business Unit / department, live from NestHR (Control > Organisation). */
+  is_bu_head: boolean
+  is_department_head: boolean
 }
 
 export interface TeamData {
@@ -33,6 +40,7 @@ const DEFAULT_FEED_URL = 'https://nqwvepnoadbfwrvkcjqh.supabase.co/functions/v1/
 const str = (v: unknown): string => (typeof v === 'string' ? v.trim() : '')
 const optStr = (v: unknown): string | null => str(v) || null
 const optYear = (v: unknown): number | null => (typeof v === 'number' && Number.isInteger(v) && v > 1900 && v < 2200 ? v : null)
+const optLabel = (v: unknown, max: number): string | null => { const s = str(v); return s && s.length <= max ? s : null }
 const httpsOnly = (v: unknown): string | null => {
   const s = str(v)
   return /^https?:\/\//i.test(s) ? s : null
@@ -54,7 +62,7 @@ export function parsePerson(raw: unknown): FeedPerson | null {
     job_title: str(r['job_title']),
     business_unit: str(r['business_unit']),
     department: str(r['department']),
-    is_leader: r['is_leader'] === true,
+    is_leader: r['is_leader'] === true || r['is_bu_head'] === true || r['is_department_head'] === true,
     sort: typeof r['sort'] === 'number' && Number.isFinite(r['sort']) ? r['sort'] : 999,
     bio: optStr(r['bio'])?.slice(0, 600) ?? null,
     linkedin_url: optStr(r['linkedin_url']),
@@ -62,6 +70,10 @@ export function parsePerson(raw: unknown): FeedPerson | null {
     status,
     joined_year: optYear(r['joined_year']),
     left_year: optYear(r['left_year']),
+    status_label: optLabel(r['status_label'], 60),
+    program_label: optLabel(r['program_label'], 80),
+    is_bu_head: r['is_bu_head'] === true,
+    is_department_head: r['is_department_head'] === true,
   }
 }
 
@@ -102,6 +114,7 @@ async function loadFallback(): Promise<FeedPerson[]> {
     slug: m.slug, name: m.name, photo_url: httpsOnly(m.image_url), job_title: m.role, business_unit: '',
     department: m.department, is_leader: m.department === 'Founder', sort: m.sort_order, bio: m.bio,
     linkedin_url: m.linkedin_url, skills: m.expertise ?? [], status: 'current', joined_year: null, left_year: null,
+    status_label: null, program_label: null, is_bu_head: false, is_department_head: false,
   }] : [])
   void alumni // alumni keep their own grid (with self-serve "Now at") when the feed has none
   return current
@@ -136,8 +149,11 @@ export const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-'
 
 const byOrder = (a: FeedPerson, b: FeedPerson) => a.sort - b.sort || a.name.localeCompare(b.name)
 
-export interface DeptGroup { department: string; leads: FeedPerson[]; members: FeedPerson[] }
-export interface BuGroup { name: string; slug: string; accent: string; blurb: string; departments: DeptGroup[]; count: number }
+export interface DeptGroup { department: string; head: FeedPerson | null; leads: FeedPerson[]; members: FeedPerson[] }
+export interface BuGroup { name: string; slug: string; accent: string; blurb: string; head: FeedPerson | null; departments: DeptGroup[]; count: number }
+
+// Business Unit head first, then the department head, then other leads (each group already in page order).
+const leadRank = (p: FeedPerson) => (p.is_bu_head ? 0 : p.is_department_head ? 1 : 2)
 
 export function groupTeam(people: FeedPerson[]): { management: FeedPerson[]; units: BuGroup[] } {
   const current = people.filter(p => p.status === 'current').sort(byOrder)
@@ -156,15 +172,18 @@ export function groupTeam(people: FeedPerson[]): { management: FeedPerson[]; uni
     // Departments ordered by their most senior (lowest sort) person; people with no department last.
     deptNames.sort((a, b) => {
       if (!a !== !b) return a ? -1 : 1
+      const hasHead = (d: string) => inUnit.some(p => (p.department || '') === d && p.is_bu_head)
+      if (hasHead(a) !== hasHead(b)) return hasHead(a) ? -1 : 1
       const min = (d: string) => Math.min(...inUnit.filter(p => (p.department || '') === d).map(p => p.sort))
       return min(a) - min(b) || a.localeCompare(b)
     })
     const departments = deptNames.map(d => {
       const inDept = inUnit.filter(p => (p.department || '') === d)
-      return { department: d, leads: inDept.filter(p => p.is_leader), members: inDept.filter(p => !p.is_leader) }
+      const leads = inDept.filter(p => p.is_leader).sort((x, y) => leadRank(x) - leadRank(y))
+      return { department: d, head: inDept.find(p => p.is_department_head) ?? null, leads, members: inDept.filter(p => !p.is_leader) }
     })
     const info = BU_INFO[name]
-    return { name, slug: slugify(name), accent: info?.accent ?? '#8985A6', blurb: info?.blurb ?? '', departments, count: inUnit.length }
+    return { name, slug: slugify(name), accent: info?.accent ?? '#8985A6', blurb: info?.blurb ?? '', head: inUnit.find(p => p.is_bu_head) ?? null, departments, count: inUnit.length }
   })
   return { management, units }
 }
