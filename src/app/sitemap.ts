@@ -3,14 +3,16 @@ import { getBriefings, getLegalDocuments, getTeamMembers } from '@/lib/db'
 import { ANNOUNCEMENTS } from '@/lib/announcements'
 import { HAS_CLIENTS } from '@/lib/clients'
 import { DEMOS } from '@/lib/demos'
+import { getTeamData } from '@/lib/team-feed'
 
 const baseUrl = 'https://labelnest.in'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [briefings, legalDocs, teamMembers] = await Promise.all([
+  const [briefings, legalDocs, teamMembers, teamData] = await Promise.all([
     getBriefings().catch(() => []),
     getLegalDocuments().catch(() => []),
     getTeamMembers().catch(() => []),
+    getTeamData().catch(() => ({ people: [] })),
   ])
 
   const staticPages: MetadataRoute.Sitemap = [
@@ -128,10 +130,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Only members with a real slug have a /team/[slug] page at all --
   // TeamMember.slug is nullable (see lib/db.ts).
-  const teamPages: MetadataRoute.Sitemap = teamMembers
-    .filter(m => m.slug)
-    .map(m => ({
-      url: `${baseUrl}/team/${m.slug}`,
+  const teamSlugs = [...new Set([...teamData.people.map(p => p.slug), ...teamMembers.flatMap(m => (m.slug ? [m.slug] : []))])]
+  const teamPages: MetadataRoute.Sitemap = teamSlugs
+    .map(slug => ({
+      url: `${baseUrl}/team/${slug}`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.5,

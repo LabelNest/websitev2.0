@@ -13,17 +13,28 @@ import { pageMetadata } from '@/lib/seo'
 import { imgFrameStyle } from '@/lib/image'
 import { normalizeExternalUrl } from '@/lib/utils'
 import { DEPT_COLORS } from '../page'
+import { BU_INFO, getPersonBySlug } from '@/lib/team-feed'
 
 type Props = { params: Promise<{ slug: string }> }
 
+// NestHR's approved feed is the source of truth; the website's own tables are the fallback (and still hold fellows and interns).
 async function resolveProfile(slug: string) {
-  const member = await getTeamMemberBySlug(slug).catch(() => null)
-  if (member) return { member, fellow: null, intern: null }
+  const fromFeed = await getPersonBySlug(slug).catch(() => null)
+  const member = fromFeed
+    ? {
+        id: fromFeed.slug, name: fromFeed.name, role: fromFeed.job_title,
+        department: [fromFeed.business_unit, fromFeed.department].filter(Boolean).join(' · '),
+        bio: fromFeed.bio, linkedin_url: fromFeed.linkedin_url, image_url: fromFeed.photo_url,
+        image_position: '50% 12%', image_zoom: 1, sort_order: fromFeed.sort, is_active: true, slug: fromFeed.slug,
+        email: null, expertise: fromFeed.skills, quote: null,
+      }
+    : await getTeamMemberBySlug(slug).catch(() => null)
+  if (member) return { member, fellow: null, intern: null, feed: fromFeed }
   const fellow = await getFellowBySlug(slug).catch(() => null)
-  if (fellow) return { member: null, fellow, intern: null }
+  if (fellow) return { member: null, fellow, intern: null, feed: null }
   const intern = await getInternBySlug(slug).catch(() => null)
-  if (intern) return { member: null, fellow: null, intern }
-  return { member: null, fellow: null, intern: null }
+  if (intern) return { member: null, fellow: null, intern, feed: null }
+  return { member: null, fellow: null, intern: null, feed: null }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -40,7 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProfilePage({ params }: Props) {
   const { slug } = await params
-  const { member, fellow, intern } = await resolveProfile(slug)
+  const { member, fellow, intern, feed } = await resolveProfile(slug)
   if (!member && !fellow && !intern) notFound()
 
   const name = member?.name ?? fellow?.name ?? intern?.name ?? ''
@@ -55,8 +66,9 @@ export default async function ProfilePage({ params }: Props) {
   const email = member?.email ?? fellow?.email ?? null
   const expertise = member?.expertise ?? fellow?.expertise ?? null
   const quote = member?.quote ?? fellow?.quote ?? null
-  const kindLabel = member ? 'Team' : fellow ? 'Nestling Fellow' : 'Intern'
-  const deptColor = DEPT_COLORS[department] || '#8985A6'
+  const kindLabel = feed?.status === 'alumni' ? 'Alumni' : member ? 'Team' : fellow ? 'Nestling Fellow' : 'Intern'
+  const deptColor = (feed && BU_INFO[feed.business_unit]?.accent) || DEPT_COLORS[department] || '#8985A6'
+  const tenure = feed && (feed.joined_year || feed.left_year) ? `${feed.joined_year ?? ''} – ${feed.status === 'alumni' ? (feed.left_year ?? '') : 'now'}` : null
 
   const briefings = member || fellow
     ? await getBriefingsByAuthor(name).catch(() => [])
@@ -74,7 +86,10 @@ export default async function ProfilePage({ params }: Props) {
 
             <div className="flex items-start" style={{ gap: 28, marginBottom: 28 }}>
               <div className="relative overflow-hidden flex-shrink-0" style={{ width: 96, height: 96, borderRadius: 20, background: 'linear-gradient(135deg,rgba(122,82,23,.08),rgba(31,58,95,.06))' }}>
-                {imageUrl ? (
+                {imageUrl && feed ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={imageUrl} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 12%' }} />
+                ) : imageUrl ? (
                   <Image src={imageUrl} alt={name} fill sizes="96px" style={imgFrameStyle(imagePosition, imageZoom)} />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center font-display font-extrabold" style={{ fontSize: 32, color: 'rgba(14,27,46,.15)' }}>
@@ -92,6 +107,7 @@ export default async function ProfilePage({ params }: Props) {
                     {department}
                   </span>
                 )}
+                {tenure && <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: 'var(--text3)', marginTop: 10 }}>{tenure}</div>}
               </div>
             </div>
 
