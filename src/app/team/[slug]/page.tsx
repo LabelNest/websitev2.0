@@ -12,7 +12,7 @@ import {
 import { pageMetadata } from '@/lib/seo'
 import { imgFrameStyle } from '@/lib/image'
 import { normalizeExternalUrl } from '@/lib/utils'
-import { DEPT_COLORS } from '../page'
+import { DEPT_COLORS } from '@/lib/team-colors'
 import { BU_INFO, getPersonBySlug } from '@/lib/team-feed'
 
 type Props = { params: Promise<{ slug: string }> }

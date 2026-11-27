@@ -3,7 +3,7 @@ import Footer from '@/components/Footer'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Metadata } from 'next'
-import { getAlumni, getFellows, getInterns } from '@/lib/db'
+import { getAlumni, getFellows, getInterns, type Alumni, type Fellow, type Intern } from '@/lib/db'
 import AlumniGrid from './AlumniGrid'
 import { getTeamData, groupTeam } from '@/lib/team-feed'
 import { FeedAlumni, ManagementSection, TeamNav, UnitSection } from './TeamDirectory'
@@ -18,15 +18,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 export const revalidate = 3600
 
-export const DEPT_COLORS: Record<string, string> = {
-  'NestIntel': '#1F3A5F',
-  'DataNest': '#1F3A5F',
-  'NestHR': '#1F3A5F',
-  'NestLens': '#2C6B4B',
-  'Ops': '#9A4B1F',
-  'HR': '#5B3A6B',
-  'Founder': '#7A5217',
-}
 
 function FellowChip({ f, accent, background }: { f: { id: string; name: string; role: string; slug: string | null; status?: string; image_url?: string | null; image_position?: string; image_zoom?: number }; accent: string; background: string }) {
   const style: React.CSSProperties = { background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: 12, position: 'relative' }
@@ -52,7 +43,7 @@ function FellowChip({ f, accent, background }: { f: { id: string; name: string; 
 }
 
 export default async function TeamPage() {
-  const [{ people }, siteAlumni, fellows, interns] = await Promise.all([getTeamData(), getAlumni().catch(() => []), getFellows().catch(() => []), getInterns().catch(() => [])])
+  const [{ people }, siteAlumni, fellows, interns] = await Promise.all([getTeamData(), getAlumni().catch((): Alumni[] => []), getFellows().catch((): Fellow[] => []), getInterns().catch((): Intern[] => [])])
   const { management, units } = groupTeam(people)
   const feedAlumni = people.filter(p => p.status === 'alumni').sort((a, b) => (b.left_year ?? 0) - (a.left_year ?? 0) || a.name.localeCompare(b.name))
   const alumniCount = feedAlumni.length || siteAlumni.length
@@ -188,7 +179,7 @@ export default async function TeamPage() {
             </div>
             <p style={{ fontSize: 13.5, color: 'var(--text2)', maxWidth: 520, marginBottom: 32, lineHeight: 1.6 }}>
               Everyone who worked at LabelNest stays on this page forever. No exceptions. If you built something here, you belong here.{' '}
-              <strong style={{ color: 'var(--text)' }}>Alumni can update their "Now at" via a self-serve link sent by the team.</strong>
+              <strong style={{ color: 'var(--text)' }}>Alumni can update their &ldquo;Now at&rdquo; via a self-serve link sent by the team.</strong>
             </p>
             {feedAlumni.length > 0 ? <FeedAlumni people={feedAlumni} /> : <AlumniGrid initial={siteAlumni} />}
           </div>
