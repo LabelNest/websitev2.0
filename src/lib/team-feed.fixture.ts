@@ -1,0 +1,467 @@
+// Placeholder people for local layout screenshots only (TEAM_FEED_FIXTURE=1). Never used in production.
+export const FIXTURE = {
+ "generated_at": "2026-11-27T00:00:00Z",
+ "people": [
+  {
+   "slug": "sample-founder",
+   "name": "Sample Founder",
+   "photo_url": null,
+   "job_title": "Founder & Director",
+   "business_unit": "Management",
+   "department": "Leadership",
+   "is_leader": true,
+   "sort": 1,
+   "bio": "Sample text for layout preview only.",
+   "linkedin_url": "https://www.linkedin.com/company/labelnest",
+   "skills": [],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-cofounder",
+   "name": "Sample Cofounder",
+   "photo_url": null,
+   "job_title": "Co-founder & Chief Operating Officer",
+   "business_unit": "Management",
+   "department": "Leadership",
+   "is_leader": true,
+   "sort": 2,
+   "bio": "Sample text for layout preview only.",
+   "linkedin_url": "https://www.linkedin.com/company/labelnest",
+   "skills": [],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-venture-lead",
+   "name": "Sample Venture Lead",
+   "photo_url": null,
+   "job_title": "Head of Venture",
+   "business_unit": "Venture",
+   "department": "Startup Success",
+   "is_leader": true,
+   "sort": 10,
+   "bio": null,
+   "linkedin_url": "https://www.linkedin.com/company/labelnest",
+   "skills": [
+    "Onboarding",
+    "Data rooms"
+   ],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-v2",
+   "name": "Sample Person A",
+   "photo_url": null,
+   "job_title": "Startup Success Manager",
+   "business_unit": "Venture",
+   "department": "Startup Success",
+   "is_leader": false,
+   "sort": 11,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [
+    "Onboarding",
+    "Mentoring",
+    "CRM"
+   ],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-v3",
+   "name": "Sample Person B",
+   "photo_url": null,
+   "job_title": "Ecosystem Manager",
+   "business_unit": "Venture",
+   "department": "Ecosystem & Network",
+   "is_leader": true,
+   "sort": 12,
+   "bio": null,
+   "linkedin_url": "https://www.linkedin.com/company/labelnest",
+   "skills": [
+    "Investors"
+   ],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-v4",
+   "name": "Sample Person C",
+   "photo_url": null,
+   "job_title": "Growth Executive",
+   "business_unit": "Venture",
+   "department": "Growth & Marketing",
+   "is_leader": false,
+   "sort": 13,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [
+    "SEO",
+    "Content"
+   ],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-pm-lead",
+   "name": "Sample Research Head",
+   "photo_url": null,
+   "job_title": "Research Manager",
+   "business_unit": "Private Markets",
+   "department": "Data Research & Review",
+   "is_leader": true,
+   "sort": 20,
+   "bio": null,
+   "linkedin_url": "https://www.linkedin.com/company/labelnest",
+   "skills": [
+    "Private equity",
+    "Due diligence"
+   ],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-pm-0",
+   "name": "Sample Analyst A",
+   "photo_url": null,
+   "job_title": "Research Analyst",
+   "business_unit": "Private Markets",
+   "department": "Data Research & Review",
+   "is_leader": false,
+   "sort": 21,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [
+    "LP data",
+    "Funds"
+   ],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-pm-1",
+   "name": "Sample Analyst B",
+   "photo_url": null,
+   "job_title": "Data Reviewer",
+   "business_unit": "Private Markets",
+   "department": "Data Research & Review",
+   "is_leader": false,
+   "sort": 22,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [
+    "QA"
+   ],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-pm-2",
+   "name": "Sample Analyst C",
+   "photo_url": null,
+   "job_title": "Data Analyst",
+   "business_unit": "Private Markets",
+   "department": "Data Research & Review",
+   "is_leader": false,
+   "sort": 23,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [
+    "SQL",
+    "Dashboards"
+   ],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-pm-3",
+   "name": "Sample Analyst D",
+   "photo_url": null,
+   "job_title": "Research Analyst",
+   "business_unit": "Private Markets",
+   "department": "Data Research & Review",
+   "is_leader": false,
+   "sort": 24,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [
+    "Deals"
+   ],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-pm-4",
+   "name": "Sample Analyst E",
+   "photo_url": null,
+   "job_title": "Data Research Associate",
+   "business_unit": "Private Markets",
+   "department": "Data Research & Review",
+   "is_leader": false,
+   "sort": 25,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-pm-5",
+   "name": "Sample Analyst F",
+   "photo_url": null,
+   "job_title": "Research Analyst",
+   "business_unit": "Private Markets",
+   "department": "Data Research & Review",
+   "is_leader": false,
+   "sort": 26,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [
+    "GP data"
+   ],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-eng-lead",
+   "name": "Sample Engineering Lead",
+   "photo_url": null,
+   "job_title": "Full Stack Developer",
+   "business_unit": "Private Markets",
+   "department": "Engineering",
+   "is_leader": true,
+   "sort": 30,
+   "bio": null,
+   "linkedin_url": "https://www.linkedin.com/company/labelnest",
+   "skills": [
+    "TypeScript",
+    "Postgres",
+    "Next.js"
+   ],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-eng-1",
+   "name": "Sample Engineer A",
+   "photo_url": null,
+   "job_title": "Backend Developer",
+   "business_unit": "Private Markets",
+   "department": "Engineering",
+   "is_leader": false,
+   "sort": 31,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [
+    "Node",
+    "SQL"
+   ],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-eng-2",
+   "name": "Sample Engineer B",
+   "photo_url": null,
+   "job_title": "Frontend Developer",
+   "business_unit": "Private Markets",
+   "department": "Engineering",
+   "is_leader": false,
+   "sort": 32,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [
+    "React"
+   ],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-ai",
+   "name": "Sample Engineer C",
+   "photo_url": null,
+   "job_title": "AI/ML Engineer",
+   "business_unit": "Private Markets",
+   "department": "Data Engineering & AI",
+   "is_leader": false,
+   "sort": 33,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [
+    "LLMs",
+    "Python"
+   ],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-risk-lead",
+   "name": "Sample Risk Lead",
+   "photo_url": null,
+   "job_title": "Risk Research Analyst",
+   "business_unit": "Risk",
+   "department": "Risk Research & Analysis",
+   "is_leader": true,
+   "sort": 40,
+   "bio": null,
+   "linkedin_url": "https://www.linkedin.com/company/labelnest",
+   "skills": [
+    "Credit risk"
+   ],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-risk-1",
+   "name": "Sample Quant",
+   "photo_url": null,
+   "job_title": "Quantitative Analyst",
+   "business_unit": "Risk",
+   "department": "Risk Modelling & AI",
+   "is_leader": false,
+   "sort": 41,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [
+    "Models"
+   ],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-ops-lead",
+   "name": "Sample People Lead",
+   "photo_url": null,
+   "job_title": "HR Manager",
+   "business_unit": "Corporate Operations",
+   "department": "People & Culture",
+   "is_leader": true,
+   "sort": 50,
+   "bio": null,
+   "linkedin_url": "https://www.linkedin.com/company/labelnest",
+   "skills": [
+    "Hiring"
+   ],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-ops-1",
+   "name": "Sample Finance",
+   "photo_url": null,
+   "job_title": "Accountant",
+   "business_unit": "Corporate Operations",
+   "department": "Finance & Accounts",
+   "is_leader": false,
+   "sort": 51,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-ops-2",
+   "name": "Sample Legal",
+   "photo_url": null,
+   "job_title": "Compliance Officer",
+   "business_unit": "Corporate Operations",
+   "department": "Legal & Compliance",
+   "is_leader": false,
+   "sort": 52,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [],
+   "status": "current",
+   "joined_year": 2024,
+   "left_year": null
+  },
+  {
+   "slug": "sample-alum-0",
+   "name": "Sample Alumnus A",
+   "photo_url": null,
+   "job_title": "Developer",
+   "business_unit": "Private Markets",
+   "department": "Data Research & Review",
+   "is_leader": false,
+   "sort": 900,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [],
+   "status": "alumni",
+   "joined_year": 2022,
+   "left_year": 2024
+  },
+  {
+   "slug": "sample-alum-1",
+   "name": "Sample Alumnus B",
+   "photo_url": null,
+   "job_title": "Research Analyst",
+   "business_unit": "Private Markets",
+   "department": "Data Research & Review",
+   "is_leader": false,
+   "sort": 900,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [],
+   "status": "alumni",
+   "joined_year": 2022,
+   "left_year": 2025
+  },
+  {
+   "slug": "sample-alum-2",
+   "name": "Sample Alumnus C",
+   "photo_url": null,
+   "job_title": "Developer",
+   "business_unit": "Private Markets",
+   "department": "Data Research & Review",
+   "is_leader": false,
+   "sort": 900,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [],
+   "status": "alumni",
+   "joined_year": 2022,
+   "left_year": 2024
+  },
+  {
+   "slug": "sample-alum-3",
+   "name": "Sample Alumnus D",
+   "photo_url": null,
+   "job_title": "Research Analyst",
+   "business_unit": "Private Markets",
+   "department": "Data Research & Review",
+   "is_leader": false,
+   "sort": 900,
+   "bio": null,
+   "linkedin_url": null,
+   "skills": [],
+   "status": "alumni",
+   "joined_year": 2022,
+   "left_year": 2025
+  }
+ ]
+}

@@ -3,11 +3,12 @@ import Footer from '@/components/Footer'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Metadata } from 'next'
-import { getTeamMembers, getAlumni, getFellows, getInterns } from '@/lib/db'
+import { getAlumni, getFellows, getInterns, type Alumni, type Fellow, type Intern } from '@/lib/db'
 import AlumniGrid from './AlumniGrid'
+import { getTeamData, groupTeam } from '@/lib/team-feed'
+import { FeedAlumni, ManagementSection, TeamNav, UnitSection } from './TeamDirectory'
 import { pageMetadata } from '@/lib/seo'
 import { imgFrameStyle } from '@/lib/image'
-import { normalizeExternalUrl } from '@/lib/utils'
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/team', {
@@ -17,15 +18,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 export const revalidate = 3600
 
-export const DEPT_COLORS: Record<string, string> = {
-  'NestIntel': '#1F3A5F',
-  'DataNest': '#1F3A5F',
-  'NestHR': '#1F3A5F',
-  'NestLens': '#2C6B4B',
-  'Ops': '#9A4B1F',
-  'HR': '#5B3A6B',
-  'Founder': '#7A5217',
-}
 
 function FellowChip({ f, accent, background }: { f: { id: string; name: string; role: string; slug: string | null; status?: string; image_url?: string | null; image_position?: string; image_zoom?: number }; accent: string; background: string }) {
   const style: React.CSSProperties = { background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: 12, position: 'relative' }
@@ -51,7 +43,17 @@ function FellowChip({ f, accent, background }: { f: { id: string; name: string; 
 }
 
 export default async function TeamPage() {
-  const [team, alumni, fellows, interns] = await Promise.all([getTeamMembers(), getAlumni(), getFellows(), getInterns()])
+  const [{ people }, siteAlumni, fellows, interns] = await Promise.all([getTeamData(), getAlumni().catch((): Alumni[] => []), getFellows().catch((): Fellow[] => []), getInterns().catch((): Intern[] => [])])
+  const { management, units } = groupTeam(people)
+  const feedAlumni = people.filter(p => p.status === 'alumni').sort((a, b) => (b.left_year ?? 0) - (a.left_year ?? 0) || a.name.localeCompare(b.name))
+  const alumniCount = feedAlumni.length || siteAlumni.length
+  const currentCount = management.length + units.reduce((n, u) => n + u.count, 0)
+  const navItems = [
+    ...(management.length ? [{ id: 'management', label: 'Leadership', accent: '#2C6B4B' }] : []),
+    ...units.map(u => ({ id: u.slug, label: u.name, accent: u.accent })),
+    ...(fellows.length ? [{ id: 'fellows', label: 'Fellows', accent: '#5B3A6B' }] : []),
+    { id: 'alumni', label: 'Alumni', accent: '#2C6B4B' },
+  ]
 
   // Fellows are grouped by their exact `cohort` string (e.g. "NestLabs · Cohort 2 · Data Research"),
   // newest cohort number first. New cohorts need no code changes — admin just types a new cohort label.
@@ -100,8 +102,8 @@ export default async function TeamPage() {
               </div>
               <div className="flex" style={{ gap: 32 }}>
                 {[
-                  { num: team.length || 13, label: 'Current team', color: '#1F3A5F' },
-                  { num: alumni.length || 39, label: 'Alumni', color: '#2C6B4B' },
+                  { num: currentCount, label: 'Current team', color: '#1F3A5F' },
+                  { num: alumniCount, label: 'Alumni', color: '#2C6B4B' },
                   { num: fellows.length || 15, label: 'Nestling fellows', color: '#5B3A6B' },
                 ].map(s => (
                   <div key={s.label} className="text-center">
@@ -114,62 +116,19 @@ export default async function TeamPage() {
           </div>
         </section>
 
-        {/* CURRENT TEAM */}
-        <section className="border-b" style={{ padding: '64px 48px', borderColor: 'var(--border)' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div className="flex items-center justify-between" style={{ marginBottom: 32 }}>
-              <div>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: '#1F3A5F', marginBottom: 8 }}>Current team</div>
-                <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(20px,3vw,32px)', letterSpacing: '-.025em', color: 'var(--text)' }}>The people building LabelNest right now</h2>
-              </div>
-              <Link href="/careers" style={{ fontSize: 13.5, color: '#7A5217', fontWeight: 600 }}>We are hiring →</Link>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4" style={{ gap: 16 }}>
-              {team.map(m => {
-                const deptColor = DEPT_COLORS[m.department] || '#8985A6'
-                const photoAndName = (
-                  <>
-                    <div className="relative" style={{ aspectRatio: '1', background: 'linear-gradient(135deg,rgba(122,82,23,.08),rgba(31,58,95,.06))' }}>
-                      {m.image_url ? (
-                        <Image src={m.image_url} alt={m.name} fill sizes="300px" style={imgFrameStyle(m.image_position || '50% 0%', m.image_zoom || 1)} />
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center font-display font-extrabold" style={{ fontSize: 36, color: 'rgba(14,27,46,.12)' }}>
-                          {m.name[0]}
-                        </div>
-                      )}
-                      <span className="absolute" style={{ bottom: 10, left: 10, fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '.08em', textTransform: 'uppercase', padding: '3px 8px', borderRadius: 4, background: 'rgba(0,0,0,.5)', backdropFilter: 'blur(4px)', color: deptColor }}>{m.department}</span>
-                    </div>
-                    <div style={{ padding: '16px 16px 0' }}>
-                      <div className="font-display font-bold group-hover:underline" style={{ fontSize: 15, letterSpacing: '-.01em', color: 'var(--text)', marginBottom: 3 }}>{m.name}</div>
-                      <div style={{ fontSize: 12.5, color: 'var(--text2)', lineHeight: 1.4 }}>{m.role}</div>
-                    </div>
-                  </>
-                )
-                // Ankit has a dedicated founder page at /about/ankit — link his
-                // team card there instead of the generic /team/[slug] profile.
-                const profileHref = m.slug === 'ankit-kumar-suman' ? '/about/ankit' : m.slug ? `/team/${m.slug}` : null
-                return (
-                  <div key={m.id} className="overflow-hidden transition-all duration-200 hover:-translate-y-1.5 group"
-                    style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16 }}>
-                    {profileHref ? <Link href={profileHref} className="block">{photoAndName}</Link> : photoAndName}
-                    {m.linkedin_url ? (
-                      <div style={{ padding: '10px 16px 16px' }}>
-                        <a href={normalizeExternalUrl(m.linkedin_url)} target="_blank" rel="noopener noreferrer"
-                          className="inline-flex items-center" style={{ gap: 5, fontSize: 11.5, color: '#1F3A5F' }}>
-                          LinkedIn →
-                        </a>
-                      </div>
-                    ) : <div style={{ paddingBottom: 16 }} />}
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </section>
+        <style>{`html{scroll-behavior:smooth}section[id]{scroll-margin-top:124px}`}</style>
+        <TeamNav items={navItems} />
+
+        {/* LEADERSHIP, then each business unit and its departments (from the NestHR team feed) */}
+        <ManagementSection people={management} />
+        {units.map((u, i) => <UnitSection key={u.slug} unit={u} index={i} />)}
+        <div className="flex justify-end" style={{ maxWidth: 1200, margin: '0 auto', padding: '20px clamp(20px,4vw,48px) 0' }}>
+          <Link href="/careers" style={{ fontSize: 13.5, color: '#7A5217', fontWeight: 600 }}>We are hiring →</Link>
+        </div>
 
         {/* FELLOWS */}
         {fellows.length > 0 && (
-          <section className="border-b" style={{ padding: '64px 48px', borderColor: 'var(--border)' }}>
+          <section id="fellows" className="border-b" style={{ padding: '64px 48px', borderColor: 'var(--border)' }}>
             <div style={{ maxWidth: 1200, margin: '0 auto' }}>
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: '#5B3A6B', marginBottom: 8 }}>Nestling Fellows</div>
               <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(20px,3vw,32px)', letterSpacing: '-.025em', color: 'var(--text)', marginBottom: 8 }}>
@@ -208,21 +167,21 @@ export default async function TeamPage() {
         )}
 
         {/* ALUMNI */}
-        <section className="border-b" style={{ padding: '64px 48px', background: 'var(--bg2)', borderColor: 'var(--border)' }}>
+        <section id="alumni" className="border-b" style={{ padding: '64px 48px', background: 'var(--bg2)', borderColor: 'var(--border)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div className="flex items-center justify-between" style={{ marginBottom: 12 }}>
               <div>
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', color: '#2C6B4B', marginBottom: 8 }}>Alumni</div>
                 <h2 className="font-display font-extrabold" style={{ fontSize: 'clamp(20px,3vw,32px)', letterSpacing: '-.025em', color: 'var(--text)' }}>
-                  {alumni.length || 39} people. All permanent. All on this page.
+                  {alumniCount} people. All permanent. All on this page.
                 </h2>
               </div>
             </div>
             <p style={{ fontSize: 13.5, color: 'var(--text2)', maxWidth: 520, marginBottom: 32, lineHeight: 1.6 }}>
               Everyone who worked at LabelNest stays on this page forever. No exceptions. If you built something here, you belong here.{' '}
-              <strong style={{ color: 'var(--text)' }}>Alumni can update their "Now at" via a self-serve link sent by the team.</strong>
+              <strong style={{ color: 'var(--text)' }}>Alumni can update their &ldquo;Now at&rdquo; via a self-serve link sent by the team.</strong>
             </p>
-            <AlumniGrid initial={alumni} />
+            {feedAlumni.length > 0 ? <FeedAlumni people={feedAlumni} /> : <AlumniGrid initial={siteAlumni} />}
           </div>
         </section>
 
