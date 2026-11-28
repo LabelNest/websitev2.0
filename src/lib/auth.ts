@@ -1,10 +1,8 @@
 import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
 import { sql } from './db'
+import { gateAllows, jwtSecretBytes } from './gate'
 
-const SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET ?? 'fallback-secret-change-in-prod'
-)
 const COOKIE_NAME = 'labelnest_admin_token'
 const EXPIRY = '8h'
 
@@ -14,16 +12,22 @@ export interface AdminUser {
 }
 
 export async function signAdminToken(user: AdminUser): Promise<string> {
+  const secret = jwtSecretBytes()
+  if (!secret) {
+    throw new Error('JWT_SECRET must be set when ACCESS_GATE_MODE=enforce')
+  }
   return new SignJWT({ id: user.id, email: user.email })
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime(EXPIRY)
-    .sign(SECRET)
+    .sign(secret)
 }
 
 export async function verifyAdminToken(token: string): Promise<AdminUser | null> {
+  const secret = jwtSecretBytes()
+  if (!secret) return null
   try {
-    const { payload } = await jwtVerify(token, SECRET)
+    const { payload } = await jwtVerify(token, secret)
     return { id: payload.id as string, email: payload.email as string }
   } catch {
     return null
@@ -34,7 +38,13 @@ export async function getAdminFromCookies(): Promise<AdminUser | null> {
   const cookieStore = await cookies()
   const token = cookieStore.get(COOKIE_NAME)?.value
   if (!token) return null
-  return verifyAdminToken(token)
+  const admin = await verifyAdminToken(token)
+  if (!admin) return null
+  // Access Admin gate: every admin API request re-asks (cached 60 s), so a
+  // revoked person stops working within about a minute, not at 8 h expiry.
+  // No-op when ACCESS_GATE_MODE is off.
+  if (!(await gateAllows(admin.email))) return null
+  return admin
 }
 
 export function setAdminCookie(token: string) {

@@ -23,6 +23,11 @@ try {
   }
 } catch { /* ignore */ }
 
+if ((process.env.ACCESS_GATE_MODE ?? '').trim().toLowerCase() === 'enforce') {
+  console.error('Access is managed in Access Admin. Creating or changing admin users here is disabled while ACCESS_GATE_MODE=enforce.')
+  process.exit(1)
+}
+
 const [,, email, password] = process.argv
 if (!email || !password) {
   console.error('Usage: node scripts/seed-admin.mjs email@example.com yourpassword')

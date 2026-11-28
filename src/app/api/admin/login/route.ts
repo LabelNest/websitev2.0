@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { gateAllows } from '@/lib/gate'
 import { verifyAdminCredentials, signAdminToken, setAdminCookie } from '@/lib/auth'
 
 export async function POST(req: NextRequest) {
@@ -10,6 +11,9 @@ export async function POST(req: NextRequest) {
     const user = await verifyAdminCredentials(email, password)
     if (!user) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+    }
+    if (!(await gateAllows(user.email))) {
+      return NextResponse.json({ error: 'No access. Ask for access in Access Admin.' }, { status: 403 })
     }
     const token = await signAdminToken(user)
     const response = NextResponse.json({ ok: true, email: user.email })

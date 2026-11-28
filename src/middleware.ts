@@ -1,10 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { jwtVerify } from 'jose'
-
-const SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET ?? 'fallback-secret-change-in-prod'
-)
+import { gateAllows, jwtSecretBytes } from '@/lib/gate'
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -35,7 +32,11 @@ export async function middleware(request: NextRequest) {
     }
 
     try {
-      await jwtVerify(token, SECRET)
+      const secret = jwtSecretBytes()
+      if (!secret) throw new Error('no secret')
+      const { payload } = await jwtVerify(token, secret)
+      // Access Admin gate (no-op unless ACCESS_GATE_MODE is log/enforce)
+      if (!(await gateAllows(String(payload.email ?? '')))) throw new Error('gate denied')
       return NextResponse.next()
     } catch {
       const response = NextResponse.redirect(new URL('/admin/login', request.url))
