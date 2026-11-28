@@ -89,7 +89,7 @@ const CSS = `
   .nv-m{display:inline-flex}
   .nv-bar{padding:0 20px}
 }
-.nv-mobile{position:fixed;left:0;right:0;top:64px;bottom:0;background:var(--bg);overflow:auto;padding:8px 20px 40px}
+.nv-mobile{position:fixed;left:0;right:0;top:64px;height:calc(100vh - 64px);height:calc(100dvh - 64px);background:var(--bg);overflow:auto;overscroll-behavior:contain;padding:8px 20px 40px}
 .nv-mobile h4{font:600 12px var(--font-sans),sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);margin:26px 0 6px}
 .nv-mobile a.row{display:block;padding:14px 0;border-top:1px solid var(--border);text-decoration:none;color:var(--text);font-family:var(--font-serif),Georgia,serif;font-size:26px;line-height:1.1}
 .nv-mobile a.row small{display:block;font:400 14px var(--font-sans),sans-serif;color:var(--text3);margin-top:3px}
