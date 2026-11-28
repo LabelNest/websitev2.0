@@ -53,6 +53,7 @@ function ManagementCard({ p }: { p: FeedPerson }) {
       <div className="flex flex-col sm:flex-row" style={{ gap: 24, padding: 24 }}>
         <Link href={profileHref(p)} aria-label={p.name}><PersonPhoto p={p} size={148} radius={18} accent={accent} /></Link>
         <div style={{ minWidth: 0 }}>
+          {(p.is_bu_head || p.is_department_head) && <div style={{ fontFamily: MONO, fontSize: 9.5, letterSpacing: '.12em', textTransform: 'uppercase', color: tint(accent), marginBottom: 6 }}>{p.is_bu_head ? `Business Unit Head · ${p.business_unit}` : `Department Head · ${p.department}`}</div>}
           <Link href={profileHref(p)} className="font-display font-extrabold group-hover:underline" style={{ display: 'block', fontSize: 24, letterSpacing: '-.025em', lineHeight: 1.1, color: 'var(--text)' }}>{p.name}</Link>
           <div style={{ fontSize: 14, color: tint(accent), fontWeight: 600, margin: '6px 0 10px' }}>{p.job_title}</div>
           <StatusBadge label={p.status_label} accent={accent} />
