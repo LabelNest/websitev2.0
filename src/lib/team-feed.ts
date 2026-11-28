@@ -100,7 +100,7 @@ async function loadFeed(): Promise<FeedPerson[]> {
   }
   const url = process.env['NESTHR_TEAM_FEED_URL'] || DEFAULT_FEED_URL
   try {
-    const res = await fetch(url, { next: { revalidate: 3600 }, signal: AbortSignal.timeout(6000) })
+    const res = await fetch(url, { next: { revalidate: 300, tags: ['team-feed'] }, signal: AbortSignal.timeout(6000) })
     if (!res.ok) return []
     return parseFeed(await res.json())
   } catch {
