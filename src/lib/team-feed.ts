@@ -29,8 +29,23 @@ export interface FeedPerson {
   is_department_head: boolean
 }
 
+/** Who leads each Business Unit and department (by slug), whichever unit that person sits in. */
+export interface FeedHeads { units: { business_unit: string; head_slug: string }[]; departments: { business_unit: string; department: string; head_slug: string }[] }
+const NO_HEADS: FeedHeads = { units: [], departments: [] }
+
+export function parseHeads(body: unknown): FeedHeads {
+  const raw = typeof body === 'object' && body !== null ? (body as Record<string, unknown>)['heads'] : null
+  if (typeof raw !== 'object' || raw === null) return NO_HEADS
+  const r = raw as Record<string, unknown>
+  const list = (v: unknown): Record<string, unknown>[] => Array.isArray(v) ? v.filter((x): x is Record<string, unknown> => typeof x === 'object' && x !== null) : []
+  const units = list(r['units']).flatMap(u => { const bu = str(u['business_unit']), h = str(u['head_slug']); return bu && h ? [{ business_unit: bu, head_slug: h }] : [] })
+  const departments = list(r['departments']).flatMap(d => { const bu = str(d['business_unit']), dp = str(d['department']), h = str(d['head_slug']); return bu && dp && h ? [{ business_unit: bu, department: dp, head_slug: h }] : [] })
+  return { units, departments }
+}
+
 export interface TeamData {
   people: FeedPerson[]
+  heads: FeedHeads
   source: 'nesthr' | 'fallback'
 }
 
@@ -92,19 +107,20 @@ export function parseFeed(body: unknown): FeedPerson[] {
   return out
 }
 
-async function loadFeed(): Promise<FeedPerson[]> {
+async function loadFeed(): Promise<{ people: FeedPerson[]; heads: FeedHeads }> {
   // Local screenshots only: a fixture instead of the live feed.
   if (process.env['TEAM_FEED_FIXTURE'] === '1') {
     const fx = await import('./team-feed.fixture')
-    return parseFeed(fx.FIXTURE)
+    return { people: parseFeed(fx.FIXTURE), heads: parseHeads(fx.FIXTURE) }
   }
   const url = process.env['NESTHR_TEAM_FEED_URL'] || DEFAULT_FEED_URL
   try {
     const res = await fetch(url, { next: { revalidate: 300, tags: ['team-feed'] }, signal: AbortSignal.timeout(6000) })
-    if (!res.ok) return []
-    return parseFeed(await res.json())
+    if (!res.ok) return { people: [], heads: NO_HEADS }
+    const body: unknown = await res.json()
+    return { people: parseFeed(body), heads: parseHeads(body) }
   } catch {
-    return []
+    return { people: [], heads: NO_HEADS }
   }
 }
 
@@ -122,8 +138,8 @@ async function loadFallback(): Promise<FeedPerson[]> {
 
 export async function getTeamData(): Promise<TeamData> {
   const feed = await loadFeed()
-  if (feed.some(p => p.status === 'current')) return { people: feed, source: 'nesthr' }
-  return { people: await loadFallback(), source: 'fallback' }
+  if (feed.people.some(p => p.status === 'current')) return { people: feed.people, heads: feed.heads, source: 'nesthr' }
+  return { people: await loadFallback(), heads: NO_HEADS, source: 'fallback' }
 }
 
 export async function getPersonBySlug(slug: string): Promise<FeedPerson | null> {
@@ -155,7 +171,7 @@ export interface BuGroup { name: string; slug: string; accent: string; blurb: st
 // Business Unit head first, then the department head, then other leads (each group already in page order).
 const leadRank = (p: FeedPerson) => (p.is_bu_head ? 0 : p.is_department_head ? 1 : 2)
 
-export function groupTeam(people: FeedPerson[]): { management: FeedPerson[]; units: BuGroup[] } {
+export function groupTeam(people: FeedPerson[], heads: FeedHeads = NO_HEADS): { management: FeedPerson[]; units: BuGroup[] } {
   const current = people.filter(p => p.status === 'current').sort(byOrder)
   const management = current.filter(p => p.business_unit === MANAGEMENT)
   const rest = current.filter(p => p.business_unit !== MANAGEMENT)
@@ -180,10 +196,12 @@ export function groupTeam(people: FeedPerson[]): { management: FeedPerson[]; uni
     const departments = deptNames.map(d => {
       const inDept = inUnit.filter(p => (p.department || '') === d)
       const leads = inDept.filter(p => p.is_leader).sort((x, y) => leadRank(x) - leadRank(y))
-      return { department: d, head: inDept.find(p => p.is_department_head) ?? null, leads, members: inDept.filter(p => !p.is_leader) }
+      // The head named by NestHR for this department, wherever that person sits; else a head who sits in it.
+      const named = heads.departments.find(h => h.business_unit === name && h.department === d)
+      return { department: d, head: (named && current.find(p => p.slug === named.head_slug)) || inDept.find(p => p.is_department_head) || null, leads, members: inDept.filter(p => !p.is_leader) }
     })
     const info = BU_INFO[name]
-    return { name, slug: slugify(name), accent: info?.accent ?? '#8985A6', blurb: info?.blurb ?? '', head: inUnit.find(p => p.is_bu_head) ?? null, departments, count: inUnit.length }
+    return { name, slug: slugify(name), accent: info?.accent ?? '#8985A6', blurb: info?.blurb ?? '', head: (() => { const named = heads.units.find(h => h.business_unit === name); return (named && current.find(p => p.slug === named.head_slug)) || inUnit.find(p => p.is_bu_head) || null })(), departments, count: inUnit.length }
   })
   return { management, units }
 }

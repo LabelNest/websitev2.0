@@ -43,8 +43,8 @@ function FellowChip({ f, accent, background }: { f: { id: string; name: string; 
 }
 
 export default async function TeamPage() {
-  const [{ people }, siteAlumni, fellows, interns] = await Promise.all([getTeamData(), getAlumni().catch((): Alumni[] => []), getFellows().catch((): Fellow[] => []), getInterns().catch((): Intern[] => [])])
-  const { management, units } = groupTeam(people)
+  const [{ people, heads }, siteAlumni, fellows, interns] = await Promise.all([getTeamData(), getAlumni().catch((): Alumni[] => []), getFellows().catch((): Fellow[] => []), getInterns().catch((): Intern[] => [])])
+  const { management, units } = groupTeam(people, heads)
   const feedAlumni = people.filter(p => p.status === 'alumni').sort((a, b) => (b.left_year ?? 0) - (a.left_year ?? 0) || a.name.localeCompare(b.name))
   const alumniCount = feedAlumni.length || siteAlumni.length
   const currentCount = management.length + units.reduce((n, u) => n + u.count, 0)
